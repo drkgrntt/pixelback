@@ -7,7 +7,7 @@ import {
   UpdateDateColumn
 } from 'typeorm'
 import { ObjectType, Field } from 'type-graphql'
-import { UserRole } from '../enums/UserRole'
+import { UserRole } from '../types'
 
 @ObjectType()
 @Entity()
