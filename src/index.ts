@@ -8,6 +8,7 @@ import cors from "cors"
 import { ApolloServer } from "apollo-server-express"
 import jwt from "jsonwebtoken"
 import { User } from "./entities/User"
+import { UserResolver } from './resolvers/user'
 
 const main = async () => {
   await createConnection({
@@ -29,7 +30,7 @@ const main = async () => {
     introspection: true,
     playground: true,
     schema: await buildSchema({
-      resolvers: [] as any,
+      resolvers: [UserResolver],
       validate: false
     }),
     context: async ({ req, res }) => {
