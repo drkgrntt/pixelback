@@ -38,7 +38,7 @@ const main = async () => {
 
       const { token } = req.headers
       if (typeof token === 'string') {
-        const tokenData = jwt.verify(token, process.env.JWT_SECRET as string)
+        const tokenData = jwt.verify(token, process.env.JWT_SECRET)
         if (typeof tokenData === 'object') {
           me = await User.findOne((tokenData as { uid: string }).uid)
         }
@@ -54,7 +54,7 @@ const main = async () => {
 
   server.applyMiddleware({ app })
 
-  app.listen(parseInt(process.env.PORT as string), () => {
+  app.listen(parseInt(process.env.PORT), () => {
     console.log(`Server started on ${process.env.PORT}`)
   })
 }
