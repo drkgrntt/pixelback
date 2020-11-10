@@ -28,6 +28,41 @@ export class UserResolver {
     return regex.test(String(password))
   }
 
+  getNewToken(uid: string): string {
+    const now = new Date()
+    const expiry = new Date(now).setDate(now.getDate() + 30)
+    const token = jwt.sign(
+      {
+        uid: uid,
+        iat: Math.floor(now.getTime() / 1000),
+        exp: Math.floor(expiry / 1000)
+      },
+      process.env.JWT_SECRET
+    )
+    return token
+  }
+
+  @Mutation(() => String)
+  async login(
+    @Arg("password") password: string,
+    @Arg("email") email: string
+  ): Promise<string> {
+
+    const user = await User.findOne({ email })
+    if (!user) {
+      throw new Error('Invalid email or password')
+    }
+
+    const correctPassword = await bcrypt.compare(password, user.password)
+    if (!correctPassword) {
+      throw new Error('Invalid email or password')
+    }
+
+    const token = this.getNewToken(user.id)
+
+    return token
+  }
+
   @Mutation(() => String)
   async register(
     @Arg("password") password: string,
@@ -48,20 +83,11 @@ export class UserResolver {
       email: email,
       password: passwordHash,
       role: UserRole.User,
-      displayName: email.split('@')[0]
+      displayName: email.split('@')[0] // TODO: improve this
     }).save()
 
     // Generate a token
-    const now = new Date()
-    const expiry = new Date(now).setDate(now.getDate() + 30)
-    const token = jwt.sign(
-      {
-        uid: user.id,
-        iat: Math.floor(now.getTime() / 1000),
-        exp: Math.floor(expiry / 1000)
-      },
-      process.env.JWT_SECRET
-    )
+    const token = this.getNewToken(user.id)
 
     return token
   }
