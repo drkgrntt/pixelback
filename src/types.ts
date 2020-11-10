@@ -12,4 +12,4 @@ export interface Context {
   req: Request
   res: Response
   me: User
-};
+}

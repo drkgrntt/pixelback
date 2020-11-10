@@ -3,12 +3,24 @@ import {
   Query,
   Mutation,
   Resolver,
-  Arg
+  Arg,
+  ObjectType,
+  Field
 } from 'type-graphql'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import { User } from '../entities/User'
+import { Token } from '../entities/Token'
 import { Context, UserRole } from '../types'
+
+@ObjectType()
+class UserResponse {
+  @Field(() => User, { nullable: true })
+  user: User
+
+  @Field(() => Token, { nullable: true })
+  token: Token
+}
 
 @Resolver(User)
 export class UserResolver {
@@ -28,25 +40,33 @@ export class UserResolver {
     return regex.test(String(password))
   }
 
-  getNewToken(uid: string): string {
+  async getNewToken(uid: string): Promise<Token> {
     const now = new Date()
-    const expiry = new Date(now).setDate(now.getDate() + 30)
-    const token = jwt.sign(
+    const expiry = new Date(new Date(now).setDate(now.getDate() + 30))
+    const value = jwt.sign(
       {
         uid: uid,
         iat: Math.floor(now.getTime() / 1000),
-        exp: Math.floor(expiry / 1000)
+        exp: Math.floor(expiry.getTime() / 1000)
       },
       process.env.JWT_SECRET
     )
+
+    const token = await Token.create({
+      value,
+      expiry,
+      issued: now,
+      userId: uid
+    }).save()
+
     return token
   }
 
-  @Mutation(() => String)
+  @Mutation(() => UserResponse)
   async login(
     @Arg("password") password: string,
     @Arg("email") email: string
-  ): Promise<string> {
+  ): Promise<UserResponse> {
 
     const user = await User.findOne({ email })
     if (!user) {
@@ -58,23 +78,26 @@ export class UserResolver {
       throw new Error('Invalid email or password')
     }
 
-    const token = this.getNewToken(user.id)
+    const token = await this.getNewToken(user.id)
 
-    return token
+    return {
+      user,
+      token
+    }
   }
 
-  @Mutation(() => String)
+  @Mutation(() => UserResponse)
   async register(
     @Arg("password") password: string,
     @Arg("email") email: string
-  ): Promise<string> {
+  ): Promise<UserResponse> {
 
     if (!this.verifyEmailSyntax(email)) {
       throw new Error('Invalid email')
     }
 
     if (!this.verifyPasswordSyntax(password)) {
-      throw new Error('Invalid password')
+      throw new Error('Invalid password. Make sure it is at least 8 characters and includes at least 1 letter and 1 number.')
     }
 
     // Create the user
@@ -87,8 +110,11 @@ export class UserResolver {
     }).save()
 
     // Generate a token
-    const token = this.getNewToken(user.id)
+    const token = await this.getNewToken(user.id)
 
-    return token
+    return {
+      user,
+      token
+    }
   }
 }

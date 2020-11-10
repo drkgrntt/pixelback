@@ -5,43 +5,37 @@ import {
   BaseEntity,
   CreateDateColumn,
   UpdateDateColumn,
-  OneToMany
+  ManyToOne
 } from 'typeorm'
 import { ObjectType, Field } from 'type-graphql'
-import { UserRole } from '../types'
-import { Token } from './Token'
+import { User } from './User'
 
 @ObjectType()
 @Entity()
-export class User extends BaseEntity {
+export class Token extends BaseEntity {
 
-  @Field()
   @PrimaryGeneratedColumn("uuid")
   id!: string
 
   @Field()
   @Column({ unique: true })
-  email: string
+  value: string
 
   @Column()
-  password: string
+  expiry: Date
 
-  @Field()
   @Column()
-  role: UserRole
+  issued: Date
 
-  @Field()
   @Column()
-  displayName: string
+  userId: string;
 
-  @OneToMany(() => Token, (token) => token.user)
-  tokens: Token[]
+  @ManyToOne(() => User, (user) => user.tokens)
+  user: User
 
-  @Field(() => String)
   @CreateDateColumn()
   createdAt: Date
 
-  @Field(() => String)
   @UpdateDateColumn()
   updatedAt: Date
 }
