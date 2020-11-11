@@ -84,4 +84,26 @@ export class Token extends BaseEntity {
       return null
     }
   }
+
+  static async generate(uid: string): Promise<Token> {
+    const now = new Date()
+    const expiry = new Date(new Date(now).setDate(now.getDate() + 30))
+    const value = jwt.sign(
+      {
+        uid: uid,
+        iat: Math.floor(now.getTime() / 1000),
+        exp: Math.floor(expiry.getTime() / 1000)
+      },
+      process.env.JWT_SECRET
+    )
+
+    const token = await Token.create({
+      value,
+      expiry,
+      issued: now,
+      userId: uid
+    }).save()
+
+    return token
+  }
 }

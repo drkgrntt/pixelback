@@ -1,4 +1,3 @@
-import { Request, Response } from "express"
 import { User } from './entities/User'
 
 export enum UserRole {
@@ -9,7 +8,6 @@ export enum UserRole {
 }
 
 export interface Context {
-  req: Request
-  res: Response
-  me: User
+  me: User,
+  token: string
 }

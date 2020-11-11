@@ -31,10 +31,10 @@ const main = async () => {
       resolvers: [UserResolver],
       validate: false
     }),
-    context: async ({ req, res }) => {
+    context: async ({ req }) => {
 
       if (req.body.operationName === "IntrospectionQuery") {
-        return { req, res }
+        return {}
       }
 
       let me
@@ -45,9 +45,8 @@ const main = async () => {
       }
   
       return {
-        req,
-        res,
-        me
+        me,
+        token
       }
     }
   })

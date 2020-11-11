@@ -8,7 +8,6 @@ import {
   Field
 } from 'type-graphql'
 import bcrypt from 'bcrypt'
-import jwt from 'jsonwebtoken'
 import { User } from '../entities/User'
 import { Token } from '../entities/Token'
 import { Context, UserRole } from '../types'
@@ -40,28 +39,6 @@ export class UserResolver {
     return regex.test(String(password))
   }
 
-  async getNewToken(uid: string): Promise<Token> {
-    const now = new Date()
-    const expiry = new Date(new Date(now).setDate(now.getDate() + 30))
-    const value = jwt.sign(
-      {
-        uid: uid,
-        iat: Math.floor(now.getTime() / 1000),
-        exp: Math.floor(expiry.getTime() / 1000)
-      },
-      process.env.JWT_SECRET
-    )
-
-    const token = await Token.create({
-      value,
-      expiry,
-      issued: now,
-      userId: uid
-    }).save()
-
-    return token
-  }
-
   @Mutation(() => UserResponse)
   async login(
     @Arg("password") password: string,
@@ -78,7 +55,7 @@ export class UserResolver {
       throw new Error('Invalid email or password')
     }
 
-    const token = await this.getNewToken(user.id)
+    const token = await Token.generate(user.id)
 
     return {
       user,
@@ -110,11 +87,20 @@ export class UserResolver {
     }).save()
 
     // Generate a token
-    const token = await this.getNewToken(user.id)
+    const token = await Token.generate(user.id)
 
     return {
       user,
       token
     }
+  }
+
+  @Mutation(() => Boolean)
+  async logout(
+    @Ctx() { token }: Context
+  ) {
+    const value = Token.unsign(token)
+    const result = await Token.delete({ value })
+    return !!result.affected
   }
 }
