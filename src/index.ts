@@ -6,8 +6,7 @@ import { buildSchema } from "type-graphql"
 import express from "express"
 import cors from "cors"
 import { ApolloServer } from "apollo-server-express"
-import jwt from "jsonwebtoken"
-import { User } from "./entities/User"
+import { Token } from './entities/Token'
 import { UserResolver } from './resolvers/user'
 
 const main = async () => {
@@ -27,7 +26,6 @@ const main = async () => {
   app.use(cors())
 
   const server = new ApolloServer({
-    introspection: true,
     playground: true,
     schema: await buildSchema({
       resolvers: [UserResolver],
@@ -35,14 +33,15 @@ const main = async () => {
     }),
     context: async ({ req, res }) => {
 
+      if (req.body.operationName === "IntrospectionQuery") {
+        return { req, res }
+      }
+
       let me
 
       const { token } = req.headers
       if (typeof token === 'string') {
-        const tokenData = jwt.verify(token, process.env.JWT_SECRET)
-        if (typeof tokenData === 'object') {
-          me = await User.findOne((tokenData as { uid: string }).uid)
-        }
+        me = await Token.verifyAndFindUser(token)
       }
   
       return {

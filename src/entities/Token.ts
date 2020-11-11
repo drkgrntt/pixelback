@@ -27,18 +27,15 @@ export class Token extends BaseEntity {
 
   @BeforeInsert()
   removeSignature() {
-    const pieces = this.value.split('.')
-    this.value = `${pieces[0]}.${pieces[1]}`
+    this.value = Token.unsign(this.value)
   }
 
   @AfterLoad()
   @AfterInsert()
-  addSignature() {
-    const decoded = jwt.decode(this.value + '.x')
-    if (decoded) {
-      this.value = jwt.sign(decoded, process.env.JWT_SECRET)
-    } else {
-      this.remove()
+  async addSignature() {
+    this.value = Token.sign(this.value)
+    if (!this.value) {
+      await this.remove()
     }
   }
 
@@ -59,4 +56,32 @@ export class Token extends BaseEntity {
 
   @UpdateDateColumn()
   updatedAt: Date
+
+  static sign(value: string): string {
+    const decoded = jwt.decode(`${value}.x`)
+    if (decoded) {
+      const signed = jwt.sign(decoded, process.env.JWT_SECRET)
+      return signed
+    }
+    return ''
+  }
+
+  static unsign(value: string): string {
+    const pieces = value.split('.')
+    const unsigned = `${pieces[0]}.${pieces[1]}`
+    return unsigned
+  }
+
+  static async verifyAndFindUser(value: string): Promise<User | null> {
+    const unsigned = Token.unsign(value)
+    const token = await Token.findOne({ value: unsigned }, { relations: ['user'] })
+    if (!token) return null
+    try {
+      jwt.verify(value, process.env.JWT_SECRET)
+      return token.user
+    } catch (err) {
+      await token.remove()
+      return null
+    }
+  }
 }
