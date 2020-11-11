@@ -2,44 +2,45 @@ import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
-  BaseEntity,
   CreateDateColumn,
   UpdateDateColumn,
-  OneToMany
+  ManyToOne,
+  BaseEntity
 } from 'typeorm'
 import { ObjectType, Field } from 'type-graphql'
-import { UserRole } from '../types'
-import { Token } from './Token'
 import { Story } from './Story'
 
 @ObjectType()
 @Entity()
-export class User extends BaseEntity {
+export class Chapter extends BaseEntity {
 
   @Field()
   @PrimaryGeneratedColumn("uuid")
   id!: string
 
-  @Field()
-  @Column({ unique: true })
-  email: string
-
   @Column()
-  password: string
+  storyId: string
 
-  @Field()
+  @ManyToOne(() => Story, (story) => story.chapters, {
+    onDelete: "CASCADE"
+  })
+  story: Story
+
   @Column({ type: "int" })
-  role: UserRole
-
   @Field()
+  number: number
+
   @Column()
-  displayName: string
+  @Field()
+  title: string
 
-  @OneToMany(() => Token, (token) => token.user)
-  tokens: Token[]
+  @Column("text")
+  @Field()
+  body: string
 
-  @OneToMany(() => Story, (story) => story.author)
-  stories: Story[]
+  @Column()
+  @Field()
+  enableCommenting: boolean
 
   @Field(() => String)
   @CreateDateColumn()

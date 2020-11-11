@@ -78,7 +78,7 @@ export class UserResolver {
     }
 
     // Create the user
-    const passwordHash = await bcrypt.hash(password, 15)
+    const passwordHash = await bcrypt.hash(password, 13)
     const user = await User.create({
       email: email,
       password: passwordHash,

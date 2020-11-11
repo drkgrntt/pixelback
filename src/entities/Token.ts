@@ -48,7 +48,9 @@ export class Token extends BaseEntity {
   @Column()
   userId: string;
 
-  @ManyToOne(() => User, (user) => user.tokens)
+  @ManyToOne(() => User, (user) => user.tokens, {
+    onDelete: "CASCADE"
+  })
   user: User
 
   @CreateDateColumn()
