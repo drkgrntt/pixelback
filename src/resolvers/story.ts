@@ -77,4 +77,16 @@ export class StoryResolver {
 
     return story
   }
+
+  @Mutation(() => Boolean)
+  @UseMiddleware(isAuth)
+  async deleteStory(
+    @Arg("id") id: string,
+    @Ctx() { me }: Context
+  ): Promise<Boolean> {
+
+    const result = await Story.delete({ id, authorId: me.id })
+
+    return !!result.affected
+  }
 }
