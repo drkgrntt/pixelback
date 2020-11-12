@@ -1,4 +1,11 @@
 import { User } from './entities/User'
+import { createUserLoader } from './utils/createUserLoader'
+
+export interface Context {
+  me: User,
+  token: string,
+  userLoader: ReturnType<typeof createUserLoader>
+}
 
 export enum UserRole {
   None,
@@ -21,7 +28,3 @@ export enum SubLevel {
 
 export type RatingScore = 1 | 2 | 3 | 4 | 5
 
-export interface Context {
-  me: User,
-  token: string
-}

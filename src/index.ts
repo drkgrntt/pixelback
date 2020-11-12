@@ -8,6 +8,8 @@ import cors from "cors"
 import { ApolloServer } from "apollo-server-express"
 import { Token } from './entities/Token'
 import { UserResolver } from './resolvers/user'
+import { StoryResolver } from './resolvers/story'
+import { createUserLoader } from './utils/createUserLoader'
 import { __prod__ } from './constants'
 
 const main = async () => {
@@ -29,7 +31,7 @@ const main = async () => {
   const server = new ApolloServer({
     playground: true,
     schema: await buildSchema({
-      resolvers: [UserResolver],
+      resolvers: [UserResolver, StoryResolver],
       validate: false
     }),
     context: async ({ req }) => {
@@ -47,7 +49,8 @@ const main = async () => {
   
       return {
         me,
-        token
+        token,
+        userLoader: createUserLoader()
       }
     }
   })
