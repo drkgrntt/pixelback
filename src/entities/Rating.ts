@@ -8,48 +8,44 @@ import {
   BaseEntity
 } from 'typeorm'
 import { ObjectType, Field } from 'type-graphql'
+import { RatingScore } from '../types'
+import { User } from './User'
 import { Story } from './Story'
-import { PublishStatus } from '../types'
-import { Rating } from './Rating'
+import { Chapter } from './Chapter'
 
 @ObjectType()
 @Entity()
-export class Chapter extends BaseEntity {
+export class Rating extends BaseEntity {
 
   @Field()
   @PrimaryGeneratedColumn("uuid")
   id!: string
 
   @Column()
+  readerId: string
+
+  @ManyToOne(() => User, (user) => user.ratings)
+  reader: User
+
+  @Column()
   storyId: string
 
-  @ManyToOne(() => Story, (story) => story.chapters, {
+  @ManyToOne(() => Story, (story) => story.ratings, {
     onDelete: "CASCADE"
   })
   story: Story
 
-  @Column({ type: "int" })
-  @Field()
-  number: number
+  @Column()
+  chapterId: string
+
+  @ManyToOne(() => Chapter, (chapter) => chapter.ratings, {
+    onDelete: "CASCADE"
+  })
+  chapter: Chapter
 
   @Column()
   @Field()
-  title: string
-
-  @Column("text")
-  @Field()
-  body: string
-
-  @Column()
-  @Field()
-  enableCommenting: boolean
-
-  @Column()
-  @Field()
-  status: PublishStatus
-
-  @ManyToOne(() => Rating, (rating) => rating.story)
-  ratings: Rating[]
+  score: RatingScore
 
   @Field(() => String)
   @CreateDateColumn()

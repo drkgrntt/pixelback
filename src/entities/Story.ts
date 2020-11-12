@@ -11,6 +11,8 @@ import {
 import { ObjectType, Field } from 'type-graphql'
 import { User } from './User'
 import { Chapter } from './Chapter'
+import { PublishStatus } from '../types'
+import { Rating } from './Rating'
 
 @ObjectType()
 @Entity()
@@ -42,6 +44,13 @@ export class Story extends BaseEntity {
   @Column()
   @Field()
   enableCommenting: boolean
+
+  @Column()
+  @Field()
+  status: PublishStatus
+
+  @ManyToOne(() => Rating, (rating) => rating.story)
+  ratings: Rating[]
 
   @Field(() => String)
   @CreateDateColumn()
