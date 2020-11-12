@@ -22,13 +22,17 @@ export class Subscription extends BaseEntity {
   @Column()
   subscriberId: string
 
-  @ManyToOne(() => User, (user) => user.subscriptions)
+  @ManyToOne(() => User, (user) => user.subscriptions, {
+    onDelete: "CASCADE"
+  })
   subscriber: User
 
   @Column()
   subscribedToId: string
 
-  @ManyToOne(() => User, (user) => user.subscribers)
+  @ManyToOne(() => User, (user) => user.subscribers, {
+    onDelete: "CASCADE"
+  })
   subscribedTo: User
 
   @Column("int")

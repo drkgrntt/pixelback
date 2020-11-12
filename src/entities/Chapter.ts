@@ -5,6 +5,7 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   ManyToOne,
+  OneToMany,
   BaseEntity
 } from 'typeorm'
 import { ObjectType, Field, Int } from 'type-graphql'
@@ -40,6 +41,10 @@ export class Chapter extends BaseEntity {
   @Field()
   body: string
 
+  @Column("text")
+  @Field()
+  summary: string
+
   @Column()
   @Field()
   enableCommenting: boolean
@@ -48,7 +53,7 @@ export class Chapter extends BaseEntity {
   @Field(() => Int)
   status: PublishStatus
 
-  @ManyToOne(() => Rating, (rating) => rating.story)
+  @OneToMany(() => Rating, (rating) => rating.story)
   ratings: Rating[]
 
   @Field(() => String)

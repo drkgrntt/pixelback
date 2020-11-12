@@ -41,6 +41,10 @@ export class Story extends BaseEntity {
   @Field()
   body: string
 
+  @Column("text")
+  @Field()
+  summary: string
+
   @Column()
   @Field()
   enableCommenting: boolean
@@ -49,7 +53,7 @@ export class Story extends BaseEntity {
   @Field(() => Int)
   status: PublishStatus
 
-  @ManyToOne(() => Rating, (rating) => rating.story)
+  @OneToMany(() => Rating, (rating) => rating.story)
   ratings: Rating[]
 
   @Field(() => String)
