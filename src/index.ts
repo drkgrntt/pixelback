@@ -16,7 +16,7 @@ const main = async () => {
     synchronize: true,
     logging: false,
     entities: [
-      path.join(__dirname, "/entities/*.js")
+      path.join(__dirname, "entities", "*.js")
     ],
     migrations: [],
     subscribers: []
