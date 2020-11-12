@@ -26,6 +26,14 @@ export class StoryResolver {
     return await Story.find()
   }
 
+  @Query(() => Story, { nullable: true })
+  async story(
+    @Arg("id") id: string
+  ): Promise<Story | undefined> {
+    const story = Story.findOne(id)
+    return story
+  }
+
   @Mutation(() => Story)
   @UseMiddleware(isAuth)
   async createStory(
