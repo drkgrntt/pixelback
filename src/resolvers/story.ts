@@ -45,4 +45,36 @@ export class StoryResolver {
       authorId: me.id
     }).save()
   }
+
+  @Mutation(() => Story)
+  @UseMiddleware(isAuth)
+  async updateStory(
+    @Arg('id') id: string,
+    @Arg('title') title: string,
+    @Arg('body') body: string,
+    @Arg('status') status: PublishStatus,
+    @Arg('enableCommenting') enableCommenting: boolean,
+    @Arg('summary') summary: string,
+    @Ctx() { me }: Context
+  ): Promise<Story> {
+
+    const result = await Story.update({
+      id, authorId: me.id
+    }, {
+      title, body, status, enableCommenting, summary
+    }, {
+      reload: true
+    })
+
+    if (!result.affected) {
+      throw new Error('Something went wrong')
+    }
+
+    const story = await Story.findOne({ id, authorId: me.id })
+    if (!story) {
+      throw new Error('Something went wrong')
+    }
+
+    return story
+  }
 }
