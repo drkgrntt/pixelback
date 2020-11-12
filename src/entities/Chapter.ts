@@ -7,7 +7,7 @@ import {
   ManyToOne,
   BaseEntity
 } from 'typeorm'
-import { ObjectType, Field } from 'type-graphql'
+import { ObjectType, Field, Int } from 'type-graphql'
 import { Story } from './Story'
 import { PublishStatus } from '../types'
 import { Rating } from './Rating'
@@ -28,8 +28,8 @@ export class Chapter extends BaseEntity {
   })
   story: Story
 
-  @Column({ type: "int" })
-  @Field()
+  @Column("int")
+  @Field(() => Int)
   number: number
 
   @Column()
@@ -44,8 +44,8 @@ export class Chapter extends BaseEntity {
   @Field()
   enableCommenting: boolean
 
-  @Column()
-  @Field()
+  @Column("int")
+  @Field(() => Int)
   status: PublishStatus
 
   @ManyToOne(() => Rating, (rating) => rating.story)

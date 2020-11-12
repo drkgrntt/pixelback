@@ -7,7 +7,7 @@ import {
   ManyToOne,
   BaseEntity
 } from 'typeorm'
-import { ObjectType, Field } from 'type-graphql'
+import { ObjectType, Field, Int } from 'type-graphql'
 import { RatingScore } from '../types'
 import { User } from './User'
 import { Story } from './Story'
@@ -43,8 +43,8 @@ export class Rating extends BaseEntity {
   })
   chapter: Chapter
 
-  @Column()
-  @Field()
+  @Column("int")
+  @Field(() => Int)
   score: RatingScore
 
   @Field(() => String)

@@ -7,7 +7,7 @@ import {
   UpdateDateColumn,
   OneToMany
 } from 'typeorm'
-import { ObjectType, Field } from 'type-graphql'
+import { ObjectType, Field, Int } from 'type-graphql'
 import { UserRole } from '../types'
 import { Token } from './Token'
 import { Story } from './Story'
@@ -29,8 +29,8 @@ export class User extends BaseEntity {
   @Column()
   password: string
 
-  @Field()
-  @Column({ type: "int" })
+  @Field(() => Int)
+  @Column("int")
   role: UserRole
 
   @Field()

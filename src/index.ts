@@ -8,13 +8,14 @@ import cors from "cors"
 import { ApolloServer } from "apollo-server-express"
 import { Token } from './entities/Token'
 import { UserResolver } from './resolvers/user'
+import { __prod__ } from './constants'
 
 const main = async () => {
   await createConnection({
     type: "postgres",
     url: process.env.DATABASE_URL,
     synchronize: true,
-    logging: false,
+    logging: !__prod__,
     entities: [
       path.join(__dirname, "entities", "*.js")
     ],

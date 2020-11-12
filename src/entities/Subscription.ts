@@ -7,7 +7,7 @@ import {
   ManyToOne,
   BaseEntity
 } from 'typeorm'
-import { ObjectType, Field } from 'type-graphql'
+import { ObjectType, Field, Int } from 'type-graphql'
 import { SubLevel } from '../types'
 import { User } from './User'
 
@@ -31,8 +31,8 @@ export class Subscription extends BaseEntity {
   @ManyToOne(() => User, (user) => user.subscribers)
   subscribedTo: User
 
-  @Column()
-  @Field()
+  @Column("int")
+  @Field(() => Int)
   level: SubLevel
 
   @Field(() => String)
