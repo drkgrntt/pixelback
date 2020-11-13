@@ -1,10 +1,18 @@
 import { User } from './entities/User'
+import { createChapterLoader } from './utils/createChapterLoader'
+import { createRatingLoader } from './utils/createRatingLoader'
+import { createStoryLoader } from './utils/createStoryLoader'
+import { createSubscriptionLoader } from './utils/createSubscriptionLoader'
 import { createUserLoader } from './utils/createUserLoader'
 
 export interface Context {
   me: User,
   token: string,
-  userLoader: ReturnType<typeof createUserLoader>
+  userLoader: ReturnType<typeof createUserLoader>,
+  storyLoader: ReturnType<typeof createStoryLoader>,
+  chapterLoader: ReturnType<typeof createChapterLoader>,
+  ratingLoader: ReturnType<typeof createRatingLoader>,
+  subscriptionLoader: ReturnType<typeof createSubscriptionLoader>
 }
 
 export enum UserRole {

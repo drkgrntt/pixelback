@@ -10,6 +10,10 @@ import { Token } from './entities/Token'
 import { UserResolver } from './resolvers/user'
 import { StoryResolver } from './resolvers/story'
 import { createUserLoader } from './utils/createUserLoader'
+import { createStoryLoader } from './utils/createStoryLoader'
+import { createChapterLoader } from './utils/createChapterLoader'
+import { createRatingLoader } from './utils/createRatingLoader'
+import { createSubscriptionLoader } from './utils/createSubscriptionLoader'
 import { __prod__ } from './constants'
 
 const main = async () => {
@@ -50,7 +54,11 @@ const main = async () => {
       return {
         me,
         token,
-        userLoader: createUserLoader()
+        userLoader: createUserLoader(),
+        storyLoader: createStoryLoader(),
+        chapterLoader: createChapterLoader(),
+        ratingLoader: createRatingLoader(),
+        subscriptionLoader: createSubscriptionLoader()
       }
     }
   })
