@@ -11,7 +11,7 @@ import {
 import { ObjectType, Field, Int } from 'type-graphql'
 import { User } from './User'
 import { Chapter } from './Chapter'
-import { PublishStatus } from '../types'
+import { PublishStatus, RatingScore } from '../types'
 import { Rating } from './Rating'
 
 @ObjectType()
@@ -25,11 +25,13 @@ export class Story extends BaseEntity {
   @Column()
   authorId: string
 
+  @Field(() => User)
   @ManyToOne(() => User, (user) => user.stories, {
     onDelete: "CASCADE"
   })
   author: User
 
+  @Field(() => [Chapter])
   @OneToMany(() => Chapter, (chapter) => chapter.story)
   chapters: Chapter[]
 
@@ -53,8 +55,12 @@ export class Story extends BaseEntity {
   @Field(() => Int)
   status: PublishStatus
 
+  @Field(() => [Rating])
   @OneToMany(() => Rating, (rating) => rating.story)
   ratings: Rating[]
+
+  @Field(() => Int, { nullable: true })
+  rateStatus: RatingScore | null
 
   @Field(() => String)
   @CreateDateColumn()

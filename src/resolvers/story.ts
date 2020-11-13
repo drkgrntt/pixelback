@@ -7,18 +7,26 @@ import {
   Query,
   FieldResolver,
   Root,
+  Int,
 } from 'type-graphql'
 import { Story } from '../entities/Story'
 import { User } from '../entities/User'
-import { Context, PublishStatus } from '../types'
+import { Rating } from '../entities/Rating'
+import { Context, PublishStatus, RatingScore } from '../types'
 import { isAuth } from '../middleware/isAuth'
 
 @Resolver(Story)
 export class StoryResolver {
 
   @FieldResolver(() => User)
-  author(@Root() story: Story, @Ctx() { userLoader }: Context) {
-    return userLoader.load(story.authorId)
+  async author(@Root() story: Story, @Ctx() { userLoader }: Context) {
+    return await userLoader.load(story.authorId)
+  }
+
+  @FieldResolver(() => [Rating])
+  async ratings(@Root() story: Story, @Ctx() { ratingLoader }: Context) {
+    const ratings = await ratingLoader.loadMany([{ storyId: story.id }])
+    return ratings.filter(r => r)
   }
 
   @Query(() => [Story])
@@ -70,8 +78,6 @@ export class StoryResolver {
       id, authorId: me.id
     }, {
       title, body, status, enableCommenting, summary
-    }, {
-      reload: true
     })
 
     if (!result.affected) {
@@ -96,5 +102,35 @@ export class StoryResolver {
     const result = await Story.delete({ id, authorId: me.id })
 
     return !!result.affected
+  }
+
+  @Mutation(() => Rating)
+  @UseMiddleware(isAuth)
+  async rateStory(
+    @Arg("id") id: string,
+    @Arg("score", () => Int) score: RatingScore,
+    @Ctx() { me }: Context
+  ): Promise<Rating> {
+
+    let rating = await Rating.findOne({
+      readerId: me.id,
+      storyId: id
+    }, { relations: ['reader', 'story'] })
+
+    if (!rating) {
+      rating = Rating.create({
+        readerId: me.id,
+        reader: me,
+        storyId: id,
+        story: await Story.findOne(id)
+      })
+    }
+
+    if (rating.score !== score) {
+      rating.score = score
+      await rating.save()
+    }
+
+    return rating
   }
 }

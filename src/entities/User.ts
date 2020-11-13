@@ -40,15 +40,19 @@ export class User extends BaseEntity {
   @OneToMany(() => Token, (token) => token.user)
   tokens: Token[]
 
+  @Field(() => [Story])
   @OneToMany(() => Story, (story) => story.author)
   stories: Story[]
 
+  @Field(() => [Rating])
   @OneToMany(() => Rating, (rating) => rating.reader)
   ratings: Rating[]
 
+  @Field(() => [Subscription])
   @OneToMany(() => Subscription, (subscription) => subscription.subscriber)
   subscriptions: Subscription[]
 
+  @Field(() => [Subscription])
   @OneToMany(() => Subscription, (subscription) => subscription.subscribedTo)
   subscribers: Subscription[]
 
