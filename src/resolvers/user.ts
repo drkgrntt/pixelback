@@ -5,11 +5,16 @@ import {
   Resolver,
   Arg,
   ObjectType,
-  Field
+  Field,
+  FieldResolver,
+  Root
 } from 'type-graphql'
 import bcrypt from 'bcrypt'
 import { User } from '../entities/User'
 import { Token } from '../entities/Token'
+import { Story } from '../entities/Story'
+import { Rating } from '../entities/Rating'
+import { Subscription } from '../entities/Subscription'
 import { Context, UserRole } from '../types'
 
 @ObjectType()
@@ -24,9 +29,29 @@ class UserResponse {
 @Resolver(User)
 export class UserResolver {
 
+  @FieldResolver(() => [Rating])
+  async ratings(@Root() user: User) {
+    return await Rating.find({ readerId: user.id })
+  }
+
+  @FieldResolver(() => [Story])
+  async stories(@Root() user: User) {
+    return await Story.find({ authorId: user.id })
+  }
+
+  @FieldResolver(() => [Subscription])
+  async subscriptions(@Root() user: User) {
+    return await Subscription.find({ subscriberId: user.id })
+  }
+
+  @FieldResolver(() => [Subscription])
+  async subscribers(@Root() user: User) {
+    return await Subscription.find({ subscribedToId: user.id })
+  }
+
   @Query(() => User, { nullable: true })
   me(@Ctx() { me }: Context) {
-    return me;
+    return me
   }
 
   verifyEmailSyntax(email: string): boolean {

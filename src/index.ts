@@ -9,6 +9,7 @@ import { ApolloServer } from "apollo-server-express"
 import { Token } from './entities/Token'
 import { UserResolver } from './resolvers/user'
 import { StoryResolver } from './resolvers/story'
+import { RatingResolver } from "./resolvers/rating"
 import { createUserLoader } from './utils/createUserLoader'
 import { createStoryLoader } from './utils/createStoryLoader'
 import { createChapterLoader } from './utils/createChapterLoader'
@@ -35,7 +36,11 @@ const main = async () => {
   const server = new ApolloServer({
     playground: true,
     schema: await buildSchema({
-      resolvers: [UserResolver, StoryResolver],
+      resolvers: [
+        UserResolver,
+        StoryResolver,
+        RatingResolver
+      ],
       validate: false
     }),
     context: async ({ req }) => {
