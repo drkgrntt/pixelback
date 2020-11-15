@@ -22,14 +22,8 @@ export class StoryResolver {
   }
 
   @FieldResolver(() => [Rating])
-  async ratings(
-    @Root() story: Story,
-    @Ctx() { ratingLoader }: Context
-  ) {
-    const ratings = await ratingLoader.loadMany([
-      { storyId: story.id },
-    ])
-    return ratings.filter((r) => r)
+  async ratings(@Root() story: Story) {
+    return await Rating.find({ storyId: story.id })
   }
 
   @Query(() => [Story])

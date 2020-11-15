@@ -5,10 +5,12 @@ import {
   Root,
   Mutation,
   Arg,
+  UseMiddleware,
 } from 'type-graphql'
 import { User } from '../entities/User'
 import { Subscription } from '../entities/Subscription'
 import { Context, SubLevel } from '../types'
+import { isAuth } from '../middleware/isAuth'
 
 @Resolver(Subscription)
 export class SubscriptionResolver {
@@ -29,11 +31,12 @@ export class SubscriptionResolver {
   }
 
   @Mutation(() => Subscription)
+  @UseMiddleware(isAuth)
   async subscribe(@Ctx() { me }: Context, @Arg('id') id: string) {
     const subscription = await Subscription.create({
       level: SubLevel.Free,
       subscribedToId: id,
-      subscriberId: me.id
+      subscriberId: me.id,
     }).save()
 
     return subscription
