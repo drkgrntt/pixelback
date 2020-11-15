@@ -18,7 +18,7 @@ export class SubscriptionResolver {
   async subscriber(
     @Root() subscription: Subscription,
     @Ctx() { userLoader }: Context
-  ) {
+  ): Promise<User> {
     return await userLoader.load(subscription.subscriberId)
   }
 
@@ -26,13 +26,16 @@ export class SubscriptionResolver {
   async subscribedTo(
     @Root() subscription: Subscription,
     @Ctx() { userLoader }: Context
-  ) {
+  ): Promise<User> {
     return await userLoader.load(subscription.subscribedToId)
   }
 
   @Mutation(() => Subscription)
   @UseMiddleware(isAuth)
-  async subscribe(@Ctx() { me }: Context, @Arg('id') id: string) {
+  async subscribe(
+    @Ctx() { me }: Context,
+    @Arg('id') id: string
+  ): Promise<Subscription> {
     const subscription = await Subscription.create({
       level: SubLevel.Free,
       subscribedToId: id,

@@ -21,24 +21,24 @@ export class RatingResolver {
   async story(
     @Root() rating: Rating,
     @Ctx() { storyLoader }: Context
-  ) {
-    return storyLoader.load(rating.storyId)
+  ): Promise<Story> {
+    return await storyLoader.load(rating.storyId)
   }
 
   @FieldResolver(() => Chapter)
   async chapter(
     @Root() rating: Rating,
     @Ctx() { chapterLoader }: Context
-  ) {
+  ): Promise<Chapter | null> {
     if (!rating.chapterId) return null
-    return chapterLoader.load(rating.chapterId)
+    return await chapterLoader.load(rating.chapterId)
   }
 
   @FieldResolver(() => User)
   async reader(
     @Root() rating: Rating,
     @Ctx() { userLoader }: Context
-  ) {
+  ): Promise<User> {
     return await userLoader.load(rating.readerId)
   }
 

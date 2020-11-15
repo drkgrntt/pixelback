@@ -29,27 +29,27 @@ class UserResponse {
 @Resolver(User)
 export class UserResolver {
   @FieldResolver(() => [Rating])
-  async ratings(@Root() user: User) {
+  async ratings(@Root() user: User): Promise<Rating[]> {
     return await Rating.find({ readerId: user.id })
   }
 
   @FieldResolver(() => [Story])
-  async stories(@Root() user: User) {
+  async stories(@Root() user: User): Promise<Story[]> {
     return await Story.find({ authorId: user.id })
   }
 
   @FieldResolver(() => [Subscription])
-  async subscriptions(@Root() user: User) {
+  async subscriptions(@Root() user: User): Promise<Subscription[]> {
     return await Subscription.find({ subscriberId: user.id })
   }
 
   @FieldResolver(() => [Subscription])
-  async subscribers(@Root() user: User) {
+  async subscribers(@Root() user: User): Promise<Subscription[]> {
     return await Subscription.find({ subscribedToId: user.id })
   }
 
   @Query(() => User, { nullable: true })
-  me(@Ctx() { me }: Context) {
+  me(@Ctx() { me }: Context): User {
     return me
   }
 
@@ -113,7 +113,7 @@ export class UserResolver {
   }
 
   @Mutation(() => Boolean)
-  async logout(@Ctx() { token }: Context) {
+  async logout(@Ctx() { token }: Context): Promise<boolean> {
     const value = Token.unsign(token)
     const result = await Token.delete({ value })
     return !!result.affected

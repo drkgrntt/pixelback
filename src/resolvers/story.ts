@@ -17,12 +17,15 @@ import { isAuth } from '../middleware/isAuth'
 @Resolver(Story)
 export class StoryResolver {
   @FieldResolver(() => User)
-  async author(@Root() story: Story, @Ctx() { userLoader }: Context) {
+  async author(
+    @Root() story: Story,
+    @Ctx() { userLoader }: Context
+  ): Promise<User> {
     return await userLoader.load(story.authorId)
   }
 
   @FieldResolver(() => [Rating])
-  async ratings(@Root() story: Story) {
+  async ratings(@Root() story: Story): Promise<Rating[]> {
     return await Rating.find({ storyId: story.id })
   }
 
