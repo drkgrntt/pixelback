@@ -6,13 +6,12 @@ import {
   UseMiddleware,
   Query,
   FieldResolver,
-  Root,
-  Int,
+  Root
 } from 'type-graphql'
 import { Story } from '../entities/Story'
 import { User } from '../entities/User'
 import { Rating } from '../entities/Rating'
-import { Context, PublishStatus, RatingScore } from '../types'
+import { Context, PublishStatus } from '../types'
 import { isAuth } from '../middleware/isAuth'
 
 @Resolver(Story)
