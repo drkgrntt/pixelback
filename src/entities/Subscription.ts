@@ -5,7 +5,7 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   ManyToOne,
-  BaseEntity
+  BaseEntity,
 } from 'typeorm'
 import { ObjectType, Field, Int } from 'type-graphql'
 import { SubLevel } from '../types'
@@ -14,9 +14,8 @@ import { User } from './User'
 @ObjectType()
 @Entity()
 export class Subscription extends BaseEntity {
-
   @Field()
-  @PrimaryGeneratedColumn("uuid")
+  @PrimaryGeneratedColumn('uuid')
   id!: string
 
   @Column()
@@ -24,7 +23,7 @@ export class Subscription extends BaseEntity {
 
   @Field(() => User)
   @ManyToOne(() => User, (user) => user.subscriptions, {
-    onDelete: "CASCADE"
+    onDelete: 'CASCADE',
   })
   subscriber: User
 
@@ -33,11 +32,11 @@ export class Subscription extends BaseEntity {
 
   @Field(() => User)
   @ManyToOne(() => User, (user) => user.subscribers, {
-    onDelete: "CASCADE"
+    onDelete: 'CASCADE',
   })
   subscribedTo: User
 
-  @Column("int")
+  @Column('int')
   @Field(() => Int)
   level: SubLevel
 

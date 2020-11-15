@@ -6,7 +6,7 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   ManyToOne,
-  OneToMany
+  OneToMany,
 } from 'typeorm'
 import { ObjectType, Field, Int } from 'type-graphql'
 import { User } from './User'
@@ -17,9 +17,8 @@ import { Rating } from './Rating'
 @ObjectType()
 @Entity()
 export class Story extends BaseEntity {
-
   @Field()
-  @PrimaryGeneratedColumn("uuid")
+  @PrimaryGeneratedColumn('uuid')
   id!: string
 
   @Column()
@@ -27,7 +26,7 @@ export class Story extends BaseEntity {
 
   @Field(() => User)
   @ManyToOne(() => User, (user) => user.stories, {
-    onDelete: "CASCADE"
+    onDelete: 'CASCADE',
   })
   author: User
 
@@ -39,11 +38,11 @@ export class Story extends BaseEntity {
   @Field()
   title: string
 
-  @Column("text")
+  @Column('text')
   @Field()
   body: string
 
-  @Column("text")
+  @Column('text')
   @Field()
   summary: string
 
@@ -51,7 +50,7 @@ export class Story extends BaseEntity {
   @Field()
   enableCommenting: boolean
 
-  @Column("int")
+  @Column('int')
   @Field(() => Int)
   status: PublishStatus
 

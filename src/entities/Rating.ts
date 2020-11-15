@@ -6,7 +6,7 @@ import {
   UpdateDateColumn,
   ManyToOne,
   BaseEntity,
-  PrimaryColumn
+  PrimaryColumn,
 } from 'typeorm'
 import { ObjectType, Field, Int } from 'type-graphql'
 import { RatingScore } from '../types'
@@ -17,9 +17,8 @@ import { Chapter } from './Chapter'
 @ObjectType()
 @Entity()
 export class Rating extends BaseEntity {
-
   @Field()
-  @PrimaryGeneratedColumn("uuid")
+  @PrimaryGeneratedColumn('uuid')
   id!: string
 
   @PrimaryColumn()
@@ -34,7 +33,7 @@ export class Rating extends BaseEntity {
 
   @Field(() => Story)
   @ManyToOne(() => Story, (story) => story.ratings, {
-    onDelete: "CASCADE"
+    onDelete: 'CASCADE',
   })
   story: Story
 
@@ -43,11 +42,11 @@ export class Rating extends BaseEntity {
 
   @Field(() => Chapter, { nullable: true })
   @ManyToOne(() => Chapter, (chapter) => chapter.ratings, {
-    onDelete: "CASCADE"
+    onDelete: 'CASCADE',
   })
   chapter: Chapter
 
-  @Column("int")
+  @Column('int')
   @Field(() => Int)
   score: RatingScore
 

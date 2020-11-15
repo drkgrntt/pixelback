@@ -5,7 +5,7 @@ import {
   BaseEntity,
   CreateDateColumn,
   UpdateDateColumn,
-  OneToMany
+  OneToMany,
 } from 'typeorm'
 import { ObjectType, Field, Int } from 'type-graphql'
 import { UserRole } from '../types'
@@ -17,9 +17,8 @@ import { Subscription } from './Subscription'
 @ObjectType()
 @Entity()
 export class User extends BaseEntity {
-
   @Field()
-  @PrimaryGeneratedColumn("uuid")
+  @PrimaryGeneratedColumn('uuid')
   id!: string
 
   @Field()
@@ -30,7 +29,7 @@ export class User extends BaseEntity {
   password: string
 
   @Field(() => Int)
-  @Column("int")
+  @Column('int')
   role: UserRole
 
   @Field()
@@ -49,11 +48,17 @@ export class User extends BaseEntity {
   ratings: Rating[]
 
   @Field(() => [Subscription])
-  @OneToMany(() => Subscription, (subscription) => subscription.subscriber)
+  @OneToMany(
+    () => Subscription,
+    (subscription) => subscription.subscriber
+  )
   subscriptions: Subscription[]
 
   @Field(() => [Subscription])
-  @OneToMany(() => Subscription, (subscription) => subscription.subscribedTo)
+  @OneToMany(
+    () => Subscription,
+    (subscription) => subscription.subscribedTo
+  )
   subscribers: Subscription[]
 
   @Field(() => String)

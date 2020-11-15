@@ -6,7 +6,7 @@ import {
   UseMiddleware,
   Arg,
   Mutation,
-  Int
+  Int,
 } from 'type-graphql'
 import { User } from '../entities/User'
 import { Story } from '../entities/Story'
@@ -17,34 +17,41 @@ import { isAuth } from '../middleware/isAuth'
 
 @Resolver(Rating)
 export class RatingResolver {
-
   @FieldResolver(() => Story)
-  async story(@Root() rating: Rating, @Ctx() { storyLoader }: Context) {
+  async story(
+    @Root() rating: Rating,
+    @Ctx() { storyLoader }: Context
+  ) {
     return storyLoader.load(rating.storyId)
   }
 
   @FieldResolver(() => Chapter)
-  async chapter(@Root() rating: Rating, @Ctx() { chapterLoader }: Context) {
+  async chapter(
+    @Root() rating: Rating,
+    @Ctx() { chapterLoader }: Context
+  ) {
     if (!rating.chapterId) return null
     return chapterLoader.load(rating.chapterId)
   }
 
   @FieldResolver(() => User)
-  async reader(@Root() rating: Rating, @Ctx() { userLoader }: Context) {
+  async reader(
+    @Root() rating: Rating,
+    @Ctx() { userLoader }: Context
+  ) {
     return await userLoader.load(rating.readerId)
   }
 
   @Mutation(() => Rating)
   @UseMiddleware(isAuth)
   async rateStory(
-    @Arg("id") id: string,
-    @Arg("score", () => Int) score: RatingScore,
+    @Arg('id') id: string,
+    @Arg('score', () => Int) score: RatingScore,
     @Ctx() { me }: Context
   ): Promise<Rating> {
-
     let rating = await Rating.findOne({
       readerId: me.id,
-      storyId: id
+      storyId: id,
     })
 
     if (!rating) {
@@ -52,7 +59,7 @@ export class RatingResolver {
         readerId: me.id,
         reader: me,
         storyId: id,
-        story: await Story.findOne(id)
+        story: await Story.findOne(id),
       })
     }
 

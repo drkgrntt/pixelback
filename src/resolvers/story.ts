@@ -6,7 +6,7 @@ import {
   UseMiddleware,
   Query,
   FieldResolver,
-  Root
+  Root,
 } from 'type-graphql'
 import { Story } from '../entities/Story'
 import { User } from '../entities/User'
@@ -16,16 +16,20 @@ import { isAuth } from '../middleware/isAuth'
 
 @Resolver(Story)
 export class StoryResolver {
-
   @FieldResolver(() => User)
   async author(@Root() story: Story, @Ctx() { userLoader }: Context) {
     return await userLoader.load(story.authorId)
   }
 
   @FieldResolver(() => [Rating])
-  async ratings(@Root() story: Story, @Ctx() { ratingLoader }: Context) {
-    const ratings = await ratingLoader.loadMany([{ storyId: story.id }])
-    return ratings.filter(r => r)
+  async ratings(
+    @Root() story: Story,
+    @Ctx() { ratingLoader }: Context
+  ) {
+    const ratings = await ratingLoader.loadMany([
+      { storyId: story.id },
+    ])
+    return ratings.filter((r) => r)
   }
 
   @Query(() => [Story])
@@ -34,9 +38,7 @@ export class StoryResolver {
   }
 
   @Query(() => Story, { nullable: true })
-  async story(
-    @Arg("id") id: string
-  ): Promise<Story | undefined> {
+  async story(@Arg('id') id: string): Promise<Story | undefined> {
     const story = Story.findOne(id)
     return story
   }
@@ -57,7 +59,7 @@ export class StoryResolver {
       summary,
       status,
       enableCommenting,
-      authorId: me.id
+      authorId: me.id,
     }).save()
   }
 
@@ -72,12 +74,19 @@ export class StoryResolver {
     @Arg('summary') summary: string,
     @Ctx() { me }: Context
   ): Promise<Story> {
-
-    const result = await Story.update({
-      id, authorId: me.id
-    }, {
-      title, body, status, enableCommenting, summary
-    })
+    const result = await Story.update(
+      {
+        id,
+        authorId: me.id,
+      },
+      {
+        title,
+        body,
+        status,
+        enableCommenting,
+        summary,
+      }
+    )
 
     if (!result.affected) {
       throw new Error('Something went wrong')
@@ -94,10 +103,9 @@ export class StoryResolver {
   @Mutation(() => Boolean)
   @UseMiddleware(isAuth)
   async deleteStory(
-    @Arg("id") id: string,
+    @Arg('id') id: string,
     @Ctx() { me }: Context
   ): Promise<Boolean> {
-
     const result = await Story.delete({ id, authorId: me.id })
 
     return !!result.affected

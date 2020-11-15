@@ -8,7 +8,7 @@ import {
   ManyToOne,
   BeforeInsert,
   AfterLoad,
-  AfterInsert
+  AfterInsert,
 } from 'typeorm'
 import { ObjectType, Field } from 'type-graphql'
 import jwt from 'jsonwebtoken'
@@ -17,8 +17,7 @@ import { User } from './User'
 @ObjectType()
 @Entity()
 export class Token extends BaseEntity {
-
-  @PrimaryGeneratedColumn("uuid")
+  @PrimaryGeneratedColumn('uuid')
   id!: string
 
   @Field()
@@ -46,10 +45,10 @@ export class Token extends BaseEntity {
   issued: Date
 
   @Column()
-  userId: string;
+  userId: string
 
   @ManyToOne(() => User, (user) => user.tokens, {
-    onDelete: "CASCADE"
+    onDelete: 'CASCADE',
   })
   user: User
 
@@ -74,9 +73,14 @@ export class Token extends BaseEntity {
     return unsigned
   }
 
-  static async verifyAndFindUser(value: string): Promise<User | null> {
+  static async verifyAndFindUser(
+    value: string
+  ): Promise<User | null> {
     const unsigned = Token.unsign(value)
-    const token = await Token.findOne({ value: unsigned }, { relations: ['user'] })
+    const token = await Token.findOne(
+      { value: unsigned },
+      { relations: ['user'] }
+    )
     if (!token) return null
     try {
       jwt.verify(value, process.env.JWT_SECRET)
@@ -94,7 +98,7 @@ export class Token extends BaseEntity {
       {
         uid: uid,
         iat: Math.floor(now.getTime() / 1000),
-        exp: Math.floor(expiry.getTime() / 1000)
+        exp: Math.floor(expiry.getTime() / 1000),
       },
       process.env.JWT_SECRET
     )
@@ -103,7 +107,7 @@ export class Token extends BaseEntity {
       value,
       expiry,
       issued: now,
-      userId: uid
+      userId: uid,
     }).save()
 
     return token

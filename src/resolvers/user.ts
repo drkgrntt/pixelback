@@ -7,7 +7,7 @@ import {
   ObjectType,
   Field,
   FieldResolver,
-  Root
+  Root,
 } from 'type-graphql'
 import bcrypt from 'bcrypt'
 import { User } from '../entities/User'
@@ -28,7 +28,6 @@ class UserResponse {
 
 @Resolver(User)
 export class UserResolver {
-
   @FieldResolver(() => [Rating])
   async ratings(@Root() user: User) {
     return await Rating.find({ readerId: user.id })
@@ -66,16 +65,18 @@ export class UserResolver {
 
   @Mutation(() => UserResponse)
   async login(
-    @Arg("password") password: string,
-    @Arg("email") email: string
+    @Arg('password') password: string,
+    @Arg('email') email: string
   ): Promise<UserResponse> {
-
     const user = await User.findOne({ email })
     if (!user) {
       throw new Error('Invalid email or password')
     }
 
-    const correctPassword = await bcrypt.compare(password, user.password)
+    const correctPassword = await bcrypt.compare(
+      password,
+      user.password
+    )
     if (!correctPassword) {
       throw new Error('Invalid email or password')
     }
@@ -84,22 +85,23 @@ export class UserResolver {
 
     return {
       user,
-      token
+      token,
     }
   }
 
   @Mutation(() => UserResponse)
   async register(
-    @Arg("password") password: string,
-    @Arg("email") email: string
+    @Arg('password') password: string,
+    @Arg('email') email: string
   ): Promise<UserResponse> {
-
     if (!this.verifyEmailSyntax(email)) {
       throw new Error('Invalid email')
     }
 
     if (!this.verifyPasswordSyntax(password)) {
-      throw new Error('Invalid password. Make sure it is at least 8 characters and includes at least 1 letter and 1 number.')
+      throw new Error(
+        'Invalid password. Make sure it is at least 8 characters and includes at least 1 letter and 1 number.'
+      )
     }
 
     // Create the user
@@ -108,7 +110,7 @@ export class UserResolver {
       email: email,
       password: passwordHash,
       role: UserRole.User,
-      displayName: email.split('@')[0] // TODO: improve this
+      displayName: email.split('@')[0], // TODO: improve this
     }).save()
 
     // Generate a token
@@ -116,14 +118,12 @@ export class UserResolver {
 
     return {
       user,
-      token
+      token,
     }
   }
 
   @Mutation(() => Boolean)
-  async logout(
-    @Ctx() { token }: Context
-  ) {
+  async logout(@Ctx() { token }: Context) {
     const value = Token.unsign(token)
     const result = await Token.delete({ value })
     return !!result.affected

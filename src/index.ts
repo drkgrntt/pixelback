@@ -1,16 +1,16 @@
-import "reflect-metadata"
-import "dotenv-safe/config"
-import path from "path"
-import express from "express"
-import cors from "cors"
-import { createConnection } from "typeorm"
-import { buildSchema } from "type-graphql"
-import { ApolloServer } from "apollo-server-express"
+import 'reflect-metadata'
+import 'dotenv-safe/config'
+import path from 'path'
+import express from 'express'
+import cors from 'cors'
+import { createConnection } from 'typeorm'
+import { buildSchema } from 'type-graphql'
+import { ApolloServer } from 'apollo-server-express'
 import { Token } from './entities/Token'
 import { UserResolver } from './resolvers/user'
 import { StoryResolver } from './resolvers/story'
-import { RatingResolver } from "./resolvers/rating"
-import { SubscriptionResolver } from "./resolvers/subscription"
+import { RatingResolver } from './resolvers/rating'
+import { SubscriptionResolver } from './resolvers/subscription'
 import { createUserLoader } from './utils/createUserLoader'
 import { createStoryLoader } from './utils/createStoryLoader'
 import { createRatingLoader } from './utils/createRatingLoader'
@@ -20,15 +20,13 @@ import { __prod__ } from './constants'
 
 const main = async () => {
   await createConnection({
-    type: "postgres",
+    type: 'postgres',
     url: process.env.DATABASE_URL,
     synchronize: true,
     logging: !__prod__,
-    entities: [
-      path.join(__dirname, "entities", "*.js")
-    ],
+    entities: [path.join(__dirname, 'entities', '*.js')],
     migrations: [],
-    subscribers: []
+    subscribers: [],
   })
 
   const app = express()
@@ -41,13 +39,12 @@ const main = async () => {
         UserResolver,
         StoryResolver,
         RatingResolver,
-        SubscriptionResolver
+        SubscriptionResolver,
       ],
-      validate: false
+      validate: false,
     }),
     context: async ({ req }) => {
-
-      if (req.body.operationName === "IntrospectionQuery") {
+      if (req.body.operationName === 'IntrospectionQuery') {
         return {}
       }
 
@@ -57,7 +54,7 @@ const main = async () => {
       if (typeof token === 'string') {
         me = await Token.verifyAndFindUser(token)
       }
-  
+
       return {
         me,
         token,
@@ -65,9 +62,9 @@ const main = async () => {
         storyLoader: createStoryLoader(),
         chapterLoader: createChapterLoader(),
         ratingLoader: createRatingLoader(),
-        subscriptionLoader: createSubscriptionLoader()
+        subscriptionLoader: createSubscriptionLoader(),
       }
-    }
+    },
   })
 
   server.applyMiddleware({ app })
@@ -77,7 +74,7 @@ const main = async () => {
   })
 }
 
-try { 
+try {
   main()
 } catch (error) {
   console.error(error)
