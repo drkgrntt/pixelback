@@ -53,16 +53,6 @@ export class UserResolver {
     return me
   }
 
-  verifyEmailSyntax(email: string): boolean {
-    const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-    return regex.test(String(email).toLowerCase())
-  }
-
-  verifyPasswordSyntax(password: string): boolean {
-    const regex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/
-    return regex.test(String(password))
-  }
-
   @Mutation(() => UserResponse)
   async login(
     @Arg('password') password: string,
@@ -94,11 +84,11 @@ export class UserResolver {
     @Arg('password') password: string,
     @Arg('email') email: string
   ): Promise<UserResponse> {
-    if (!this.verifyEmailSyntax(email)) {
+    if (!User.verifyEmailSyntax(email)) {
       throw new Error('Invalid email')
     }
 
-    if (!this.verifyPasswordSyntax(password)) {
+    if (!User.verifyPasswordSyntax(password)) {
       throw new Error(
         'Invalid password. Make sure it is at least 8 characters and includes at least 1 letter and 1 number.'
       )
