@@ -103,34 +103,4 @@ export class StoryResolver {
 
     return !!result.affected
   }
-
-  @Mutation(() => Rating)
-  @UseMiddleware(isAuth)
-  async rateStory(
-    @Arg("id") id: string,
-    @Arg("score", () => Int) score: RatingScore,
-    @Ctx() { me }: Context
-  ): Promise<Rating> {
-
-    let rating = await Rating.findOne({
-      readerId: me.id,
-      storyId: id
-    }, { relations: ['reader', 'story'] })
-
-    if (!rating) {
-      rating = Rating.create({
-        readerId: me.id,
-        reader: me,
-        storyId: id,
-        story: await Story.findOne(id)
-      })
-    }
-
-    if (rating.score !== score) {
-      rating.score = score
-      await rating.save()
-    }
-
-    return rating
-  }
 }
