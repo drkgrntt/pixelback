@@ -1,11 +1,6 @@
 import {
   Ctx,
-  // Query,
-  // Mutation,
   Resolver,
-  // Arg,
-  // ObjectType,
-  // Field,
   FieldResolver,
   Root
 } from 'type-graphql'

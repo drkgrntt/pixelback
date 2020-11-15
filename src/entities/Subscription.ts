@@ -22,6 +22,7 @@ export class Subscription extends BaseEntity {
   @Column()
   subscriberId: string
 
+  @Field(() => User)
   @ManyToOne(() => User, (user) => user.subscriptions, {
     onDelete: "CASCADE"
   })
@@ -30,6 +31,7 @@ export class Subscription extends BaseEntity {
   @Column()
   subscribedToId: string
 
+  @Field(() => User)
   @ManyToOne(() => User, (user) => user.subscribers, {
     onDelete: "CASCADE"
   })
