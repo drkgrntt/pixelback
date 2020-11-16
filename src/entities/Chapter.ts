@@ -10,6 +10,7 @@ import {
 } from 'typeorm'
 import { ObjectType, Field, Int, Float } from 'type-graphql'
 import { Story } from './Story'
+import { Comment } from './Comment'
 import { PublishStatus } from '../types'
 import { Rating } from './Rating'
 
@@ -28,6 +29,10 @@ export class Chapter extends BaseEntity {
     onDelete: 'CASCADE',
   })
   story: Story
+
+  @Field(() => [Comment])
+  @OneToMany(() => Comment, (comment) => comment.chapter)
+  comments: Comment[]
 
   @Column('int')
   @Field(() => Int)

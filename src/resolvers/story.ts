@@ -11,6 +11,7 @@ import {
 } from 'type-graphql'
 import { Story } from '../entities/Story'
 import { User } from '../entities/User'
+import { Comment } from '../entities/Comment'
 import { Rating } from '../entities/Rating'
 import { Context, PublishStatus } from '../types'
 import { isAuth } from '../middleware/isAuth'
@@ -44,6 +45,11 @@ export class StoryResolver {
   @FieldResolver(() => [Chapter])
   async chapters(@Root() story: Story): Promise<Chapter[]> {
     return await Chapter.find({ storyId: story.id })
+  }
+
+  @FieldResolver(() => [Comment])
+  async comments(@Root() story: Story): Promise<Comment[]> {
+    return await Comment.find({ storyId: story.id })
   }
 
   @Query(() => [Story])

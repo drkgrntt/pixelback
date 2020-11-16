@@ -10,6 +10,7 @@ import {
   Float,
 } from 'type-graphql'
 import { Story } from '../entities/Story'
+import { Comment } from '../entities/Comment'
 import { Chapter } from '../entities/Chapter'
 import { Rating } from '../entities/Rating'
 import { Context, PublishStatus } from '../types'
@@ -28,6 +29,11 @@ export class ChapterResolver {
   @FieldResolver(() => [Rating])
   async ratings(@Root() chapter: Chapter): Promise<Rating[]> {
     return await Rating.find({ chapterId: chapter.id })
+  }
+
+  @FieldResolver(() => [Comment])
+  async comments(@Root() chapter: Chapter): Promise<Comment[]> {
+    return await Comment.find({ chapterId: chapter.id })
   }
 
   @FieldResolver(() => Float)
