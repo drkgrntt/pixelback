@@ -7,6 +7,7 @@ import {
   Query,
   FieldResolver,
   Root,
+  Float,
 } from 'type-graphql'
 import { Story } from '../entities/Story'
 import { Chapter } from '../entities/Chapter'
@@ -27,6 +28,16 @@ export class ChapterResolver {
   @FieldResolver(() => [Rating])
   async ratings(@Root() chapter: Chapter): Promise<Rating[]> {
     return await Rating.find({ chapterId: chapter.id })
+  }
+
+  @FieldResolver(() => Float)
+  async score(@Root() chapter: Chapter): Promise<number> {
+    const allRatings = await Rating.find({ chapterId: chapter.id })
+    const total: number = allRatings.reduce(
+      (score, rating) => score + rating.score,
+      0
+    )
+    return total / allRatings.length
   }
 
   @Query(() => [Chapter])

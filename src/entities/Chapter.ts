@@ -8,7 +8,7 @@ import {
   OneToMany,
   BaseEntity,
 } from 'typeorm'
-import { ObjectType, Field, Int } from 'type-graphql'
+import { ObjectType, Field, Int, Float } from 'type-graphql'
 import { Story } from './Story'
 import { PublishStatus } from '../types'
 import { Rating } from './Rating'
@@ -56,6 +56,9 @@ export class Chapter extends BaseEntity {
   @Field(() => [Rating])
   @OneToMany(() => Rating, (rating) => rating.story)
   ratings: Rating[]
+
+  @Field(() => Float)
+  score: number
 
   @Field(() => String)
   @CreateDateColumn()
