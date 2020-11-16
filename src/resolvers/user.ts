@@ -113,10 +113,46 @@ export class UserResolver {
   }
 
   @Mutation(() => Boolean)
+  async resetPassword(
+    @Ctx() { me }: Context,
+    @Arg('oldPassword') oldPassword: string,
+    @Arg('newPassword') newPassword: string
+  ): Promise<boolean> {
+    const correctPassword = await bcrypt.compare(
+      oldPassword,
+      me.password
+    )
+    if (!correctPassword) {
+      throw new Error('Invalid old password')
+    }
+
+    const passwordHash = await bcrypt.hash(newPassword, 13)
+    me.password = passwordHash
+    await me.save()
+
+    return true
+  }
+
+  @Mutation(() => Boolean)
   async logout(@Ctx() { token }: Context): Promise<boolean> {
     const value = Token.unsign(token)
     const result = await Token.delete({ value })
     return !!result.affected
+  }
+
+  @Mutation(() => Token)
+  async logoutEverywhere(@Ctx() { me }: Context): Promise<Token> {
+    await Token.delete({ userId: me.id })
+    const token = await Token.generate(me.id)
+    return token
+  }
+
+  @Mutation(() => Token)
+  async exchangeToken(@Ctx() { me, token }: Context): Promise<Token> {
+    const value = Token.unsign(token)
+    await Token.delete({ value })
+    const newToken = await Token.generate(me.id)
+    return newToken
   }
 
   @Mutation(() => Boolean)
