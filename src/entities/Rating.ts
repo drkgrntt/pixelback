@@ -27,7 +27,9 @@ export class Rating extends BaseEntity {
   readerId: string
 
   @Field(() => User)
-  @ManyToOne(() => User, (user) => user.ratings)
+  @ManyToOne(() => User, (user) => user.ratings, {
+    onDelete: 'CASCADE',
+  })
   reader: User
 
   @PrimaryColumn()
