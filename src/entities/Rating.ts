@@ -7,6 +7,7 @@ import {
   ManyToOne,
   BaseEntity,
   PrimaryColumn,
+  Unique,
 } from 'typeorm'
 import { ObjectType, Field, Int } from 'type-graphql'
 import { RatingScore } from '../types'
@@ -16,6 +17,7 @@ import { Chapter } from './Chapter'
 
 @ObjectType()
 @Entity()
+@Unique(['readerId', 'storyId', 'chapterId'])
 export class Rating extends BaseEntity {
   @Field()
   @PrimaryGeneratedColumn('uuid')
