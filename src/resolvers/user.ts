@@ -9,6 +9,7 @@ import {
   FieldResolver,
   Root,
 } from 'type-graphql'
+import { ILike } from 'typeorm'
 import bcrypt from 'bcrypt'
 import { User } from '../entities/User'
 import { Token } from '../entities/Token'
@@ -51,6 +52,18 @@ export class UserResolver {
   @Query(() => User, { nullable: true })
   me(@Ctx() { me }: Context): User {
     return me
+  }
+
+  @Query(() => [User])
+  async searchUsers(
+    // @Arg('filters') filters: any,
+    @Arg('search') search: string
+  ): Promise<User[]> {
+    const users = await User.find({
+      where: [{ displayName: ILike(`%${search}%`) }],
+    })
+
+    return users
   }
 
   @Mutation(() => UserResponse)
