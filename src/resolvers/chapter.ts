@@ -105,7 +105,10 @@ export class ChapterResolver {
     @Ctx() { me }: Context
   ): Promise<Chapter> {
     // Make sure the user is the author of the story
-    let chapter = await Chapter.findOne({ id }, { relations: ['story'] })
+    let chapter = await Chapter.findOne(
+      { id },
+      { relations: ['story'] }
+    )
     if (!chapter) {
       throw new Error('This chapter does not exist.')
     }
@@ -132,9 +135,11 @@ export class ChapterResolver {
     @Arg('id') id: string,
     @Ctx() { me }: Context
   ): Promise<Boolean> {
-
     // Make sure the user is the author of the story
-    let chapter = await Chapter.findOne({ id }, { relations: ['story'] })
+    let chapter = await Chapter.findOne(
+      { id },
+      { relations: ['story'] }
+    )
     if (!chapter) {
       return false
     }

@@ -11,6 +11,7 @@ import { UserResolver } from './resolvers/user'
 import { StoryResolver } from './resolvers/story'
 import { RatingResolver } from './resolvers/rating'
 import { ChapterResolver } from './resolvers/chapter'
+import { CommentResolver } from './resolvers/comment'
 import { SubscriptionResolver } from './resolvers/subscription'
 import { createUserLoader } from './utils/createUserLoader'
 import { createStoryLoader } from './utils/createStoryLoader'
@@ -42,6 +43,7 @@ const main = async () => {
         ChapterResolver,
         RatingResolver,
         SubscriptionResolver,
+        CommentResolver,
       ],
       validate: false,
     }),

@@ -6,7 +6,7 @@ import {
   UpdateDateColumn,
   ManyToOne,
   BaseEntity,
-  Unique
+  Unique,
 } from 'typeorm'
 import { ObjectType, Field, Int } from 'type-graphql'
 import { SubLevel } from '../types'
