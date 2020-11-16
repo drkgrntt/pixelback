@@ -8,7 +8,7 @@ import {
   ManyToOne,
   OneToMany,
 } from 'typeorm'
-import { ObjectType, Field, Int } from 'type-graphql'
+import { ObjectType, Field, Int, Float } from 'type-graphql'
 import { User } from './User'
 import { Chapter } from './Chapter'
 import { PublishStatus, RatingScore } from '../types'
@@ -60,6 +60,9 @@ export class Story extends BaseEntity {
 
   @Field(() => Int, { nullable: true })
   rateStatus: RatingScore | null
+
+  @Field(() => Float)
+  score: number
 
   @Field(() => String)
   @CreateDateColumn()
