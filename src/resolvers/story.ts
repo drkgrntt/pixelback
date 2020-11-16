@@ -9,6 +9,7 @@ import {
   Root,
   Float,
 } from 'type-graphql'
+import { ILike } from 'typeorm'
 import { Story } from '../entities/Story'
 import { User } from '../entities/User'
 import { Comment } from '../entities/Comment'
@@ -61,6 +62,18 @@ export class StoryResolver {
   async story(@Arg('id') id: string): Promise<Story | undefined> {
     const story = Story.findOne(id)
     return story
+  }
+
+  @Query(() => [Story])
+  async searchStories(
+    // @Arg('filters') filters: any,
+    @Arg('search') search: string
+  ): Promise<Story[]> {
+    const stories = await Story.find({
+      where: [{ title: ILike(`%${search}%`) }],
+    })
+
+    return stories
   }
 
   @Mutation(() => Story)
