@@ -8,6 +8,7 @@ import {
   Mutation,
   Int,
 } from 'type-graphql'
+import { IsNull } from 'typeorm'
 import { User } from '../entities/User'
 import { Story } from '../entities/Story'
 import { Chapter } from '../entities/Chapter'
@@ -44,22 +45,22 @@ export class RatingResolver {
 
   @Mutation(() => Rating)
   @UseMiddleware(isAuth)
-  async rateStory(
-    @Arg('id') id: string,
+  async rate(
+    @Arg('storyId') storyId: string,
+    @Arg('chapterId', { nullable: true }) chapterId: string,
     @Arg('score', () => Int) score: RatingScore,
     @Ctx() { me }: Context
   ): Promise<Rating> {
-    let rating = await Rating.findOne({
-      readerId: me.id,
-      storyId: id,
-    })
+    const query: any = { readerId: me.id, storyId, chapterId }
+    if (!chapterId) query.chapterId = IsNull()
+    let rating = await Rating.findOne(query)
 
     if (!rating) {
       rating = Rating.create({
         readerId: me.id,
         reader: me,
-        storyId: id,
-        story: await Story.findOne(id),
+        storyId,
+        chapterId,
       })
     }
 
