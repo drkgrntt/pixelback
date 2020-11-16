@@ -1,0 +1,8 @@
+- `npm i`
+- `touch .env`
+    - DATABASE_URL - The PG Database URL
+    - PORT - Your favorite port to run on
+    - JWT_SECRET - A super secret string for JWTs
+- Make sure PG is running and you've created a DB matching that in your DATABASE_URL
+- `npm run watch`
+- In a new terminal tab `npm run dev`
