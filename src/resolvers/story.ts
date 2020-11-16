@@ -13,6 +13,7 @@ import { User } from '../entities/User'
 import { Rating } from '../entities/Rating'
 import { Context, PublishStatus } from '../types'
 import { isAuth } from '../middleware/isAuth'
+import { Chapter } from '../entities/Chapter'
 
 @Resolver(Story)
 export class StoryResolver {
@@ -27,6 +28,11 @@ export class StoryResolver {
   @FieldResolver(() => [Rating])
   async ratings(@Root() story: Story): Promise<Rating[]> {
     return await Rating.find({ storyId: story.id })
+  }
+
+  @FieldResolver(() => [Chapter])
+  async chapters(@Root() story: Story): Promise<Chapter[]> {
+    return await Chapter.find({ storyId: story.id })
   }
 
   @Query(() => [Story])

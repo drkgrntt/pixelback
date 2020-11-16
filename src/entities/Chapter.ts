@@ -23,6 +23,7 @@ export class Chapter extends BaseEntity {
   @Column()
   storyId: string
 
+  @Field(() => Story)
   @ManyToOne(() => Story, (story) => story.chapters, {
     onDelete: 'CASCADE',
   })
@@ -52,6 +53,7 @@ export class Chapter extends BaseEntity {
   @Field(() => Int)
   status: PublishStatus
 
+  @Field(() => [Rating])
   @OneToMany(() => Rating, (rating) => rating.story)
   ratings: Rating[]
 
