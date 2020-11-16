@@ -8,6 +8,8 @@ import {
   FieldResolver,
   Root,
   Float,
+  ObjectType,
+  Field,
 } from 'type-graphql'
 import { ILike } from 'typeorm'
 import { Story } from '../entities/Story'
@@ -17,6 +19,24 @@ import { Rating } from '../entities/Rating'
 import { Context, PublishStatus } from '../types'
 import { isAuth } from '../middleware/isAuth'
 import { Chapter } from '../entities/Chapter'
+
+@ObjectType()
+class PageData {
+  @Field()
+  hasMore: boolean
+
+  @Field({ nullable: true })
+  cursor?: string
+}
+
+@ObjectType()
+class PaginatedResponse {
+  @Field()
+  pageData: PageData
+
+  @Field(() => [Story])
+  stories: Story[]
+}
 
 @Resolver(Story)
 export class StoryResolver {
@@ -53,9 +73,19 @@ export class StoryResolver {
     return await Comment.find({ storyId: story.id })
   }
 
-  @Query(() => [Story])
-  async stories(): Promise<Story[]> {
-    return await Story.find()
+  @Query(() => PaginatedResponse)
+  async stories(
+    @Arg('cursor', { nullable: true }) cursor: string
+  ): Promise<PaginatedResponse> {
+    console.log(cursor)
+    const stories = await Story.find()
+    return {
+      pageData: {
+        hasMore: false,
+        cursor: undefined,
+      },
+      stories,
+    }
   }
 
   @Query(() => Story, { nullable: true })
@@ -64,16 +94,24 @@ export class StoryResolver {
     return story
   }
 
-  @Query(() => [Story])
+  @Query(() => PaginatedResponse)
   async searchStories(
+    @Arg('cursor', { nullable: true }) cursor: string,
     // @Arg('filters') filters: any,
     @Arg('search') search: string
-  ): Promise<Story[]> {
+  ): Promise<PaginatedResponse> {
+    console.log(cursor)
     const stories = await Story.find({
       where: [{ title: ILike(`%${search}%`) }],
     })
 
-    return stories
+    return {
+      pageData: {
+        hasMore: false,
+        cursor: undefined,
+      },
+      stories,
+    }
   }
 
   @Mutation(() => Story)
