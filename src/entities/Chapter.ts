@@ -7,6 +7,8 @@ import {
   ManyToOne,
   OneToMany,
   BaseEntity,
+  BeforeInsert,
+  BeforeUpdate,
 } from 'typeorm'
 import { ObjectType, Field, Int, Float } from 'type-graphql'
 import { Story } from './Story'
@@ -64,6 +66,18 @@ export class Chapter extends BaseEntity {
 
   @Field(() => Float)
   score: number
+
+  @Field(() => String, { nullable: true })
+  @Column({ nullable: true })
+  publishedAt: Date
+
+  @BeforeInsert()
+  @BeforeUpdate()
+  setPublishedAt() {
+    if (!this.publishedAt && this.status === PublishStatus.Published) {
+      this.publishedAt = new Date()
+    }
+  }
 
   @Field(() => String)
   @CreateDateColumn()

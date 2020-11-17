@@ -79,7 +79,6 @@ export class StoryResolver {
     @Arg('skip', { nullable: true }) skip: number = 0,
     @Arg('take', { nullable: true }) take: number = 10
   ): Promise<PaginatedResponse> {
-
     take = Math.min(50, take)
 
     const query = {
@@ -89,8 +88,8 @@ export class StoryResolver {
       take: take + 1,
       skip: skip,
       order: {
-        createdAt: 'DESC' as const
-      }
+        createdAt: 'DESC' as const,
+      },
     }
     const foundStories = await Story.find(query)
     const stories = foundStories.slice(0, take)
@@ -100,7 +99,7 @@ export class StoryResolver {
     return {
       pageData: {
         hasMore,
-        skip: hasMore ? take + skip : undefined
+        skip: hasMore ? take + skip : undefined,
       },
       stories,
     }
@@ -119,7 +118,6 @@ export class StoryResolver {
     // @Arg('filters') filters: any,
     @Arg('search') search: string
   ): Promise<PaginatedResponse> {
-
     take = Math.min(50, take)
 
     const query = {
@@ -130,8 +128,8 @@ export class StoryResolver {
       take: take + 1,
       skip: skip,
       order: {
-        createdAt: 'DESC' as const
-      }
+        createdAt: 'DESC' as const,
+      },
     }
 
     const foundStories = await Story.find(query)
@@ -142,7 +140,7 @@ export class StoryResolver {
     return {
       pageData: {
         hasMore,
-        skip: hasMore ? take + skip : undefined
+        skip: hasMore ? take + skip : undefined,
       },
       stories,
     }
@@ -179,28 +177,18 @@ export class StoryResolver {
     @Arg('summary') summary: string,
     @Ctx() { me }: Context
   ): Promise<Story> {
-    const result = await Story.update(
-      {
-        id,
-        authorId: me.id,
-      },
-      {
-        title,
-        body,
-        status,
-        enableCommenting,
-        summary,
-      }
-    )
-
-    if (!result.affected) {
-      throw new Error('Something went wrong')
-    }
-
-    const story = await Story.findOne({ id, authorId: me.id })
+    let story = await Story.findOne({ id, authorId: me.id })
     if (!story) {
-      throw new Error('Something went wrong')
+      throw new Error("This story doesn't exist")
     }
+
+    story.title = title
+    story.body = body
+    story.status = status
+    story.enableCommenting = enableCommenting
+    story.summary = summary
+
+    story = await story.save()
 
     return story
   }
