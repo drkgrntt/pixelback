@@ -26,7 +26,7 @@ class PageData {
   hasMore: boolean
 
   @Field({ nullable: true })
-  cursor?: string
+  skip?: number
 }
 
 @ObjectType()
@@ -56,6 +56,7 @@ export class StoryResolver {
   @FieldResolver(() => Float)
   async score(@Root() story: Story): Promise<number> {
     const allRatings = await Rating.find({ storyId: story.id })
+    if (!allRatings.length) return 0
     const total: number = allRatings.reduce(
       (score, rating) => score + rating.score,
       0
@@ -75,14 +76,31 @@ export class StoryResolver {
 
   @Query(() => PaginatedResponse)
   async stories(
-    @Arg('cursor', { nullable: true }) cursor: string
+    @Arg('skip', { nullable: true }) skip: number = 0,
+    @Arg('take', { nullable: true }) take: number = 10
   ): Promise<PaginatedResponse> {
-    console.log(cursor)
-    const stories = await Story.find()
+
+    take = Math.min(50, take)
+
+    const query = {
+      where: {
+        status: PublishStatus.Published,
+      },
+      take: take + 1,
+      skip: skip,
+      order: {
+        createdAt: 'DESC' as const
+      }
+    }
+    const foundStories = await Story.find(query)
+    const stories = foundStories.slice(0, take)
+
+    const hasMore = foundStories.length > take
+
     return {
       pageData: {
-        hasMore: false,
-        cursor: undefined,
+        hasMore,
+        skip: hasMore ? take + skip : undefined
       },
       stories,
     }
@@ -96,19 +114,35 @@ export class StoryResolver {
 
   @Query(() => PaginatedResponse)
   async searchStories(
-    @Arg('cursor', { nullable: true }) cursor: string,
+    @Arg('skip', { nullable: true }) skip: number = 0,
+    @Arg('take', { nullable: true }) take: number = 10,
     // @Arg('filters') filters: any,
     @Arg('search') search: string
   ): Promise<PaginatedResponse> {
-    console.log(cursor)
-    const stories = await Story.find({
-      where: [{ title: ILike(`%${search}%`) }],
-    })
+
+    take = Math.min(50, take)
+
+    const query = {
+      where: {
+        status: PublishStatus.Published,
+        title: ILike(`%${search}%`),
+      },
+      take: take + 1,
+      skip: skip,
+      order: {
+        createdAt: 'DESC' as const
+      }
+    }
+
+    const foundStories = await Story.find(query)
+    const stories = foundStories.slice(0, take)
+
+    const hasMore = foundStories.length > take
 
     return {
       pageData: {
-        hasMore: false,
-        cursor: undefined,
+        hasMore,
+        skip: hasMore ? take + skip : undefined
       },
       stories,
     }
