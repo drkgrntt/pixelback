@@ -44,8 +44,8 @@ const Input: React.FC<Props> = (props) => {
 
   // Render label if present
   const renderLabel = () => {
-    if (label) return null
-    
+    if (!label) return null
+
     return (
       <label className="input__label" htmlFor={id}>
         {label}
