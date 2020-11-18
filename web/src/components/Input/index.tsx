@@ -1,3 +1,5 @@
+import styles from './Input.module.scss'
+
 interface Props {
   className?: string
   type?: string
@@ -47,7 +49,7 @@ const Input: React.FC<Props> = (props) => {
     if (!label) return null
 
     return (
-      <label className="input__label" htmlFor={id}>
+      <label className={styles.label} htmlFor={id}>
         {label}
         {required && ' *'}
       </label>
@@ -64,8 +66,8 @@ const Input: React.FC<Props> = (props) => {
             placeholder={placeholder}
             name={name}
             id={id}
-            className={`input__textarea ${
-              validation && 'input__textarea--invalid'
+            className={`${styles.textarea} ${
+              validation && styles.invalid
             }`}
             value={value?.toString() || ''}
             required={!!required}
@@ -83,7 +85,7 @@ const Input: React.FC<Props> = (props) => {
             placeholder={placeholder}
             name={name}
             id={id}
-            className="input__checkbox"
+            className={styles.checkbox}
             checked={!!value}
             required={!!required}
             onChange={(event) => onChange(event)}
@@ -103,8 +105,8 @@ const Input: React.FC<Props> = (props) => {
           placeholder={placeholder}
           name={name}
           id={id}
-          className={`input__input ${
-            validation && 'input__input--invalid'
+          className={`${styles.field} ${
+            validation && styles.invalid
           }`}
           value={value?.toString() || ''}
           required={!!required}
@@ -117,9 +119,9 @@ const Input: React.FC<Props> = (props) => {
   }
 
   return (
-    <div className={`input ${className}`}>
+    <div className={`${styles.input} ${className}`}>
       {renderInput()}
-      <p className="input__validation">{validation}</p>
+      <span className={styles.validation}>{validation}</span>
       {children}
     </div>
   )

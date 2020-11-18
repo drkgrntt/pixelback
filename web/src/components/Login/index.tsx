@@ -1,6 +1,6 @@
-import { useLoginMutation } from '../hooks/useLoginMutation'
-import { useForm } from '../hooks/useForm'
-import Input from './input'
+import { useLoginMutation } from '../../hooks/useLoginMutation'
+import { useForm } from '../../hooks/useForm'
+import Input from '../Input'
 
 const Login: React.FC<{}> = ({}) => {
 
@@ -11,10 +11,15 @@ const Login: React.FC<{}> = ({}) => {
 
   const handleSubmit = (event: any) => {
     event.preventDefault()
+
+    if (formState.validate()) {
+      return
+    }
+
     try {
       login({ variables: formState.values })
     } catch (error) {
-      console.error(error)
+      console.warn(error)
     }
   }
 
@@ -26,6 +31,7 @@ const Login: React.FC<{}> = ({}) => {
         type="email"
         label="Email"
         formState={formState}
+        required
       />
       <Input
         id="login-password"
@@ -33,6 +39,7 @@ const Login: React.FC<{}> = ({}) => {
         type="password"
         label="Password"
         formState={formState}
+        required
       />
       <input type="submit" value="Login" />
     </form>

@@ -1,7 +1,6 @@
-import styles from '../styles/Home.module.scss'
+import Login from '../components/Login'
+import Register from '../components/Register'
 import withApollo from '../utils/withApollo'
-import Login from '../components/login'
-import Register from '../components/register'
 
 const Home: React.FC = () => {
 

@@ -1,20 +1,25 @@
-import { useRegisterMutation } from '../hooks/useRegisterMutation'
-import { useForm } from '../hooks/useForm'
-import Input from './input'
+import { useRegisterMutation } from '../../hooks/useRegisterMutation'
+import { useForm } from '../../hooks/useForm'
+import Input from '../Input'
 
 const Register: React.FC<{}> = ({}) => {
 
   const formState = useForm({ email: '', password: '' })
   const [register, data] = useRegisterMutation()
 
-  console.log(data)
+  // console.log(data)
 
   const handleSubmit = (event: any) => {
     event.preventDefault()
+
+    if (formState.validate()) {
+      return
+    }
+
     try {
       register({ variables: formState.values })
     } catch (error) {
-      console.error(error)
+      console.warn(error)
     }
   }
 
@@ -26,6 +31,7 @@ const Register: React.FC<{}> = ({}) => {
         type="email"
         label="Email"
         formState={formState}
+        required
       />
       <Input
         id="register-password"
@@ -33,6 +39,7 @@ const Register: React.FC<{}> = ({}) => {
         type="password"
         label="Password"
         formState={formState}
+        required
       />
       <input type="submit" value="Register" />
     </form>

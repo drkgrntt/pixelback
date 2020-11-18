@@ -47,9 +47,12 @@ export const useForm = (
     }
   }
 
-  type Callbacks = {
-    success?: Function
-    error?: Function
+  const validate = () => {
+    const existingErrors = Object.keys(errors).filter(key => {
+      return !!errors[key]
+    })
+
+    return !!existingErrors.length
   }
 
   return {
@@ -58,5 +61,6 @@ export const useForm = (
     validateField,
     errors,
     handleChange,
+    validate
   }
 }
