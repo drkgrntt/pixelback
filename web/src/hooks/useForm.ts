@@ -3,6 +3,7 @@ import { useState } from 'react'
 export const useForm = (
   initialState: { [key: string]: any }
 ) => {
+  
   const initialErrors: { [key: string]: string } = {}
 
   const [values, setValues] = useState(initialState)
@@ -51,45 +52,11 @@ export const useForm = (
     error?: Function
   }
 
-  // const submitForm = async (
-  //   callbacks: Callbacks = {},
-  //   additionalValues = {},
-  //   resetForm = true
-  // ) => {
-
-  //   // Set empty callback functions if they're not set
-  //   if (!callbacks.success) callbacks.success = () => null
-  //   if (!callbacks.error) callbacks.error = () => null
-
-  //   try {
-  //     const postValues = { ...values, ...additionalValues }
-  //     onSubmit(postValues)
-
-  //     const resetState = resetForm ? initialState : values
-
-  //     callbacks.success((message: string) =>
-  //       setValues({ ...resetState, validation: message })
-  //     )
-  //   } catch (err) {
-  //     let message = 'Something went wrong. Please try again.'
-
-  //     if (err.data && err.data.error && err.data.error.message) {
-  //       message = err.data.error.message
-  //     }
-
-  //     setValues({ ...values, validation: message })
-  //     error(err, (message: string) =>
-  //       setValues({ ...initialState, validation: message })
-  //     )
-  //   }
-  // }
-
   return {
     values,
     setValues,
     validateField,
     errors,
     handleChange,
-    // submitForm,
   }
 }

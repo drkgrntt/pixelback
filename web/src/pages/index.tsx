@@ -1,6 +1,7 @@
 import styles from '../styles/Home.module.scss'
 import withApollo from '../utils/withApollo'
 import Login from '../components/login'
+import Register from '../components/register'
 
 const Home: React.FC = () => {
 
@@ -8,6 +9,7 @@ const Home: React.FC = () => {
     <div>
       Kicking things off
       <Login />
+      <Register />
     </div>
   )
 }
