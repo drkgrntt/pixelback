@@ -1,5 +1,6 @@
-import '../styles/globals.scss'
 import Head from 'next/head'
+import '../styles/globals.scss'
+import Layout from '../components/Layout'
 
 const App = ({ Component, pageProps }: { Component: React.FC, pageProps: any }) => {
   return (
@@ -12,7 +13,9 @@ const App = ({ Component, pageProps }: { Component: React.FC, pageProps: any }) 
         <meta name="language" content="en-us" />
         <meta httpEquiv="X-UA-Compatible" content="ie=edge" />
       </Head>
-      <Component {...pageProps} />
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
     </>
   )
 }
