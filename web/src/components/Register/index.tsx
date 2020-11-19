@@ -1,6 +1,7 @@
 import { useRegisterMutation } from '../../hooks/useRegisterMutation'
 import { useForm } from '../../hooks/useForm'
 import Input from '../Input'
+import Button from '../Button'
 
 const Register: React.FC<{}> = ({}) => {
 
@@ -41,7 +42,7 @@ const Register: React.FC<{}> = ({}) => {
         formState={formState}
         required
       />
-      <input type="submit" value="Register" />
+      <Button type="submit">Register</Button>
     </form>
   )
 }

@@ -1,6 +1,7 @@
 import { useLoginMutation } from '../../hooks/useLoginMutation'
 import { useForm } from '../../hooks/useForm'
 import Input from '../Input'
+import Button from '../Button'
 
 const Login: React.FC<{}> = ({}) => {
 
@@ -41,7 +42,7 @@ const Login: React.FC<{}> = ({}) => {
         formState={formState}
         required
       />
-      <input type="submit" value="Login" />
+      <Button type="submit">Login</Button>
     </form>
   )
 }
