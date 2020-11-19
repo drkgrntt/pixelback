@@ -19,6 +19,7 @@ import { Rating } from '../entities/Rating'
 import { Context, PublishStatus } from '../types'
 import { isAuth } from '../middleware/isAuth'
 import { Chapter } from '../entities/Chapter'
+import { StoryGenre } from '../entities/StoryGenre'
 
 @ObjectType()
 class PageData {
@@ -72,6 +73,15 @@ export class StoryResolver {
   @FieldResolver(() => [Comment])
   async comments(@Root() story: Story): Promise<Comment[]> {
     return await Comment.find({ storyId: story.id })
+  }
+
+  @FieldResolver(() => [String])
+  async genres(@Root() story: Story): Promise<string[]> {
+    const storyGenres = await StoryGenre.find({
+      where: { storyId: story.id },
+      relations: ['genre']
+    })
+    return storyGenres.map(storyGenre => storyGenre.genre.name)
   }
 
   @Query(() => PaginatedResponse)

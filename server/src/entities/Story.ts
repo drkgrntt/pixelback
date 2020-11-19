@@ -16,6 +16,7 @@ import { Chapter } from './Chapter'
 import { Comment } from './Comment'
 import { PublishStatus, RatingScore } from '../types'
 import { Rating } from './Rating'
+import { StoryGenre } from './StoryGenre'
 
 @ObjectType()
 @Entity()
@@ -70,6 +71,12 @@ export class Story extends BaseEntity {
 
   @Field(() => Float)
   score: number
+
+  @OneToMany(() => StoryGenre, (storyGenre) => storyGenre.story)
+  storyGenre: StoryGenre
+
+  @Field(() => [String])
+  genres: string[]
 
   @Field(() => String, { nullable: true })
   @Column({ nullable: true })
