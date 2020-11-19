@@ -2,5 +2,5 @@
 
 .layout {
   padding: 1rem;
-  min-height: calc(100vh - $header-height - $footer-height);
+  min-height: $main-height;
 }
