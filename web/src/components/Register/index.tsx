@@ -1,3 +1,4 @@
+import styles from './Register.module.scss'
 import { useRegisterMutation } from '../../hooks/useRegisterMutation'
 import { useForm } from '../../hooks/useForm'
 import Input from '../Input'
