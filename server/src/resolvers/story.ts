@@ -20,7 +20,7 @@ import { Context, PublishStatus } from '../types'
 import { isAuth } from '../middleware/isAuth'
 import { Chapter } from '../entities/Chapter'
 import { StoryGenre } from '../entities/StoryGenre'
-import { Genre } from 'src/entities/Genre'
+import { Genre } from '../entities/Genre'
 
 @ObjectType()
 class PageData {
