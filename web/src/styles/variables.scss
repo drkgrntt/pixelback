@@ -26,9 +26,6 @@ $color-cta: $color-tertiary;
 // FONT
 $default-font-size: 1.4rem;
 
-// COMMON STYLES
-$shadow-high: 0 .6rem 1.8rem rgba($color-black, .4);
-$shadow-low: 0 .3rem .9rem rgba($color-black, .6);
-$max-section-width: 130rem;
-$max-text-width: 73rem;
-$gap-width: 1.3rem;
+// LAYOUT
+$header-height: 20rem;
+$footer-height: 10rem;

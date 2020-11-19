@@ -1,6 +1,6 @@
 @import 'src/styles/variables.scss';
 
 .header {
-  height: 30rem;
+  height: $header-height;
   background-color: $color-primary;
 }

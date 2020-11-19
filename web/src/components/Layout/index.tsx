@@ -1,6 +1,7 @@
 import styles from './Layout.module.scss'
 import Nav from './Nav'
 import Header from './Header'
+import Footer from './Footer'
 
 const Layout: React.FC<{}> = (props) => {
   return (
@@ -10,9 +11,7 @@ const Layout: React.FC<{}> = (props) => {
       <main className={styles.layout}>
         {props.children}
       </main>
-      <footer>
-
-      </footer>
+      <Footer />
     </>
   )
 }
