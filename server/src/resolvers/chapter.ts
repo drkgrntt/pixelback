@@ -46,6 +46,24 @@ export class ChapterResolver {
     return total / allRatings.length
   }
 
+  @FieldResolver(() => Chapter)
+  async previous(@Root() chapter: Chapter): Promise<Chapter | undefined> {
+    const previousChapter = await Chapter.findOne({
+      storyId: chapter.storyId,
+      number: chapter.number-1
+    })
+    return previousChapter
+  }
+
+  @FieldResolver(() => Chapter)
+  async next(@Root() chapter: Chapter): Promise<Chapter | undefined> {
+    const nextChapter = await Chapter.findOne({
+      storyId: chapter.storyId,
+      number: chapter.number+1
+    })
+    return nextChapter
+  }
+
   @Query(() => [Chapter])
   async chapters(
     @Arg('storyId') storyId: string

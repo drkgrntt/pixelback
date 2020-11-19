@@ -67,6 +67,12 @@ export class Chapter extends BaseEntity {
   @Field(() => Float)
   score: number
 
+  @Field(() => Chapter, { nullable: true })
+  previous: Chapter
+
+  @Field(() => Chapter, { nullable: true })
+  next: Chapter
+
   @Field(() => String, { nullable: true })
   @Column({ nullable: true })
   publishedAt: Date
