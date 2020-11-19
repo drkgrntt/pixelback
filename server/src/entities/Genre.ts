@@ -1,3 +1,4 @@
+import { sanitize } from 'dompurify'
 import { Field, ObjectType } from 'type-graphql'
 import {
   Entity,
@@ -7,6 +8,8 @@ import {
   UpdateDateColumn,
   BaseEntity,
   OneToMany,
+  BeforeInsert,
+  BeforeUpdate,
 } from 'typeorm'
 import { StoryGenre } from './StoryGenre'
 
@@ -23,6 +26,12 @@ export class Genre extends BaseEntity {
 
   @OneToMany(() => StoryGenre, (storyGenre) => storyGenre.genre)
   storyGenre: StoryGenre
+
+  @BeforeInsert()
+  @BeforeUpdate()
+  sanitizeInputs() {
+    this.name = sanitize(this.name)
+  }
 
   @CreateDateColumn()
   createdAt: Date

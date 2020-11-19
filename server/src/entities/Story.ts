@@ -11,6 +11,7 @@ import {
   BeforeUpdate,
 } from 'typeorm'
 import { ObjectType, Field, Int, Float } from 'type-graphql'
+import { sanitize } from 'dompurify'
 import { User } from './User'
 import { Chapter } from './Chapter'
 import { Comment } from './Comment'
@@ -88,6 +89,14 @@ export class Story extends BaseEntity {
     if (!this.publishedAt && this.status === PublishStatus.Published) {
       this.publishedAt = new Date()
     }
+  }
+
+  @BeforeInsert()
+  @BeforeUpdate()
+  sanitizeInputs() {
+    this.title = sanitize(this.title)
+    this.body = sanitize(this.body)
+    this.summary = sanitize(this.summary)
   }
 
   @Field(() => String)
