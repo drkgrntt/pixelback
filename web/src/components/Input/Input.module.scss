@@ -6,18 +6,19 @@
   .label {
     text-transform: uppercase;
     font-size: 1.4rem;
-    letter-spacing: .1rem;
+    letter-spacing: 0.1rem;
   }
 
-  .field, .textarea {
-    padding: .5rem;
+  .field,
+  .textarea {
+    padding: 0.5rem;
     width: 100%;
     color: $color-grey-dark;
-    letter-spacing: .1rem;
+    letter-spacing: 0.1rem;
     font-size: 1.5rem;
 
     &.invalid {
-      border: .2rem solid $color-error;
+      border: 0.2rem solid $color-error;
     }
   }
 
@@ -39,6 +40,6 @@
   .validation {
     font-size: 1.4rem;
     color: $color-error;
-    font-style: italic
+    font-style: italic;
   }
 }

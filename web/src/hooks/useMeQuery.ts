@@ -1,7 +1,6 @@
 import { gql, useQuery } from '@apollo/client'
 
 export const useMeQuery = () => {
-
   const ME = gql`
     query Me {
       me {
@@ -26,6 +25,6 @@ export const useMeQuery = () => {
       }
     }
   `
-  
+
   return useQuery(ME)
 }

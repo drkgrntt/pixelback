@@ -1,13 +1,9 @@
 import { gql, useMutation } from '@apollo/client'
 
 export const useRegisterMutation = () => {
-
   const REGISTER = gql`
-    mutation Register($email: String! $password: String!) {
-      register(
-        email: $email
-        password: $password
-      ) {
+    mutation Register($email: String!, $password: String!) {
+      register(email: $email, password: $password) {
         user {
           id
           email
@@ -20,6 +16,6 @@ export const useRegisterMutation = () => {
       }
     }
   `
-  
+
   return useMutation(REGISTER)
 }

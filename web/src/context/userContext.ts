@@ -19,5 +19,5 @@ export default createContext<UserContext>({
     createdAt: new Date(),
     updatedAt: new Date(),
   },
-  setCurrentUser: (user: User) => {}
+  setCurrentUser: (user: User) => {},
 })

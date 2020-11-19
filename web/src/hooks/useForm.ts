@@ -1,9 +1,6 @@
 import { useState } from 'react'
 
-export const useForm = (
-  initialState: { [key: string]: any }
-) => {
-  
+export const useForm = (initialState: { [key: string]: any }) => {
   const initialErrors: { [key: string]: string } = {}
 
   const [values, setValues] = useState(initialState)
@@ -48,7 +45,7 @@ export const useForm = (
   }
 
   const validate = () => {
-    const existingErrors = Object.keys(errors).filter(key => {
+    const existingErrors = Object.keys(errors).filter((key) => {
       return !!errors[key]
     })
 
@@ -61,6 +58,6 @@ export const useForm = (
     validateField,
     errors,
     handleChange,
-    validate
+    validate,
   }
 }
