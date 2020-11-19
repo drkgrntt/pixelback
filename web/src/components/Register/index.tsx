@@ -1,4 +1,6 @@
 import styles from './Register.module.scss'
+import { useContext } from 'react'
+import userContext from '../../context/userContext'
 import { useRegisterMutation } from '../../hooks/useRegisterMutation'
 import { useForm } from '../../hooks/useForm'
 import Input from '../Input'
@@ -6,12 +8,11 @@ import Button from '../Button'
 
 const Register: React.FC<{}> = ({}) => {
 
+  const { setCurrentUser } = useContext(userContext)
   const formState = useForm({ email: '', password: '' })
-  const [register, data] = useRegisterMutation()
+  const [register] = useRegisterMutation()
 
-  // console.log(data)
-
-  const handleSubmit = (event: any) => {
+  const handleSubmit = async (event: any) => {
     event.preventDefault()
 
     if (formState.validate()) {
@@ -19,7 +20,9 @@ const Register: React.FC<{}> = ({}) => {
     }
 
     try {
-      register({ variables: formState.values })
+      const result = await register({ variables: formState.values })
+      const { user, token } = result.data.login
+      setCurrentUser(user, token.value)
     } catch (error) {
       console.warn(error)
     }
