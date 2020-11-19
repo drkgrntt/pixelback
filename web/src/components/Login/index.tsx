@@ -1,4 +1,6 @@
 import styles from './Login.module.scss'
+import { useContext } from 'react'
+import userContext from '../../context/userContext'
 import { useLoginMutation } from '../../hooks/useLoginMutation'
 import { useForm } from '../../hooks/useForm'
 import Input from '../Input'
@@ -6,12 +8,11 @@ import Button from '../Button'
 
 const Login: React.FC<{}> = ({}) => {
 
+  const { setCurrentUser } = useContext(userContext)
   const formState = useForm({ email: '', password: '' })
-  const [login, data] = useLoginMutation()
+  const [login] = useLoginMutation()
 
-  // console.log(data)
-
-  const handleSubmit = (event: any) => {
+  const handleSubmit = async (event: any) => {
     event.preventDefault()
 
     if (formState.validate()) {
@@ -19,7 +20,9 @@ const Login: React.FC<{}> = ({}) => {
     }
 
     try {
-      login({ variables: formState.values })
+      const result = await login({ variables: formState.values })
+      const { user, token } = result.data.login
+      setCurrentUser(user, token.value)
     } catch (error) {
       console.warn(error)
     }
