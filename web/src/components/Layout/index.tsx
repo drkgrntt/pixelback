@@ -1,11 +1,10 @@
 import styles from './Layout.module.scss'
+import Nav from './Nav'
 
 const Layout: React.FC<{}> = (props) => {
   return (
     <>
-      <nav>
-
-      </nav>
+      <Nav />
       <header>
 
       </header>
