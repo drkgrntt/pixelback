@@ -6,11 +6,13 @@ import {
   BaseEntity,
   PrimaryColumn,
   ManyToOne,
+  Unique,
 } from 'typeorm'
 import { Story } from './Story'
 import { Genre } from './Genre'
 
 @Entity()
+@Unique(['storyId', 'genreId'])
 export class StoryGenre extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id!: string

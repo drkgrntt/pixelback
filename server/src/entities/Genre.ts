@@ -1,3 +1,4 @@
+import { Field, ObjectType } from 'type-graphql'
 import {
   Entity,
   Column,
@@ -10,10 +11,13 @@ import {
 import { StoryGenre } from './StoryGenre'
 
 @Entity()
+@ObjectType()
 export class Genre extends BaseEntity {
+  @Field()
   @PrimaryGeneratedColumn('uuid')
   id!: string
 
+  @Field()
   @Column({ unique: true })
   name: string
 

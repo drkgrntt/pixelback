@@ -79,9 +79,9 @@ export class StoryResolver {
   async genres(@Root() story: Story): Promise<string[]> {
     const storyGenres = await StoryGenre.find({
       where: { storyId: story.id },
-      relations: ['genre']
+      relations: ['genre'],
     })
-    return storyGenres.map(storyGenre => storyGenre.genre.name)
+    return storyGenres.map((storyGenre) => storyGenre.genre.name)
   }
 
   @Query(() => PaginatedResponse)
@@ -164,9 +164,10 @@ export class StoryResolver {
     @Arg('status') status: PublishStatus,
     @Arg('enableCommenting') enableCommenting: boolean,
     @Arg('summary') summary: string,
+    @Arg('genreIds', () => [String]) genreIds: string[],
     @Ctx() { me }: Context
   ): Promise<Story> {
-    return await Story.create({
+    const story = await Story.create({
       title,
       body,
       summary,
@@ -174,6 +175,15 @@ export class StoryResolver {
       enableCommenting,
       authorId: me.id,
     }).save()
+
+    for (const genreId in genreIds) {
+      await StoryGenre.create({
+        storyId: story.id,
+        genreId: genreId,
+      }).save()
+    }
+
+    return story
   }
 
   @Mutation(() => Story)
@@ -212,5 +222,53 @@ export class StoryResolver {
     const result = await Story.delete({ id, authorId: me.id })
 
     return !!result.affected
+  }
+
+  @Mutation(() => Story)
+  @UseMiddleware(isAuth)
+  async addGenreToStory(
+    @Arg('storyId') storyId: string,
+    @Arg('genreId') genreId: string,
+    @Ctx() { me }: Context
+  ): Promise<Story> {
+    const story = await Story.findOne({
+      id: storyId,
+      authorId: me.id,
+    })
+
+    if (!story) {
+      throw new Error('This story doesn\'t exist')
+    }
+
+    await StoryGenre.create({
+      storyId: storyId,
+      genreId: genreId,
+    }).save()
+
+    return story
+  }
+
+  @Mutation(() => Story)
+  @UseMiddleware(isAuth)
+  async removeGenreFromStory(
+    @Arg('storyId') storyId: string,
+    @Arg('genreId') genreId: string,
+    @Ctx() { me }: Context
+  ): Promise<Story> {
+    const story = await Story.findOne({
+      id: storyId,
+      authorId: me.id,
+    })
+
+    if (!story) {
+      throw new Error('This story doesn\'t exist')
+    }
+
+    await StoryGenre.delete({
+      storyId: storyId,
+      genreId: genreId,
+    })
+
+    return story
   }
 }

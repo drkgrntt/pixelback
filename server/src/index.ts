@@ -9,6 +9,7 @@ import { ApolloServer } from 'apollo-server-express'
 import { Token } from './entities/Token'
 import { UserResolver } from './resolvers/user'
 import { StoryResolver } from './resolvers/story'
+import { GenreResolver } from './resolvers/genre'
 import { RatingResolver } from './resolvers/rating'
 import { ChapterResolver } from './resolvers/chapter'
 import { CommentResolver } from './resolvers/comment'
@@ -40,10 +41,11 @@ const main = async () => {
       resolvers: [
         UserResolver,
         StoryResolver,
-        ChapterResolver,
+        GenreResolver,
         RatingResolver,
-        SubscriptionResolver,
         CommentResolver,
+        ChapterResolver,
+        SubscriptionResolver,
       ],
       validate: false,
     }),
