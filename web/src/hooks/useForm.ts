@@ -52,6 +52,11 @@ export const useForm = (initialState: { [key: string]: any }) => {
     return !!existingErrors.length
   }
 
+  const reset = (resetErrors: boolean = true) => {
+    setValues(initialState)
+    if (resetErrors) setErrors(initialErrors)
+  }
+
   return {
     values,
     setValues,
@@ -59,5 +64,6 @@ export const useForm = (initialState: { [key: string]: any }) => {
     errors,
     handleChange,
     validate,
+    reset
   }
 }

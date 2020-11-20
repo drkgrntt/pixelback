@@ -1,3 +1,5 @@
+import { useRouter } from 'next/router'
+import Link from 'next/link'
 import styles from './Login.module.scss'
 import { useContext } from 'react'
 import userContext from '../../context/userContext'
@@ -8,8 +10,15 @@ import Button from '../Button'
 
 const Login: React.FC<{}> = ({}) => {
 
+  const INITIAL_FORM_STATE = {
+    email: '',
+    password: '',
+    validation: ''
+  }
+
+  const formState = useForm(INITIAL_FORM_STATE)
   const { setCurrentUser } = useContext(userContext)
-  const formState = useForm({ email: '', password: '' })
+  const { push } = useRouter()
   const [login] = useLoginMutation()
 
   const handleSubmit = async (event: any, reset: Function) => {
@@ -24,14 +33,18 @@ const Login: React.FC<{}> = ({}) => {
       const result = await login({ variables: formState.values })
       const { user, token } = result.data.login
       setCurrentUser(user, token.value)
+      formState.reset()
+      push('/profile')
     } catch (error) {
       console.warn(error)
+      formState.setValues({ ...formState.values, validation: error.message })
     }
     reset()
   }
 
   return (
-    <form>
+    <form className={styles.login}>
+      <h2>Login</h2>
       <Input
         id="login-email"
         name="email"
@@ -48,7 +61,9 @@ const Login: React.FC<{}> = ({}) => {
         formState={formState}
         required
       />
+      <span className={styles.validation}>{formState.values.validation}</span>
       <Button type="submit" onClick={handleSubmit}>Login</Button>
+      <Link href="/register"><a className={styles.link}>Or create a new account!</a></Link>
     </form>
   )
 }
