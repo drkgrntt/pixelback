@@ -1,14 +1,14 @@
 import { useRouter } from 'next/router'
 import Link from 'next/link'
-import styles from './Register.module.scss'
+import styles from './LoginForm.module.scss'
 import { useContext } from 'react'
 import userContext from '../../context/userContext'
-import { useRegisterMutation } from '../../hooks/useRegisterMutation'
+import { useLoginMutation } from '../../hooks/useLoginMutation'
 import { useForm } from '../../hooks/useForm'
 import Input from '../Input'
 import Button from '../Button'
 
-const Register: React.FC<{}> = ({}) => {
+const LoginForm: React.FC<{}> = ({}) => {
 
   const INITIAL_FORM_STATE = {
     email: '',
@@ -19,7 +19,7 @@ const Register: React.FC<{}> = ({}) => {
   const formState = useForm(INITIAL_FORM_STATE)
   const { setCurrentUser } = useContext(userContext)
   const { push } = useRouter()
-  const [register] = useRegisterMutation()
+  const [login] = useLoginMutation()
 
   const handleSubmit = async (event: any, reset: Function) => {
     event.preventDefault()
@@ -30,7 +30,7 @@ const Register: React.FC<{}> = ({}) => {
     }
 
     try {
-      const result = await register({ variables: formState.values })
+      const result = await login({ variables: formState.values })
       const { user, token } = result.data.login
       setCurrentUser(user, token.value)
       formState.reset()
@@ -43,10 +43,10 @@ const Register: React.FC<{}> = ({}) => {
   }
 
   return (
-    <form className={styles.register}>
-      <h2 className={styles.title}>Register</h2>
+    <form className={styles.login}>
+      <h2 className={styles.title}>Login</h2>
       <Input
-        id="register-email"
+        id="login-email"
         name="email"
         type="email"
         label="Email"
@@ -54,7 +54,7 @@ const Register: React.FC<{}> = ({}) => {
         required
       />
       <Input
-        id="register-password"
+        id="login-password"
         name="password"
         type="password"
         label="Password"
@@ -62,10 +62,10 @@ const Register: React.FC<{}> = ({}) => {
         required
       />
       <span className={styles.validation}>{formState.values.validation}</span>
-      <Button type="submit" onClick={handleSubmit}>Register</Button>
-      <Link href="login"><a className={styles.link}>Or login here!</a></Link>
+      <Button type="submit" onClick={handleSubmit}>Login</Button>
+      <Link href="/register"><a className={styles.link}>Or create a new account!</a></Link>
     </form>
   )
 }
 
-export default Register
+export default LoginForm
