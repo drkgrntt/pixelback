@@ -3,4 +3,23 @@
 .header {
   height: $header-height;
   background-color: $color-primary;
+  padding-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.title {
+  margin: 0;
+  font-weight: 300;
+  font-size: 3.3rem;
+  color: $color-white;
+  text-align: center;
+}
+
+.subtitle {
+  font-size: 1.4rem;
+  display: block;
+  font-weight: 300;
 }
