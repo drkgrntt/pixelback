@@ -12,10 +12,11 @@ const Register: React.FC<{}> = ({}) => {
   const formState = useForm({ email: '', password: '' })
   const [register] = useRegisterMutation()
 
-  const handleSubmit = async (event: any) => {
+  const handleSubmit = async (event: any, reset: Function) => {
     event.preventDefault()
 
     if (formState.validate()) {
+      reset()
       return
     }
 
@@ -26,10 +27,11 @@ const Register: React.FC<{}> = ({}) => {
     } catch (error) {
       console.warn(error)
     }
+    reset()
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form>
       <Input
         id="register-email"
         name="email"
@@ -46,7 +48,7 @@ const Register: React.FC<{}> = ({}) => {
         formState={formState}
         required
       />
-      <Button type="submit">Register</Button>
+      <Button type="submit" onClick={handleSubmit}>Register</Button>
     </form>
   )
 }

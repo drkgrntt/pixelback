@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import Loader from '../Loader'
 import styles from './Button.module.scss'
 
 interface Props {
@@ -9,9 +10,8 @@ interface Props {
   style?: { [key: string]: string }
   title?: string
   children: string
-  type?: string
+  type?: "button" | "reset" | "submit"
   styleTypes?: string[]
-  submittedText?: string
 }
 
 const Button = (props: Props) => {
@@ -25,30 +25,23 @@ const Button = (props: Props) => {
     style = {},
     title = '',
     children = '',
-    type = '',
+    type,
 
     // Custom button props
     styleTypes = ['primary'],
-    submittedText = children
   } = props
 
   const [buttonDisabled, setButtonDisabled] = useState(disabled)
-  const [buttonText, setButtonText] = useState(children)
-
-  // Because use the state "buttonText" instead of children as the actual text,
-  // we should update "buttonText" when "children" changes.
-  useEffect(() => {
-    setButtonText(children)
-  }, [children])
+  const [pressed, setPressed] = useState(false)
 
   const handleClick = (event: any) => {
 
-    setButtonText(submittedText)
+    setPressed(true)
     setButtonDisabled(true)
 
     const reset = () => {
-      setButtonText(children)
       setButtonDisabled(false)
+      setPressed(false)
     }
 
     onClick(event, reset)
@@ -60,22 +53,9 @@ const Button = (props: Props) => {
     ...styleTypes.map(styleType => styles[styleType])
   ].join(' ')
 
-  if (type === 'submit') {
-    return (
-      <input
-        className={classNames}
-        disabled={buttonDisabled}
-        id={id || undefined}
-        title={title}
-        style={style}
-        type="submit"
-        value={buttonText}
-      />
-    )
-  }
-
   return (
     <button
+      type={type}
       className={classNames}
       disabled={buttonDisabled}
       onClick={handleClick}
@@ -83,7 +63,7 @@ const Button = (props: Props) => {
       title={title}
       style={style}
     >
-      {buttonText}
+      {pressed ? <Loader /> : children}
     </button>
   )
 }

@@ -12,10 +12,11 @@ const Login: React.FC<{}> = ({}) => {
   const formState = useForm({ email: '', password: '' })
   const [login] = useLoginMutation()
 
-  const handleSubmit = async (event: any) => {
+  const handleSubmit = async (event: any, reset: Function) => {
     event.preventDefault()
 
     if (formState.validate()) {
+      reset()
       return
     }
 
@@ -26,10 +27,11 @@ const Login: React.FC<{}> = ({}) => {
     } catch (error) {
       console.warn(error)
     }
+    reset()
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form>
       <Input
         id="login-email"
         name="email"
@@ -46,7 +48,7 @@ const Login: React.FC<{}> = ({}) => {
         formState={formState}
         required
       />
-      <Button type="submit">Login</Button>
+      <Button type="submit" onClick={handleSubmit}>Login</Button>
     </form>
   )
 }
