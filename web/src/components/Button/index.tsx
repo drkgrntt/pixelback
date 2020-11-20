@@ -63,7 +63,7 @@ const Button = (props: Props) => {
       title={title}
       style={style}
     >
-      {pressed ? <Loader /> : children}
+      {pressed ? <Loader height={40} /> : children}
     </button>
   )
 }

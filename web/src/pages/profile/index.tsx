@@ -23,9 +23,10 @@ const Profile: React.FC<{}> = () => {
 
   return (
     <div className={styles.profile}>
-      This is the profile page.
+      <h2>Profile</h2>
+      <p>Discard all other authentication tokens to log out everywhere.</p>
       <Button styleTypes={['delete']} onClick={onLogoutEverywhereClick}>
-        Logout Everywhere
+        Discard
       </Button>
     </div>
   )
