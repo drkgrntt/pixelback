@@ -44,7 +44,7 @@ const Login: React.FC<{}> = ({}) => {
 
   return (
     <form className={styles.login}>
-      <h2>Login</h2>
+      <h2 className={styles.title}>Login</h2>
       <Input
         id="login-email"
         name="email"

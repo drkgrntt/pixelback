@@ -1,13 +1,15 @@
 import styles from './Register.module.scss'
 import RegisterForm from '../../components/Register'
-import withApollo from '../../utils/withApollo'
+import Card from '../../components/Card'
 
 const Register: React.FC<{}> = () => {
   return (
     <div className={styles.register}>
-      <RegisterForm />
+      <Card>
+        <RegisterForm />
+      </Card>
     </div>
   )
 }
 
-export default withApollo({ ssr: false })(Register)
+export default Register

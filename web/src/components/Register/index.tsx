@@ -44,7 +44,7 @@ const Register: React.FC<{}> = ({}) => {
 
   return (
     <form className={styles.register}>
-      <h2>Register</h2>
+      <h2 className={styles.title}>Register</h2>
       <Input
         id="register-email"
         name="email"

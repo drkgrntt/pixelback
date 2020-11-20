@@ -1,13 +1,15 @@
 import styles from './Login.module.scss'
 import LoginForm from '../../components/Login'
-import withApollo from '../../utils/withApollo'
+import Card from '../../components/Card'
 
 const Login: React.FC<{}> = () => {
   return (
     <div className={styles.login}>
-      <LoginForm />
+      <Card>
+        <LoginForm />
+      </Card>
     </div>
   )
 }
 
-export default withApollo({ ssr: false })(Login)
+export default Login
