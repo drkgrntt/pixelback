@@ -1,10 +1,57 @@
 import Link from 'next/link'
+import { useContext } from 'react'
+import { useLogoutMutation } from '../../../hooks/useLogoutMutation'
+import userContext from '../../../context/userContext'
 import styles from './Nav.module.scss';
 
 const Nav: React.FC<{}> = () => {
 
+  const { currentUser, setCurrentUser } = useContext(userContext)
+  const [logout] = useLogoutMutation()
+
   const toggleNav = () => {
     document.getElementById("nav-toggle")?.classList.toggle(styles.checked)
+  }
+
+  const onLogoutClick = async () => {
+    toggleNav()
+    try {
+      await logout()
+      setCurrentUser(null)
+    } catch (err) {
+      console.warn(err)
+    }
+  }
+
+  const renderAuthLinks = () => {
+    if (!currentUser) {
+      return (
+        <>
+          <Link href="/register">
+            <li className={styles.item}>
+              <a className={styles.link} onClick={toggleNav}>
+                Register
+              </a>
+            </li>
+          </Link>
+          <Link href="/login">
+            <li className={styles.item}>
+              <a className={styles.link} onClick={toggleNav}>
+                Login
+              </a>
+            </li>
+          </Link>
+        </>
+      )
+    }
+
+    return (
+      <li className={styles.item}>
+        <a className={styles.link} onClick={onLogoutClick}>
+          Logout
+        </a>
+      </li>
+    )
   }
 
   return (
@@ -26,20 +73,7 @@ const Nav: React.FC<{}> = () => {
               </a>
             </li>
           </Link>
-          <Link href="/register">
-            <li className={styles.item}>
-              <a className={styles.link} onClick={toggleNav}>
-                Register
-              </a>
-            </li>
-          </Link>
-          <Link href="/login">
-            <li className={styles.item}>
-              <a className={styles.link} onClick={toggleNav}>
-                Login
-              </a>
-            </li>
-          </Link>
+          {renderAuthLinks()}
         </div>
       </ul>
     </nav>

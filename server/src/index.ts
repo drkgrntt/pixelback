@@ -58,8 +58,9 @@ const main = async () => {
       let token
 
       const { authorization } = req.headers
-      if (typeof authorization === 'string') {
-        const [bearer, token] = authorization.split(' ')
+      if (authorization && typeof authorization === 'string') {
+        const [bearer, bearerToken] = authorization.split(' ')
+        token = bearerToken
         if (bearer === 'Bearer') {
           me = await Token.verifyAndFindUser(token)
         }

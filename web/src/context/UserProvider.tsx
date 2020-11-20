@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useMeQuery } from '../hooks/useMeQuery'
 import userContext from './userContext'
 import { User } from '../types'
@@ -6,13 +6,14 @@ import { User } from '../types'
 const UserProvider: React.FC<{}> = (props) => {
 
   const result = useMeQuery()
-  const [currentUser, setUser] = useState<User | null>(result.data?.me)
+  const [currentUser, setUser] = useState<User | null>(null)
+  useEffect(() => {
+    setUser(result.data?.me)
+  }, [result.data])
 
   const setCurrentUser = (user: User, token?: string) => {
     setUser(user)
-    if (token) {
-      localStorage.setItem('token', token)
-    }
+    localStorage.setItem('token', token || '')
   }
 
   return (
