@@ -5,13 +5,20 @@ import { User } from '../types'
 
 const UserProvider: React.FC<{}> = (props) => {
 
-  const result = useMeQuery()
   const [currentUser, setUser] = useState<User | null>(null)
-  useEffect(() => {
-    setUser(result.data?.me)
-  }, [result.data])
 
-  const setCurrentUser = (user: User, token?: string) => {
+  let data: { me: User | null }
+  try {
+    const result = useMeQuery()
+    data = result.data
+  } catch (err) {
+    data = { me: null }
+  }
+  useEffect(() => {
+    setCurrentUser(data?.me)
+  }, [data])
+
+  const setCurrentUser = (user: User | null, token?: string) => {
     setUser(user)
     localStorage.setItem('token', token || '')
   }
