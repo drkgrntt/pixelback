@@ -6,8 +6,6 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   OneToMany,
-  BeforeUpdate,
-  BeforeInsert,
 } from 'typeorm'
 import { ObjectType, Field, Int } from 'type-graphql'
 import { UserRole } from '../types'
@@ -15,7 +13,6 @@ import { Token } from './Token'
 import { Story } from './Story'
 import { Rating } from './Rating'
 import { Subscription } from './Subscription'
-import { sanitize } from 'dompurify'
 
 @ObjectType()
 @Entity()
@@ -71,13 +68,6 @@ export class User extends BaseEntity {
   @Field(() => String)
   @UpdateDateColumn()
   updatedAt: Date
-
-  @BeforeInsert()
-  @BeforeUpdate()
-  sanitizeInputs() {
-    this.email = sanitize(this.email)
-    this.displayName = sanitize(this.displayName)
-  }
 
   static verifyEmailSyntax(email: string): boolean {
     const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/

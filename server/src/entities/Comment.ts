@@ -7,11 +7,8 @@ import {
   ManyToOne,
   BaseEntity,
   PrimaryColumn,
-  BeforeInsert,
-  BeforeUpdate,
 } from 'typeorm'
 import { ObjectType, Field } from 'type-graphql'
-import { sanitize } from 'dompurify'
 import { User } from './User'
 import { Story } from './Story'
 import { Chapter } from './Chapter'
@@ -53,12 +50,6 @@ export class Comment extends BaseEntity {
     onDelete: 'CASCADE',
   })
   chapter: Chapter
-
-  @BeforeInsert()
-  @BeforeUpdate()
-  sanitizeInputs() {
-    this.body = sanitize(this.body)
-  }
 
   @Field(() => String)
   @CreateDateColumn()

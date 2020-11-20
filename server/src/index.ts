@@ -3,6 +3,7 @@ import 'dotenv-safe/config'
 import path from 'path'
 import express from 'express'
 import cors from 'cors'
+import sanitize from 'sanitize'
 import { createConnection } from 'typeorm'
 import { buildSchema } from 'type-graphql'
 import { ApolloServer } from 'apollo-server-express'
@@ -34,6 +35,7 @@ const main = async () => {
 
   const app = express()
   app.use(cors())
+  app.use(sanitize.middleware)
 
   const server = new ApolloServer({
     playground: true,
