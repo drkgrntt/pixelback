@@ -81,13 +81,13 @@ export class Token extends BaseEntity {
       { value: unsigned },
       { relations: ['user'] }
     )
-    if (!token) return null
+    if (!token) throw new Error('Token not found')
     try {
       jwt.verify(value, process.env.JWT_SECRET)
       return token.user
     } catch (err) {
       await token.remove()
-      return null
+      throw new Error('Token not found')
     }
   }
 

@@ -7,21 +7,21 @@ const UserProvider: React.FC<{}> = (props) => {
 
   const [currentUser, setUser] = useState<User | null>(null)
 
-  let data: { me: User | null }
-  try {
-    const result = useMeQuery()
-    data = result.data
-  } catch (err) {
-    data = { me: null }
-  }
-  useEffect(() => {
-    setCurrentUser(data?.me)
-  }, [data])
-
   const setCurrentUser = (user: User | null, token?: string) => {
     setUser(user)
     localStorage.setItem('token', token || '')
   }
+
+  let data: { me: User | null } = { me: null }
+  try {
+    const result = useMeQuery()
+    data = result.data
+  } catch (err) {
+    setCurrentUser(null, '')
+  }
+  useEffect(() => {
+    setUser(data?.me)
+  }, [data])
 
   return (
     <userContext.Provider
