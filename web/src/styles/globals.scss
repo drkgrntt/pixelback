@@ -18,8 +18,9 @@ body {
 }
 
 a {
-  color: inherit;
-  text-decoration: none;
+  color: $color-grey-dark-2;
+  text-decoration: underline;
+  font-style: italic;
 }
 
 * {
