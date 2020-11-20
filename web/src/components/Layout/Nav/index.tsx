@@ -46,11 +46,20 @@ const Nav: React.FC<{}> = () => {
     }
 
     return (
-      <li className={styles.item}>
-        <a className={styles.link} onClick={onLogoutClick}>
-          Logout
-        </a>
-      </li>
+      <>
+        <Link href="/profile">
+          <li className={styles.item}>
+            <a className={styles.link} onClick={toggleNav}>
+              Profile
+            </a>
+          </li>
+        </Link>
+        <li className={styles.item}>
+          <a className={styles.link} onClick={onLogoutClick}>
+            Logout
+          </a>
+        </li>
+      </>
     )
   }
 
