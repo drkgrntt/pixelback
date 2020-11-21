@@ -3,12 +3,12 @@ import { gql, useMutation } from '@apollo/client'
 export const useCreateStoryMutation = () => {
   const CREATE_STORY = gql`
     mutation CreateStory(
-      $title: string
-      $summary: string
-      $body: string
-      $status: number
-      $enableCommenting: boolean
-      genreIds: string[]
+      $title: String!
+      $summary: String!
+      $body: String!
+      $status: Float!
+      $enableCommenting: Boolean!
+      $genreIds: [String!]!
     ) {
       createStory(
         title: $title

@@ -16,13 +16,27 @@ const StoryForm: React.FC<Props> = (props) => {
 
   // Formstate handling
   const INITIAL_STATE = {
+    id: story?.id || '',
     title: story?.title || '',
     summary: story?.summary || '',
     body: story?.body || '',
     publish: story?.status === PublishStatus.Published,
+    enableCommenting: story?.enableCommenting || true,
+    genres: story?.genres || [],
     validation: ''
   }
   const formState = useForm(INITIAL_STATE)
+
+  // Handle story update
+  useEffect(() => {
+    if (!formState.values.id && story) {
+      formState.setValues({
+        ...formState.values,
+        id: story.id
+      })
+      setInit(false)
+    }
+  }, [story])
 
   // Autosave handling
   const [saved, setSaved] = useState('')
@@ -87,6 +101,12 @@ const StoryForm: React.FC<Props> = (props) => {
         label="Body"
         formState={formState}
         placeholder="Leave this blank if you are writing a chaptered story"
+      />
+      <Input
+        name="enableCommenting"
+        type="checkbox"
+        label="Enable Commenting"
+        formState={formState}
       />
       <Input
         name="publish"
