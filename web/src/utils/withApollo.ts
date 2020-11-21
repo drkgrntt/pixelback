@@ -26,6 +26,7 @@ const authLink = setContext((_, { headers }) => {
  * so this will to convert those to date objects
  */
 const convertDates = (data: any) => {
+  if (!data) return data
   Object.keys(data).forEach(key => {
     switch (typeof data[key]) {
       case 'string':
