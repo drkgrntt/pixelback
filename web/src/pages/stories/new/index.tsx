@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
+import Error from 'next/error'
 import styles from './New.module.scss'
 import Card from '../../../components/Card'
 import StoryForm from '../../../components/StoryForm'
@@ -6,6 +7,7 @@ import { useCreateStoryMutation } from '../../../hooks/useCreateStoryMutation'
 import { useUpdateStoryMutation } from '../../../hooks/useUpdateStoryMutation'
 import { Genre, PublishStatus, Story } from '../../../types'
 import { useRouter } from 'next/router'
+import userContext from '../../../context/userContext'
 
 const New: React.FC<{}> = () => {
 
@@ -13,6 +15,11 @@ const New: React.FC<{}> = () => {
   const [createStory] = useCreateStoryMutation()
   const [updateStory] = useUpdateStoryMutation()
   const [story, setStory] = useState<Story | undefined>()
+  const { currentUser, setCurrentUser } = useContext(userContext)
+
+  if (!currentUser) {
+    return <Error statusCode={404} />
+  }
 
   const save = async (formState: any) => {
     formState.values.status = formState.values.publish
@@ -23,14 +30,18 @@ const New: React.FC<{}> = () => {
     try {
       let result: Record<string, any>
       let updatedStory: Story
+      let stories: Story[]
       if (story) {
         result = await updateStory({ variables: formState.values })
         updatedStory = result.data.updateStory
+        stories = currentUser.stories.map(s => s.id === updatedStory.id ? updatedStory : s)
       } else {
         result = await createStory({ variables: formState.values })
         updatedStory = result.data.createStory
+        stories = [updatedStory, ...currentUser.stories]
       }
       setStory(updatedStory)
+      setCurrentUser({ ...currentUser, stories })
       return updatedStory
     } catch (error) {
       console.warn(error)

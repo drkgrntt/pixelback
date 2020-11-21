@@ -9,7 +9,12 @@ const UserProvider: React.FC<{}> = (props) => {
 
   const setCurrentUser = (user: User | null, token?: string) => {
     setUser(user)
-    localStorage.setItem('token', token || '')
+    if (!user) {
+      localStorage.removeItem('token')
+    }
+    if (typeof token === 'string') {
+      localStorage.setItem('token', token)
+    }
   }
 
   let data: { me: User | null } = { me: null }

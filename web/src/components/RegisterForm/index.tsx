@@ -24,7 +24,7 @@ const RegisterForm: React.FC<{}> = ({}) => {
   const handleSubmit = async (event: any, reset: Function) => {
     event.preventDefault()
 
-    if (formState.validate()) {
+    if (!formState.validate()) {
       reset()
       return
     }

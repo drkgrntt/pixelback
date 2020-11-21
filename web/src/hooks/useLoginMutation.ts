@@ -7,8 +7,24 @@ export const useLoginMutation = () => {
         user {
           id
           email
-          displayName
           role
+          displayName
+          stories {
+            id
+            title
+          }
+          ratings {
+            id
+          }
+          subscriptions {
+            id
+          }
+          subscribers {
+            id
+            level
+          }
+          createdAt
+          updatedAt
         }
         token {
           value
