@@ -29,16 +29,13 @@ const StoryForm: React.FC<Props> = (props) => {
   const [init, setInit] = useState(false)
   const [autoSaveTimer, setAutoSaveTimer] = useState<NodeJS.Timeout | null>(null)
   useEffect(() => {
+    if (!autoSave || INITIAL_STATE.publish) return
     if (!init) {
       setInit(true)
       return
     }
-    if (!autoSave) return
-    if (!autoSaveTimer && formState.values.publish) return
-    if (autoSaveTimer) {
-      clearTimeout(autoSaveTimer)
-      if (formState.values.publish) return
-    }
+    if (autoSaveTimer) clearTimeout(autoSaveTimer)
+    if (formState.values.publish) return
     const timer = setTimeout(async () => {
       if (formState.values.publish) return
       setSaved('Saving...')
