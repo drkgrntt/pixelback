@@ -3,7 +3,7 @@ import styles from './New.module.scss'
 import Card from '../../../components/Card'
 import StoryForm from '../../../components/StoryForm'
 import { useCreateStoryMutation } from '../../../hooks/useCreateStoryMutation'
-// import { useUpdateStoryMutation } from '../../../hooks/useUpdateStoryMutation'
+import { useUpdateStoryMutation } from '../../../hooks/useUpdateStoryMutation'
 import { Genre, PublishStatus, Story } from '../../../types'
 import { useRouter } from 'next/router'
 
@@ -11,11 +11,10 @@ const New: React.FC<{}> = () => {
 
   const { push } = useRouter()
   const [createStory] = useCreateStoryMutation()
-  // const [updateStory] = useUpdateStoryMutation()
+  const [updateStory] = useUpdateStoryMutation()
   const [story, setStory] = useState<Story | undefined>()
 
   const save = async (formState: any) => {
-    console.log('saving!', formState)
     formState.values.status = formState.values.publish
       ? PublishStatus.Published
       : PublishStatus.Draft
@@ -25,12 +24,10 @@ const New: React.FC<{}> = () => {
       let result: Record<string, any>
       let updatedStory: Story
       if (story) {
-        // result = await updateStory({ variables: formState.values })
-        // setStory(result.data.updateStory)
-        updatedStory = {} as Story // Temporary
+        result = await updateStory({ variables: formState.values })
+        updatedStory = result.data.updateStory
       } else {
         result = await createStory({ variables: formState.values })
-        console.log(result)
         updatedStory = result.data.createStory
       }
       setStory(updatedStory)
