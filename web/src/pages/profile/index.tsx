@@ -15,9 +15,11 @@ const Profile: React.FC<{}> = () => {
     return (
       <Card className={styles.login}>
         <Link href="/login">
-          <a className={styles.login}>Login</a>
+          <span>
+            <a className={styles.login}>Login</a>
+            {' '}to view your profile.
+          </span>
         </Link>
-        {' '}to view your profile.
       </Card>
     )
   }

@@ -16,9 +16,11 @@ const WriterDashboard: React.FC<{}> = () => {
     return (
       <Card className={styles.login}>
         <Link href="/login">
-          <a className={styles.login}>Login</a>
+          <span>
+            <a className={styles.login}>Login</a>
+            {' '}to view your writer's dashboard.
+          </span>
         </Link>
-        {' '}to view your writer's dashboard.
       </Card>
     )
   }
