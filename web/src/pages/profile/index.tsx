@@ -35,8 +35,11 @@ const Profile: React.FC<{}> = () => {
   return (
     <div className={styles.profile}>
       <h2>Profile</h2>
+      <Link href="/writer-dashboard">
+        <a>Go to your writer's dashboard</a>
+      </Link>
 
-      <Card className={styles.card}>
+      <Card>
         <label>Discard all other authentication tokens to log out everywhere.</label>
         <Button styleTypes={['delete']} onClick={onLogoutEverywhereClick}>
           Discard
