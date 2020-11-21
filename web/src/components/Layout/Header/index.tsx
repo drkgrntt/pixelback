@@ -5,7 +5,7 @@ const Header: React.FC<{}> = () => {
     <header className={styles.header}>
       <h1 className={styles.title}>
         Pixelback
-        <span className={styles.subtitle}>A platform for writers</span>
+        <span className={styles.subtitle}>A platform for creative writers</span>
       </h1>
     </header>
   )
