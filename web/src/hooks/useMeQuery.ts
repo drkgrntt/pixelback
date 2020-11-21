@@ -10,6 +10,7 @@ export const useMeQuery = () => {
         displayName
         stories {
           id
+          title
         }
         ratings {
           id
@@ -19,6 +20,7 @@ export const useMeQuery = () => {
         }
         subscribers {
           id
+          level
         }
         createdAt
         updatedAt

@@ -17,12 +17,17 @@ body {
   font-size: $default-font-size;
 }
 
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
+
 a {
   color: $color-grey-dark-2;
   text-decoration: underline;
   font-style: italic;
 }
 
-* {
-  box-sizing: border-box;
+hr {
+  color: $color-grey-dark;
 }
