@@ -72,7 +72,6 @@ const StoryForm: React.FC<Props> = (props) => {
         name="title"
         label="Title"
         formState={formState}
-        required
       />
       <Input
         name="summary"
