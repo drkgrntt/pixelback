@@ -15,6 +15,7 @@ const App = ({ Component, pageProps }: { Component: React.FC, pageProps: any }) 
         />
         <meta name="language" content="en-us" />
         <meta httpEquiv="X-UA-Compatible" content="ie=edge" />
+        <title>Pixelback | A platform for creative writers</title>
       </Head>
       <ApolloProvider client={client}>
         <UserProvider>

@@ -165,7 +165,6 @@ export class StoryResolver {
     @Arg('status') status: PublishStatus,
     @Arg('enableCommenting') enableCommenting: boolean,
     @Arg('summary') summary: string,
-    @Arg('genreIds', () => [String]) genreIds: string[],
     @Ctx() { me }: Context
   ): Promise<Story> {
     const story = await Story.create({
@@ -176,13 +175,6 @@ export class StoryResolver {
       enableCommenting,
       authorId: me.id,
     }).save()
-
-    for (const genreId in genreIds) {
-      await StoryGenre.create({
-        storyId: story.id,
-        genreId: genreId,
-      }).save()
-    }
 
     return story
   }

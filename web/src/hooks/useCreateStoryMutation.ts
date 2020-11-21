@@ -8,7 +8,6 @@ export const useCreateStoryMutation = () => {
       $body: String!
       $status: Float!
       $enableCommenting: Boolean!
-      $genreIds: [String!]!
     ) {
       createStory(
         title: $title
@@ -16,7 +15,6 @@ export const useCreateStoryMutation = () => {
         body: $body
         status: $status
         enableCommenting: $enableCommenting
-        genreIds: $genreIds
       ) {
         id
         title
