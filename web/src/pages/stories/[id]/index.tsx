@@ -1,7 +1,7 @@
 import { Story } from '../../../types'
 import styles from './[id].module.scss'
 
-const Story: React.FC<{}> = () => {
+const StoryPage: React.FC<{}> = () => {
   return (
     <div>
       Story page
@@ -9,4 +9,4 @@ const Story: React.FC<{}> = () => {
   )
 }
 
-export default Story
+export default StoryPage
