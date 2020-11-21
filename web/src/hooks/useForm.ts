@@ -49,7 +49,7 @@ export const useForm = (initialState: { [key: string]: any }) => {
       return !!errors[key]
     })
 
-    return !!existingErrors.length
+    return !existingErrors.length
   }
 
   const reset = (resetErrors: boolean = true) => {

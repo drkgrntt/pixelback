@@ -39,7 +39,7 @@ const StoryForm: React.FC<Props> = (props) => {
     const timer = setTimeout(async () => {
       if (formState.values.publish) return
       setSaved('Saving...')
-      await autoSave(formState.values)
+      await autoSave(formState)
       setSaved('Saved!')
       setTimeout(() => setSaved(''), 10000)
     }, 3000)
@@ -51,12 +51,14 @@ const StoryForm: React.FC<Props> = (props) => {
 
   // Submit handling
   const handleSubmit = async (event: any, reset: Function) => {
+    event.preventDefault()
+
     if (!formState.validate()) {
       reset()
       return
     }
     try {
-      onSubmit()
+      await onSubmit(formState)
     } catch (error) {
       formState.setValues({
         ...formState.values,
