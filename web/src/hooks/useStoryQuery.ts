@@ -11,6 +11,11 @@ export const useStoryQuery = (variables: { id: string }) => {
         enableCommenting
         status
         score
+        chapters {
+          id
+          title
+          number
+        }
         publishedAt
         createdAt
         updatedAt

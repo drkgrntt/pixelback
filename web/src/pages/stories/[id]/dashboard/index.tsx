@@ -6,9 +6,12 @@ import Error from 'next/error'
 import { useRouter } from 'next/router'
 import StoryInfo from '../../../../components/StoryInfo'
 import DeleteStoryForm from '../../../../components/DeleteStoryForm'
+import ChapterList from '../../../../components/ChapterList'
 import Card from '../../../../components/Card'
+import Button from '../../../../components/Button'
 import { useStoryQuery } from '../../../../hooks/useStoryQuery'
 import userContext from '../../../../context/userContext'
+import { Story } from '../../../../types'
 
 interface Props {
 
@@ -19,7 +22,7 @@ const Dashboard: NextPage<Props> = () => {
   const { query } = useRouter()
   const { currentUser } = useContext(userContext)
   const result = useStoryQuery({ id: query.id as string })
-  const story = result.data?.story
+  const story: Story = result.data?.story
 
   if (!currentUser || !story) {
     return <Error statusCode={404} />
@@ -31,6 +34,10 @@ const Dashboard: NextPage<Props> = () => {
       <Link href="/writer-dashboard">
         <a>Back to writer's dashboard</a>
       </Link>
+
+      <Card>
+        <ChapterList story={story} />
+      </Card>
 
       <Card>
         <StoryInfo story={story} />
