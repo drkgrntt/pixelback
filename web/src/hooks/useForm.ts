@@ -39,6 +39,11 @@ export const useForm = (initialState: { [key: string]: any }) => {
         ...errors,
         [name]: 'Please use at least 6 characters in your password.',
       })
+    } else if (name === 'summary' && value.length > 510) {
+      setErrors({
+        ...errors,
+        [name]: 'The summary must be 510 characters or less.'
+      })
     } else if (errors[name]) {
       setErrors({ ...errors, [name]: '' })
     }

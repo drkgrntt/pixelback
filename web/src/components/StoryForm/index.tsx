@@ -42,6 +42,7 @@ const StoryForm: React.FC<Props> = (props) => {
   const [saved, setSaved] = useState('')
   const [init, setInit] = useState(false)
   const [autoSaveTimer, setAutoSaveTimer] = useState<NodeJS.Timeout | null>(null)
+  const [saveTextTimer, setSaveTextTimer] = useState<NodeJS.Timeout | null>(null)
   useEffect(() => {
     if (!autoSave || INITIAL_STATE.publish) return
     if (!init) {
@@ -50,16 +51,20 @@ const StoryForm: React.FC<Props> = (props) => {
     }
     if (autoSaveTimer) clearTimeout(autoSaveTimer)
     if (formState.values.publish) return
-    const timer = setTimeout(async () => {
+    const saveTimer = setTimeout(async () => {
       if (formState.values.publish) return
+      if (!formState.validate()) return
       setSaved('Saving...')
       await autoSave(formState)
       setSaved('Saved!')
-      setTimeout(() => setSaved(''), 10000)
+      if (saveTextTimer) clearTimeout(saveTextTimer)
+      const textTimer = setTimeout(() => setSaved(''), 8000)
+      setSaveTextTimer(textTimer)
     }, 3000)
-    setAutoSaveTimer(timer)
+    setAutoSaveTimer(saveTimer)
     return () => {
       if (autoSaveTimer) clearTimeout(autoSaveTimer)
+      if (saveTextTimer) clearTimeout(saveTextTimer)
     }
   }, [formState.values])
 
@@ -95,6 +100,7 @@ const StoryForm: React.FC<Props> = (props) => {
         label="Summary"
         formState={formState}
       />
+      {510 - formState.values.summary.length} characters remaining
       <Input
         name="body"
         type="textarea"

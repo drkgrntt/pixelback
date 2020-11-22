@@ -1,10 +1,9 @@
 import Error from 'next/error'
 import { NextPage } from 'next'
+import { ParsedUrlQuery } from 'querystring'
 import styles from './[id].module.scss'
 import Loader from '../../../components/Loader'
 import { useStoryQuery } from '../../../hooks/useStoryQuery'
-import withApollo from '../../../utils/withApollo'
-import { ParsedUrlQuery } from 'querystring'
 
 interface Props {
   query: ParsedUrlQuery
@@ -26,6 +25,7 @@ const StoryPage: NextPage<Props> = (props) => {
   return (
     <div>
       <h2>{story.title}</h2>
+      {story.body}
     </div>
   )
 }

@@ -51,7 +51,7 @@ export class Story extends BaseEntity {
   @Field()
   body: string
 
-  @Column('text')
+  @Column({ length: 510 })
   @Field()
   summary: string
 
