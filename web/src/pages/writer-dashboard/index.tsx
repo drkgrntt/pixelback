@@ -1,13 +1,14 @@
+import { NextPage } from 'next'
 import { useContext } from 'react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
-import userContext from '../../context/userContext'
+import userContext from '@/context/userContext'
 import styles from './WriterDashboard.module.scss'
-import Card from '../../components/Card'
-import { SubLevel } from '../../types'
-import Button from '../../components/Button'
+import Card from '@/components/Card'
+import { SubLevel } from '@/types'
+import Button from '@/components/Button'
 
-const WriterDashboard: React.FC<{}> = () => {
+const WriterDashboard: NextPage<{}> = () => {
 
   const { currentUser } = useContext(userContext)
   const { push } = useRouter()

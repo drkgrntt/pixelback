@@ -1,11 +1,11 @@
 import { useState, useContext } from 'react'
 import { useRouter } from 'next/router'
 import styles from './DeleteStoryForm.module.scss'
-import userContext from '../../context/userContext'
-import { useDeleteStoryMutation } from '../../hooks/useDeleteStoryMutation'
+import userContext from '@/context/userContext'
+import { useDeleteStoryMutation } from '@/hooks/useDeleteStoryMutation'
 import Input from '../Input'
 import Button from '../Button'
-import { Story } from '../../types'
+import { Story } from '@/types'
 
 interface Props {
   story: Story

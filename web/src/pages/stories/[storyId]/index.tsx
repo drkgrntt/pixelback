@@ -2,8 +2,8 @@ import Error from 'next/error'
 import { NextPage } from 'next'
 import { ParsedUrlQuery } from 'querystring'
 import styles from './[id].module.scss'
-import Loader from '../../../components/Loader'
-import { useStoryQuery } from '../../../hooks/useStoryQuery'
+import Loader from '@/components/Loader'
+import { useStoryQuery } from '@/hooks/useStoryQuery'
 
 interface Props {
   query: ParsedUrlQuery
@@ -11,7 +11,7 @@ interface Props {
 
 const StoryPage: NextPage<Props> = (props) => {
 
-  const result = useStoryQuery({ id: props.query.id as string })
+  const result = useStoryQuery({ id: props.query.storyId as string })
   
   switch (true) {
     case !!result.error:

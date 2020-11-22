@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react'
 import styles from './StoryForm.module.scss'
-import { useForm } from '../../hooks/useForm'
+import { useForm } from '@/hooks/useForm'
 import Button from '../Button'
 import Input from '../Input'
-import { Story, PublishStatus } from '../../types'
+import { Story, PublishStatus } from '@/types'
 
 interface Props {
   story?: Story

@@ -1,6 +1,7 @@
+import { NextPage } from 'next'
 import styles from './About.module.scss'
 
-const About: React.FC<{}> = () => {
+const About: NextPage<{}> = () => {
   return (
     <div>
       This is the about page.

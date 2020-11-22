@@ -1,8 +1,9 @@
+import { NextPage } from 'next'
 import styles from './Login.module.scss'
-import LoginForm from '../../components/LoginForm'
-import Card from '../../components/Card'
+import LoginForm from '@/components/LoginForm'
+import Card from '@/components/Card'
 
-const Login: React.FC<{}> = () => {
+const Login: NextPage<{}> = () => {
   return (
     <div className={styles.login}>
       <Card>

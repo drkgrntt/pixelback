@@ -1,8 +1,9 @@
+import { NextPage } from 'next'
 import styles from './Register.module.scss'
-import RegisterForm from '../../components/RegisterForm'
-import Card from '../../components/Card'
+import RegisterForm from '@/components/RegisterForm'
+import Card from '@/components/Card'
 
-const Register: React.FC<{}> = () => {
+const Register: NextPage<{}> = () => {
   return (
     <div className={styles.register}>
       <Card>

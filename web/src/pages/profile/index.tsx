@@ -1,12 +1,13 @@
+import { NextPage } from 'next'
 import { useContext } from 'react'
-import userContext from '../../context/userContext'
+import userContext from '@/context/userContext'
 import styles from './Profile.module.scss'
-import Button from '../../components/Button'
-import Card from '../../components/Card'
-import { useLogoutEverywhereMutation } from '../../hooks/useLogoutEverywhereMutation'
+import Button from '@/components/Button'
+import Card from '@/components/Card'
+import { useLogoutEverywhereMutation } from '@/hooks/useLogoutEverywhereMutation'
 import Link from 'next/link'
 
-const Profile: React.FC<{}> = () => {
+const Profile: NextPage<{}> = () => {
 
   const { currentUser, setCurrentUser, setToken } = useContext(userContext)
   const [logoutEverywhere] = useLogoutEverywhereMutation()

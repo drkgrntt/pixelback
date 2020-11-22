@@ -1,7 +1,7 @@
-import withApollo from '../utils/withApollo'
-import Loader from '../components/Loader'
+import { NextPage } from 'next'
+import Loader from '@/components/Loader'
 
-const Home: React.FC<{}> = () => {
+const Home: NextPage<{}> = () => {
 
   return (
     <div>
@@ -11,4 +11,4 @@ const Home: React.FC<{}> = () => {
   )
 }
 
-export default withApollo({ ssr: false })(Home)
+export default Home

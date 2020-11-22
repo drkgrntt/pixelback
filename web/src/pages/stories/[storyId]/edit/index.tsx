@@ -1,20 +1,21 @@
+import { NextPage } from 'next'
 import { useContext } from 'react'
 import Error from 'next/error'
 import styles from './Edit.module.scss'
-import Card from '../../../../components/Card'
-import StoryForm from '../../../../components/StoryForm'
-import { useUpdateStoryMutation } from '../../../../hooks/useUpdateStoryMutation'
-import { useStoryQuery } from '../../../../hooks/useStoryQuery'
-import { Genre, PublishStatus, Story } from '../../../../types'
+import Card from '@/components/Card'
+import StoryForm from '@/components/StoryForm'
+import { useUpdateStoryMutation } from '@/hooks/useUpdateStoryMutation'
+import { useStoryQuery } from '@/hooks/useStoryQuery'
+import { Genre, PublishStatus } from '@/types'
 import { useRouter } from 'next/router'
-import userContext from '../../../../context/userContext'
+import userContext from '@/context/userContext'
 
-const Edit: React.FC<{}> = () => {
+const Edit: NextPage<{}> = () => {
 
   const { push, query } = useRouter()
   const [updateStory] = useUpdateStoryMutation()
   const { currentUser, setCurrentUser } = useContext(userContext)
-  const result = useStoryQuery({ id: query.id as string })
+  const result = useStoryQuery({ id: query.storyId as string })
   const story = result.data?.story
 
   if (!currentUser || !story) {

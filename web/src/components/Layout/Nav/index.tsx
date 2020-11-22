@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { useContext } from 'react'
-import { useLogoutMutation } from '../../../hooks/useLogoutMutation'
-import userContext from '../../../context/userContext'
+import { useLogoutMutation } from '@/hooks/useLogoutMutation'
+import userContext from '@/context/userContext'
 import styles from './Nav.module.scss';
 
 const Nav: React.FC<{}> = () => {

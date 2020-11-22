@@ -1,4 +1,4 @@
-import { Story } from '../../types'
+import { Story } from '@/types'
 import styles from './GenreList.module.scss'
 import GenreSearch from '../GenreSearch'
 

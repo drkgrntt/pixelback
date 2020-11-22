@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import styles from './StoryInfo.module.scss'
-import { Story, PublishStatus } from '../../types'
+import { Story, PublishStatus } from '@/types'
 
 interface Props {
   story: Story

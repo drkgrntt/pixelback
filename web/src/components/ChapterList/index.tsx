@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 import Button from '../Button'
-import { Story } from '../../types'
+import { Story } from '@/types'
 import styles from './ChapterList.module.scss'
 
 interface Props {

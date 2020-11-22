@@ -1,15 +1,16 @@
+import { NextPage } from 'next'
 import { useContext, useState } from 'react'
 import Error from 'next/error'
 import styles from './New.module.scss'
-import Card from '../../../components/Card'
-import StoryForm from '../../../components/StoryForm'
-import { useCreateStoryMutation } from '../../../hooks/useCreateStoryMutation'
-import { useUpdateStoryMutation } from '../../../hooks/useUpdateStoryMutation'
-import { Genre, PublishStatus, Story } from '../../../types'
+import Card from '@/components/Card'
+import StoryForm from '@/components/StoryForm'
+import { useCreateStoryMutation } from '@/hooks/useCreateStoryMutation'
+import { useUpdateStoryMutation } from '@/hooks/useUpdateStoryMutation'
+import { Genre, PublishStatus, Story } from '@/types'
 import { useRouter } from 'next/router'
-import userContext from '../../../context/userContext'
+import userContext from '@/context/userContext'
 
-const New: React.FC<{}> = () => {
+const New: NextPage<{}> = () => {
 
   const { push } = useRouter()
   const [createStory] = useCreateStoryMutation()

@@ -1,9 +1,9 @@
 import { ApolloProvider } from '@apollo/client'
 import Head from 'next/head'
 import '../styles/globals.scss'
-import Layout from '../components/Layout'
-import UserProvider from '../context/UserProvider'
-import { client } from '../utils/withApollo'
+import Layout from '@/components/Layout'
+import UserProvider from '@/context/UserProvider'
+import { client } from '@/utils/withApollo'
 
 const App = ({ Component, pageProps }: { Component: React.FC, pageProps: any }) => {
   return (
