@@ -15,7 +15,9 @@ const Edit: NextPage<{}> = () => {
   const { push, query } = useRouter()
   const [updateStory] = useUpdateStoryMutation()
   const { currentUser, setCurrentUser } = useContext(userContext)
-  const result = useStoryQuery({ id: query.storyId as string })
+  const getStory = useStoryQuery()
+  const variables = { id: query.storyId as string }
+  const result = getStory({ variables, skip: !query.storyId })
   const story = result.data?.story
 
   if (!currentUser || !story) {

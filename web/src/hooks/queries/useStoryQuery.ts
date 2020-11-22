@@ -1,6 +1,6 @@
-import { gql, useQuery } from '@apollo/client'
+import { gql, QueryHookOptions, useQuery } from '@apollo/client'
 
-export const useStoryQuery = (variables: { id: string }) => {
+export const useStoryQuery = () => {
   const STORY = gql`
     query Story($id: String!) {
       story(id: $id) {
@@ -27,5 +27,5 @@ export const useStoryQuery = (variables: { id: string }) => {
     }
   `
 
-  return useQuery(STORY, { variables })
+  return (options: QueryHookOptions) => useQuery(STORY, options)
 }

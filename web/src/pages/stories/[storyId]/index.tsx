@@ -9,9 +9,11 @@ interface Props {
   query: ParsedUrlQuery
 }
 
-const StoryPage: NextPage<Props> = (props) => {
+const StoryPage: NextPage<Props> = ({ query }) => {
 
-  const result = useStoryQuery({ id: props.query.storyId as string })
+  const getStory = useStoryQuery()
+  const variables = { id: query.storyId as string }
+  const result = getStory({ variables, skip: !query.storyId })
   
   switch (true) {
     case !!result.error:
@@ -19,7 +21,7 @@ const StoryPage: NextPage<Props> = (props) => {
     case !!result.loading:
       return <Loader />
   }
-      
+
   const story = result.data.story
 
   return (
