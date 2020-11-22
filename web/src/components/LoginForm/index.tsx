@@ -17,7 +17,7 @@ const LoginForm: React.FC<{}> = ({}) => {
   }
 
   const formState = useForm(INITIAL_FORM_STATE)
-  const { setCurrentUser } = useContext(userContext)
+  const { setCurrentUser, setToken } = useContext(userContext)
   const { push } = useRouter()
   const [login] = useLoginMutation()
 
@@ -32,7 +32,8 @@ const LoginForm: React.FC<{}> = ({}) => {
     try {
       const result = await login({ variables: formState.values })
       const { user, token } = result.data.login
-      setCurrentUser(user, token.value)
+      setCurrentUser(user)
+      setToken(token.value)
       formState.reset()
       push('/profile')
     } catch (error) {

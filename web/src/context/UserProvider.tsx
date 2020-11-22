@@ -5,34 +5,34 @@ import { User } from '../types'
 
 const UserProvider: React.FC<{}> = (props) => {
 
-  const [currentUser, setUser] = useState<User | null>(null)
-
-  const setCurrentUser = (user: User | null, token?: string) => {
-    setUser(user)
-    if (!user) {
+  const [currentUser, setCurrentUser] = useState<User | null>(null)
+  const setToken = (token?: string) => {
+    if (token) {
+      localStorage.setItem('token', token)
+    } else {
       localStorage.removeItem('token')
     }
-    if (typeof token === 'string') {
-      localStorage.setItem('token', token)
-    }
   }
 
-  let data: { me: User | null } = { me: null }
-  try {
-    const result = useMeQuery()
-    data = result.data
-  } catch (err) {
-    setCurrentUser(null, '')
-  }
+  const result = useMeQuery()
+
   useEffect(() => {
-    setUser(data?.me)
-  }, [data])
+    switch (true) {
+      case !!result.error:
+        setCurrentUser(null)
+        break
+      case !!result.data:
+        setCurrentUser(result.data.me)
+        break
+    }
+  }, [result])
 
   return (
     <userContext.Provider
       value={{
         currentUser,
-        setCurrentUser
+        setCurrentUser,
+        setToken
       }}
     >
       {props.children}

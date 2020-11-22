@@ -17,7 +17,7 @@ const RegisterForm: React.FC<{}> = ({}) => {
   }
 
   const formState = useForm(INITIAL_FORM_STATE)
-  const { setCurrentUser } = useContext(userContext)
+  const { setCurrentUser, setToken } = useContext(userContext)
   const { push } = useRouter()
   const [register] = useRegisterMutation()
 
@@ -31,8 +31,9 @@ const RegisterForm: React.FC<{}> = ({}) => {
 
     try {
       const result = await register({ variables: formState.values })
-      const { user, token } = result.data.login
-      setCurrentUser(user, token.value)
+      const { user, token } = result.data.register
+      setCurrentUser(user)
+      setToken(token.value)
       formState.reset()
       push('/profile')
     } catch (error) {

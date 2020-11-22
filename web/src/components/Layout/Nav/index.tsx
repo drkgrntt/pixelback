@@ -6,7 +6,7 @@ import styles from './Nav.module.scss';
 
 const Nav: React.FC<{}> = () => {
 
-  const { currentUser, setCurrentUser } = useContext(userContext)
+  const { currentUser, setCurrentUser, setToken } = useContext(userContext)
   const [logout] = useLogoutMutation()
 
   const toggleNav = () => {
@@ -18,6 +18,7 @@ const Nav: React.FC<{}> = () => {
     try {
       await logout()
       setCurrentUser(null)
+      setToken(null)
     } catch (err) {
       console.warn(err)
     }

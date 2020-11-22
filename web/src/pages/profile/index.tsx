@@ -8,7 +8,7 @@ import Link from 'next/link'
 
 const Profile: React.FC<{}> = () => {
 
-  const { currentUser, setCurrentUser } = useContext(userContext)
+  const { currentUser, setCurrentUser, setToken } = useContext(userContext)
   const [logoutEverywhere] = useLogoutEverywhereMutation()
 
   if (!currentUser) {
@@ -27,7 +27,8 @@ const Profile: React.FC<{}> = () => {
   const onLogoutEverywhereClick = async (event: any, reset: Function) => {
     try {
       const result = await logoutEverywhere()
-      setCurrentUser(currentUser, result.data.logoutEverywhere.value)
+      setCurrentUser(currentUser)
+      setToken(result.data.logoutEverywhere.value)
     } catch (err) {
 
     }
