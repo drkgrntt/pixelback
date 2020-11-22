@@ -1,5 +1,6 @@
 import { Story } from '../../types'
 import styles from './GenreList.module.scss'
+import GenreSearch from '../GenreSearch'
 
 interface Props {
   story: Story
@@ -19,16 +20,12 @@ const GenreList: React.FC<Props> = ({ story }) => {
     })
   }
 
-  const renderGenreSearch = () => {
-    return null
-  }
-
   return (
     <>
       <h3>Genres</h3>
       <ul className={styles.genres}>{renderGenres()}</ul>
       <hr />
-      {renderGenreSearch()}
+      <GenreSearch story={story} />
     </>
   )
 }
