@@ -12,6 +12,7 @@ import Button from '../../../../components/Button'
 import { useStoryQuery } from '../../../../hooks/useStoryQuery'
 import userContext from '../../../../context/userContext'
 import { Story } from '../../../../types'
+import GenreList from '../../../../components/GenreList'
 
 interface Props {
 
@@ -34,6 +35,10 @@ const Dashboard: NextPage<Props> = () => {
       <Link href="/writer-dashboard">
         <a>Back to writer's dashboard</a>
       </Link>
+
+      <Card>
+        <GenreList story={story} />
+      </Card>
 
       <Card>
         <ChapterList story={story} />

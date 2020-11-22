@@ -11,6 +11,10 @@ export const useStoryQuery = (variables: { id: string }) => {
         enableCommenting
         status
         score
+        genres {
+          id
+          name
+        }
         chapters {
           id
           title
