@@ -10,5 +10,5 @@ export const useGenresQuery = () => {
     }
   `
 
-  return (options: QueryHookOptions) => useQuery(GENRES, options)
+  return (options?: QueryHookOptions) => useQuery(GENRES, options)
 }

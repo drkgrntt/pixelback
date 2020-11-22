@@ -27,5 +27,5 @@ export const useStoryQuery = () => {
     }
   `
 
-  return (options: QueryHookOptions) => useQuery(STORY, options)
+  return (options?: QueryHookOptions) => useQuery(STORY, options)
 }

@@ -1,4 +1,4 @@
-import { gql, useQuery } from '@apollo/client'
+import { gql, QueryHookOptions, useQuery } from '@apollo/client'
 
 export const useMeQuery = () => {
   const ME = gql`
@@ -28,5 +28,5 @@ export const useMeQuery = () => {
     }
   `
 
-  return useQuery(ME)
+  return (options?: QueryHookOptions) => useQuery(ME, options)
 }
