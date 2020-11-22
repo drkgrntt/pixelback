@@ -26,15 +26,7 @@ const WriterDashboard: React.FC<{}> = () => {
   }
 
   const renderStories = () => {
-
-    if (!currentUser.stories.length) {
-      return (
-        <>
-          <p className={styles.ctaText}>Write your first story!</p>
-          <Button onClick={() => push('/stories/new')} styleTypes={['cta']}>Start writing</Button>
-        </>
-      )
-    }
+    if (!currentUser.stories.length) return null
 
     return currentUser.stories.map((story) => {
       return (
@@ -51,6 +43,24 @@ const WriterDashboard: React.FC<{}> = () => {
     })
   }
 
+  const renderNewStoryButton = () => {
+    if (currentUser.stories.length) {
+      return (
+        <>
+          <p className={styles.ctaText}>Write a new story!</p>
+          <Button onClick={() => push('/stories/new')} styleTypes={['cta']}>Start writing</Button>
+        </>
+      )
+    }
+
+    return (
+      <>
+        <p className={styles.ctaText}>Write your first story!</p>
+        <Button onClick={() => push('/stories/new')} styleTypes={['cta']}>Start writing</Button>
+      </>
+    )
+  }
+
   return (
     <div>
       <h2>Writer's Dashboard</h2>
@@ -59,8 +69,7 @@ const WriterDashboard: React.FC<{}> = () => {
         <h3>My Stories</h3>
         <ul className={styles.stories}>{renderStories()}</ul>
         <hr />
-        <p className={styles.ctaText}>Write a new story!</p>
-        <Button onClick={() => push('/stories/new')} styleTypes={['cta']}>Start writing</Button>
+        {renderNewStoryButton()}
       </Card>
 
       <Card>
