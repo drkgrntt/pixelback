@@ -35,8 +35,8 @@ const WriterDashboard: React.FC<{}> = () => {
             {story.title}
           </Link>
           {' | '}
-          <Link href={`/stories/${story.id}/edit`}>
-            Edit
+          <Link href={`/stories/${story.id}/dashboard`}>
+            Dashboard
           </Link>
         </li>
       )
