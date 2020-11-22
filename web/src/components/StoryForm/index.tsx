@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from 'react'
+import { useState, useEffect } from 'react'
 import styles from './StoryForm.module.scss'
 import { useForm } from '../../hooks/useForm'
 import Button from '../Button'
@@ -58,7 +58,15 @@ const StoryForm: React.FC<Props> = (props) => {
       await autoSave(formState)
       setSaved('Saved!')
       if (saveTextTimer) clearTimeout(saveTextTimer)
-      const textTimer = setTimeout(() => setSaved(''), 8000)
+      const textTimer = setTimeout(() => {
+        setSaved('')
+        if (formState.values.validation) {
+          formState.setValues({
+            ...formState.values,
+            validation: ''
+          })
+        }
+      }, 8000)
       setSaveTextTimer(textTimer)
     }, 3000)
     setAutoSaveTimer(saveTimer)
