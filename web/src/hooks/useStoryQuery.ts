@@ -10,6 +10,7 @@ export const useStoryQuery = (variables: { id: string }) => {
         summary
         enableCommenting
         status
+        score
         publishedAt
         createdAt
         updatedAt

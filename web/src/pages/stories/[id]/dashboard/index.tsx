@@ -1,18 +1,20 @@
 import { NextPage } from 'next'
-import { useState } from 'react'
+import Link from 'next/link'
 import styles from './Dashboard.module.scss'
 import { useContext } from 'react'
 import Error from 'next/error'
+import { useRouter } from 'next/router'
+import StoryInfo from '../../../../components/StoryInfo'
 import DeleteStoryForm from '../../../../components/DeleteStoryForm'
-import Input from '../../../../components/Input'
-import Button from '../../../../components/Button'
 import Card from '../../../../components/Card'
 import { useStoryQuery } from '../../../../hooks/useStoryQuery'
-import { Genre, PublishStatus, Story } from '../../../../types'
-import { useRouter } from 'next/router'
 import userContext from '../../../../context/userContext'
 
-const Dashboard: NextPage<{}> = () => {
+interface Props {
+
+}
+
+const Dashboard: NextPage<Props> = () => {
 
   const { query } = useRouter()
   const { currentUser } = useContext(userContext)
@@ -25,7 +27,17 @@ const Dashboard: NextPage<{}> = () => {
 
   return (
     <div>
-      <h2>Story Dashboard</h2>
+      <h2>{story.title}</h2>
+      <Link href="/writer-dashboard">
+        <a>Back to writer's dashboard</a>
+      </Link>
+
+      <Card>
+        <StoryInfo story={story} />
+        <Link href={`/stories/${story.id}/edit`}>
+          <a>Edit the story</a>
+        </Link>
+      </Card>
 
       <Card>
         <DeleteStoryForm story={story} />
