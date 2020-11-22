@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react'
 import Loader from '../Loader'
 import styles from './Button.module.scss'
 
+type StyleType = 'primary' | 'secondary' | 'tertiary' | 'cta' | 'edit' | 'delete' | 'small'
+
 interface Props {
   className?: string
   disabled?: boolean
@@ -11,7 +13,7 @@ interface Props {
   title?: string
   children: string
   type?: "button" | "reset" | "submit"
-  styleTypes?: string[]
+  styleTypes?: StyleType[]
 }
 
 const Button = (props: Props) => {

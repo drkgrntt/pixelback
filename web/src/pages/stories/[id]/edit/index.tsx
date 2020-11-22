@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react'
+import { useContext } from 'react'
 import Error from 'next/error'
 import styles from './Edit.module.scss'
 import Card from '../../../../components/Card'
