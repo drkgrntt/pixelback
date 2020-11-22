@@ -23,6 +23,8 @@
     "paths": {
       "@/components/*": ["src/components/*"],
       "@/hooks/*": ["src/hooks/*"],
+      "@/queries/*": ["src/hooks/queries/*"],
+      "@/mutations/*": ["src/hooks/mutations/*"],
       "@/context/*": ["src/context/*"],
       "@/utils/*": ["src/utils/*"],
       "@/types": ["src/types"]

@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { useContext } from 'react'
-import { useLogoutMutation } from '@/hooks/useLogoutMutation'
+import { useLogoutMutation } from '@/mutations/useLogoutMutation'
 import userContext from '@/context/userContext'
 import styles from './Nav.module.scss';
 

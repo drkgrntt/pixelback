@@ -4,7 +4,7 @@ import userContext from '@/context/userContext'
 import styles from './Profile.module.scss'
 import Button from '@/components/Button'
 import Card from '@/components/Card'
-import { useLogoutEverywhereMutation } from '@/hooks/useLogoutEverywhereMutation'
+import { useLogoutEverywhereMutation } from '@/mutations/useLogoutEverywhereMutation'
 import Link from 'next/link'
 
 const Profile: NextPage<{}> = () => {

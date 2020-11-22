@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useMeQuery } from '../hooks/useMeQuery'
+import { useMeQuery } from '../hooks/queries/useMeQuery'
 import userContext from './userContext'
 import { User } from '../types'
 

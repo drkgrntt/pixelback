@@ -3,7 +3,7 @@ import { NextPage } from 'next'
 import { ParsedUrlQuery } from 'querystring'
 import styles from './[id].module.scss'
 import Loader from '@/components/Loader'
-import { useStoryQuery } from '@/hooks/useStoryQuery'
+import { useStoryQuery } from '@/queries/useStoryQuery'
 
 interface Props {
   query: ParsedUrlQuery
