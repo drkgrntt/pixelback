@@ -1,14 +1,21 @@
+@import 'src/styles/variables.scss';
+
 .genres {
   padding: 0;
   margin: 0;
   display: flex;
   flex-direction: column;
-  padding-left: 2rem;
+  gap: 1rem;
 }
 
 .genre {
-  // list-style-type: none;
-  // font-size: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.name {
+  vertical-align: middle;
 }
 
 .ctaText {

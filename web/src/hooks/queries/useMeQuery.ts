@@ -9,6 +9,10 @@ export const useMeQuery = () => {
         stories {
           id
           title
+          genres {
+            id
+            name
+          }
         }
         ratings {
           id

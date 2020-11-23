@@ -1,12 +1,25 @@
-import { Story } from '@/types'
+import { Genre, Story } from '@/types'
 import styles from './GenreList.module.scss'
 import GenreSearch from '../GenreSearch'
+import Button from '../Button'
+import { useRemoveGenreFromStoryMutation } from '@/mutations/useRemoveGenreFromStoryMutation'
 
 interface Props {
   story: Story
 }
 
 const GenreList: React.FC<Props> = ({ story }) => {
+
+  const [removeGenreFromStory] = useRemoveGenreFromStoryMutation()
+
+  const deleteGenre = async (genre: Genre, event: any, reset: Function) => {
+    event.preventDefault()
+    const variables = {
+      genreId: genre.id,
+      storyId: story.id
+    }
+    await removeGenreFromStory({ variables })
+  }
 
   const renderGenres = () => {
     if (!story.genres.length) {
@@ -15,7 +28,15 @@ const GenreList: React.FC<Props> = ({ story }) => {
 
     return story.genres.map(genre => {
       return (
-        <li className={styles.genre} key={genre.id}>{genre.name}</li>
+        <li key={genre.id} className={styles.genre}>
+          <span className={styles.name}>{genre.name}</span>
+          <Button
+            styleTypes={['small', 'delete']}
+            onClick={(event: any, reset: Function) => deleteGenre(genre, event, reset)}
+          >
+            Remove
+          </Button>
+        </li>
       )
     })
   }
