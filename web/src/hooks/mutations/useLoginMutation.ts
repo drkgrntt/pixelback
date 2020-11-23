@@ -1,14 +1,12 @@
 import { gql, useMutation } from '@apollo/client'
+import { UserInfo } from '@/fragments/UserInfo'
 
 export const useLoginMutation = () => {
   const LOGIN = gql`
     mutation Login($email: String!, $password: String!) {
       login(email: $email, password: $password) {
         user {
-          id
-          email
-          role
-          displayName
+          ...UserInfo
           stories {
             id
             title
@@ -23,14 +21,13 @@ export const useLoginMutation = () => {
             id
             level
           }
-          createdAt
-          updatedAt
         }
         token {
           value
         }
       }
     }
+    ${UserInfo}
   `
 
   return useMutation(LOGIN)

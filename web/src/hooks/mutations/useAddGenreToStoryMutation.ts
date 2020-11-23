@@ -1,4 +1,5 @@
 import { gql, useMutation } from '@apollo/client'
+import { StoryInfo } from '@/fragments/StoryInfo'
 
 export const useAddGenreToStoryMutation = () => {
   const ADD_GENRE_TO_STORY = gql`
@@ -10,13 +11,7 @@ export const useAddGenreToStoryMutation = () => {
         genreId: $genreId
         storyId: $storyId
       ) {
-        id
-        title
-        body
-        summary
-        enableCommenting
-        status
-        score
+        ...StoryInfo
         genres {
           id
           name
@@ -26,11 +21,9 @@ export const useAddGenreToStoryMutation = () => {
           title
           number
         }
-        publishedAt
-        createdAt
-        updatedAt
       }
     }
+    ${StoryInfo}
   `
 
   return useMutation(ADD_GENRE_TO_STORY)

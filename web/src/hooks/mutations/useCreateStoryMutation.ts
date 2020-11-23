@@ -1,4 +1,5 @@
 import { gql, useMutation } from '@apollo/client'
+import { StoryInfo } from '@/fragments/StoryInfo'
 
 export const useCreateStoryMutation = () => {
   const CREATE_STORY = gql`
@@ -16,17 +17,10 @@ export const useCreateStoryMutation = () => {
         status: $status
         enableCommenting: $enableCommenting
       ) {
-        id
-        title
-        body
-        summary
-        enableCommenting
-        status
-        publishedAt
-        createdAt
-        updatedAt
+        ...StoryInfo
       }
     }
+    ${StoryInfo}
   `
 
   return useMutation(CREATE_STORY)

@@ -1,13 +1,11 @@
 import { gql, QueryHookOptions, useQuery } from '@apollo/client'
+import { UserInfo } from '@/fragments/UserInfo'
 
 export const useMeQuery = () => {
   const ME = gql`
     query Me {
       me {
-        id
-        email
-        role
-        displayName
+        ...UserInfo
         stories {
           id
           title
@@ -22,10 +20,9 @@ export const useMeQuery = () => {
           id
           level
         }
-        createdAt
-        updatedAt
       }
     }
+    ${UserInfo}
   `
 
   return (options?: QueryHookOptions) => useQuery(ME, options)
