@@ -11,7 +11,6 @@ import { useRouter } from 'next/router'
 import userContext from '@/context/userContext'
 
 const New: NextPage<{}> = () => {
-
   const { push } = useRouter()
   const [createStory] = useCreateStoryMutation()
   const [updateStory] = useUpdateStoryMutation()
@@ -26,7 +25,9 @@ const New: NextPage<{}> = () => {
     formState.values.status = formState.values.publish
       ? PublishStatus.Published
       : PublishStatus.Draft
-    formState.values.genreIds = formState.values.genres.map((g: Genre) => g.id)
+    formState.values.genreIds = formState.values.genres.map(
+      (g: Genre) => g.id
+    )
 
     try {
       let result: Record<string, any>
@@ -35,7 +36,9 @@ const New: NextPage<{}> = () => {
       if (story) {
         result = await updateStory({ variables: formState.values })
         updatedStory = result.data.updateStory
-        stories = currentUser.stories.map(s => s.id === updatedStory.id ? updatedStory : s)
+        stories = currentUser.stories.map((s) =>
+          s.id === updatedStory.id ? updatedStory : s
+        )
       } else {
         result = await createStory({ variables: formState.values })
         updatedStory = result.data.createStory
@@ -48,7 +51,7 @@ const New: NextPage<{}> = () => {
       console.warn(error)
       formState.setValues({
         ...formState.values,
-        validation: error.message
+        validation: error.message,
       })
       return null
     }

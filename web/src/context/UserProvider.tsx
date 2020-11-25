@@ -4,7 +4,6 @@ import userContext from './userContext'
 import { User } from '../types'
 
 const UserProvider: React.FC<{}> = (props) => {
-
   const [currentUser, setCurrentUser] = useState<User | null>(null)
   const setToken = (token?: string) => {
     if (token) {
@@ -39,7 +38,7 @@ const UserProvider: React.FC<{}> = (props) => {
       value={{
         currentUser,
         setCurrentUser,
-        setToken
+        setToken,
       }}
     >
       {props.children}

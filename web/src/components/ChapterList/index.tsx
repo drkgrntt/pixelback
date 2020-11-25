@@ -9,7 +9,6 @@ interface Props {
 }
 
 const ChapterList: React.FC<Props> = ({ story }) => {
-
   const { push } = useRouter()
 
   const renderChapters = () => {
@@ -35,7 +34,12 @@ const ChapterList: React.FC<Props> = ({ story }) => {
       return (
         <>
           <p className={styles.ctaText}>Write a new chapter!</p>
-          <Button onClick={() => push('/stories/new')} styleTypes={['cta']}>Start writing</Button>
+          <Button
+            onClick={() => push('/stories/new')}
+            styleTypes={['cta']}
+          >
+            Start writing
+          </Button>
         </>
       )
     }
@@ -43,7 +47,12 @@ const ChapterList: React.FC<Props> = ({ story }) => {
     return (
       <>
         <p className={styles.ctaText}>Write the first chapter!</p>
-        <Button onClick={() => push('/stories/new')} styleTypes={['cta']}>Start writing</Button>
+        <Button
+          onClick={() => push('/stories/new')}
+          styleTypes={['cta']}
+        >
+          Start writing
+        </Button>
       </>
     )
   }

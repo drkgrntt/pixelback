@@ -9,7 +9,6 @@ import { SubLevel } from '@/types'
 import Button from '@/components/Button'
 
 const WriterDashboard: NextPage<{}> = () => {
-
   const { currentUser } = useContext(userContext)
   const { push } = useRouter()
 
@@ -18,8 +17,8 @@ const WriterDashboard: NextPage<{}> = () => {
       <Card className={styles.login}>
         <Link href="/login">
           <span>
-            <a className={styles.login}>Login</a>
-            {' '}to view your writer's dashboard.
+            <a className={styles.login}>Login</a> to view your
+            writer's dashboard.
           </span>
         </Link>
       </Card>
@@ -32,9 +31,7 @@ const WriterDashboard: NextPage<{}> = () => {
     return currentUser.stories.map((story) => {
       return (
         <li key={story.id} className={styles.story}>
-          <Link href={`/stories/${story.id}`}>
-            {story.title}
-          </Link>
+          <Link href={`/stories/${story.id}`}>{story.title}</Link>
           {' | '}
           <Link href={`/stories/${story.id}/dashboard`}>
             Dashboard
@@ -49,7 +46,12 @@ const WriterDashboard: NextPage<{}> = () => {
       return (
         <>
           <p className={styles.ctaText}>Write a new story!</p>
-          <Button onClick={() => push('/stories/new')} styleTypes={['cta']}>Start writing</Button>
+          <Button
+            onClick={() => push('/stories/new')}
+            styleTypes={['cta']}
+          >
+            Start writing
+          </Button>
         </>
       )
     }
@@ -57,7 +59,12 @@ const WriterDashboard: NextPage<{}> = () => {
     return (
       <>
         <p className={styles.ctaText}>Write your first story!</p>
-        <Button onClick={() => push('/stories/new')} styleTypes={['cta']}>Start writing</Button>
+        <Button
+          onClick={() => push('/stories/new')}
+          styleTypes={['cta']}
+        >
+          Start writing
+        </Button>
       </>
     )
   }
@@ -78,10 +85,20 @@ const WriterDashboard: NextPage<{}> = () => {
         <hr />
         <ul className={styles.stats}>
           <li className={styles.stat}>
-            Followers: {currentUser.subscribers.map(s => s.level === SubLevel.Free).length}
+            Followers:{' '}
+            {
+              currentUser.subscribers.map(
+                (s) => s.level === SubLevel.Free
+              ).length
+            }
           </li>
           <li className={styles.stat}>
-            Subscribers: {currentUser.subscribers.map(s => s.level === SubLevel.Free).length}
+            Subscribers:{' '}
+            {
+              currentUser.subscribers.map(
+                (s) => s.level === SubLevel.Free
+              ).length
+            }
           </li>
         </ul>
       </Card>

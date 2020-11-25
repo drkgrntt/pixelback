@@ -5,7 +5,13 @@ import Layout from '@/components/Layout'
 import UserProvider from '@/context/UserProvider'
 import { client } from '@/utils/withApollo'
 
-const App = ({ Component, pageProps }: { Component: React.FC, pageProps: any }) => {
+const App = ({
+  Component,
+  pageProps,
+}: {
+  Component: React.FC
+  pageProps: any
+}) => {
   return (
     <>
       <Head>

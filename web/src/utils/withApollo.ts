@@ -2,7 +2,7 @@ import {
   ApolloClient,
   InMemoryCache,
   createHttpLink,
-  ApolloLink
+  ApolloLink,
 } from '@apollo/client'
 import { setContext } from '@apollo/client/link/context'
 import { withApollo } from 'next-apollo'
@@ -27,7 +27,7 @@ const authLink = setContext((_, { headers }) => {
  */
 const convertDates = (data: any) => {
   if (!data) return data
-  Object.keys(data).forEach(key => {
+  Object.keys(data).forEach((key) => {
     switch (typeof data[key]) {
       case 'string':
         if (
@@ -64,7 +64,7 @@ export const client = new ApolloClient({
   cache: new InMemoryCache(),
   name: 'react-web-client',
   version: '1.0.0',
-  ssrMode: true
+  ssrMode: true,
 })
 
 export default withApollo(client)

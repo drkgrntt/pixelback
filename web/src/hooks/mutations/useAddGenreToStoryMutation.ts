@@ -3,14 +3,8 @@ import { StoryInfo } from '@/fragments/StoryInfo'
 
 export const useAddGenreToStoryMutation = () => {
   const ADD_GENRE_TO_STORY = gql`
-    mutation AddGenreToStory(
-      $genreId: String!
-      $storyId: String!
-    ) {
-      addGenreToStory(
-        genreId: $genreId
-        storyId: $storyId
-      ) {
+    mutation AddGenreToStory($genreId: String!, $storyId: String!) {
+      addGenreToStory(genreId: $genreId, storyId: $storyId) {
         ...StoryInfo
         genres {
           id

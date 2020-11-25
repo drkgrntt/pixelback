@@ -7,10 +7,7 @@ export const useRemoveGenreFromStoryMutation = () => {
       $genreId: String!
       $storyId: String!
     ) {
-      removeGenreFromStory(
-        genreId: $genreId
-        storyId: $storyId
-      ) {
+      removeGenreFromStory(genreId: $genreId, storyId: $storyId) {
         ...StoryInfo
         genres {
           id

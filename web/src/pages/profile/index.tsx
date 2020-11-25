@@ -8,8 +8,9 @@ import { useLogoutEverywhereMutation } from '@/mutations/useLogoutEverywhereMuta
 import Link from 'next/link'
 
 const Profile: NextPage<{}> = () => {
-
-  const { currentUser, setCurrentUser, setToken } = useContext(userContext)
+  const { currentUser, setCurrentUser, setToken } = useContext(
+    userContext
+  )
   const [logoutEverywhere] = useLogoutEverywhereMutation()
 
   if (!currentUser) {
@@ -17,22 +18,23 @@ const Profile: NextPage<{}> = () => {
       <Card className={styles.login}>
         <Link href="/login">
           <span>
-            <a className={styles.login}>Login</a>
-            {' '}to view your profile.
+            <a className={styles.login}>Login</a> to view your
+            profile.
           </span>
         </Link>
       </Card>
     )
   }
 
-  const onLogoutEverywhereClick = async (event: any, reset: Function) => {
+  const onLogoutEverywhereClick = async (
+    event: any,
+    reset: Function
+  ) => {
     try {
       const result = await logoutEverywhere()
       setCurrentUser(currentUser)
       setToken(result.data.logoutEverywhere.value)
-    } catch (err) {
-
-    }
+    } catch (err) {}
     reset()
   }
 
@@ -44,8 +46,14 @@ const Profile: NextPage<{}> = () => {
       </Link>
 
       <Card>
-        <label>Discard all other authentication tokens to log out everywhere.</label>
-        <Button styleTypes={['delete']} onClick={onLogoutEverywhereClick}>
+        <label>
+          Discard all other authentication tokens to log out
+          everywhere.
+        </label>
+        <Button
+          styleTypes={['delete']}
+          onClick={onLogoutEverywhereClick}
+        >
           Discard
         </Button>
       </Card>

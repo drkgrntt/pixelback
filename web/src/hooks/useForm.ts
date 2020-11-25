@@ -42,7 +42,7 @@ export const useForm = (initialState: { [key: string]: any }) => {
     } else if (name === 'summary' && value.length > 510) {
       setErrors({
         ...errors,
-        [name]: 'The summary must be 510 characters or less.'
+        [name]: 'The summary must be 510 characters or less.',
       })
     } else if (errors[name]) {
       setErrors({ ...errors, [name]: '' })
@@ -69,6 +69,6 @@ export const useForm = (initialState: { [key: string]: any }) => {
     errors,
     handleChange,
     validate,
-    reset
+    reset,
   }
 }

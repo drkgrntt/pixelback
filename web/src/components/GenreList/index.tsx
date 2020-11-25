@@ -9,30 +9,39 @@ interface Props {
 }
 
 const GenreList: React.FC<Props> = ({ story }) => {
-
   const [removeGenreFromStory] = useRemoveGenreFromStoryMutation()
 
-  const deleteGenre = async (genre: Genre, event: any, reset: Function) => {
+  const deleteGenre = async (
+    genre: Genre,
+    event: any,
+    reset: Function
+  ) => {
     event.preventDefault()
     const variables = {
       genreId: genre.id,
-      storyId: story.id
+      storyId: story.id,
     }
     await removeGenreFromStory({ variables })
   }
 
   const renderGenres = () => {
     if (!story.genres.length) {
-      return <p className={styles.ctaText}>This story has no genres. Start adding some!</p>
+      return (
+        <p className={styles.ctaText}>
+          This story has no genres. Start adding some!
+        </p>
+      )
     }
 
-    return story.genres.map(genre => {
+    return story.genres.map((genre) => {
       return (
         <li key={genre.id} className={styles.genre}>
           <span className={styles.name}>{genre.name}</span>
           <Button
             styleTypes={['small', 'delete']}
-            onClick={(event: any, reset: Function) => deleteGenre(genre, event, reset)}
+            onClick={(event: any, reset: Function) =>
+              deleteGenre(genre, event, reset)
+            }
           >
             Remove
           </Button>

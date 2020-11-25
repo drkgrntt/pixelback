@@ -3,17 +3,16 @@ import Link from 'next/link'
 import styles from './RegisterForm.module.scss'
 import { useContext } from 'react'
 import userContext from '@/context/userContext'
-import { useRegisterMutation } from '@/hooks/useRegisterMutation'
+import { useRegisterMutation } from '@/mutations/useRegisterMutation'
 import { useForm } from '@/hooks/useForm'
 import Input from '../Input'
 import Button from '../Button'
 
 const RegisterForm: React.FC<{}> = ({}) => {
-
   const INITIAL_FORM_STATE = {
     email: '',
     password: '',
-    validation: ''
+    validation: '',
   }
 
   const formState = useForm(INITIAL_FORM_STATE)
@@ -38,7 +37,10 @@ const RegisterForm: React.FC<{}> = ({}) => {
       push('/profile')
     } catch (error) {
       console.warn(error)
-      formState.setValues({ ...formState.values, validation: error.message })
+      formState.setValues({
+        ...formState.values,
+        validation: error.message,
+      })
     }
     reset()
   }
@@ -62,9 +64,15 @@ const RegisterForm: React.FC<{}> = ({}) => {
         formState={formState}
         required
       />
-      <span className={styles.validation}>{formState.values.validation}</span>
-      <Button type="submit" onClick={handleSubmit}>Register</Button>
-      <Link href="login"><a className={styles.link}>Or login here!</a></Link>
+      <span className={styles.validation}>
+        {formState.values.validation}
+      </span>
+      <Button type="submit" onClick={handleSubmit}>
+        Register
+      </Button>
+      <Link href="login">
+        <a className={styles.link}>Or login here!</a>
+      </Link>
     </form>
   )
 }

@@ -12,7 +12,6 @@ interface Props {
 }
 
 const DeleteStoryForm: React.FC<Props> = ({ story }) => {
-
   const [title, setTitle] = useState('')
   const [deleteStory] = useDeleteStoryMutation()
   const { push } = useRouter()
@@ -23,17 +22,21 @@ const DeleteStoryForm: React.FC<Props> = ({ story }) => {
   const onDeleteClick = async (event: any, reset: Function) => {
     event.preventDefault()
     if (title !== story.title) {
-      window.alert('The text in the input needs to match the title of the story exactly.')
+      window.alert(
+        'The text in the input needs to match the title of the story exactly.'
+      )
       reset()
       return
     }
 
-    const confirm = window.confirm(`Are you sure you want to permanently delete ${story.title}? Doing so will delete all chapters, comments, and ratings related to the story.`)
+    const confirm = window.confirm(
+      `Are you sure you want to permanently delete ${story.title}? Doing so will delete all chapters, comments, and ratings related to the story.`
+    )
     if (confirm) {
       await deleteStory({ variables: { id: story.id } })
       setCurrentUser({
         ...currentUser,
-        stories: currentUser.stories.filter(s => s.id !== story.id)
+        stories: currentUser.stories.filter((s) => s.id !== story.id),
       })
       push('/writer-dashboard')
     }
@@ -44,7 +47,10 @@ const DeleteStoryForm: React.FC<Props> = ({ story }) => {
   return (
     <form className={styles.form}>
       <h3>Delete this story</h3>
-      <p>In order to delete the story, please enter <strong>{story.title}</strong> into the input.</p>
+      <p>
+        In order to delete the story, please enter{' '}
+        <strong>{story.title}</strong> into the input.
+      </p>
       <Input
         name="title"
         value={title}

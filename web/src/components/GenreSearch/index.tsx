@@ -12,7 +12,6 @@ interface Props {
 }
 
 const GenreSearch: React.FC<Props> = ({ story }) => {
-
   const [search, setSearch] = useState('')
   const [genreId, setGenreId] = useState<string | null>(null)
 
@@ -20,7 +19,10 @@ const GenreSearch: React.FC<Props> = ({ story }) => {
   const [createGenre] = useCreateGenreMutation()
   const [addGenreToStory] = useAddGenreToStoryMutation()
 
-  const searchResult = searchGenres({ variables: { search }, skip: !search })
+  const searchResult = searchGenres({
+    variables: { search },
+    skip: !search,
+  })
   useEffect(() => {
     const select = document.getElementById('genre-select')
     select?.dispatchEvent(new Event('mousedown'))
@@ -28,23 +30,24 @@ const GenreSearch: React.FC<Props> = ({ story }) => {
 
   const handleSubmit = async (event: any, reset: Function) => {
     event.preventDefault()
-    
+
     const variables = {
       storyId: story.id,
-      genreId: genreId
+      genreId: genreId,
     }
 
     if (genreId === 'newGenre') {
-      const createResult = await createGenre({ variables: { name: search } })
+      const createResult = await createGenre({
+        variables: { name: search },
+      })
       console.log(createResult)
       variables.genreId = createResult.data.createGenre.id
     }
 
     await addGenreToStory({ variables })
-    
+
     reset()
   }
-
 
   // useEffect(() => {
   //   if (!createdGenre.data) return
@@ -65,16 +68,15 @@ const GenreSearch: React.FC<Props> = ({ story }) => {
 
     return searchResult.data.genres.map((genre: Genre) => {
       return (
-        <option key={genre.id} value={genre.id}>{genre.name}</option>
+        <option key={genre.id} value={genre.id}>
+          {genre.name}
+        </option>
       )
     })
   }
 
   const renderAddOption = () => {
-    if (
-      !search ||
-      searchResult.data?.genres.length
-    ) return null
+    if (!search || searchResult.data?.genres.length) return null
 
     return <option value="newGenre">Add "{search}" as a genre</option>
   }

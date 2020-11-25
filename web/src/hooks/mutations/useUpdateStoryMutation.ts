@@ -1,5 +1,5 @@
 import { gql, useMutation } from '@apollo/client'
-import { StoryInfo } from'@/fragments/StoryInfo'
+import { StoryInfo } from '@/fragments/StoryInfo'
 
 export const useUpdateStoryMutation = () => {
   const UPDATE_STORY = gql`

@@ -23,7 +23,7 @@ const StoryForm: React.FC<Props> = (props) => {
     publish: story?.status === PublishStatus.Published,
     enableCommenting: story?.enableCommenting || true,
     genres: story?.genres || [],
-    validation: ''
+    validation: '',
   }
   const formState = useForm(INITIAL_STATE)
 
@@ -32,7 +32,7 @@ const StoryForm: React.FC<Props> = (props) => {
     if (!formState.values.id && story) {
       formState.setValues({
         ...formState.values,
-        id: story.id
+        id: story.id,
       })
       setInit(false)
     }
@@ -41,8 +41,14 @@ const StoryForm: React.FC<Props> = (props) => {
   // Autosave handling
   const [saved, setSaved] = useState('')
   const [init, setInit] = useState(false)
-  const [autoSaveTimer, setAutoSaveTimer] = useState<NodeJS.Timeout | null>(null)
-  const [saveTextTimer, setSaveTextTimer] = useState<NodeJS.Timeout | null>(null)
+  const [
+    autoSaveTimer,
+    setAutoSaveTimer,
+  ] = useState<NodeJS.Timeout | null>(null)
+  const [
+    saveTextTimer,
+    setSaveTextTimer,
+  ] = useState<NodeJS.Timeout | null>(null)
   useEffect(() => {
     if (!autoSave || INITIAL_STATE.publish) return
     if (!init) {
@@ -63,7 +69,7 @@ const StoryForm: React.FC<Props> = (props) => {
         if (formState.values.validation) {
           formState.setValues({
             ...formState.values,
-            validation: ''
+            validation: '',
           })
         }
       }, 8000)
@@ -89,7 +95,7 @@ const StoryForm: React.FC<Props> = (props) => {
     } catch (error) {
       formState.setValues({
         ...formState.values,
-        validation: error.message
+        validation: error.message,
       })
     }
     reset()
@@ -97,11 +103,7 @@ const StoryForm: React.FC<Props> = (props) => {
 
   return (
     <form className={styles.form}>
-      <Input
-        name="title"
-        label="Title"
-        formState={formState}
-      />
+      <Input name="title" label="Title" formState={formState} />
       <Input
         name="summary"
         type="textarea"
@@ -129,7 +131,9 @@ const StoryForm: React.FC<Props> = (props) => {
         formState={formState}
       />
       <span className={styles.saved}>{saved}</span>
-      <span className={styles.validation}>{formState.values.validation}</span>
+      <span className={styles.validation}>
+        {formState.values.validation}
+      </span>
       <Button onClick={handleSubmit}>Submit</Button>
     </form>
   )

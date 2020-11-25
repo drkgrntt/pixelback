@@ -2,7 +2,14 @@ import { useState, useEffect } from 'react'
 import Loader from '../Loader'
 import styles from './Button.module.scss'
 
-type StyleType = 'primary' | 'secondary' | 'tertiary' | 'cta' | 'edit' | 'delete' | 'small'
+type StyleType =
+  | 'primary'
+  | 'secondary'
+  | 'tertiary'
+  | 'cta'
+  | 'edit'
+  | 'delete'
+  | 'small'
 
 interface Props {
   className?: string
@@ -12,12 +19,11 @@ interface Props {
   style?: { [key: string]: string }
   title?: string
   children: string
-  type?: "button" | "reset" | "submit"
+  type?: 'button' | 'reset' | 'submit'
   styleTypes?: StyleType[]
 }
 
 const Button = (props: Props) => {
-
   const {
     // Standard button props
     className = '',
@@ -37,7 +43,6 @@ const Button = (props: Props) => {
   const [pressed, setPressed] = useState(false)
 
   const handleClick = (event: any) => {
-
     setPressed(true)
     setButtonDisabled(true)
 
@@ -52,7 +57,7 @@ const Button = (props: Props) => {
   const classNames = [
     className,
     styles.button,
-    ...styleTypes.map(styleType => styles[styleType])
+    ...styleTypes.map((styleType) => styles[styleType]),
   ].join(' ')
 
   return (
@@ -69,6 +74,5 @@ const Button = (props: Props) => {
     </button>
   )
 }
-
 
 export default Button

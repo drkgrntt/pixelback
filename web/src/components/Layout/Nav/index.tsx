@@ -2,15 +2,18 @@ import Link from 'next/link'
 import { useContext } from 'react'
 import { useLogoutMutation } from '@/mutations/useLogoutMutation'
 import userContext from '@/context/userContext'
-import styles from './Nav.module.scss';
+import styles from './Nav.module.scss'
 
 const Nav: React.FC<{}> = () => {
-
-  const { currentUser, setCurrentUser, setToken } = useContext(userContext)
+  const { currentUser, setCurrentUser, setToken } = useContext(
+    userContext
+  )
   const [logout] = useLogoutMutation()
 
   const toggleNav = () => {
-    document.getElementById("nav-toggle")?.classList.toggle(styles.checked)
+    document
+      .getElementById('nav-toggle')
+      ?.classList.toggle(styles.checked)
   }
 
   const onLogoutClick = async () => {
@@ -68,7 +71,10 @@ const Nav: React.FC<{}> = () => {
     <nav className={styles.nav}>
       <ul className={styles.list}>
         <div className={styles.toggle} id="nav-toggle">
-          <span className={`${styles.hamburger} ${styles.item}`} onClick={toggleNav} />
+          <span
+            className={`${styles.hamburger} ${styles.item}`}
+            onClick={toggleNav}
+          />
           <Link href="/">
             <li className={styles.item}>
               <a className={styles.link} onClick={toggleNav}>

@@ -3,7 +3,7 @@ import { createContext } from 'react'
 
 type UserContext = {
   currentUser: User | null
-  setCurrentUser: Function,
+  setCurrentUser: Function
   setToken: Function
 }
 
@@ -21,5 +21,5 @@ export default createContext<UserContext>({
     updatedAt: new Date(),
   },
   setCurrentUser: (user: User) => {},
-  setToken: (token: string) => {}
+  setToken: (token: string) => {},
 })

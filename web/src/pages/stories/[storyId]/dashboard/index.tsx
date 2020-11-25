@@ -14,12 +14,9 @@ import userContext from '@/context/userContext'
 import { Story } from '@/types'
 import GenreList from '@/components/GenreList'
 
-interface Props {
-
-}
+interface Props {}
 
 const Dashboard: NextPage<Props> = () => {
-
   const { query } = useRouter()
   const { currentUser } = useContext(userContext)
   const getStory = useStoryQuery()

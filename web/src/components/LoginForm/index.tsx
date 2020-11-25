@@ -9,11 +9,10 @@ import Input from '../Input'
 import Button from '../Button'
 
 const LoginForm: React.FC<{}> = ({}) => {
-
   const INITIAL_FORM_STATE = {
     email: '',
     password: '',
-    validation: ''
+    validation: '',
   }
 
   const formState = useForm(INITIAL_FORM_STATE)
@@ -38,7 +37,10 @@ const LoginForm: React.FC<{}> = ({}) => {
       push('/profile')
     } catch (error) {
       console.warn(error)
-      formState.setValues({ ...formState.values, validation: error.message })
+      formState.setValues({
+        ...formState.values,
+        validation: error.message,
+      })
     }
     reset()
   }
@@ -62,9 +64,15 @@ const LoginForm: React.FC<{}> = ({}) => {
         formState={formState}
         required
       />
-      <span className={styles.validation}>{formState.values.validation}</span>
-      <Button type="submit" onClick={handleSubmit}>Login</Button>
-      <Link href="/register"><a className={styles.link}>Or create a new account!</a></Link>
+      <span className={styles.validation}>
+        {formState.values.validation}
+      </span>
+      <Button type="submit" onClick={handleSubmit}>
+        Login
+      </Button>
+      <Link href="/register">
+        <a className={styles.link}>Or create a new account!</a>
+      </Link>
     </form>
   )
 }

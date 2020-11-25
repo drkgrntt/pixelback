@@ -8,9 +8,7 @@ const Layout: React.FC<{}> = (props) => {
     <>
       <Nav />
       <Header />
-      <main className={styles.layout}>
-        {props.children}
-      </main>
+      <main className={styles.layout}>{props.children}</main>
       <Footer />
     </>
   )
