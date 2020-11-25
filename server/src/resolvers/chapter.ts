@@ -39,6 +39,7 @@ export class ChapterResolver {
   @FieldResolver(() => Float)
   async score(@Root() chapter: Chapter): Promise<number> {
     const allRatings = await Rating.find({ chapterId: chapter.id })
+    if (!allRatings.length) return 0
     const total: number = allRatings.reduce(
       (score, rating) => score + rating.score,
       0
