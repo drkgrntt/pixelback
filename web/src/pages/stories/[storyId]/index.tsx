@@ -1,5 +1,6 @@
 import Error from 'next/error'
 import { NextPage } from 'next'
+import { useRouter } from 'next/router'
 import { ParsedUrlQuery } from 'querystring'
 import styles from './[id].module.scss'
 import Loader from '@/components/Loader'
@@ -10,6 +11,7 @@ interface Props {
 }
 
 const StoryPage: NextPage<Props> = ({ query }) => {
+  const { push } = useRouter()
   const getStory = useStoryQuery()
   const variables = { id: query.storyId as string }
   const result = getStory({ variables, skip: !query.storyId })
@@ -22,6 +24,10 @@ const StoryPage: NextPage<Props> = ({ query }) => {
   }
 
   const { story } = result.data
+
+  if (!story.body && story.chapters.length) {
+    push(`/stories/${story.id}/chapters`)
+  }
 
   return (
     <div>
