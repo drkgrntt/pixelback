@@ -20,7 +20,7 @@ const ChapterList: React.FC<Props> = ({ story }) => {
     return (
       <>
         {' | '}
-        <Link href={`/stories/${chapter.id}/dashboard`}>
+        <Link href={`/stories/${story.id}/chapters/${chapter.id}/dashboard`}>
           Dashboard
         </Link>
       </>
@@ -33,7 +33,7 @@ const ChapterList: React.FC<Props> = ({ story }) => {
     return story.chapters.map((chapter) => {
       return (
         <li key={chapter.id} className={styles.chapter}>
-          <Link href={`/stories/${chapter.id}`}>
+          <Link href={`/stories/${story.id}/chapters/${chapter.id}`}>
             {chapter.number}. {chapter.title}
           </Link>
           {renderDashboardLink(chapter)}
@@ -51,7 +51,7 @@ const ChapterList: React.FC<Props> = ({ story }) => {
           <hr />
           <p className={styles.ctaText}>Write a new chapter!</p>
           <Button
-            onClick={() => push('/stories/new')}
+            onClick={() => push(`/stories/${story.id}/chapters/new`)}
             styleTypes={['cta']}
           >
             Start writing
@@ -65,7 +65,7 @@ const ChapterList: React.FC<Props> = ({ story }) => {
         <hr />
         <p className={styles.ctaText}>Write the first chapter!</p>
         <Button
-          onClick={() => push('/stories/new')}
+          onClick={() => push(`/stories/${story.id}/chapters/new`)}
           styleTypes={['cta']}
         >
           Start writing
