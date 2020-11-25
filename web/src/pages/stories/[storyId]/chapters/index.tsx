@@ -4,6 +4,8 @@ import Error from 'next/error'
 import { useStoryQuery } from '@/queries/useStoryQuery'
 import Loader from '@/components/Loader'
 import styles from './Chapters.module.scss'
+import ChapterList from '@/components/ChapterList'
+import Card from '@/components/Card'
 
 interface Props {
   query: ParsedUrlQuery
@@ -23,7 +25,13 @@ const Chapters: NextPage<Props> = ({ query }) => {
 
   const { story } = result.data
 
-  return <div>{story.title}</div>
+  return (
+    <div>
+      <Card>
+        <ChapterList story={story} />
+      </Card>
+    </div>
+  )
 }
 
 Chapters.getInitialProps = ({ query }) => {

@@ -1,7 +1,9 @@
 import { useRouter } from 'next/router'
+import { useContext } from 'react'
+import userContext from '@/context/userContext'
 import Link from 'next/link'
 import Button from '../Button'
-import { Story } from '@/types'
+import { Chapter, Story } from '@/types'
 import styles from './ChapterList.module.scss'
 
 interface Props {
@@ -10,6 +12,20 @@ interface Props {
 
 const ChapterList: React.FC<Props> = ({ story }) => {
   const { push } = useRouter()
+  const { currentUser } = useContext(userContext)
+
+  const renderDashboardLink = (chapter: Chapter) => {
+    if (currentUser?.id !== story.authorId) return
+
+    return (
+      <>
+        {' | '}
+        <Link href={`/stories/${chapter.id}/dashboard`}>
+          Dashboard
+        </Link>
+      </>
+    )
+  }
 
   const renderChapters = () => {
     if (!story.chapters.length) return null
@@ -20,19 +36,19 @@ const ChapterList: React.FC<Props> = ({ story }) => {
           <Link href={`/stories/${chapter.id}`}>
             {chapter.number}. {chapter.title}
           </Link>
-          {' | '}
-          <Link href={`/stories/${chapter.id}/dashboard`}>
-            Dashboard
-          </Link>
+          {renderDashboardLink(chapter)}
         </li>
       )
     })
   }
 
   const renderNewChapterButton = () => {
+    if (currentUser?.id !== story.authorId) return
+
     if (story.chapters.length) {
       return (
         <>
+          <hr />
           <p className={styles.ctaText}>Write a new chapter!</p>
           <Button
             onClick={() => push('/stories/new')}
@@ -46,6 +62,7 @@ const ChapterList: React.FC<Props> = ({ story }) => {
 
     return (
       <>
+        <hr />
         <p className={styles.ctaText}>Write the first chapter!</p>
         <Button
           onClick={() => push('/stories/new')}
@@ -61,7 +78,6 @@ const ChapterList: React.FC<Props> = ({ story }) => {
     <>
       <h3>Chapters</h3>
       <ul className={styles.chapters}>{renderChapters()}</ul>
-      <hr />
       {renderNewChapterButton()}
     </>
   )

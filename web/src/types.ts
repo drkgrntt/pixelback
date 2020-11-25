@@ -35,6 +35,7 @@ export interface User {
 export interface Story {
   id: string
   author: User
+  authorId: string
   chapters: Chapter[]
   comments: Comment[]
   title: string

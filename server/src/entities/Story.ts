@@ -26,6 +26,7 @@ export class Story extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id!: string
 
+  @Field()
   @Column()
   authorId: string
 

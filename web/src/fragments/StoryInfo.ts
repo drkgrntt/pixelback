@@ -9,6 +9,7 @@ export const StoryInfo = gql`
     enableCommenting
     status
     score
+    authorId
     publishedAt
     createdAt
     updatedAt
