@@ -1,15 +1,15 @@
-import Error from 'next/error'
 import { NextPage } from 'next'
 import { ParsedUrlQuery } from 'querystring'
-import styles from './[id].module.scss'
-import Loader from '@/components/Loader'
+import Error from 'next/error'
 import { useStoryQuery } from '@/queries/useStoryQuery'
+import Loader from '@/components/Loader'
+import styles from "./Chapters.module.scss"
 
 interface Props {
   query: ParsedUrlQuery
 }
 
-const StoryPage: NextPage<Props> = ({ query }) => {
+const Chapters: NextPage<Props> = ({ query }) => {
 
   const getStory = useStoryQuery()
   const variables = { id: query.storyId as string }
@@ -26,14 +26,13 @@ const StoryPage: NextPage<Props> = ({ query }) => {
 
   return (
     <div>
-      <h2>{story.title}</h2>
-      {story.body}
+      {story.title}
     </div>
   )
 }
 
-StoryPage.getInitialProps = ({ query }) => {
+Chapters.getInitialProps = ({ query }) => {
   return { query }
 }
 
-export default StoryPage
+export default Chapters
