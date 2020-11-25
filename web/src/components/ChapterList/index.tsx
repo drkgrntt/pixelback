@@ -34,7 +34,7 @@ const ChapterList: React.FC<Props> = ({ story }) => {
       return (
         <li key={chapter.id} className={styles.chapter}>
           <Link href={`/stories/${story.id}/chapters/${chapter.id}`}>
-            {chapter.number}. {chapter.title}
+            {`${chapter.number}. ${chapter.title}`}
           </Link>
           {renderDashboardLink(chapter)}
         </li>

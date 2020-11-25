@@ -3,7 +3,7 @@ import { useContext, useState } from 'react'
 import Error from 'next/error'
 import styles from './New.module.scss'
 import Card from '@/components/Card'
-import StoryForm from '@/components/StoryForm'
+import ContentForm from '@/components/ContentForm'
 import { useCreateStoryMutation } from '@/mutations/useCreateStoryMutation'
 import { useUpdateStoryMutation } from '@/mutations/useUpdateStoryMutation'
 import { Genre, PublishStatus, Story } from '@/types'
@@ -25,9 +25,6 @@ const New: NextPage<{}> = () => {
     formState.values.status = formState.values.publish
       ? PublishStatus.Published
       : PublishStatus.Draft
-    formState.values.genreIds = formState.values.genres.map(
-      (g: Genre) => g.id
-    )
 
     try {
       let result: Record<string, any>
@@ -67,8 +64,8 @@ const New: NextPage<{}> = () => {
     <div>
       <h2>New Story</h2>
       <Card>
-        <StoryForm
-          story={story}
+        <ContentForm
+          content={story}
           autoSave={save}
           onSubmit={handleSubmit}
         />

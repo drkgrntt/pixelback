@@ -39,6 +39,7 @@ export interface Content {
   summary: string
   enableCommenting: boolean
   status: PublishStatus
+  number?: number
 }
 
 export interface Story extends Content {

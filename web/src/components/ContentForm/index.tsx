@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
-import styles from './StoryForm.module.scss'
+import { useRouter } from 'next/router'
+import styles from './ContentForm.module.scss'
 import { useForm } from '@/hooks/useForm'
 import Button from '../Button'
 import Input from '../Input'
@@ -11,12 +12,13 @@ interface Props {
   onSubmit: Function
 }
 
-const StoryForm: React.FC<Props> = (props) => {
+const ContentForm: React.FC<Props> = (props) => {
   const { content, autoSave, onSubmit } = props
 
   // Formstate handling
   const INITIAL_STATE = {
     id: content?.id || '',
+    number: content?.number || 0,
     title: content?.title || '',
     summary: content?.summary || '',
     body: content?.body || '',
@@ -100,8 +102,23 @@ const StoryForm: React.FC<Props> = (props) => {
     reset()
   }
 
+  const { route } = useRouter()
+  const renderNumberInput = () => {
+    if (!route.includes('chapter')) return
+
+    return (
+      <Input
+        name="number"
+        type="number"
+        label="Chapter Number"
+        formState={formState}
+      />
+    )
+  }
+
   return (
     <form className={styles.form}>
+      {renderNumberInput()}
       <Input name="title" label="Title" formState={formState} />
       <Input
         name="summary"
@@ -137,4 +154,4 @@ const StoryForm: React.FC<Props> = (props) => {
   )
 }
 
-export default StoryForm
+export default ContentForm

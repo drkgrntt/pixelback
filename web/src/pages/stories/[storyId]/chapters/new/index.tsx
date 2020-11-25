@@ -22,7 +22,7 @@ const New: NextPage<Props> = ({ query }) => {
   const [createChapter] = useCreateChapterMutation()
   const [updateChapter] = useUpdateChapterMutation()
   const [chapter, setChapter] = useState<Chapter | undefined>()
-  const { currentUser, setCurrentUser } = useContext(userContext)
+  const { currentUser } = useContext(userContext)
   const getStory = useStoryQuery()
   const variables = { id: query.storyId as string }
   const result = getStory({ variables, skip: !query.storyId })
@@ -30,7 +30,7 @@ const New: NextPage<Props> = ({ query }) => {
   if (!currentUser) {
     return <Error statusCode={403} />
   }
-  
+
   switch (true) {
     case !!result.error:
       return <Error statusCode={404} />
@@ -44,9 +44,9 @@ const New: NextPage<Props> = ({ query }) => {
     formState.values.status = formState.values.publish
       ? PublishStatus.Published
       : PublishStatus.Draft
-    formState.values.genreIds = formState.values.genres.map(
-      (g: Genre) => g.id
-    )
+
+    formState.values.number = parseInt(formState.values.number)
+    formState.values.storyId = story.id
 
     try {
       let result: Record<string, any>
@@ -73,7 +73,7 @@ const New: NextPage<Props> = ({ query }) => {
   const handleSubmit = async (formState: any) => {
     const chapter = await save(formState)
     if (!chapter) return
-    push(`/chapters/${chapter.id}`)
+    push(`/stories/${story.id}/chapters/${chapter.id}`)
   }
 
   return (
