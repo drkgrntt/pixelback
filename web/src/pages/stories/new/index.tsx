@@ -18,7 +18,7 @@ const New: NextPage<{}> = () => {
   const { currentUser, setCurrentUser } = useContext(userContext)
 
   if (!currentUser) {
-    return <Error statusCode={404} />
+    return <Error statusCode={403} />
   }
 
   const save = async (formState: any) => {

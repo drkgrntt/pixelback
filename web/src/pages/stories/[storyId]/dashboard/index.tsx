@@ -24,8 +24,12 @@ const Dashboard: NextPage<Props> = () => {
   const result = getStory({ variables, skip: !query.storyId })
   const story: Story = result.data?.story
 
-  if (!currentUser || !story) {
+  if (!story) {
     return <Error statusCode={404} />
+  }
+
+  if (currentUser?.id !== story.authorId) {
+    return <Error statusCode={403} />
   }
 
   return (

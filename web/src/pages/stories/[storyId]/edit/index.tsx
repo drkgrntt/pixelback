@@ -19,8 +19,12 @@ const Edit: NextPage<{}> = () => {
   const result = getStory({ variables, skip: !query.storyId })
   const story = result.data?.story
 
-  if (!currentUser || !story) {
+  if (!story) {
     return <Error statusCode={404} />
+  }
+
+  if (currentUser?.id !== story.authorId) {
+    return <Error statusCode={403} />
   }
 
   const save = async (formState: any) => {
@@ -36,7 +40,7 @@ const Edit: NextPage<{}> = () => {
         variables: formState.values,
       })
       const updatedStory = result.data.updateStory
-      const stories = currentUser.stories.map((s) =>
+      const stories = currentUser?.stories.map((s) =>
         s.id === updatedStory.id ? updatedStory : s
       )
 
