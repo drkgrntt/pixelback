@@ -32,17 +32,20 @@ export interface User {
   updatedAt: Date
 }
 
-export interface Story {
+export interface Content {
   id: string
-  author: User
-  authorId: string
-  chapters: Chapter[]
-  comments: Comment[]
   title: string
   body: string
   summary: string
   enableCommenting: boolean
   status: PublishStatus
+}
+
+export interface Story extends Content {
+  author: User
+  authorId: string
+  chapters: Chapter[]
+  comments: Comment[]
   ratings: Rating[]
   score: number
   genres: Genre[]
@@ -51,16 +54,10 @@ export interface Story {
   updatedAt: Date
 }
 
-export interface Chapter {
-  id: string
+export interface Chapter extends Content {
   story: Story
   comments: Comment[]
   number: number
-  title: string
-  body: string
-  summary: string
-  enableCommenting: boolean
-  status: PublishStatus
   ratings: Rating[]
   score: number
   previous: Chapter

@@ -3,40 +3,39 @@ import styles from './StoryForm.module.scss'
 import { useForm } from '@/hooks/useForm'
 import Button from '../Button'
 import Input from '../Input'
-import { Story, PublishStatus } from '@/types'
+import { Content, PublishStatus } from '@/types'
 
 interface Props {
-  story?: Story
+  content?: Content
   autoSave?: Function
   onSubmit: Function
 }
 
 const StoryForm: React.FC<Props> = (props) => {
-  const { story, autoSave, onSubmit } = props
+  const { content, autoSave, onSubmit } = props
 
   // Formstate handling
   const INITIAL_STATE = {
-    id: story?.id || '',
-    title: story?.title || '',
-    summary: story?.summary || '',
-    body: story?.body || '',
-    publish: story?.status === PublishStatus.Published,
-    enableCommenting: story?.enableCommenting || true,
-    genres: story?.genres || [],
+    id: content?.id || '',
+    title: content?.title || '',
+    summary: content?.summary || '',
+    body: content?.body || '',
+    publish: content?.status === PublishStatus.Published,
+    enableCommenting: content?.enableCommenting || true,
     validation: '',
   }
   const formState = useForm(INITIAL_STATE)
 
-  // Handle story update
+  // Handle content update
   useEffect(() => {
-    if (!formState.values.id && story) {
+    if (!formState.values.id && content) {
       formState.setValues({
         ...formState.values,
-        id: story.id,
+        id: content.id,
       })
       setInit(false)
     }
-  }, [story])
+  }, [content])
 
   // Autosave handling
   const [saved, setSaved] = useState('')
@@ -116,7 +115,6 @@ const StoryForm: React.FC<Props> = (props) => {
         type="textarea"
         label="Body"
         formState={formState}
-        placeholder="Leave this blank if you are writing a chaptered story"
       />
       <Input
         name="enableCommenting"
