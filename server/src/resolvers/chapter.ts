@@ -169,6 +169,6 @@ export class ChapterResolver {
 
     await chapter.remove()
 
-    return chapter.id
+    return id
   }
 }

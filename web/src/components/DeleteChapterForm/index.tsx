@@ -32,11 +32,8 @@ const DeleteChapterForm: React.FC<Props> = ({ story, chapter }) => {
     if (confirm) {
       await deleteChapter({
         variables: { id: chapter.id },
-        update: (cache) => {
-          cache.evict({ id: `Chapter:${chapter.id}` })
-        }
       })
-      push('/writer-dashboard')
+      push(`/stories/${story.id}/dashboard`)
     }
 
     reset()

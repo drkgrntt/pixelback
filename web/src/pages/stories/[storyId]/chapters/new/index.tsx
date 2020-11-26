@@ -19,7 +19,7 @@ interface Props {
 
 const New: NextPage<Props> = ({ query }) => {
   const { push } = useRouter()
-  const [createChapter] = useCreateChapterMutation()
+  const [createChapter] = useCreateChapterMutation(query.storyId as string)
   const [updateChapter] = useUpdateChapterMutation()
   const [chapter, setChapter] = useState<Chapter | undefined>()
   const { data } = useMeQuery()
@@ -58,7 +58,6 @@ const New: NextPage<Props> = ({ query }) => {
         updatedStory = result.data.createChapter
       }
       setChapter(updatedStory)
-      queryResult.refetch() // Not ideal, would be better to update the cache
       return updatedStory
     } catch (error) {
       console.warn(error)
@@ -73,7 +72,7 @@ const New: NextPage<Props> = ({ query }) => {
   const handleSubmit = async (formState: any) => {
     const chapter = await save(formState)
     if (!chapter) return
-    push(`/stories/${story.id}/chapters/${chapter.id}`)
+    push(`/stories/${story.id}/chapters/${chapter.id}/dashboard`)
   }
 
   return (

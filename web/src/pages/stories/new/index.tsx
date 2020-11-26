@@ -51,7 +51,7 @@ const New: NextPage<{}> = () => {
   const handleSubmit = async (formState: any) => {
     const story = await save(formState)
     if (!story) return
-    push(`/stories/${story.id}`)
+    push(`/stories/${story.id}/dashboard`)
   }
 
   return (
