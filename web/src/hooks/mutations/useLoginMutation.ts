@@ -1,34 +1,48 @@
-import { gql, useMutation } from '@apollo/client'
+import { gql, MutationHookOptions, useMutation } from '@apollo/client'
 import { UserInfo } from '@/fragments/UserInfo'
+import { meQuery } from '@/queries/useMeQuery'
 
-export const useLoginMutation = () => {
-  const LOGIN = gql`
-    mutation Login($email: String!, $password: String!) {
-      login(email: $email, password: $password) {
-        user {
-          ...UserInfo
-          stories {
-            id
-            title
-          }
-          ratings {
-            id
-          }
-          subscriptions {
-            id
-          }
-          subscribers {
-            id
-            level
-          }
+export const loginMutation = gql`
+  mutation Login($email: String!, $password: String!) {
+    login(email: $email, password: $password) {
+      user {
+        ...UserInfo
+        stories {
+          id
+          title
         }
-        token {
-          value
+        ratings {
+          id
+        }
+        subscriptions {
+          id
+        }
+        subscribers {
+          id
+          level
         }
       }
+      token {
+        value
+      }
     }
-    ${UserInfo}
-  `
+  }
+  ${UserInfo}
+`
 
-  return useMutation(LOGIN)
+export const useLoginMutation = () => {
+  const options: MutationHookOptions = {
+    update: (cache, result) => {
+      cache.writeQuery({
+        query: meQuery,
+        data: {
+          __typename: "Query",
+          me: result.data?.login.user,
+        },
+      })
+      localStorage.setItem('token', result.data?.login.token.value)
+    }
+  }
+
+  return useMutation(loginMutation, options)
 }

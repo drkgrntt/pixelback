@@ -8,7 +8,7 @@ import { useMeQuery } from '@/hooks/queries/useMeQuery'
 
 const Profile: NextPage<{}> = () => {
   const [logoutEverywhere] = useLogoutEverywhereMutation()
-  const { refetch, data } = useMeQuery()
+  const { data } = useMeQuery()
 
   if (!data?.me) {
     return (
@@ -28,9 +28,7 @@ const Profile: NextPage<{}> = () => {
     reset: Function
   ) => {
     try {
-      const result = await logoutEverywhere()
-      localStorage.setItem('token', result.data.logoutEverywhere.value)
-      refetch()
+      await logoutEverywhere()
     } catch (err) {}
     reset()
   }

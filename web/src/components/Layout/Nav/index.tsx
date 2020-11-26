@@ -5,7 +5,7 @@ import { useMeQuery } from '@/hooks/queries/useMeQuery'
 
 const Nav: React.FC<{}> = () => {
   const [logout] = useLogoutMutation()
-  const { refetch, data } = useMeQuery()
+  const { data } = useMeQuery()
 
   const toggleNav = () => {
     document
@@ -17,7 +17,6 @@ const Nav: React.FC<{}> = () => {
     toggleNav()
     try {
       await logout()
-      refetch()
       localStorage.removeItem('token')
     } catch (err) {
       console.warn(err)

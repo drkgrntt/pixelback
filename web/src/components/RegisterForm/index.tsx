@@ -5,7 +5,6 @@ import { useRegisterMutation } from '@/mutations/useRegisterMutation'
 import { useForm } from '@/hooks/useForm'
 import Input from '../Input'
 import Button from '../Button'
-import { useMeQuery } from '@/hooks/queries/useMeQuery'
 
 const RegisterForm: React.FC<{}> = ({}) => {
   const INITIAL_FORM_STATE = {
@@ -17,7 +16,6 @@ const RegisterForm: React.FC<{}> = ({}) => {
   const formState = useForm(INITIAL_FORM_STATE)
   const { push } = useRouter()
   const [register] = useRegisterMutation()
-  const { refetch } = useMeQuery()
 
   const handleSubmit = async (event: any, reset: Function) => {
     event.preventDefault()
@@ -28,10 +26,7 @@ const RegisterForm: React.FC<{}> = ({}) => {
     }
 
     try {
-      const result = await register({ variables: formState.values })
-      const { user, token } = result.data.register
-      localStorage.setItem('token', token.value)
-      refetch() // Not ideal, should use writeQuery
+      await register({ variables: formState.values })
       formState.reset()
       push('/profile')
     } catch (error) {

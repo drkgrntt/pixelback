@@ -5,7 +5,7 @@ import { useLoginMutation } from '@/mutations/useLoginMutation'
 import { useForm } from '@/hooks/useForm'
 import Input from '../Input'
 import Button from '../Button'
-import { useMeQuery } from '@/hooks/queries/useMeQuery'
+import { useMeQuery, meQuery } from '@/hooks/queries/useMeQuery'
 
 const LoginForm: React.FC<{}> = ({}) => {
   const INITIAL_FORM_STATE = {
@@ -17,7 +17,7 @@ const LoginForm: React.FC<{}> = ({}) => {
   const formState = useForm(INITIAL_FORM_STATE)
   const { push } = useRouter()
   const [login] = useLoginMutation()
-  const { refetch } = useMeQuery()
+  // const { refetch } = useMeQuery()
 
   const handleSubmit = async (event: any, reset: Function) => {
     event.preventDefault()
@@ -28,10 +28,7 @@ const LoginForm: React.FC<{}> = ({}) => {
     }
 
     try {
-      const result = await login({ variables: formState.values })
-      const { user, token } = result.data.login
-      localStorage.setItem('token', token.value)
-      refetch() // Not ideal, should use writeQuery
+      await login({ variables: formState.values})
       formState.reset()
       push('/profile')
     } catch (error) {
