@@ -36,7 +36,7 @@ const ChapterPage: NextPage<Props> = ({ query }) => {
   const { chapter }: { chapter: Chapter } = chapterResult.data
 
   const renderPrev = () => {
-    if (!chapter.previous) return
+    if (!chapter.previous) return <div /> // Placeholder so "next" will float right
 
     return (
       <Link
