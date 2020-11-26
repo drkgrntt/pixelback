@@ -1,11 +1,17 @@
-import { gql, useMutation } from '@apollo/client'
+import { gql, MutationHookOptions, useMutation } from '@apollo/client'
+
+export const deleteStory = gql`
+  mutation DeleteStory($id: String!) {
+    deleteStory(id: $id)
+  }
+`
 
 export const useDeleteStoryMutation = () => {
-  const DELETE_STORY = gql`
-    mutation DeleteStory($id: String!) {
-      deleteStory(id: $id)
+  const options: MutationHookOptions = {
+    update: (cache, result) => {
+      cache.evict({ id: `Story:${result.data?.deleteStory}` })
     }
-  `
+  }
 
-  return useMutation(DELETE_STORY)
+  return useMutation(deleteStory, options)
 }

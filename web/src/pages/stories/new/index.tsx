@@ -15,7 +15,7 @@ const New: NextPage<{}> = () => {
   const [createStory] = useCreateStoryMutation()
   const [updateStory] = useUpdateStoryMutation()
   const [story, setStory] = useState<Story | undefined>()
-  const { refetch, data } = useMeQuery()
+  const { data } = useMeQuery()
 
   if (!data?.me) {
     return <Error statusCode={403} />
@@ -37,7 +37,6 @@ const New: NextPage<{}> = () => {
         updatedStory = result.data.createStory
       }
       setStory(updatedStory)
-      refetch() // Not ideal, should use writeQuery
       return updatedStory
     } catch (error) {
       console.warn(error)
