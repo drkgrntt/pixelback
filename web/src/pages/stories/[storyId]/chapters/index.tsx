@@ -28,6 +28,7 @@ const Chapters: NextPage<Props> = ({ query }) => {
   return (
     <div>
       <h2>{story.title}</h2>
+      {story.summary}
       <Card>
         <ChapterList story={story} />
       </Card>

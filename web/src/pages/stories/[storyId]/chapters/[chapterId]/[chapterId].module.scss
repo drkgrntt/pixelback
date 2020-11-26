@@ -1,0 +1,11 @@
+.chapter {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.prevNext {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.6rem;
+}
