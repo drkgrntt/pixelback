@@ -11,7 +11,7 @@ interface Props {
 }
 
 const StoryPage: NextPage<Props> = ({ query }) => {
-  const { push } = useRouter()
+  const { replace } = useRouter()
   const variables = { id: query.storyId as string }
   const result = useStoryQuery({ variables, skip: !query.storyId })
 
@@ -25,7 +25,7 @@ const StoryPage: NextPage<Props> = ({ query }) => {
   const { story } = result.data
 
   if (!story.body && story.chapters.length) {
-    push(`/stories/${story.id}/chapters`)
+    replace(`/stories/${story.id}/chapters`)
   }
 
   return (
