@@ -1,19 +1,16 @@
 import { NextPage } from 'next'
-import { useContext } from 'react'
-import userContext from '@/context/userContext'
 import styles from './Profile.module.scss'
 import Button from '@/components/Button'
 import Card from '@/components/Card'
 import { useLogoutEverywhereMutation } from '@/mutations/useLogoutEverywhereMutation'
 import Link from 'next/link'
+import { useMeQuery } from '@/hooks/queries/useMeQuery'
 
 const Profile: NextPage<{}> = () => {
-  const { currentUser, setCurrentUser, setToken } = useContext(
-    userContext
-  )
   const [logoutEverywhere] = useLogoutEverywhereMutation()
+  const { refetch, data } = useMeQuery()
 
-  if (!currentUser) {
+  if (!data?.me) {
     return (
       <Card className={styles.login}>
         <Link href="/login">
@@ -32,8 +29,8 @@ const Profile: NextPage<{}> = () => {
   ) => {
     try {
       const result = await logoutEverywhere()
-      setCurrentUser(currentUser)
-      setToken(result.data.logoutEverywhere.value)
+      localStorage.setItem('token', result.data.logoutEverywhere.value)
+      refetch()
     } catch (err) {}
     reset()
   }

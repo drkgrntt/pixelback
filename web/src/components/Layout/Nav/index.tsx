@@ -1,14 +1,11 @@
 import Link from 'next/link'
-import { useContext } from 'react'
 import { useLogoutMutation } from '@/mutations/useLogoutMutation'
-import userContext from '@/context/userContext'
 import styles from './Nav.module.scss'
+import { useMeQuery } from '@/hooks/queries/useMeQuery'
 
 const Nav: React.FC<{}> = () => {
-  const { currentUser, setCurrentUser, setToken } = useContext(
-    userContext
-  )
   const [logout] = useLogoutMutation()
+  const { refetch, data } = useMeQuery()
 
   const toggleNav = () => {
     document
@@ -20,15 +17,15 @@ const Nav: React.FC<{}> = () => {
     toggleNav()
     try {
       await logout()
-      setCurrentUser(null)
-      setToken(null)
+      refetch()
+      localStorage.removeItem('token')
     } catch (err) {
       console.warn(err)
     }
   }
 
   const renderAuthLinks = () => {
-    if (!currentUser) {
+    if (!data?.me) {
       return (
         <>
           <Link href="/register">

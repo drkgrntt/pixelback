@@ -1,23 +1,23 @@
 import { NextPage } from 'next'
-import { useContext, useState } from 'react'
+import { useState } from 'react'
 import Error from 'next/error'
 import styles from './New.module.scss'
 import Card from '@/components/Card'
 import ContentForm from '@/components/ContentForm'
 import { useCreateStoryMutation } from '@/mutations/useCreateStoryMutation'
 import { useUpdateStoryMutation } from '@/mutations/useUpdateStoryMutation'
-import { Genre, PublishStatus, Story } from '@/types'
+import { PublishStatus, Story } from '@/types'
 import { useRouter } from 'next/router'
-import userContext from '@/context/userContext'
+import { useMeQuery } from '@/hooks/queries/useMeQuery'
 
 const New: NextPage<{}> = () => {
   const { push } = useRouter()
   const [createStory] = useCreateStoryMutation()
   const [updateStory] = useUpdateStoryMutation()
   const [story, setStory] = useState<Story | undefined>()
-  const { currentUser, setCurrentUser } = useContext(userContext)
+  const { refetch, data } = useMeQuery()
 
-  if (!currentUser) {
+  if (!data?.me) {
     return <Error statusCode={403} />
   }
 
@@ -29,20 +29,15 @@ const New: NextPage<{}> = () => {
     try {
       let result: Record<string, any>
       let updatedStory: Story
-      let stories: Story[]
       if (story) {
         result = await updateStory({ variables: formState.values })
         updatedStory = result.data.updateStory
-        stories = currentUser.stories.map((s) =>
-          s.id === updatedStory.id ? updatedStory : s
-        )
       } else {
         result = await createStory({ variables: formState.values })
         updatedStory = result.data.createStory
-        stories = [updatedStory, ...currentUser.stories]
       }
       setStory(updatedStory)
-      setCurrentUser({ ...currentUser, stories })
+      refetch() // Not ideal, should use writeQuery
       return updatedStory
     } catch (error) {
       console.warn(error)

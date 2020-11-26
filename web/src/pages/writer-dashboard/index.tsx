@@ -1,18 +1,17 @@
 import { NextPage } from 'next'
-import { useContext } from 'react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
-import userContext from '@/context/userContext'
 import styles from './WriterDashboard.module.scss'
 import Card from '@/components/Card'
-import { SubLevel } from '@/types'
+import { Story, SubLevel, Subscription } from '@/types'
 import Button from '@/components/Button'
+import { useMeQuery } from '@/hooks/queries/useMeQuery'
 
 const WriterDashboard: NextPage<{}> = () => {
-  const { currentUser } = useContext(userContext)
+  const { data } = useMeQuery()
   const { push } = useRouter()
 
-  if (!currentUser) {
+  if (!data?.me) {
     return (
       <Card className={styles.login}>
         <Link href="/login">
@@ -26,9 +25,9 @@ const WriterDashboard: NextPage<{}> = () => {
   }
 
   const renderStories = () => {
-    if (!currentUser.stories.length) return null
+    if (!data?.me.stories.length) return null
 
-    return currentUser.stories.map((story) => {
+    return data?.me.stories.map((story: Story) => {
       return (
         <li key={story.id} className={styles.story}>
           <Link href={`/stories/${story.id}`}>{story.title}</Link>
@@ -42,7 +41,7 @@ const WriterDashboard: NextPage<{}> = () => {
   }
 
   const renderNewStoryButton = () => {
-    if (currentUser.stories.length) {
+    if (data?.me.stories.length) {
       return (
         <>
           <p className={styles.ctaText}>Write a new story!</p>
@@ -87,16 +86,16 @@ const WriterDashboard: NextPage<{}> = () => {
           <li className={styles.stat}>
             Followers:{' '}
             {
-              currentUser.subscribers.map(
-                (s) => s.level === SubLevel.Free
+              data?.me.subscribers.map(
+                (s: Subscription) => s.level === SubLevel.Free
               ).length
             }
           </li>
           <li className={styles.stat}>
             Subscribers:{' '}
             {
-              currentUser.subscribers.map(
-                (s) => s.level === SubLevel.Free
+              data?.me.subscribers.map(
+                (s: Subscription) => s.level === SubLevel.Free
               ).length
             }
           </li>

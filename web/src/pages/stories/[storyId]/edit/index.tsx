@@ -1,5 +1,4 @@
 import { NextPage } from 'next'
-import { useContext } from 'react'
 import Error from 'next/error'
 import styles from './Edit.module.scss'
 import Card from '@/components/Card'
@@ -8,12 +7,12 @@ import { useUpdateStoryMutation } from '@/mutations/useUpdateStoryMutation'
 import { useStoryQuery } from '@/queries/useStoryQuery'
 import { Genre, PublishStatus } from '@/types'
 import { useRouter } from 'next/router'
-import userContext from '@/context/userContext'
+import { useMeQuery } from '@/hooks/queries/useMeQuery'
 
 const Edit: NextPage<{}> = () => {
   const { push, query } = useRouter()
   const [updateStory] = useUpdateStoryMutation()
-  const { currentUser, setCurrentUser } = useContext(userContext)
+  const { refetch, data } = useMeQuery()
   const variables = { id: query.storyId as string }
   const result = useStoryQuery({ variables, skip: !query.storyId })
   const story = result.data?.story
@@ -22,7 +21,7 @@ const Edit: NextPage<{}> = () => {
     return <Error statusCode={404} />
   }
 
-  if (currentUser?.id !== story.authorId) {
+  if (data?.me?.id !== story.authorId) {
     return <Error statusCode={403} />
   }
 
@@ -39,11 +38,7 @@ const Edit: NextPage<{}> = () => {
         variables: formState.values,
       })
       const updatedStory = result.data.updateStory
-      const stories = currentUser?.stories.map((s) =>
-        s.id === updatedStory.id ? updatedStory : s
-      )
-
-      setCurrentUser({ ...currentUser, stories })
+      refetch() // Not ideal, should use writeQuery
       return updatedStory
     } catch (error) {
       console.warn(error)

@@ -1,5 +1,5 @@
 import { NextPage } from 'next'
-import { useContext, useState } from 'react'
+import { useState } from 'react'
 import { ParsedUrlQuery } from 'querystring'
 import Error from 'next/error'
 import styles from './New.module.scss'
@@ -9,9 +9,9 @@ import ContentForm from '@/components/ContentForm'
 import { useCreateChapterMutation } from '@/mutations/useCreateChapterMutation'
 import { useUpdateChapterMutation } from '@/mutations/useUpdateChapterMutation'
 import { useStoryQuery } from '@/queries/useStoryQuery'
-import { Genre, PublishStatus, Chapter } from '@/types'
+import { PublishStatus, Chapter } from '@/types'
 import { useRouter } from 'next/router'
-import userContext from '@/context/userContext'
+import { useMeQuery } from '@/hooks/queries/useMeQuery'
 
 interface Props {
   query: ParsedUrlQuery
@@ -22,11 +22,11 @@ const New: NextPage<Props> = ({ query }) => {
   const [createChapter] = useCreateChapterMutation()
   const [updateChapter] = useUpdateChapterMutation()
   const [chapter, setChapter] = useState<Chapter | undefined>()
-  const { currentUser } = useContext(userContext)
+  const { data } = useMeQuery()
   const variables = { id: query.storyId as string }
   const queryResult = useStoryQuery({ variables, skip: !query.storyId })
 
-  if (!currentUser) {
+  if (!data?.me) {
     return <Error statusCode={403} />
   }
 

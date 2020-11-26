@@ -1,12 +1,11 @@
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 import styles from './RegisterForm.module.scss'
-import { useContext } from 'react'
-import userContext from '@/context/userContext'
 import { useRegisterMutation } from '@/mutations/useRegisterMutation'
 import { useForm } from '@/hooks/useForm'
 import Input from '../Input'
 import Button from '../Button'
+import { useMeQuery } from '@/hooks/queries/useMeQuery'
 
 const RegisterForm: React.FC<{}> = ({}) => {
   const INITIAL_FORM_STATE = {
@@ -16,9 +15,9 @@ const RegisterForm: React.FC<{}> = ({}) => {
   }
 
   const formState = useForm(INITIAL_FORM_STATE)
-  const { setCurrentUser, setToken } = useContext(userContext)
   const { push } = useRouter()
   const [register] = useRegisterMutation()
+  const { refetch } = useMeQuery()
 
   const handleSubmit = async (event: any, reset: Function) => {
     event.preventDefault()
@@ -31,8 +30,8 @@ const RegisterForm: React.FC<{}> = ({}) => {
     try {
       const result = await register({ variables: formState.values })
       const { user, token } = result.data.register
-      setCurrentUser(user)
-      setToken(token.value)
+      localStorage.setItem('token', token.value)
+      refetch() // Not ideal, should use writeQuery
       formState.reset()
       push('/profile')
     } catch (error) {

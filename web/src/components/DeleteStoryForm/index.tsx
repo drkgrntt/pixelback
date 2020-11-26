@@ -1,11 +1,11 @@
-import { useState, useContext } from 'react'
+import { useState } from 'react'
 import { useRouter } from 'next/router'
 import styles from './DeleteStoryForm.module.scss'
-import userContext from '@/context/userContext'
 import { useDeleteStoryMutation } from '@/mutations/useDeleteStoryMutation'
 import Input from '../Input'
 import Button from '../Button'
 import { Story } from '@/types'
+import { useMeQuery } from '@/hooks/queries/useMeQuery'
 
 interface Props {
   story: Story
@@ -15,9 +15,9 @@ const DeleteStoryForm: React.FC<Props> = ({ story }) => {
   const [title, setTitle] = useState('')
   const [deleteStory] = useDeleteStoryMutation()
   const { push } = useRouter()
-  const { currentUser, setCurrentUser } = useContext(userContext)
+  const { data } = useMeQuery()
 
-  if (!currentUser) return null
+  if (!data?.me) return null
 
   const onDeleteClick = async (event: any, reset: Function) => {
     event.preventDefault()
@@ -33,10 +33,11 @@ const DeleteStoryForm: React.FC<Props> = ({ story }) => {
       `Are you sure you want to permanently delete ${story.title}? Doing so will delete all chapters, comments, and ratings related to the story.`
     )
     if (confirm) {
-      await deleteStory({ variables: { id: story.id } })
-      setCurrentUser({
-        ...currentUser,
-        stories: currentUser.stories.filter((s) => s.id !== story.id),
+      await deleteStory({
+        variables: { id: story.id },
+        update: (cache) => {
+          cache.evict({ id: `Story:${story.id}` })
+        }
       })
       push('/writer-dashboard')
     }

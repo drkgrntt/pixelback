@@ -1,7 +1,6 @@
 import { NextPage } from 'next'
 import Link from 'next/link'
 import styles from './Dashboard.module.scss'
-import { useContext } from 'react'
 import Error from 'next/error'
 import { useRouter } from 'next/router'
 import StoryInfo from '@/components/StoryInfo'
@@ -9,15 +8,15 @@ import DeleteStoryForm from '@/components/DeleteStoryForm'
 import ChapterList from '@/components/ChapterList'
 import Card from '@/components/Card'
 import { useStoryQuery } from '@/queries/useStoryQuery'
-import userContext from '@/context/userContext'
 import { Story } from '@/types'
 import GenreList from '@/components/GenreList'
+import { useMeQuery } from '@/hooks/queries/useMeQuery'
 
 interface Props {}
 
 const Dashboard: NextPage<Props> = () => {
   const { query } = useRouter()
-  const { currentUser } = useContext(userContext)
+  const { data } = useMeQuery()
   const variables = { id: query.storyId as string }
   const result = useStoryQuery({ variables, skip: !query.storyId })
   const story: Story = result.data?.story
@@ -26,7 +25,7 @@ const Dashboard: NextPage<Props> = () => {
     return <Error statusCode={404} />
   }
 
-  if (currentUser?.id !== story.authorId) {
+  if (data?.me?.id !== story.authorId) {
     return <Error statusCode={403} />
   }
 

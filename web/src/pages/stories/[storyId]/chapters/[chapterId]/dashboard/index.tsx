@@ -2,7 +2,6 @@ import { NextPage } from 'next'
 import Link from 'next/link'
 import { ParsedUrlQuery } from 'querystring'
 import styles from './Dashboard.module.scss'
-import { useContext } from 'react'
 import Error from 'next/error'
 import Loader from '@/components/Loader'
 import StoryInfo from '@/components/StoryInfo'
@@ -10,8 +9,8 @@ import DeleteChapterForm from '@/components/DeleteChapterForm'
 import Card from '@/components/Card'
 import { useStoryQuery } from '@/queries/useStoryQuery'
 import { useChapterQuery } from '@/queries/useChapterQuery'
-import userContext from '@/context/userContext'
 import { Story, Chapter } from '@/types'
+import { useMeQuery } from '@/hooks/queries/useMeQuery'
 
 interface Props {
   query: ParsedUrlQuery
@@ -28,7 +27,7 @@ const Dashboard: NextPage<Props> = ({ query }) => {
     variables: chapterVariables,
     skip: !query.chapterId,
   })
-  const { currentUser } = useContext(userContext)
+  const { data } = useMeQuery()
 
   switch (true) {
     case !!storyResult.error || !!chapterResult.error:
@@ -41,7 +40,7 @@ const Dashboard: NextPage<Props> = ({ query }) => {
   const { story }: { story: Story } = storyResult.data
   const { chapter }: { chapter: Chapter } = chapterResult.data
 
-  if (currentUser?.id !== story.authorId) {
+  if (data?.me?.id !== story.authorId) {
     return <Error statusCode={403} />
   }
 

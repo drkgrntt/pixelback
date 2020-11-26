@@ -1,10 +1,9 @@
 import { useRouter } from 'next/router'
-import { useContext } from 'react'
-import userContext from '@/context/userContext'
 import Link from 'next/link'
 import Button from '../Button'
 import { Chapter, Story } from '@/types'
 import styles from './ChapterList.module.scss'
+import { useMeQuery } from '@/hooks/queries/useMeQuery'
 
 interface Props {
   story: Story
@@ -12,10 +11,10 @@ interface Props {
 
 const ChapterList: React.FC<Props> = ({ story }) => {
   const { push } = useRouter()
-  const { currentUser } = useContext(userContext)
+  const { data } = useMeQuery() 
 
   const renderDashboardLink = (chapter: Chapter) => {
-    if (currentUser?.id !== story.authorId) return
+    if (data?.me?.id !== story.authorId) return
 
     return (
       <>
@@ -43,7 +42,7 @@ const ChapterList: React.FC<Props> = ({ story }) => {
   }
 
   const renderNewChapterButton = () => {
-    if (currentUser?.id !== story.authorId) return
+    if (data?.me?.id !== story.authorId) return
 
     if (story.chapters.length) {
       return (
