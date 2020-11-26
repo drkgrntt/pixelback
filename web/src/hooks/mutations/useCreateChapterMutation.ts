@@ -1,4 +1,4 @@
-import { gql, useMutation } from '@apollo/client'
+import { ApolloCache, gql, MutationHookOptions, useMutation } from '@apollo/client'
 import { ChapterInfo } from '@/fragments/ChapterInfo.ts'
 
 export const useCreateChapterMutation = () => {

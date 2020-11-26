@@ -30,7 +30,12 @@ const DeleteChapterForm: React.FC<Props> = ({ story, chapter }) => {
       `Are you sure you want to permanently delete ${chapter.title}? Doing so will delete all chapters, comments, and ratings related to the chapter.`
     )
     if (confirm) {
-      await deleteChapter({ variables: { id: chapter.id } })
+      await deleteChapter({
+        variables: { id: chapter.id },
+        update: (cache) => {
+          cache.evict({ id: `Chapter:${chapter.id}` })
+        }
+      })
       push('/writer-dashboard')
     }
 

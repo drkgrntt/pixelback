@@ -1,4 +1,4 @@
-import { gql, useMutation } from '@apollo/client'
+import { gql, MutationHookOptions, useMutation } from '@apollo/client'
 
 export const useDeleteChapterMutation = () => {
   const DELETE_CHAPTER = gql`

@@ -24,20 +24,20 @@ const New: NextPage<Props> = ({ query }) => {
   const [chapter, setChapter] = useState<Chapter | undefined>()
   const { currentUser } = useContext(userContext)
   const variables = { id: query.storyId as string }
-  const result = useStoryQuery({ variables, skip: !query.storyId })
+  const queryResult = useStoryQuery({ variables, skip: !query.storyId })
 
   if (!currentUser) {
     return <Error statusCode={403} />
   }
 
   switch (true) {
-    case !!result.error:
+    case !!queryResult.error:
       return <Error statusCode={404} />
-    case !!result.loading:
+    case !!queryResult.loading:
       return <Loader />
   }
 
-  const { story } = result.data
+  const { story } = queryResult.data
 
   const save = async (formState: any) => {
     formState.values.status = formState.values.publish
@@ -58,6 +58,7 @@ const New: NextPage<Props> = ({ query }) => {
         updatedStory = result.data.createChapter
       }
       setChapter(updatedStory)
+      queryResult.refetch() // Not ideal, would be better to update the cache
       return updatedStory
     } catch (error) {
       console.warn(error)
