@@ -11,7 +11,8 @@ import { useUpdateChapterMutation } from '@/mutations/useUpdateChapterMutation'
 import { useStoryQuery } from '@/queries/useStoryQuery'
 import { PublishStatus, Chapter } from '@/types'
 import { useRouter } from 'next/router'
-import { useMeQuery } from '@/hooks/queries/useMeQuery'
+import { useMeQuery } from '@/queries/useMeQuery'
+import { useIsAuth } from '@/hooks/useIsAuth'
 
 interface Props {
   query: ParsedUrlQuery
@@ -19,12 +20,18 @@ interface Props {
 
 const New: NextPage<Props> = ({ query }) => {
   const { push } = useRouter()
-  const [createChapter] = useCreateChapterMutation(query.storyId as string)
+  const [createChapter] = useCreateChapterMutation(
+    query.storyId as string
+  )
   const [updateChapter] = useUpdateChapterMutation()
   const [chapter, setChapter] = useState<Chapter | undefined>()
   const { data } = useMeQuery()
   const variables = { id: query.storyId as string }
-  const queryResult = useStoryQuery({ variables, skip: !query.storyId })
+  const queryResult = useStoryQuery({
+    variables,
+    skip: !query.storyId,
+  })
+  useIsAuth()
 
   if (!data?.me) {
     return <Error statusCode={403} />

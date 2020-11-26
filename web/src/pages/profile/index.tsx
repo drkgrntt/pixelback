@@ -5,10 +5,12 @@ import Card from '@/components/Card'
 import { useLogoutEverywhereMutation } from '@/mutations/useLogoutEverywhereMutation'
 import Link from 'next/link'
 import { useMeQuery } from '@/hooks/queries/useMeQuery'
+import { useIsAuth } from '@/hooks/useIsAuth'
 
 const Profile: NextPage<{}> = () => {
   const [logoutEverywhere] = useLogoutEverywhereMutation()
   const { data } = useMeQuery()
+  useIsAuth()
 
   if (!data?.me) {
     return (

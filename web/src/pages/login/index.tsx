@@ -9,11 +9,10 @@ interface Props {
 }
 
 const Login: NextPage<Props> = ({ query }) => {
-  console.log(query)
   return (
     <div className={styles.login}>
       <Card>
-        <LoginForm next={query?.next || '/profile'} />
+        <LoginForm next={query?.next as string || '/profile'} />
       </Card>
     </div>
   )

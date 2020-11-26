@@ -11,6 +11,7 @@ import { useStoryQuery } from '@/queries/useStoryQuery'
 import { Story } from '@/types'
 import GenreList from '@/components/GenreList'
 import { useMeQuery } from '@/hooks/queries/useMeQuery'
+import { useIsAuth } from '@/hooks/useIsAuth'
 
 interface Props {}
 
@@ -20,6 +21,7 @@ const Dashboard: NextPage<Props> = () => {
   const variables = { id: query.storyId as string }
   const result = useStoryQuery({ variables, skip: !query.storyId })
   const story: Story = result.data?.story
+  useIsAuth()
 
   if (!story) {
     return <Error statusCode={404} />

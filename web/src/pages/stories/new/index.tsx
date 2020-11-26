@@ -8,7 +8,8 @@ import { useCreateStoryMutation } from '@/mutations/useCreateStoryMutation'
 import { useUpdateStoryMutation } from '@/mutations/useUpdateStoryMutation'
 import { PublishStatus, Story } from '@/types'
 import { useRouter } from 'next/router'
-import { useMeQuery } from '@/hooks/queries/useMeQuery'
+import { useMeQuery } from '@/queries/useMeQuery'
+import { useIsAuth } from '@/hooks/useIsAuth'
 
 const New: NextPage<{}> = () => {
   const { push } = useRouter()
@@ -16,6 +17,7 @@ const New: NextPage<{}> = () => {
   const [updateStory] = useUpdateStoryMutation()
   const [story, setStory] = useState<Story | undefined>()
   const { data } = useMeQuery()
+  useIsAuth()
 
   if (!data?.me) {
     return <Error statusCode={403} />

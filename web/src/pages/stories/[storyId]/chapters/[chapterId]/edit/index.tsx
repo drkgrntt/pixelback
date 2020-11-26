@@ -10,6 +10,7 @@ import { useChapterQuery } from '@/queries/useChapterQuery'
 import { Genre, PublishStatus } from '@/types'
 import { useRouter } from 'next/router'
 import { useMeQuery } from '@/queries/useMeQuery'
+import { useIsAuth } from '@/hooks/useIsAuth'
 
 interface Props {
   query: ParsedUrlQuery
@@ -31,6 +32,7 @@ const Edit: NextPage<Props> = ({ query }) => {
     skip: !query.chapterId,
   })
   const chapter = chapterResult.data?.chapter
+  useIsAuth()
 
   if (!chapter || !story) {
     return <Error statusCode={404} />

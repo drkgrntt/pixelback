@@ -11,6 +11,7 @@ import { useStoryQuery } from '@/queries/useStoryQuery'
 import { useChapterQuery } from '@/queries/useChapterQuery'
 import { Story, Chapter } from '@/types'
 import { useMeQuery } from '@/hooks/queries/useMeQuery'
+import { useIsAuth } from '@/hooks/useIsAuth'
 
 interface Props {
   query: ParsedUrlQuery
@@ -28,6 +29,7 @@ const Dashboard: NextPage<Props> = ({ query }) => {
     skip: !query.chapterId,
   })
   const { data } = useMeQuery()
+  useIsAuth()
 
   switch (true) {
     case !!storyResult.error || !!chapterResult.error:

@@ -39,7 +39,6 @@ const GenreSearch: React.FC<Props> = ({ story }) => {
       const createResult = await createGenre({
         variables: { name: search },
       })
-      console.log(createResult)
       variables.genreId = createResult.data.createGenre.id
     }
 

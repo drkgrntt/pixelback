@@ -6,10 +6,12 @@ import Card from '@/components/Card'
 import { Story, SubLevel, Subscription } from '@/types'
 import Button from '@/components/Button'
 import { useMeQuery } from '@/hooks/queries/useMeQuery'
+import { useIsAuth } from '@/hooks/useIsAuth'
 
 const WriterDashboard: NextPage<{}> = () => {
   const { data } = useMeQuery()
   const { push } = useRouter()
+  useIsAuth()
 
   if (!data?.me) {
     return (

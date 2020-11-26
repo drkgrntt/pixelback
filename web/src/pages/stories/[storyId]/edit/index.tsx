@@ -6,9 +6,10 @@ import Card from '@/components/Card'
 import ContentForm from '@/components/ContentForm'
 import { useUpdateStoryMutation } from '@/mutations/useUpdateStoryMutation'
 import { useStoryQuery } from '@/queries/useStoryQuery'
-import { Genre, PublishStatus } from '@/types'
+import { PublishStatus } from '@/types'
 import { useRouter } from 'next/router'
 import { useMeQuery } from '@/hooks/queries/useMeQuery'
+import { useIsAuth } from '@/hooks/useIsAuth'
 
 interface Props {
   query: ParsedUrlQuery
@@ -21,6 +22,7 @@ const Edit: NextPage<Props> = ({ query }) => {
   const variables = { id: query.storyId as string }
   const result = useStoryQuery({ variables, skip: !query.storyId })
   const story = result.data?.story
+  useIsAuth()
 
   if (!story) {
     return <Error statusCode={404} />
