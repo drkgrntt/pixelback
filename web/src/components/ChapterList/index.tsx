@@ -29,7 +29,9 @@ const ChapterList: React.FC<Props> = ({ story }) => {
   const renderChapters = () => {
     if (!story.chapters.length) return null
 
-    return story.chapters.map((chapter) => {
+    const sortedChapters = [...story.chapters].sort((a, b) => a.number - b.number)
+
+    return sortedChapters.map((chapter) => {
       return (
         <li key={chapter.id} className={styles.chapter}>
           <Link href={`/stories/${story.id}/chapters/${chapter.id}`}>

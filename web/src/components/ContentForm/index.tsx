@@ -77,11 +77,14 @@ const ContentForm: React.FC<Props> = (props) => {
       setSaveTextTimer(textTimer)
     }, 3000)
     setAutoSaveTimer(saveTimer)
+  }, [formState.values])
+
+  useEffect(() => {
     return () => {
       if (autoSaveTimer) clearTimeout(autoSaveTimer)
       if (saveTextTimer) clearTimeout(saveTextTimer)
     }
-  }, [formState.values])
+  }, [autoSaveTimer, saveTextTimer])
 
   // Submit handling
   const handleSubmit = async (event: any, reset: Function) => {

@@ -32,7 +32,7 @@ const Edit: NextPage<Props> = ({ query }) => {
   })
   const chapter = chapterResult.data?.chapter
 
-  if (!chapter) {
+  if (!chapter || !story) {
     return <Error statusCode={404} />
   }
 
@@ -44,6 +44,8 @@ const Edit: NextPage<Props> = ({ query }) => {
     formState.values.status = formState.values.publish
       ? PublishStatus.Published
       : PublishStatus.Draft
+
+    formState.values.number = parseInt(formState.values.number)
 
     try {
       const result = await updateChapter({
