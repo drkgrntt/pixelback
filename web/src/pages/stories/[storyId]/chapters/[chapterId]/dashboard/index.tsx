@@ -4,7 +4,7 @@ import { ParsedUrlQuery } from 'querystring'
 import styles from './Dashboard.module.scss'
 import Error from 'next/error'
 import Loader from '@/components/Loader'
-import StoryInfo from '@/components/StoryInfo'
+import ChapterInfo from '@/components/ChapterInfo'
 import DeleteChapterForm from '@/components/DeleteChapterForm'
 import Card from '@/components/Card'
 import { useStoryQuery } from '@/queries/useStoryQuery'
@@ -47,12 +47,19 @@ const Dashboard: NextPage<Props> = ({ query }) => {
   return (
     <div>
       <h2>{story.title}</h2>
+
+      <Link href={`/stories/${story.id}/dashboard`}>
+        <a>Back to the story dashboard</a>
+      </Link>
+
+      <br />
+
       <Link href="/writer-dashboard">
         <a>Back to writer's dashboard</a>
       </Link>
 
       <Card>
-        {/* <StoryInfo story={story} /> */}
+        <ChapterInfo chapter={chapter} story={story} />
         <Link
           href={`/stories/${story.id}/chapters/${chapter.id}/edit`}
         >

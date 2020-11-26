@@ -18,6 +18,7 @@ const StoryInfo: React.FC<Props> = ({ story }) => {
           </Link>
         </li>
         <li>Score: {story.score}/5</li>
+        <li>Number of ratings: {story.ratings.length}</li>
         <li>Status: {PublishStatus[story.status]}</li>
         <li>Created: {story.createdAt.toLocaleDateString()}</li>
         <li>Last updated: {story.updatedAt.toLocaleDateString()}</li>

@@ -10,6 +10,9 @@ export const StoryInfo = gql`
     status
     score
     authorId
+    ratings {
+      id
+    }
     publishedAt
     createdAt
     updatedAt
