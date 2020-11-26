@@ -168,11 +168,11 @@ export class UserResolver {
     return newToken
   }
 
-  @Mutation(() => Boolean)
+  @Mutation(() => String)
   async deleteUserAndAllData(
     @Ctx() { me }: Context,
     @Arg('password') password: string
-  ): Promise<boolean> {
+  ): Promise<string> {
     const correctPassword = await bcrypt.compare(
       password,
       me.password
@@ -181,6 +181,6 @@ export class UserResolver {
       throw new Error('Invalid email or password')
     }
     await me.remove()
-    return true
+    return me.id
   }
 }

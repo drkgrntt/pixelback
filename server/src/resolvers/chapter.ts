@@ -148,19 +148,19 @@ export class ChapterResolver {
     return chapter
   }
 
-  @Mutation(() => Boolean)
+  @Mutation(() => String)
   @UseMiddleware(isAuth)
   async deleteChapter(
     @Arg('id') id: string,
     @Ctx() { me }: Context
-  ): Promise<Boolean> {
+  ): Promise<string> {
     // Make sure the user is the author of the story
     let chapter = await Chapter.findOne(
       { id },
       { relations: ['story'] }
     )
     if (!chapter) {
-      return false
+      return id
     }
 
     if (chapter.story.authorId !== me.id) {
@@ -169,6 +169,6 @@ export class ChapterResolver {
 
     await chapter.remove()
 
-    return true
+    return chapter.id
   }
 }

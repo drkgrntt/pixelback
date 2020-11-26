@@ -206,15 +206,14 @@ export class StoryResolver {
     return story
   }
 
-  @Mutation(() => Boolean)
+  @Mutation(() => String)
   @UseMiddleware(isAuth)
   async deleteStory(
     @Arg('id') id: string,
     @Ctx() { me }: Context
-  ): Promise<Boolean> {
-    const result = await Story.delete({ id, authorId: me.id })
-
-    return !!result.affected
+  ): Promise<string> {
+    await Story.delete({ id, authorId: me.id })
+    return id
   }
 
   @Mutation(() => Story)

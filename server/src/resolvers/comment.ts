@@ -87,12 +87,12 @@ export class CommentResolver {
     return comment
   }
 
-  @Mutation(() => Boolean)
+  @Mutation(() => String)
   @UseMiddleware(isAuth)
   async deleteComment(
     @Arg('id') id: string,
     @Ctx() { me }: Context
-  ): Promise<boolean> {
+  ): Promise<string> {
     // Ensure deleter is either the owner or an admin
     const query: any = { id }
     if (me.role !== UserRole.Admin) {
@@ -105,6 +105,6 @@ export class CommentResolver {
 
     await comment.remove()
 
-    return true
+    return comment.id
   }
 }
