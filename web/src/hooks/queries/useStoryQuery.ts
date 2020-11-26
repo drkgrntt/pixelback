@@ -1,7 +1,7 @@
 import { gql, QueryHookOptions, useQuery } from '@apollo/client'
 import { StoryInfo } from '@/fragments/StoryInfo'
 
-export const useStoryQuery = () => {
+export const useStoryQuery = (options?: QueryHookOptions) => {
   const STORY = gql`
     query Story($id: String!) {
       story(id: $id) {
@@ -20,5 +20,5 @@ export const useStoryQuery = () => {
     ${StoryInfo}
   `
 
-  return (options?: QueryHookOptions) => useQuery(STORY, options)
+  return useQuery(STORY, options)
 }

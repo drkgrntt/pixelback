@@ -12,9 +12,8 @@ interface Props {
 }
 
 const Chapters: NextPage<Props> = ({ query }) => {
-  const getStory = useStoryQuery()
   const variables = { id: query.storyId as string }
-  const result = getStory({ variables, skip: !query.storyId })
+  const result = useStoryQuery({ variables, skip: !query.storyId })
 
   switch (true) {
     case !!result.error:

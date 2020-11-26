@@ -15,11 +15,10 @@ const GenreSearch: React.FC<Props> = ({ story }) => {
   const [search, setSearch] = useState('')
   const [genreId, setGenreId] = useState<string | null>(null)
 
-  const searchGenres = useGenresQuery()
   const [createGenre] = useCreateGenreMutation()
   const [addGenreToStory] = useAddGenreToStoryMutation()
 
-  const searchResult = searchGenres({
+  const searchResult = useGenresQuery({
     variables: { search },
     skip: !search,
   })

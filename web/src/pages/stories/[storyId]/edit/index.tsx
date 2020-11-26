@@ -3,7 +3,7 @@ import { useContext } from 'react'
 import Error from 'next/error'
 import styles from './Edit.module.scss'
 import Card from '@/components/Card'
-import StoryForm from '@/components/StoryForm'
+import ContentForm from '@/components/ContentForm'
 import { useUpdateStoryMutation } from '@/mutations/useUpdateStoryMutation'
 import { useStoryQuery } from '@/queries/useStoryQuery'
 import { Genre, PublishStatus } from '@/types'
@@ -14,9 +14,8 @@ const Edit: NextPage<{}> = () => {
   const { push, query } = useRouter()
   const [updateStory] = useUpdateStoryMutation()
   const { currentUser, setCurrentUser } = useContext(userContext)
-  const getStory = useStoryQuery()
   const variables = { id: query.storyId as string }
-  const result = getStory({ variables, skip: !query.storyId })
+  const result = useStoryQuery({ variables, skip: !query.storyId })
   const story = result.data?.story
 
   if (!story) {
@@ -66,8 +65,8 @@ const Edit: NextPage<{}> = () => {
     <div>
       <h2>Edit Story</h2>
       <Card>
-        <StoryForm
-          story={story}
+        <ContentForm
+          content={story}
           autoSave={save}
           onSubmit={handleSubmit}
         />

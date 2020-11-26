@@ -18,9 +18,8 @@ interface Props {}
 const Dashboard: NextPage<Props> = () => {
   const { query } = useRouter()
   const { currentUser } = useContext(userContext)
-  const getStory = useStoryQuery()
   const variables = { id: query.storyId as string }
-  const result = getStory({ variables, skip: !query.storyId })
+  const result = useStoryQuery({ variables, skip: !query.storyId })
   const story: Story = result.data?.story
 
   if (!story) {

@@ -13,12 +13,16 @@ interface Props {
 }
 
 const ChapterPage: NextPage<Props> = ({ query }) => {
-  const getStory = useStoryQuery()
   const storyVariables = { id: query.storyId }
-  const storyResult = getStory({ variables: storyVariables, skip: !query.storyId })
-  const getChapter = useChapterQuery()
+  const storyResult = useStoryQuery({
+    variables: storyVariables,
+    skip: !query.storyId,
+  })
   const chapterVariables = { id: query.chapterId }
-  const chapterResult = getChapter({ variables: chapterVariables, skip: !query.chapterId })
+  const chapterResult = useChapterQuery({
+    variables: chapterVariables,
+    skip: !query.chapterId,
+  })
 
   switch (true) {
     case !!storyResult.error || !!chapterResult.error:
@@ -35,10 +39,10 @@ const ChapterPage: NextPage<Props> = ({ query }) => {
     if (!chapter.previous) return
 
     return (
-      <Link href={`/stories/${story.id}/chapters/${chapter.previous.id}`}>
-        <a>
-          &#8249; Previous
-        </a>
+      <Link
+        href={`/stories/${story.id}/chapters/${chapter.previous.id}`}
+      >
+        <a>&#8249; Previous</a>
       </Link>
     )
   }
@@ -48,9 +52,7 @@ const ChapterPage: NextPage<Props> = ({ query }) => {
 
     return (
       <Link href={`/stories/${story.id}/chapters/${chapter.next.id}`}>
-        <a>
-          Next &#8250;
-        </a>
+        <a>Next &#8250;</a>
       </Link>
     )
   }

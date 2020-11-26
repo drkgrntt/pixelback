@@ -1,6 +1,6 @@
 import { gql, QueryHookOptions, useQuery } from '@apollo/client'
 
-export const useGenresQuery = () => {
+export const useGenresQuery = (options?: QueryHookOptions) => {
   const GENRES = gql`
     query Genres($search: String!) {
       genres(search: $search) {
@@ -10,5 +10,5 @@ export const useGenresQuery = () => {
     }
   `
 
-  return (options?: QueryHookOptions) => useQuery(GENRES, options)
+  return useQuery(GENRES, options)
 }

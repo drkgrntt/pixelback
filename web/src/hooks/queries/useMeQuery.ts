@@ -1,7 +1,7 @@
 import { gql, QueryHookOptions, useQuery } from '@apollo/client'
 import { UserInfo } from '@/fragments/UserInfo'
 
-export const useMeQuery = () => {
+export const useMeQuery = (options?: QueryHookOptions) => {
   const ME = gql`
     query Me {
       me {
@@ -29,5 +29,5 @@ export const useMeQuery = () => {
     ${UserInfo}
   `
 
-  return (options?: QueryHookOptions) => useQuery(ME, options)
+  return useQuery(ME, options)
 }

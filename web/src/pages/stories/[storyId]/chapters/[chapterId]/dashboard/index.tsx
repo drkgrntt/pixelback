@@ -18,12 +18,16 @@ interface Props {
 }
 
 const Dashboard: NextPage<Props> = ({ query }) => {
-  const getStory = useStoryQuery()
   const storyVariables = { id: query.storyId }
-  const storyResult = getStory({ variables: storyVariables, skip: !query.storyId })
-  const getChapter = useChapterQuery()
+  const storyResult = useStoryQuery({
+    variables: storyVariables,
+    skip: !query.storyId,
+  })
   const chapterVariables = { id: query.chapterId }
-  const chapterResult = getChapter({ variables: chapterVariables, skip: !query.chapterId })
+  const chapterResult = useChapterQuery({
+    variables: chapterVariables,
+    skip: !query.chapterId,
+  })
   const { currentUser } = useContext(userContext)
 
   switch (true) {
@@ -50,7 +54,9 @@ const Dashboard: NextPage<Props> = ({ query }) => {
 
       <Card>
         {/* <StoryInfo story={story} /> */}
-        <Link href={`/stories/${story.id}/chapters/${chapter.id}/edit`}>
+        <Link
+          href={`/stories/${story.id}/chapters/${chapter.id}/edit`}
+        >
           <a>Edit the chapter</a>
         </Link>
       </Card>

@@ -19,8 +19,7 @@ const UserProvider: React.FC<{}> = (props) => {
     if (token) setLocalToken(token)
   })
 
-  const getMe = useMeQuery()
-  const result = getMe({ skip: !localToken })
+  const result = useMeQuery({ skip: !localToken })
 
   useEffect(() => {
     switch (true) {

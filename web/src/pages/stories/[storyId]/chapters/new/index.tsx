@@ -23,9 +23,8 @@ const New: NextPage<Props> = ({ query }) => {
   const [updateChapter] = useUpdateChapterMutation()
   const [chapter, setChapter] = useState<Chapter | undefined>()
   const { currentUser } = useContext(userContext)
-  const getStory = useStoryQuery()
   const variables = { id: query.storyId as string }
-  const result = getStory({ variables, skip: !query.storyId })
+  const result = useStoryQuery({ variables, skip: !query.storyId })
 
   if (!currentUser) {
     return <Error statusCode={403} />
