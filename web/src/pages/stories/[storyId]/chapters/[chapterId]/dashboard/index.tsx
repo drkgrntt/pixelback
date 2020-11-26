@@ -9,7 +9,7 @@ import DeleteChapterForm from '@/components/DeleteChapterForm'
 import Card from '@/components/Card'
 import { useStoryQuery } from '@/queries/useStoryQuery'
 import { useChapterQuery } from '@/queries/useChapterQuery'
-import { Story, Chapter } from '@/types'
+import { Story, Chapter, User } from '@/types'
 import { useMeQuery } from '@/hooks/queries/useMeQuery'
 import { useIsAuth } from '@/hooks/useIsAuth'
 
@@ -23,26 +23,30 @@ const Dashboard: NextPage<Props> = ({ query }) => {
     variables: storyVariables,
     skip: !query.storyId,
   })
+  const story: Story = storyResult.data?.story
   const chapterVariables = { id: query.chapterId }
   const chapterResult = useChapterQuery({
     variables: chapterVariables,
     skip: !query.chapterId,
   })
-  const { data } = useMeQuery()
+  const chapter: Chapter = chapterResult.data?.chapter
+  const meResult = useMeQuery()
+  const me: User = meResult.data?.me
   useIsAuth()
 
-  switch (true) {
-    case !!storyResult.error || !!chapterResult.error:
-      return <Error statusCode={404} />
-
-    case !!storyResult.loading || !!chapterResult.loading:
-      return <Loader />
+  if (
+    meResult.loading ||
+    storyResult.loading ||
+    chapterResult.loading
+  ) {
+    return <Loader />
   }
 
-  const { story }: { story: Story } = storyResult.data
-  const { chapter }: { chapter: Chapter } = chapterResult.data
+  if (!chapter || !story) {
+    return <Error statusCode={404} />
+  }
 
-  if (data?.me?.id !== story.authorId) {
+  if (me.id !== story.authorId) {
     return <Error statusCode={403} />
   }
 

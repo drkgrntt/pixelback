@@ -10,17 +10,17 @@ import { PublishStatus, Story } from '@/types'
 import { useRouter } from 'next/router'
 import { useMeQuery } from '@/queries/useMeQuery'
 import { useIsAuth } from '@/hooks/useIsAuth'
+import Loader from '@/components/Loader'
 
 const New: NextPage<{}> = () => {
   const { push } = useRouter()
   const [createStory] = useCreateStoryMutation()
   const [updateStory] = useUpdateStoryMutation()
   const [story, setStory] = useState<Story | undefined>()
-  const { data } = useMeQuery()
-  useIsAuth()
+  const { loading } = useIsAuth()
 
-  if (!data?.me) {
-    return <Error statusCode={403} />
+  if (loading) {
+    return <Loader />
   }
 
   const save = async (formState: any) => {

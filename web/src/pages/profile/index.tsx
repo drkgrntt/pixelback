@@ -4,25 +4,15 @@ import Button from '@/components/Button'
 import Card from '@/components/Card'
 import { useLogoutEverywhereMutation } from '@/mutations/useLogoutEverywhereMutation'
 import Link from 'next/link'
-import { useMeQuery } from '@/hooks/queries/useMeQuery'
 import { useIsAuth } from '@/hooks/useIsAuth'
+import Loader from '@/components/Loader'
 
 const Profile: NextPage<{}> = () => {
   const [logoutEverywhere] = useLogoutEverywhereMutation()
-  const { data } = useMeQuery()
-  useIsAuth()
+  const { loading } = useIsAuth()
 
-  if (!data?.me) {
-    return (
-      <Card className={styles.login}>
-        <Link href="/login">
-          <span>
-            <a className={styles.login}>Login</a> to view your
-            profile.
-          </span>
-        </Link>
-      </Card>
-    )
+  if (loading) {
+    return <Loader />
   }
 
   const onLogoutEverywhereClick = async (

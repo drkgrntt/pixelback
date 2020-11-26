@@ -7,23 +7,15 @@ import { Story, SubLevel, Subscription } from '@/types'
 import Button from '@/components/Button'
 import { useMeQuery } from '@/hooks/queries/useMeQuery'
 import { useIsAuth } from '@/hooks/useIsAuth'
+import Loader from '@/components/Loader'
 
 const WriterDashboard: NextPage<{}> = () => {
-  const { data } = useMeQuery()
+  const { loading, data } = useMeQuery()
   const { push } = useRouter()
   useIsAuth()
 
-  if (!data?.me) {
-    return (
-      <Card className={styles.login}>
-        <Link href="/login">
-          <span>
-            <a className={styles.login}>Login</a> to view your
-            writer's dashboard.
-          </span>
-        </Link>
-      </Card>
-    )
+  if (loading) {
+    return <Loader />
   }
 
   const renderStories = () => {

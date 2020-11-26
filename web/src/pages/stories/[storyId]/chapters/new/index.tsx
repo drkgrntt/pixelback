@@ -25,26 +25,27 @@ const New: NextPage<Props> = ({ query }) => {
   )
   const [updateChapter] = useUpdateChapterMutation()
   const [chapter, setChapter] = useState<Chapter | undefined>()
-  const { data } = useMeQuery()
+  const meResult = useMeQuery()
   const variables = { id: query.storyId as string }
-  const queryResult = useStoryQuery({
+  const storyResult = useStoryQuery({
     variables,
     skip: !query.storyId,
   })
   useIsAuth()
 
-  if (!data?.me) {
+  if (meResult.loading || storyResult.loading) {
+    return <Loader />
+  }
+
+  if (!meResult.data?.me) {
     return <Error statusCode={403} />
   }
 
-  switch (true) {
-    case !!queryResult.error:
-      return <Error statusCode={404} />
-    case !!queryResult.loading:
-      return <Loader />
+  if (!storyResult.data) {
+    return <Error statusCode={404} />
   }
 
-  const { story } = queryResult.data
+  const { story } = storyResult.data
 
   const save = async (formState: any) => {
     formState.values.status = formState.values.publish

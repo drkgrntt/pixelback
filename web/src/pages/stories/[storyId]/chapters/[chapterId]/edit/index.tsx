@@ -11,6 +11,7 @@ import { Genre, PublishStatus } from '@/types'
 import { useRouter } from 'next/router'
 import { useMeQuery } from '@/queries/useMeQuery'
 import { useIsAuth } from '@/hooks/useIsAuth'
+import Loader from '@/components/Loader'
 
 interface Props {
   query: ParsedUrlQuery
@@ -19,7 +20,8 @@ interface Props {
 const Edit: NextPage<Props> = ({ query }) => {
   const { push } = useRouter()
   const [updateChapter] = useUpdateChapterMutation()
-  const { data } = useMeQuery()
+  const meResult = useMeQuery()
+  const me = meResult.data?.me
   const storyVarialbes = { id: query.storyId as string }
   const storyResult = useStoryQuery({
     variables: storyVarialbes,
@@ -34,11 +36,19 @@ const Edit: NextPage<Props> = ({ query }) => {
   const chapter = chapterResult.data?.chapter
   useIsAuth()
 
+  if (
+    meResult.loading ||
+    storyResult.loading ||
+    chapterResult.loading
+  ) {
+    return <Loader />
+  }
+
   if (!chapter || !story) {
     return <Error statusCode={404} />
   }
 
-  if (data?.me?.id !== story.authorId) {
+  if (me.id !== story.authorId) {
     return <Error statusCode={403} />
   }
 

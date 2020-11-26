@@ -10,6 +10,7 @@ import { PublishStatus } from '@/types'
 import { useRouter } from 'next/router'
 import { useMeQuery } from '@/hooks/queries/useMeQuery'
 import { useIsAuth } from '@/hooks/useIsAuth'
+import Loader from '@/components/Loader'
 
 interface Props {
   query: ParsedUrlQuery
@@ -18,17 +19,21 @@ interface Props {
 const Edit: NextPage<Props> = ({ query }) => {
   const { push } = useRouter()
   const [updateStory] = useUpdateStoryMutation()
-  const { data } = useMeQuery()
+  const meResult = useMeQuery()
   const variables = { id: query.storyId as string }
-  const result = useStoryQuery({ variables, skip: !query.storyId })
-  const story = result.data?.story
+  const storyResult = useStoryQuery({ variables, skip: !query.storyId })
+  const story = storyResult.data?.story
   useIsAuth()
+
+  if (meResult.loading || storyResult.loading) {
+    return <Loader />
+  }
 
   if (!story) {
     return <Error statusCode={404} />
   }
 
-  if (data?.me?.id !== story.authorId) {
+  if (meResult.data?.me?.id !== story.authorId) {
     return <Error statusCode={403} />
   }
 

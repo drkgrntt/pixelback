@@ -2,7 +2,6 @@ import { NextPage } from 'next'
 import Link from 'next/link'
 import styles from './Dashboard.module.scss'
 import Error from 'next/error'
-import { useRouter } from 'next/router'
 import StoryInfo from '@/components/StoryInfo'
 import DeleteStoryForm from '@/components/DeleteStoryForm'
 import ChapterList from '@/components/ChapterList'
@@ -12,22 +11,29 @@ import { Story } from '@/types'
 import GenreList from '@/components/GenreList'
 import { useMeQuery } from '@/hooks/queries/useMeQuery'
 import { useIsAuth } from '@/hooks/useIsAuth'
+import { ParsedUrlQuery } from 'querystring'
+import Loader from '@/components/Loader'
 
-interface Props {}
+interface Props {
+  query: ParsedUrlQuery
+}
 
-const Dashboard: NextPage<Props> = () => {
-  const { query } = useRouter()
-  const { data } = useMeQuery()
+const Dashboard: NextPage<Props> = ({ query }) => {
+  const meResult = useMeQuery()
   const variables = { id: query.storyId as string }
-  const result = useStoryQuery({ variables, skip: !query.storyId })
-  const story: Story = result.data?.story
+  const storyResult = useStoryQuery({ variables, skip: !query.storyId })
+  const story: Story = storyResult.data?.story
   useIsAuth()
+
+  if (meResult.loading || storyResult.loading) {
+    return <Loader />
+  }
 
   if (!story) {
     return <Error statusCode={404} />
   }
 
-  if (data?.me?.id !== story.authorId) {
+  if (meResult.data?.me?.id !== story.authorId) {
     return <Error statusCode={403} />
   }
 
@@ -58,6 +64,10 @@ const Dashboard: NextPage<Props> = () => {
       </Card>
     </div>
   )
+}
+
+Dashboard.getInitialProps = ({ query }) => {
+  return { query }
 }
 
 export default Dashboard

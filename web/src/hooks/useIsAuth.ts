@@ -10,4 +10,5 @@ export const useIsAuth = () => {
       router.replace('/login?next=' + router.pathname)
     }
   }, [loading, data, router])
+  return { loading }
 }
