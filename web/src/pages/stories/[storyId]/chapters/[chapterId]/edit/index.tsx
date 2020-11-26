@@ -4,11 +4,12 @@ import Error from 'next/error'
 import styles from './Edit.module.scss'
 import Card from '@/components/Card'
 import ContentForm from '@/components/ContentForm'
-import { useUpdateStoryMutation } from '@/mutations/useUpdateStoryMutation'
+import { useUpdateChapterMutation } from '@/mutations/useUpdateChapterMutation'
 import { useStoryQuery } from '@/queries/useStoryQuery'
+import { useChapterQuery } from '@/queries/useChapterQuery'
 import { Genre, PublishStatus } from '@/types'
 import { useRouter } from 'next/router'
-import { useMeQuery } from '@/hooks/queries/useMeQuery'
+import { useMeQuery } from '@/queries/useMeQuery'
 
 interface Props {
   query: ParsedUrlQuery
@@ -16,13 +17,22 @@ interface Props {
 
 const Edit: NextPage<Props> = ({ query }) => {
   const { push } = useRouter()
-  const [updateStory] = useUpdateStoryMutation()
+  const [updateChapter] = useUpdateChapterMutation()
   const { data } = useMeQuery()
-  const variables = { id: query.storyId as string }
-  const result = useStoryQuery({ variables, skip: !query.storyId })
-  const story = result.data?.story
+  const storyVarialbes = { id: query.storyId as string }
+  const storyResult = useStoryQuery({
+    variables: storyVarialbes,
+    skip: !query.storyId,
+  })
+  const story = storyResult.data?.story
+  const chapterVarialbes = { id: query.chapterId as string }
+  const chapterResult = useChapterQuery({
+    variables: chapterVarialbes,
+    skip: !query.chapterId,
+  })
+  const chapter = chapterResult.data?.chapter
 
-  if (!story) {
+  if (!chapter) {
     return <Error statusCode={404} />
   }
 
@@ -36,11 +46,11 @@ const Edit: NextPage<Props> = ({ query }) => {
       : PublishStatus.Draft
 
     try {
-      const result = await updateStory({
+      const result = await updateChapter({
         variables: formState.values,
       })
-      const updatedStory = result.data.updateStory
-      return updatedStory
+      const updatedChapter = result.data.updateChapter
+      return updatedChapter
     } catch (error) {
       console.warn(error)
       formState.setValues({
@@ -52,17 +62,17 @@ const Edit: NextPage<Props> = ({ query }) => {
   }
 
   const handleSubmit = async (formState: any) => {
-    const story = await save(formState)
-    if (!story) return
-    push(`/stories/${story.id}/dashboard`)
+    const chapter = await save(formState)
+    if (!chapter) return
+    push(`/stories/${story.id}/chapters/${chapter.id}/dashboard`)
   }
 
   return (
     <div>
-      <h2>Edit Story</h2>
+      <h2>Edit Chapter</h2>
       <Card>
         <ContentForm
-          content={story}
+          content={chapter}
           autoSave={save}
           onSubmit={handleSubmit}
         />
