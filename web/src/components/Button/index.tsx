@@ -42,6 +42,10 @@ const Button = (props: Props) => {
   const [buttonDisabled, setButtonDisabled] = useState(disabled)
   const [pressed, setPressed] = useState(false)
 
+  useEffect(() => {
+    setButtonDisabled(disabled)
+  }, [disabled])
+
   const handleClick = (event: any) => {
     setPressed(true)
     setButtonDisabled(true)

@@ -68,6 +68,7 @@ const WriterDashboard: NextPage<{}> = () => {
 
       <Card>
         <h3>My Stories</h3>
+        <hr />
         <ul className={styles.stories}>{renderStories()}</ul>
         <hr />
         {renderNewStoryButton()}

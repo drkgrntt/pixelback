@@ -36,13 +36,23 @@ const GenreSearch: React.FC<Props> = ({ story }) => {
     }
 
     if (genreId === 'newGenre') {
-      const createResult = await createGenre({
-        variables: { name: search },
-      })
-      variables.genreId = createResult.data.createGenre.id
+      try {
+        const createResult = await createGenre({
+          variables: { name: search },
+        })
+        variables.genreId = createResult.data.createGenre.id
+      } catch (err) {
+        console.warn(err)
+        reset()
+        return
+      }
     }
 
-    await addGenreToStory({ variables })
+    try {
+      await addGenreToStory({ variables })
+    } catch (err) {
+      console.warn(err)
+    }
 
     reset()
   }
