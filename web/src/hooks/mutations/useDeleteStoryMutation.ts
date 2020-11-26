@@ -1,6 +1,6 @@
 import { gql, MutationHookOptions, useMutation } from '@apollo/client'
 
-export const deleteStory = gql`
+export const deleteStoryMutation = gql`
   mutation DeleteStory($id: String!) {
     deleteStory(id: $id)
   }
@@ -13,5 +13,5 @@ export const useDeleteStoryMutation = () => {
     }
   }
 
-  return useMutation(deleteStory, options)
+  return useMutation(deleteStoryMutation, options)
 }

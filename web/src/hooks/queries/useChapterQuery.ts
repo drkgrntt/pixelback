@@ -1,15 +1,15 @@
 import { gql, QueryHookOptions, useQuery } from '@apollo/client'
 import { ChapterInfo } from '@/fragments/ChapterInfo'
 
-export const useChapterQuery = (options?: QueryHookOptions) => {
-  const CHAPTER = gql`
-    query Chapter($id: String!) {
-      chapter(id: $id) {
-        ...ChapterInfo
-      }
+export const chapterQuery = gql`
+  query Chapter($id: String!) {
+    chapter(id: $id) {
+      ...ChapterInfo
     }
-    ${ChapterInfo}
-  `
+  }
+  ${ChapterInfo}
+`
 
-  return useQuery(CHAPTER, options)
+export const useChapterQuery = (options?: QueryHookOptions) => {
+  return useQuery(chapterQuery, options)
 }
