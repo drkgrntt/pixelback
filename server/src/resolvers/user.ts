@@ -13,9 +13,12 @@ import { ILike } from 'typeorm'
 import bcrypt from 'bcrypt'
 import { User } from '../entities/User'
 import { Token } from '../entities/Token'
+import { Genre } from '../entities/Genre'
 import { Story } from '../entities/Story'
 import { Rating } from '../entities/Rating'
 import { Subscription } from '../entities/Subscription'
+import { FavoriteStory } from '../entities/FavoriteStory'
+import { FavoriteGenre } from '../entities/FavoriteGenre'
 import { Context, UserRole } from '../types'
 
 @ObjectType()
@@ -37,6 +40,26 @@ export class UserResolver {
   @FieldResolver(() => [Story])
   async stories(@Root() user: User): Promise<Story[]> {
     return await Story.find({ authorId: user.id })
+  }
+
+  @FieldResolver(() => [Story])
+  async favoriteStories(@Root() user: User): Promise<Story[]> {
+    const favoriteStories = await FavoriteStory.find({
+      where: { userId: user.id },
+      relations: ['story'],
+    })
+    return favoriteStories.map((favoriteStory) => favoriteStory.story)
+  }
+
+  @FieldResolver(() => [Genre])
+  async favoriteGenres(@Root() user: User): Promise<Genre[]> {
+    const favoriteGenres = await FavoriteGenre.find({
+      where: { userId: user.id },
+      relations: ['genre'],
+    })
+    return favoriteGenres.map(
+      (favoriteGenre) => favoriteGenre.genre
+    )
   }
 
   @FieldResolver(() => [Subscription])

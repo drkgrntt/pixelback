@@ -8,6 +8,7 @@ import {
   BaseEntity,
   OneToMany,
 } from 'typeorm'
+import { FavoriteGenre } from './FavoriteGenre'
 import { StoryGenre } from './StoryGenre'
 
 @Entity()
@@ -23,6 +24,9 @@ export class Genre extends BaseEntity {
 
   @OneToMany(() => StoryGenre, (storyGenre) => storyGenre.genre)
   storyGenre: StoryGenre
+
+  @OneToMany(() => FavoriteGenre, (favoriteGenre) => favoriteGenre.genre)
+  favorited: FavoriteGenre[]
 
   @CreateDateColumn()
   createdAt: Date
