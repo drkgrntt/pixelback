@@ -1,15 +1,15 @@
-import { ApolloProvider } from '@apollo/client'
 import Head from 'next/head'
 import '../styles/globals.scss'
 import Layout from '@/components/Layout'
-import { client } from '@/utils/withApollo'
+import { withApollo } from '@/utils/withApollo'
+import { NextPage } from 'next'
 
 const App = ({
   Component,
   pageProps,
 }: {
-  Component: React.FC
-  pageProps: any
+  Component: NextPage
+  pageProps: Record<string, any>
 }) => {
   return (
     <>
@@ -22,13 +22,11 @@ const App = ({
         <meta httpEquiv="X-UA-Compatible" content="ie=edge" />
         <title>Pixelback | A platform for creative writers</title>
       </Head>
-      <ApolloProvider client={client}>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
-      </ApolloProvider>
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
     </>
   )
 }
 
-export default App
+export default withApollo({ ssr: false })(App as any)

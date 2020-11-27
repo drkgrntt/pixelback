@@ -2,9 +2,11 @@ import Error from 'next/error'
 import { NextPage } from 'next'
 import { useRouter } from 'next/router'
 import { ParsedUrlQuery } from 'querystring'
-import styles from './[id].module.scss'
+import styles from './[storyId].module.scss'
 import Loader from '@/components/Loader'
 import { useStoryQuery } from '@/queries/useStoryQuery'
+import { withApollo } from '@/utils/withApollo'
+import { useEffect } from 'react'
 
 interface Props {
   query: ParsedUrlQuery
@@ -18,15 +20,17 @@ const StoryPage: NextPage<Props> = ({ query }) => {
   switch (true) {
     case !!result.error:
       return <Error statusCode={404} />
-    case !!result.loading:
+    case result.loading:
       return <Loader />
   }
 
   const { story } = result.data
 
-  if (!story.body && story.chapters.length) {
-    replace(`/stories/${story.id}/chapters`)
-  }
+  useEffect(() => {
+    if (!story.body && story.chapters.length) {
+      replace(`/stories/${story.id}/chapters`)
+    }
+  }, [])
 
   return (
     <div>
@@ -40,4 +44,4 @@ StoryPage.getInitialProps = ({ query }) => {
   return { query }
 }
 
-export default StoryPage
+export default withApollo({ ssr: true })(StoryPage as any)

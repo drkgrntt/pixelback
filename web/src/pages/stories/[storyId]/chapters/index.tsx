@@ -6,6 +6,7 @@ import Loader from '@/components/Loader'
 import styles from './Chapters.module.scss'
 import ChapterList from '@/components/ChapterList'
 import Card from '@/components/Card'
+import { withApollo } from '@/utils/withApollo'
 
 interface Props {
   query: ParsedUrlQuery
@@ -18,7 +19,7 @@ const Chapters: NextPage<Props> = ({ query }) => {
   switch (true) {
     case !!result.error:
       return <Error statusCode={404} />
-    case !!result.loading:
+    case result.loading:
       return <Loader />
   }
 
@@ -39,4 +40,4 @@ Chapters.getInitialProps = ({ query }) => {
   return { query }
 }
 
-export default Chapters
+export default withApollo({ ssr: true })(Chapters as any)

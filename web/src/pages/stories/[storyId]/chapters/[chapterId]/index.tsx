@@ -7,6 +7,7 @@ import { useChapterQuery } from '@/queries/useChapterQuery'
 import styles from './[chapterId].module.scss'
 import Link from 'next/link'
 import { Chapter, Story } from '@/types'
+import { withApollo } from '@/utils/withApollo'
 
 interface Props {
   query: ParsedUrlQuery
@@ -78,4 +79,4 @@ ChapterPage.getInitialProps = ({ query }) => {
   return { query }
 }
 
-export default ChapterPage
+export default withApollo({ ssr: true })(ChapterPage as any)
