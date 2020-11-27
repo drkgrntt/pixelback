@@ -1,3 +1,4 @@
+import { Story } from '@/types'
 import {
   ApolloClient,
   InMemoryCache,
@@ -63,9 +64,43 @@ const createClient = () => {
     })
   })
 
+  interface PageData {
+    hasMore: boolean
+    skip?: number
+  }
+
+  interface PaginatedResponse {
+    pageData: PageData
+    stories: Story[]
+  }
+
+  const inMemoryCache = new InMemoryCache({
+    typePolicies: {
+      Query: {
+        fields: {
+          stories: {
+            keyArgs: [],
+            merge(
+              existing: PaginatedResponse | undefined,
+              incoming: PaginatedResponse
+            ): PaginatedResponse {
+              return {
+                ...incoming,
+                stories: [
+                  ...(existing?.stories || []),
+                  ...incoming.stories,
+                ],
+              }
+            },
+          },
+        },
+      },
+    },
+  })
+
   return new ApolloClient({
     link: dataMutationLink.concat(authLink).concat(httpLink),
-    cache: new InMemoryCache(),
+    cache: inMemoryCache,
     name: 'react-web-client',
     version: '1.0.0',
   })

@@ -10,6 +10,10 @@ export const storiesQuery = gql`
       }
       stories {
         ...StoryInfo
+        author {
+          id
+          displayName
+        }
         genres {
           id
           name
