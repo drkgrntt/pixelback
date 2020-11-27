@@ -14,8 +14,9 @@ import {
 import { ObjectType, Field, Int, Float } from 'type-graphql'
 import { Story } from './Story'
 import { Comment } from './Comment'
-import { PublishStatus } from '../types'
+import { PublishStatus, RatingScore } from '../types'
 import { Rating } from './Rating'
+import { View } from './View'
 
 @ObjectType()
 @Entity()
@@ -65,6 +66,13 @@ export class Chapter extends BaseEntity {
   @Field(() => [Rating])
   @OneToMany(() => Rating, (rating) => rating.story)
   ratings: Rating[]
+
+  @Field(() => Int, { nullable: true })
+  rateStatus: RatingScore | null
+
+  @Field(() => [View])
+  @OneToMany(() => View, (view) => view.chapter)
+  views: View[]
 
   @Field(() => Float)
   score: number

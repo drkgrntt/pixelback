@@ -18,6 +18,7 @@ import { PublishStatus, RatingScore } from '../types'
 import { Rating } from './Rating'
 import { StoryGenre } from './StoryGenre'
 import { Genre } from './Genre'
+import { View } from './View'
 
 @ObjectType()
 @Entity()
@@ -71,6 +72,10 @@ export class Story extends BaseEntity {
   @Field(() => Int, { nullable: true })
   rateStatus: RatingScore | null
 
+  @Field(() => [View])
+  @OneToMany(() => View, (view) => view.story)
+  views: View[]
+
   @Field(() => Float)
   score: number
 
@@ -87,7 +92,10 @@ export class Story extends BaseEntity {
   @BeforeInsert()
   @BeforeUpdate()
   setPublishedAt() {
-    if (!this.publishedAt && this.status === PublishStatus.Published) {
+    if (
+      !this.publishedAt &&
+      this.status === PublishStatus.Published
+    ) {
       this.publishedAt = new Date()
     }
   }

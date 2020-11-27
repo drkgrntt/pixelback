@@ -13,6 +13,7 @@ import { Token } from './Token'
 import { Story } from './Story'
 import { Rating } from './Rating'
 import { Subscription } from './Subscription'
+import { View } from './View'
 
 @ObjectType()
 @Entity()
@@ -46,6 +47,10 @@ export class User extends BaseEntity {
   @Field(() => [Rating])
   @OneToMany(() => Rating, (rating) => rating.reader)
   ratings: Rating[]
+
+  @Field(() => [View])
+  @OneToMany(() => View, (view) => view.viewer)
+  views: View[]
 
   @Field(() => [Subscription])
   @OneToMany(
