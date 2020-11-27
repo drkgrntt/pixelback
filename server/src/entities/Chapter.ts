@@ -9,6 +9,7 @@ import {
   BaseEntity,
   BeforeInsert,
   BeforeUpdate,
+  Unique,
 } from 'typeorm'
 import { ObjectType, Field, Int, Float } from 'type-graphql'
 import { Story } from './Story'
@@ -18,6 +19,7 @@ import { Rating } from './Rating'
 
 @ObjectType()
 @Entity()
+@Unique(['storyId', 'number'])
 export class Chapter extends BaseEntity {
   @Field()
   @PrimaryGeneratedColumn('uuid')
@@ -80,7 +82,10 @@ export class Chapter extends BaseEntity {
   @BeforeInsert()
   @BeforeUpdate()
   setPublishedAt() {
-    if (!this.publishedAt && this.status === PublishStatus.Published) {
+    if (
+      !this.publishedAt &&
+      this.status === PublishStatus.Published
+    ) {
       this.publishedAt = new Date()
     }
   }
