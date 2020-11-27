@@ -78,10 +78,10 @@ const Nav: React.FC<{}> = () => {
               </a>
             </li>
           </Link>
-          <Link href="/about">
+          <Link href="/stories">
             <li className={styles.item}>
               <a className={styles.link} onClick={toggleNav}>
-                About
+                Stories
               </a>
             </li>
           </Link>

@@ -16,6 +16,13 @@ const StoryPage: NextPage<Props> = ({ query }) => {
   const { replace } = useRouter()
   const variables = { id: query.storyId as string }
   const result = useStoryQuery({ variables, skip: !query.storyId })
+  const story = result.data?.story
+
+  useEffect(() => {
+    if (!story?.body && story?.chapters.length) {
+      replace(`/stories/${story.id}/chapters`)
+    }
+  }, [])
 
   switch (true) {
     case !!result.error:
@@ -23,14 +30,6 @@ const StoryPage: NextPage<Props> = ({ query }) => {
     case result.loading:
       return <Loader />
   }
-
-  const { story } = result.data
-
-  useEffect(() => {
-    if (!story.body && story.chapters.length) {
-      replace(`/stories/${story.id}/chapters`)
-    }
-  }, [])
 
   return (
     <div>

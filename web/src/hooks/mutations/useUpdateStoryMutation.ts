@@ -1,4 +1,4 @@
-import { gql, useMutation } from '@apollo/client'
+import { gql, MutationHookOptions, useMutation } from '@apollo/client'
 import { StoryInfo } from '@/fragments/StoryInfo'
 
 export const updateStoryMutation = gql`
@@ -24,6 +24,12 @@ export const updateStoryMutation = gql`
   ${StoryInfo}
 `
 
+const options: MutationHookOptions = {
+  update: (cache) => {
+    cache.evict({ fieldName: 'Stories:{}' })
+  }
+}
+
 export const useUpdateStoryMutation = () => {
-  return useMutation(updateStoryMutation)
+  return useMutation(updateStoryMutation, options)
 }

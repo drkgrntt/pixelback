@@ -27,6 +27,7 @@ export const createStoryMutation = gql`
 export const useCreateStoryMutation = () => {
   const options: MutationHookOptions = {
     update: (cache, result) => {
+      cache.evict({ fieldName: 'Stories:{}' })
       const meRes = cache.readQuery<{ me: User }>({ query: meQuery })
       if (!meRes) return
       cache.writeQuery({
