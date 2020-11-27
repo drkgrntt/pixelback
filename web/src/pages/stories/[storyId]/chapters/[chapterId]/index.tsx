@@ -8,6 +8,7 @@ import styles from './[chapterId].module.scss'
 import Link from 'next/link'
 import { Chapter, Story } from '@/types'
 import { withApollo } from '@/utils/withApollo'
+import { useLogView } from '@/hooks/useLogView'
 
 interface Props {
   query: ParsedUrlQuery
@@ -24,6 +25,11 @@ const ChapterPage: NextPage<Props> = ({ query }) => {
     variables: chapterVariables,
     skip: !query.chapterId,
   })
+
+  useLogView(
+    storyResult.data?.story.id,
+    chapterResult.data?.chapter.id
+  )
 
   switch (true) {
     case !!storyResult.error || !!chapterResult.error:
