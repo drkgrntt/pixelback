@@ -8,6 +8,7 @@ import {
   Field,
   FieldResolver,
   Root,
+  UseMiddleware,
 } from 'type-graphql'
 import { ILike } from 'typeorm'
 import bcrypt from 'bcrypt'
@@ -20,6 +21,7 @@ import { Subscription } from '../entities/Subscription'
 import { FavoriteStory } from '../entities/FavoriteStory'
 import { FavoriteGenre } from '../entities/FavoriteGenre'
 import { Context, UserRole } from '../types'
+import { isAuth } from '../middleware/isAuth'
 
 @ObjectType()
 class UserResponse {
@@ -57,9 +59,7 @@ export class UserResolver {
       where: { userId: user.id },
       relations: ['genre'],
     })
-    return favoriteGenres.map(
-      (favoriteGenre) => favoriteGenre.genre
-    )
+    return favoriteGenres.map((favoriteGenre) => favoriteGenre.genre)
   }
 
   @FieldResolver(() => [Subscription])
@@ -149,6 +149,7 @@ export class UserResolver {
   }
 
   @Mutation(() => Boolean)
+  @UseMiddleware(isAuth)
   async resetPassword(
     @Ctx() { me }: Context,
     @Arg('oldPassword') oldPassword: string,
@@ -170,6 +171,7 @@ export class UserResolver {
   }
 
   @Mutation(() => Boolean)
+  @UseMiddleware(isAuth)
   async logout(@Ctx() { token }: Context): Promise<boolean> {
     const value = Token.unsign(token)
     const result = await Token.delete({ value })
@@ -177,6 +179,7 @@ export class UserResolver {
   }
 
   @Mutation(() => Token)
+  @UseMiddleware(isAuth)
   async logoutEverywhere(@Ctx() { me }: Context): Promise<Token> {
     await Token.delete({ userId: me.id })
     const token = await Token.generate(me.id)
@@ -184,6 +187,7 @@ export class UserResolver {
   }
 
   @Mutation(() => Token)
+  @UseMiddleware(isAuth)
   async exchangeToken(@Ctx() { me, token }: Context): Promise<Token> {
     const value = Token.unsign(token)
     await Token.delete({ value })
@@ -192,6 +196,7 @@ export class UserResolver {
   }
 
   @Mutation(() => String)
+  @UseMiddleware(isAuth)
   async deleteUserAndAllData(
     @Ctx() { me }: Context,
     @Arg('password') password: string
@@ -205,5 +210,33 @@ export class UserResolver {
     }
     await me.remove()
     return me.id
+  }
+
+  @Mutation(() => User)
+  @UseMiddleware(isAuth)
+  async addFavoriteStory(
+    @Ctx() { me }: Context,
+    @Arg('storyId') storyId: string
+  ): Promise<User> {
+    await FavoriteStory.create({
+      userId: me.id,
+      storyId: storyId,
+    }).save()
+
+    return me
+  }
+
+  @Mutation(() => User)
+  @UseMiddleware(isAuth)
+  async addFavoriteGenre(
+    @Ctx() { me }: Context,
+    @Arg('genreId') genreId: string
+  ): Promise<User> {
+    await FavoriteGenre.create({
+      userId: me.id,
+      genreId: genreId,
+    }).save()
+
+    return me
   }
 }
