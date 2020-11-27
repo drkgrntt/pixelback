@@ -98,6 +98,10 @@ const createClient = () => {
     },
   })
 
+  if (typeof window !== 'undefined') {
+    inMemoryCache.restore(__NEXT_DATA__.props.pageProps.apolloState || {})
+  }
+
   return new ApolloClient({
     link: dataMutationLink.concat(authLink).concat(httpLink),
     cache: inMemoryCache,
