@@ -31,7 +31,6 @@ export const createChapterMutation = gql`
 export const useCreateChapterMutation = (storyId: string) => {
   const options: MutationHookOptions = {
     update: (cache, result) => {
-      debugger
       const storyRes = cache.readQuery<{ story: Story }>({
         query: storyQuery,
         variables: { id: storyId },
