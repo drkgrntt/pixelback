@@ -50,6 +50,7 @@ export interface Story extends Content {
   chapters: Chapter[]
   comments: Comment[]
   ratings: Rating[]
+  rateStatus: number
   score: number
   reads: number
   genres: Genre[]
@@ -63,6 +64,7 @@ export interface Chapter extends Content {
   comments: Comment[]
   number: number
   ratings: Rating[]
+  rateStatus: number
   score: number
   reads: number
   previous: Chapter

@@ -18,6 +18,7 @@ export const StoryInfo = gql`
     ratings {
       id
     }
+    rateStatus
     publishedAt
     createdAt
     updatedAt

@@ -4,6 +4,7 @@ import { useRouter } from 'next/router'
 import { ParsedUrlQuery } from 'querystring'
 import styles from './[storyId].module.scss'
 import Loader from '@/components/Loader'
+import Card from '@/components/Card'
 import Button from '@/components/Button'
 import { useStoryQuery } from '@/queries/useStoryQuery'
 import { withApollo } from '@/utils/withApollo'
@@ -11,6 +12,7 @@ import { useEffect } from 'react'
 import { useLogRead } from '@/hooks/useLogRead'
 import { useMeQuery } from '@/queries/useMeQuery'
 import { useAddFavoriteStoryMutation } from '@/mutations/useAddFavoriteStoryMutation'
+import { useRateMutation } from '@/mutations/useRateMutation'
 import { Story } from '@/types'
 import StarScale from '@/components/StarScale'
 
@@ -28,6 +30,7 @@ const StoryPage: NextPage<Props> = ({ query }) => {
   const story = storyResult.data?.story
   const meResult = useMeQuery()
   const [addFavoriteStory] = useAddFavoriteStoryMutation()
+  const [rate] = useRateMutation()
 
   useLogRead(story?.id)
 
@@ -37,10 +40,16 @@ const StoryPage: NextPage<Props> = ({ query }) => {
     }
   }, [story])
 
+  // In order to get rateStatus, which is based on user data
+  // This should be fixed when the user state is available on ssr
+  useEffect(() => {
+    storyResult.refetch()
+  }, [meResult.data])
+
   switch (true) {
     case !!storyResult.error:
       return <Error statusCode={404} />
-    case storyResult.loading:
+    case storyResult.loading && !storyResult.data:
       return <Loader />
   }
 
@@ -65,6 +74,21 @@ const StoryPage: NextPage<Props> = ({ query }) => {
 
     return <Button onClick={favoriteStory}>Add to favorites</Button>
   }
+  
+  const rateStory = async (score: number) => {
+    if (!meResult.data?.me) return
+
+    const variables = {
+      storyId: story.id,
+      score
+    }
+    try {
+      await rate({ variables })
+      await storyResult.refetch()
+    } catch (err) {
+      console.warn(err)
+    }
+  }
 
   return (
     <div className={styles.story}>
@@ -73,7 +97,14 @@ const StoryPage: NextPage<Props> = ({ query }) => {
       <hr />
       <p>{story.author.penName}</p>
       {renderFavoriteButton()}
-      <StarScale allowHover score={story.score} />
+      <Card>
+        <StarScale
+          allowHover={!!meResult.data?.me}
+          onStarClick={rateStory}
+          score={story.score}
+          rateStatus={story.rateStatus}
+        />
+      </Card>
     </div>
   )
 }

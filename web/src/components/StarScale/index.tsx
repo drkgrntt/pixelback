@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
-import Card from '../Card'
 import styles from './StarScale.module.scss'
 
 interface Props {
   score: number
+  rateStatus?: number
   onStarClick?: Function
   allowHover?: boolean
 }
@@ -17,6 +17,7 @@ interface Props {
  */
 const StarScale: React.FC<Props> = ({
   score,
+  rateStatus,
   onStarClick = () => {},
   allowHover = false,
 }) => {
@@ -56,7 +57,7 @@ const StarScale: React.FC<Props> = ({
   // elements are creating and destroying when tmpScore changes
   // So we need to re-init events when tmpscore changes.
   // Seems heavy, so if there's a better way, I should change this.
-  }, [tmpScore, allowHover])
+  }, [tmpScore, allowHover, score])
 
   const rem = tmpScore % 1
   const renderStar = (pos: number) => {
@@ -121,7 +122,7 @@ const StarScale: React.FC<Props> = ({
   }
 
   return (
-    <Card className={styles.starScale}>
+    <div className={styles.starScale}>
       <div className={styles.stars}>
         {renderStar(1)}
         {renderStar(2)}
@@ -129,7 +130,8 @@ const StarScale: React.FC<Props> = ({
         {renderStar(4)}
         {renderStar(5)}
       </div>
-    </Card>
+      {rateStatus && <p>You rated {rateStatus}/5</p>}
+    </div>
   )
 }
 
