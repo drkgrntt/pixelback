@@ -38,7 +38,7 @@ export class User extends BaseEntity {
 
   @Field()
   @Column()
-  displayName: string
+  penName: string
 
   @OneToMany(() => Token, (token) => token.user)
   tokens: Token[]
@@ -52,11 +52,17 @@ export class User extends BaseEntity {
   ratings: Rating[]
 
   @Field(() => [Story])
-  @OneToMany(() => FavoriteStory, (favoriteStory) => favoriteStory.user)
+  @OneToMany(
+    () => FavoriteStory,
+    (favoriteStory) => favoriteStory.user
+  )
   favoriteStories: FavoriteStory[]
 
   @Field(() => [Genre])
-  @OneToMany(() => FavoriteGenre, (favoriteGenre) => favoriteGenre.user)
+  @OneToMany(
+    () => FavoriteGenre,
+    (favoriteGenre) => favoriteGenre.user
+  )
   favoriteGenres: FavoriteGenre[]
 
   @OneToMany(() => Read, (read) => read.reader)

@@ -23,7 +23,7 @@ const StoryList: React.FC<Props> = ({ stories }) => {
           </Link>
           {renderRating(story)}
           {story.summary}
-          <p>By {story.author.displayName}</p>
+          <p>By {story.author.penName}</p>
           <Link href={`/stories/${story.id}`}>
             <a>Read</a>
           </Link>

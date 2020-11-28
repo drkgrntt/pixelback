@@ -23,8 +23,10 @@ export interface User {
   id: string
   email: string
   role: UserRole
-  displayName: string
+  penName: string
   stories: Story[]
+  favoriteStories: Story[]
+  favoriteGenres: Genre[]
   ratings: Rating[]
   subscriptions: Subscription[]
   subscribers: Subscription[]

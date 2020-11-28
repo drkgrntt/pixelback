@@ -5,7 +5,11 @@ export const UserInfo = gql`
     id
     email
     role
-    displayName
+    penName
+    favoriteStories {
+      id
+      title
+    }
     createdAt
     updatedAt
   }

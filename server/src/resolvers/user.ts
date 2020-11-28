@@ -83,7 +83,7 @@ export class UserResolver {
     @Arg('search') search: string
   ): Promise<User[]> {
     const users = await User.find({
-      where: [{ displayName: ILike(`%${search}%`) }],
+      where: [{ penName: ILike(`%${search}%`) }],
     })
 
     return users
@@ -136,7 +136,7 @@ export class UserResolver {
       email: email,
       password: passwordHash,
       role: UserRole.User,
-      displayName: email.split('@')[0], // TODO: improve this
+      penName: email.split('@')[0], // TODO: improve this
     }).save()
 
     // Generate a token

@@ -4,10 +4,14 @@ import { useRouter } from 'next/router'
 import { ParsedUrlQuery } from 'querystring'
 import styles from './[storyId].module.scss'
 import Loader from '@/components/Loader'
+import Button from '@/components/Button'
 import { useStoryQuery } from '@/queries/useStoryQuery'
 import { withApollo } from '@/utils/withApollo'
 import { useEffect } from 'react'
 import { useLogRead } from '@/hooks/useLogRead'
+import { useMeQuery } from '@/queries/useMeQuery'
+import { useAddFavoriteStoryMutation } from '@/mutations/useAddFavoriteStoryMutation'
+import { Story } from '@/types'
 
 interface Props {
   query: ParsedUrlQuery
@@ -16,8 +20,13 @@ interface Props {
 const StoryPage: NextPage<Props> = ({ query }) => {
   const { replace } = useRouter()
   const variables = { id: query.storyId as string }
-  const result = useStoryQuery({ variables, skip: !query.storyId })
-  const story = result.data?.story
+  const storyResult = useStoryQuery({
+    variables,
+    skip: !query.storyId,
+  })
+  const story = storyResult.data?.story
+  const meResult = useMeQuery()
+  const [addFavoriteStory] = useAddFavoriteStoryMutation()
 
   useLogRead(story?.id)
 
@@ -28,16 +37,41 @@ const StoryPage: NextPage<Props> = ({ query }) => {
   }, [story])
 
   switch (true) {
-    case !!result.error:
+    case !!storyResult.error:
       return <Error statusCode={404} />
-    case result.loading:
+    case storyResult.loading:
       return <Loader />
   }
 
+  const favoriteStory = async () => {
+    const variables = { storyId: story.id }
+    try {
+      await addFavoriteStory({ variables })
+    } catch (err) {
+      console.warn(err)
+    }
+  }
+
+  const renderFavoriteButton = () => {
+    if (
+      !meResult.data?.me ||
+      meResult.data?.me.favoriteStories.some(
+        (fStory: Story) => fStory.id === story.id
+      )
+    ) {
+      return null
+    }
+
+    return <Button onClick={favoriteStory}>Add to favorites</Button>
+  }
+
   return (
-    <div>
+    <div className={styles.story}>
       <h2>{story.title}</h2>
       {story.body}
+      <hr />
+      <p>{story.author.penName}</p>
+      {renderFavoriteButton()}
     </div>
   )
 }

@@ -12,7 +12,7 @@ export const storiesQuery = gql`
         ...StoryInfo
         author {
           id
-          displayName
+          penName
         }
         genres {
           id
