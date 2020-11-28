@@ -22,6 +22,10 @@ const StarScale: React.FC<Props> = ({
 }) => {
   const [tmpScore, setTmpScore] = useState(score)
   useEffect(() => {
+    setTmpScore(score)
+  }, [score])
+
+  useEffect(() => {
     if (!allowHover) return
     const onHover = (e: any) => {
       const classList: string[] = [...e.target.classList]
@@ -48,7 +52,11 @@ const StarScale: React.FC<Props> = ({
         star.removeEventListener('mouseout', onBlur)
       }
     }
-  }, [])
+  // Because of how we use masking to show a star fraction,
+  // elements are creating and destroying when tmpScore changes
+  // So we need to re-init events when tmpscore changes.
+  // Seems heavy, so if there's a better way, I should change this.
+  }, [tmpScore])
 
   const rem = tmpScore % 1
   const renderStar = (pos: number) => {
