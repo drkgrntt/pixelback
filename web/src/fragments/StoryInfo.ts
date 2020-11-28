@@ -10,6 +10,7 @@ export const StoryInfo = gql`
     status
     score
     authorId
+    reads
     ratings {
       id
     }

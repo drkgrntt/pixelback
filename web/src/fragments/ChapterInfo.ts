@@ -10,6 +10,7 @@ export const ChapterInfo = gql`
     enableCommenting
     status
     score
+    reads
     previous {
       id
     }

@@ -1,14 +1,14 @@
 import { useEffect } from 'react'
-import { useViewMutation } from '@/mutations/useViewMutation'
+import { useReadMutation } from '@/hooks/mutations/useReadMutation'
 
 const READY_TIMEOUT = parseInt(process.env.NEXT_PUBLIC_VIEW_TIMER as string) || 60 * 1000
 
-export const useLogView = (storyId: string, chapterId?: string) => {
-  const [view, result] = useViewMutation()
+export const useLogRead = (storyId: string, chapterId?: string) => {
+  const [read, result] = useReadMutation()
   useEffect(() => {
     if (!storyId) return
     const variables = { storyId, chapterId }
-    const timeout = setTimeout(() => view({ variables }), READY_TIMEOUT)
+    const timeout = setTimeout(() => read({ variables }), READY_TIMEOUT)
     return () => clearTimeout(timeout)
   }, [storyId, chapterId])
   return result

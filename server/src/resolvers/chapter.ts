@@ -14,7 +14,7 @@ import { Story } from '../entities/Story'
 import { Comment } from '../entities/Comment'
 import { Chapter } from '../entities/Chapter'
 import { Rating } from '../entities/Rating'
-import { View } from '../entities/View'
+import { Read } from '../entities/Read'
 import { Context, PublishStatus } from '../types'
 import { isAuth } from '../middleware/isAuth'
 
@@ -68,8 +68,8 @@ export class ChapterResolver {
   }
 
   @FieldResolver(() => Int)
-  async views(@Root() chapter: Chapter): Promise<number> {
-    return await View.count({ where: { chapterId: chapter.id } })
+  async reads(@Root() chapter: Chapter): Promise<number> {
+    return await Read.count({ where: { chapterId: chapter.id } })
   }
 
   @Query(() => [Chapter])

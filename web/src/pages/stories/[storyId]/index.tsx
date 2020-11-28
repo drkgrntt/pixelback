@@ -7,7 +7,7 @@ import Loader from '@/components/Loader'
 import { useStoryQuery } from '@/queries/useStoryQuery'
 import { withApollo } from '@/utils/withApollo'
 import { useEffect } from 'react'
-import { useLogView } from '@/hooks/useLogView'
+import { useLogRead } from '@/hooks/useLogRead'
 
 interface Props {
   query: ParsedUrlQuery
@@ -19,7 +19,7 @@ const StoryPage: NextPage<Props> = ({ query }) => {
   const result = useStoryQuery({ variables, skip: !query.storyId })
   const story = result.data?.story
 
-  useLogView(story?.id)
+  useLogRead(story?.id)
 
   useEffect(() => {
     if (!story?.body && story?.chapters.length) {

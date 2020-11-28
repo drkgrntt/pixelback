@@ -15,25 +15,25 @@ import { Chapter } from './Chapter'
 
 @ObjectType()
 @Entity()
-export class View extends BaseEntity {
+export class Read extends BaseEntity {
   @Field()
   @PrimaryGeneratedColumn('uuid')
   id!: string
 
   @Column({ nullable: true })
-  viewerId: string
+  readerId: string
 
   @Field(() => User, { nullable: true })
-  @ManyToOne(() => User, (user) => user.views, {
+  @ManyToOne(() => User, (user) => user.reads, {
     onDelete: 'CASCADE',
   })
-  viewer: User
+  reader: User
 
   @PrimaryColumn()
   storyId: string
 
   @Field(() => Story)
-  @ManyToOne(() => Story, (story) => story.views, {
+  @ManyToOne(() => Story, (story) => story.reads, {
     onDelete: 'CASCADE',
   })
   story: Story
@@ -42,7 +42,7 @@ export class View extends BaseEntity {
   chapterId: string
 
   @Field(() => Chapter, { nullable: true })
-  @ManyToOne(() => Chapter, (chapter) => chapter.views, {
+  @ManyToOne(() => Chapter, (chapter) => chapter.reads, {
     onDelete: 'CASCADE',
   })
   chapter: Chapter

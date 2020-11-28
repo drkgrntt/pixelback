@@ -9,7 +9,7 @@ import { buildSchema } from 'type-graphql'
 import { ApolloServer } from 'apollo-server-express'
 import { Token } from './entities/Token'
 import { UserResolver } from './resolvers/user'
-import { ViewResolver } from './resolvers/view'
+import { ReadResolver } from './resolvers/view'
 import { StoryResolver } from './resolvers/story'
 import { GenreResolver } from './resolvers/genre'
 import { RatingResolver } from './resolvers/rating'
@@ -43,7 +43,7 @@ const main = async () => {
     schema: await buildSchema({
       resolvers: [
         UserResolver,
-        ViewResolver,
+        ReadResolver,
         StoryResolver,
         GenreResolver,
         RatingResolver,

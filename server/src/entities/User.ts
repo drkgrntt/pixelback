@@ -13,7 +13,7 @@ import { Token } from './Token'
 import { Story } from './Story'
 import { Rating } from './Rating'
 import { Subscription } from './Subscription'
-import { View } from './View'
+import { Read } from './Read'
 import { FavoriteStory } from './FavoriteStory'
 import { FavoriteGenre } from './FavoriteGenre'
 import { Genre } from './Genre'
@@ -59,9 +59,8 @@ export class User extends BaseEntity {
   @OneToMany(() => FavoriteGenre, (favoriteGenre) => favoriteGenre.user)
   favoriteGenres: FavoriteGenre[]
 
-  @Field(() => [View])
-  @OneToMany(() => View, (view) => view.viewer)
-  views: View[]
+  @OneToMany(() => Read, (read) => read.reader)
+  reads: Read[]
 
   @Field(() => [Subscription])
   @OneToMany(

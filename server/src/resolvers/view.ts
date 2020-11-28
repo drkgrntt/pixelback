@@ -9,49 +9,49 @@ import {
 import { User } from '../entities/User'
 import { Story } from '../entities/Story'
 import { Chapter } from '../entities/Chapter'
-import { View } from '../entities/View'
+import { Read } from '../entities/Read'
 import { Context } from '../types'
 
-@Resolver(View)
-export class ViewResolver {
+@Resolver(Read)
+export class ReadResolver {
   @FieldResolver(() => Story)
   async story(
-    @Root() view: View,
+    @Root() read: Read,
     @Ctx() { storyLoader }: Context
   ): Promise<Story> {
-    return await storyLoader.load(view.storyId)
+    return await storyLoader.load(read.storyId)
   }
 
   @FieldResolver(() => Chapter)
   async chapter(
-    @Root() view: View,
+    @Root() read: Read,
     @Ctx() { chapterLoader }: Context
   ): Promise<Chapter | null> {
-    if (!view.chapterId) return null
-    return await chapterLoader.load(view.chapterId)
+    if (!read.chapterId) return null
+    return await chapterLoader.load(read.chapterId)
   }
 
   @FieldResolver(() => User)
-  async viewer(
-    @Root() view: View,
+  async reader(
+    @Root() read: Read,
     @Ctx() { userLoader }: Context
   ): Promise<User | null> {
-    if (!view.viewerId) return null
-    return await userLoader.load(view.viewerId)
+    if (!read.readerId) return null
+    return await userLoader.load(read.readerId)
   }
 
-  @Mutation(() => View)
-  async view(
+  @Mutation(() => Read)
+  async read(
     @Arg('storyId') storyId: string,
     @Arg('chapterId', { nullable: true }) chapterId: string,
     @Ctx() { me }: Context
-  ): Promise<View> {
-    const view = await View.create({
-      viewerId: me?.id,
+  ): Promise<Read> {
+    const read = await Read.create({
+      readerId: me?.id,
       storyId,
       chapterId,
     }).save()
 
-    return view
+    return read
   }
 }

@@ -1,11 +1,11 @@
 import { gql, useMutation } from '@apollo/client'
 
-export const viewMutation = gql`
-  mutation View(
+export const readMutation = gql`
+  mutation Read(
     $storyId: String!
     $chapterId: String
   ) {
-    view(
+    read(
       storyId: $storyId
       chapterId: $chapterId
     ) {
@@ -14,6 +14,6 @@ export const viewMutation = gql`
   }
 `
 
-export const useViewMutation = () => {
-  return useMutation(viewMutation)
+export const useReadMutation = () => {
+  return useMutation(readMutation)
 }

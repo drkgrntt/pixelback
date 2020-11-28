@@ -49,6 +49,7 @@ export interface Story extends Content {
   comments: Comment[]
   ratings: Rating[]
   score: number
+  reads: number
   genres: Genre[]
   publishedAt: Date
   createdAt: Date
@@ -61,6 +62,7 @@ export interface Chapter extends Content {
   number: number
   ratings: Rating[]
   score: number
+  reads: number
   previous: Chapter
   next: Chapter
   publishedAt: Date

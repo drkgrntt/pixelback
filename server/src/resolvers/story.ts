@@ -22,7 +22,7 @@ import { isAuth } from '../middleware/isAuth'
 import { Chapter } from '../entities/Chapter'
 import { StoryGenre } from '../entities/StoryGenre'
 import { Genre } from '../entities/Genre'
-import { View } from '../entities/View'
+import { Read } from '../entities/Read'
 
 @ObjectType()
 class PageData {
@@ -88,8 +88,8 @@ export class StoryResolver {
   }
 
   @FieldResolver(() => Int)
-  async views(@Root() story: Story): Promise<number> {
-    return await View.count({ where: { storyId: story.id } })
+  async reads(@Root() story: Story): Promise<number> {
+    return await Read.count({ where: { storyId: story.id } })
   }
 
   @Query(() => PaginatedResponse)

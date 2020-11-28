@@ -18,7 +18,7 @@ import { PublishStatus, RatingScore } from '../types'
 import { Rating } from './Rating'
 import { StoryGenre } from './StoryGenre'
 import { Genre } from './Genre'
-import { View } from './View'
+import { Read } from './Read'
 import { FavoriteStory } from './FavoriteStory'
 
 @ObjectType()
@@ -76,9 +76,8 @@ export class Story extends BaseEntity {
   @Field(() => Int, { nullable: true })
   rateStatus: RatingScore | null
 
-  @Field(() => [View])
-  @OneToMany(() => View, (view) => view.story)
-  views: View[]
+  @OneToMany(() => Read, (read) => read.story)
+  reads: Read[]
 
   @Field(() => Float)
   score: number
