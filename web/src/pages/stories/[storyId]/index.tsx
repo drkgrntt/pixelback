@@ -73,7 +73,7 @@ const StoryPage: NextPage<Props> = ({ query }) => {
       <hr />
       <p>{story.author.penName}</p>
       {renderFavoriteButton()}
-      <StarScale score={story.score} />
+      <StarScale allowHover score={story.score} />
     </div>
   )
 }

@@ -1,8 +1,11 @@
+import { useEffect, useState } from 'react'
 import Card from '../Card'
 import styles from './StarScale.module.scss'
 
 interface Props {
   score: number
+  onStarClick?: Function
+  allowHover?: boolean
 }
 /**
  * For each star:
@@ -12,22 +15,65 @@ interface Props {
  * 0.625-0.874 = three quarters |
  * 0.875-1 = full
  */
-const StarScale: React.FC<Props> = ({ score }) => {
-  const rem = score % 1
+const StarScale: React.FC<Props> = ({
+  score,
+  onStarClick = () => {},
+  allowHover = false,
+}) => {
+  const [tmpScore, setTmpScore] = useState(score)
+  useEffect(() => {
+    if (!allowHover) return
+    const onHover = (e: any) => {
+      const classList: string[] = e.target.classList
+      const posClass = [...classList].find((className) =>
+        className.includes('star-pos-')
+      )
+      if (!posClass) return
+      const [_, __, pos] = posClass.split('-')
+      setTmpScore(parseInt(pos))
+    }
+    const onBlur = () => {
+      setTmpScore(score)
+    }
+    const stars = document.getElementsByClassName('fa-star')
+    for (let i = 0; i < stars.length; i++) {
+      const star = stars[i]
+      star.addEventListener('mouseover', onHover)
+      star.addEventListener('mouseout', onBlur)
+    }
+    return () => {
+      for (let i = 0; i < stars.length; i++) {
+        const star = stars[i]
+        star.removeEventListener('mouseover', onHover)
+        star.removeEventListener('mouseout', onBlur)
+      }
+    }
+  }, [])
+
+  const rem = tmpScore % 1
   const renderStar = (pos: number) => {
     // Full star
-    if (pos <= score || (pos - 1 < score && rem >= 0.875)) {
+    if (pos <= tmpScore || (pos - 1 < tmpScore && rem >= 0.875)) {
       return (
         <i
-          className={`${styles.star} fa fa-star`}
+          onClick={() => onStarClick(pos)}
+          className={`${allowHover && styles.hoverable} ${
+            styles.star
+          } fa fa-star star-pos-${pos}`}
           aria-hidden="true"
         />
       )
       // Empty star
-    } else if (pos - 1 > score || (pos > score && rem < 0.125)) {
+    } else if (
+      pos - 1 > tmpScore ||
+      (pos > tmpScore && rem < 0.125)
+    ) {
       return (
         <i
-          className={`${styles.star} ${styles.new} fa fa-star`}
+          onClick={() => onStarClick(pos)}
+          className={`${allowHover && styles.hoverable} ${
+            styles.star
+          } ${styles.new} fa fa-star star-pos-${pos}`}
           aria-hidden="true"
         />
       )
@@ -48,11 +94,17 @@ const StarScale: React.FC<Props> = ({ score }) => {
       return (
         <div className={styles[phase]}>
           <i
-            className={`${styles.star} fa fa-star`}
+            onClick={() => onStarClick(pos)}
+            className={`${allowHover && styles.hoverable} ${
+              styles.star
+            } fa fa-star star-pos-${pos}`}
             aria-hidden="true"
           />
           <i
-            className={`${styles.star} ${styles.mask} fa fa-star`}
+            onClick={() => onStarClick(pos)}
+            className={`${allowHover && styles.hoverable} ${
+              styles.star
+            } ${styles.mask} fa fa-star star-pos-${pos}`}
             aria-hidden="true"
           />
         </div>
