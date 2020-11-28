@@ -11,8 +11,25 @@
   color: darkgoldenrod;
 }
 
-.empty {
+.new {
   color: #ccc;
+}
+
+.crescent {
+  position: relative;
+
+  .star {
+    color: #ccc;
+  }
+
+  .mask {
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: darkgoldenrod;
+    width: 30%;
+    overflow: hidden;
+  }
 }
 
 .half {
@@ -28,6 +45,23 @@
     left: 0;
     color: darkgoldenrod;
     width: 50%;
+    overflow: hidden;
+  }
+}
+
+.gibbous {
+  position: relative;
+
+  .star {
+    color: #ccc;
+  }
+
+  .mask {
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: darkgoldenrod;
+    width: 70%;
     overflow: hidden;
   }
 }
