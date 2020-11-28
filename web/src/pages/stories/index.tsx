@@ -8,7 +8,7 @@ import StoryList from '@/components/StoryList'
 
 interface Props {}
 
-const PER_PAGE = 10
+const PER_PAGE = parseInt(process.env.NEXT_PUBLIC_PAGE_LIMIT as string) || 10
 
 const Stories: NextPage<Props> = (props) => {
   const { loading, data, fetchMore, variables } = useStoriesQuery({

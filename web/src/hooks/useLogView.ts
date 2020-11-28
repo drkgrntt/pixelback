@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useViewMutation } from '@/mutations/useViewMutation'
 
-const READY_TIMEOUT = 60 * 1000
+const READY_TIMEOUT = parseInt(process.env.NEXT_PUBLIC_VIEW_TIMER as string) || 60 * 1000
 
 export const useLogView = (storyId: string, chapterId?: string) => {
   const [view, result] = useViewMutation()
