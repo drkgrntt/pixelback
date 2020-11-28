@@ -56,7 +56,7 @@ const StarScale: React.FC<Props> = ({
   // elements are creating and destroying when tmpScore changes
   // So we need to re-init events when tmpscore changes.
   // Seems heavy, so if there's a better way, I should change this.
-  }, [tmpScore])
+  }, [tmpScore, allowHover])
 
   const rem = tmpScore % 1
   const renderStar = (pos: number) => {
