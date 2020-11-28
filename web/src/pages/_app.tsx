@@ -21,6 +21,7 @@ const App = ({
         <meta name="language" content="en-us" />
         <meta httpEquiv="X-UA-Compatible" content="ie=edge" />
         <title>Pixelback | A platform for creative writers</title>
+        <script src="https://kit.fontawesome.com/6d08f4a1f7.js"></script>
       </Head>
       <Layout>
         <Component {...pageProps} />

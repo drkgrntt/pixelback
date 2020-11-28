@@ -12,6 +12,7 @@ import { useLogRead } from '@/hooks/useLogRead'
 import { useMeQuery } from '@/queries/useMeQuery'
 import { useAddFavoriteStoryMutation } from '@/mutations/useAddFavoriteStoryMutation'
 import { Story } from '@/types'
+import StarScale from '@/components/StarScale'
 
 interface Props {
   query: ParsedUrlQuery
@@ -72,6 +73,7 @@ const StoryPage: NextPage<Props> = ({ query }) => {
       <hr />
       <p>{story.author.penName}</p>
       {renderFavoriteButton()}
+      <StarScale score={story.score} />
     </div>
   )
 }
