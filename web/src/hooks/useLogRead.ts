@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useReadMutation } from '@/hooks/mutations/useReadMutation'
 
-const READY_TIMEOUT = parseInt(process.env.NEXT_PUBLIC_VIEW_TIMER as string) || 60 * 1000
+const READY_TIMEOUT = parseInt(process.env.NEXT_PUBLIC_READ_TIMER as string) || 60 * 1000
 
 export const useLogRead = (storyId: string, chapterId?: string) => {
   const [read, result] = useReadMutation()
