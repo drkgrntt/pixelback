@@ -57,6 +57,22 @@ export class StoryResolver {
     return await Rating.find({ storyId: story.id })
   }
 
+  @FieldResolver(() => Int)
+  async rateStatus(
+    @Root() story: Story,
+    @Ctx() { me }: Context
+  ): Promise<1 | 2 | 3 | 4 | 5 | undefined> {
+    if (!me) return
+    const rating = await Rating.findOne({
+      where: {
+        storyId: story.id,
+        readerId: me.id,
+        chapterId: null,
+      },
+    })
+    return rating?.score
+  }
+
   @FieldResolver(() => Float)
   async score(@Root() story: Story): Promise<number> {
     const allRatings = await Rating.find({ storyId: story.id })

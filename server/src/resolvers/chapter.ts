@@ -33,6 +33,22 @@ export class ChapterResolver {
     return await Rating.find({ chapterId: chapter.id })
   }
 
+  @FieldResolver(() => Int)
+  async rateStatus(
+    @Root() chapter: Chapter,
+    @Ctx() { me }: Context
+  ): Promise<1 | 2 | 3 | 4 | 5 | undefined> {
+    if (!me) return
+    const rating = await Rating.findOne({
+      where: {
+        storyId: chapter.storyId,
+        readerId: me.id,
+        chapterId: chapter.id,
+      },
+    })
+    return rating?.score
+  }
+
   @FieldResolver(() => [Comment])
   async comments(@Root() chapter: Chapter): Promise<Comment[]> {
     return await Comment.find({ chapterId: chapter.id })
