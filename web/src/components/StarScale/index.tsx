@@ -24,8 +24,8 @@ const StarScale: React.FC<Props> = ({
   useEffect(() => {
     if (!allowHover) return
     const onHover = (e: any) => {
-      const classList: string[] = e.target.classList
-      const posClass = [...classList].find((className) =>
+      const classList: string[] = [...e.target.classList]
+      const posClass = classList.find((className) =>
         className.includes('star-pos-')
       )
       if (!posClass) return
