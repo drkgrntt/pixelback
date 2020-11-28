@@ -8,11 +8,13 @@ import {
   FieldResolver,
   Root,
   Float,
+  Int,
 } from 'type-graphql'
 import { Story } from '../entities/Story'
 import { Comment } from '../entities/Comment'
 import { Chapter } from '../entities/Chapter'
 import { Rating } from '../entities/Rating'
+import { View } from '../entities/View'
 import { Context, PublishStatus } from '../types'
 import { isAuth } from '../middleware/isAuth'
 
@@ -63,6 +65,11 @@ export class ChapterResolver {
       number: chapter.number+1
     })
     return nextChapter
+  }
+
+  @FieldResolver(() => Int)
+  async views(@Root() chapter: Chapter): Promise<number> {
+    return await View.count({ where: { chapterId: chapter.id } })
   }
 
   @Query(() => [Chapter])

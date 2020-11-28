@@ -10,6 +10,7 @@ import {
   Float,
   ObjectType,
   Field,
+  Int,
 } from 'type-graphql'
 import { ILike } from 'typeorm'
 import { Story } from '../entities/Story'
@@ -21,6 +22,7 @@ import { isAuth } from '../middleware/isAuth'
 import { Chapter } from '../entities/Chapter'
 import { StoryGenre } from '../entities/StoryGenre'
 import { Genre } from '../entities/Genre'
+import { View } from '../entities/View'
 
 @ObjectType()
 class PageData {
@@ -83,6 +85,11 @@ export class StoryResolver {
       relations: ['genre'],
     })
     return storyGenres.map((storyGenre) => storyGenre.genre)
+  }
+
+  @FieldResolver(() => Int)
+  async views(@Root() story: Story): Promise<number> {
+    return await View.count({ where: { storyId: story.id } })
   }
 
   @Query(() => PaginatedResponse)
@@ -229,7 +236,7 @@ export class StoryResolver {
     })
 
     if (!story) {
-      throw new Error('This story doesn\'t exist')
+      throw new Error("This story doesn't exist")
     }
 
     await StoryGenre.create({
@@ -253,7 +260,7 @@ export class StoryResolver {
     })
 
     if (!story) {
-      throw new Error('This story doesn\'t exist')
+      throw new Error("This story doesn't exist")
     }
 
     await StoryGenre.delete({
