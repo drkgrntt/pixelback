@@ -64,15 +64,22 @@ const ChapterPage: NextPage<Props> = ({ query }) => {
     )
   }
 
-  return (
-    <div className={styles.chapter}>
-      <h2>{story.title}</h2>
-      <hr />
-      <h3>{`${chapter.number}. ${chapter.title}`}</h3>
-      {chapter.body}
+  const renderBack = () => {
+    return (
       <Link href={`/stories/${story.id}`}>
         <a>Back to the story</a>
       </Link>
+    )
+  }
+
+  return (
+    <div className={styles.chapter}>
+      <h2>{story.title}</h2>
+      {renderBack()}
+      <hr />
+      <h3>{`${chapter.number}. ${chapter.title}`}</h3>
+      {chapter.body}
+      {renderBack()}
       <div className={styles.prevNext}>
         {renderPrev()}
         {renderNext()}
