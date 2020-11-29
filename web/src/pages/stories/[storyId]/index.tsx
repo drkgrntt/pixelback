@@ -74,13 +74,13 @@ const StoryPage: NextPage<Props> = ({ query }) => {
 
     return <Button onClick={favoriteStory}>Add to favorites</Button>
   }
-  
+
   const rateStory = async (score: number) => {
     if (!meResult.data?.me) return
 
     const variables = {
       storyId: story.id,
-      score
+      score,
     }
     try {
       await rate({ variables })
@@ -96,7 +96,6 @@ const StoryPage: NextPage<Props> = ({ query }) => {
       {story.body}
       <hr />
       <p>{story.author.penName}</p>
-      {renderFavoriteButton()}
       <Card>
         <StarScale
           allowHover={!!meResult.data?.me}
@@ -104,6 +103,7 @@ const StoryPage: NextPage<Props> = ({ query }) => {
           score={story.score}
           rateStatus={story.rateStatus}
         />
+        {renderFavoriteButton()}
       </Card>
     </div>
   )
