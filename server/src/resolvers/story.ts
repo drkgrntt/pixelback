@@ -12,7 +12,7 @@ import {
   Field,
   Int,
 } from 'type-graphql'
-import { ILike } from 'typeorm'
+import { ILike, IsNull } from 'typeorm'
 import { Story } from '../entities/Story'
 import { User } from '../entities/User'
 import { Comment } from '../entities/Comment'
@@ -67,7 +67,7 @@ export class StoryResolver {
       where: {
         storyId: story.id,
         readerId: me.id,
-        chapterId: null,
+        chapterId: IsNull(),
       },
     })
     return rating?.score
@@ -85,8 +85,23 @@ export class StoryResolver {
   }
 
   @FieldResolver(() => [Chapter])
-  async chapters(@Root() story: Story): Promise<Chapter[]> {
-    return await Chapter.find({ storyId: story.id })
+  async chapters(
+    @Ctx() { me }: Context,
+    @Root() story: Story
+  ): Promise<Chapter[]> {
+    const query = {
+      where: [
+        {
+          storyId: story.id,
+          status: PublishStatus.Published,
+        },
+        {
+          storyId: story.id,
+          authorId: me?.id || IsNull()
+        },
+      ],
+    }
+    return await Chapter.find(query)
   }
 
   @FieldResolver(() => [Comment])
@@ -110,10 +125,11 @@ export class StoryResolver {
 
   @Query(() => PaginatedResponse)
   async stories(
+    @Ctx() { me }: Context,
     @Arg('skip', { nullable: true }) skip: number = 0,
     @Arg('take', { nullable: true }) take: number = 10
   ): Promise<PaginatedResponse> {
-    take = Math.min(50, take)
+    take = Math.min(30, take)
 
     const query = {
       where: {
@@ -148,12 +164,12 @@ export class StoryResolver {
       where: [
         {
           id,
-          authorId: me.id,
+          authorId: me?.id || IsNull(),
         },
         {
           id,
-          status: PublishStatus.Published
-        }
+          status: PublishStatus.Published,
+        },
       ],
     }
     const story = Story.findOne(query)

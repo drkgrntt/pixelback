@@ -17,6 +17,7 @@ import { Rating } from '../entities/Rating'
 import { Read } from '../entities/Read'
 import { Context, PublishStatus } from '../types'
 import { isAuth } from '../middleware/isAuth'
+import { IsNull } from 'typeorm'
 
 @Resolver(Chapter)
 export class ChapterResolver {
@@ -66,20 +67,48 @@ export class ChapterResolver {
   }
 
   @FieldResolver(() => Chapter)
-  async previous(@Root() chapter: Chapter): Promise<Chapter | undefined> {
-    const previousChapter = await Chapter.findOne({
-      storyId: chapter.storyId,
-      number: chapter.number-1
-    })
+  async previous(
+    @Ctx() { me }: Context,
+    @Root() chapter: Chapter
+  ): Promise<Chapter | undefined> {
+    const query = {
+      where: [
+        {
+          storyId: chapter.storyId,
+          number: chapter.number - 1,
+          status: PublishStatus.Published,
+        },
+        {
+          storyId: chapter.storyId,
+          number: chapter.number - 1,
+          authorId: me?.id || IsNull(),
+        },
+      ],
+    }
+    const previousChapter = await Chapter.findOne(query)
     return previousChapter
   }
 
   @FieldResolver(() => Chapter)
-  async next(@Root() chapter: Chapter): Promise<Chapter | undefined> {
-    const nextChapter = await Chapter.findOne({
-      storyId: chapter.storyId,
-      number: chapter.number+1
-    })
+  async next(
+    @Ctx() { me }: Context,
+    @Root() chapter: Chapter
+  ): Promise<Chapter | undefined> {
+    const query = {
+      where: [
+        {
+          storyId: chapter.storyId,
+          number: chapter.number + 1,
+          status: PublishStatus.Published,
+        },
+        {
+          storyId: chapter.storyId,
+          number: chapter.number + 1,
+          authorId: me?.id || IsNull(),
+        },
+      ],
+    }
+    const nextChapter = await Chapter.findOne(query)
     return nextChapter
   }
 
@@ -90,14 +119,42 @@ export class ChapterResolver {
 
   @Query(() => [Chapter])
   async chapters(
-    @Arg('storyId') storyId: string
+    @Arg('storyId') storyId: string,
+    @Ctx() { me }: Context
   ): Promise<Chapter[]> {
-    return await Chapter.find({ storyId })
+    const query = {
+      where: [
+        {
+          storyId,
+          status: PublishStatus.Published,
+        },
+        {
+          storyId,
+          authorId: me?.id || IsNull(),
+        },
+      ],
+    }
+    return await Chapter.find(query)
   }
 
   @Query(() => Chapter, { nullable: true })
-  async chapter(@Arg('id') id: string): Promise<Chapter | undefined> {
-    const chapter = Chapter.findOne(id)
+  async chapter(
+    @Ctx() { me }: Context,
+    @Arg('id') id: string
+  ): Promise<Chapter | undefined> {
+    const query = {
+      where: [
+        {
+          id,
+          status: PublishStatus.Published,
+        },
+        {
+          id,
+          authorId: me?.id || IsNull(),
+        },
+      ],
+    }
+    const chapter = Chapter.findOne(query)
     return chapter
   }
 

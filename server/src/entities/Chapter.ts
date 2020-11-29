@@ -17,6 +17,7 @@ import { Comment } from './Comment'
 import { PublishStatus, RatingScore } from '../types'
 import { Rating } from './Rating'
 import { Read } from './Read'
+import { User } from './User'
 
 @ObjectType()
 @Entity()
@@ -25,6 +26,15 @@ export class Chapter extends BaseEntity {
   @Field()
   @PrimaryGeneratedColumn('uuid')
   id!: string
+
+  @Column()
+  authorId: string
+
+  @Field(() => User)
+  @ManyToOne(() => User, (user) => user.chapters, {
+    onDelete: 'CASCADE'
+  })
+  author: User
 
   @Column()
   storyId: string
