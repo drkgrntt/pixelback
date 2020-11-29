@@ -240,6 +240,20 @@ export class UserResolver {
 
   @Mutation(() => User)
   @UseMiddleware(isAuth)
+  async removeFavoriteStory(
+    @Ctx() { me }: Context,
+    @Arg('storyId') storyId: string
+  ): Promise<User> {
+    await FavoriteStory.delete({
+      userId: me.id,
+      storyId: storyId,
+    })
+
+    return me
+  }
+
+  @Mutation(() => User)
+  @UseMiddleware(isAuth)
   async addFavoriteGenre(
     @Ctx() { me }: Context,
     @Arg('genreId') genreId: string
@@ -248,6 +262,20 @@ export class UserResolver {
       userId: me.id,
       genreId: genreId,
     }).save()
+
+    return me
+  }
+
+  @Mutation(() => User)
+  @UseMiddleware(isAuth)
+  async removeFavoriteGenre(
+    @Ctx() { me }: Context,
+    @Arg('genreId') genreId: string
+  ): Promise<User> {
+    await FavoriteGenre.delete({
+      userId: me.id,
+      genreId: genreId,
+    })
 
     return me
   }
