@@ -140,8 +140,23 @@ export class StoryResolver {
   }
 
   @Query(() => Story, { nullable: true })
-  async story(@Arg('id') id: string): Promise<Story | undefined> {
-    const story = Story.findOne(id)
+  async story(
+    @Ctx() { me }: Context,
+    @Arg('id') id: string
+  ): Promise<Story | undefined> {
+    const query = {
+      where: [
+        {
+          id,
+          authorId: me.id,
+        },
+        {
+          id,
+          status: PublishStatus.Published
+        }
+      ],
+    }
+    const story = Story.findOne(query)
     return story
   }
 
