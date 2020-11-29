@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import styles from './StarScale.module.scss'
 
 interface Props {
+  small?: boolean
   score: number
   rateStatus?: number
   onStarClick?: Function
@@ -16,6 +17,7 @@ interface Props {
  * 0.875-1 = full
  */
 const StarScale: React.FC<Props> = ({
+  small = false,
   score,
   rateStatus,
   onStarClick = () => {},
@@ -53,10 +55,10 @@ const StarScale: React.FC<Props> = ({
         star.removeEventListener('mouseout', onBlur)
       }
     }
-  // Because of how we use masking to show a star fraction,
-  // elements are creating and destroying when tmpScore changes
-  // So we need to re-init events when tmpscore changes.
-  // Seems heavy, so if there's a better way, I should change this.
+    // Because of how we use masking to show a star fraction,
+    // elements are creating and destroying when tmpScore changes
+    // So we need to re-init events when tmpscore changes.
+    // Seems heavy, so if there's a better way, I should change this.
   }, [tmpScore, allowHover, score])
 
   const rem = tmpScore % 1
@@ -123,7 +125,7 @@ const StarScale: React.FC<Props> = ({
 
   return (
     <div className={styles.starScale}>
-      <div className={styles.stars}>
+      <div className={`${styles.stars} ${small && styles.small}`}>
         {renderStar(1)}
         {renderStar(2)}
         {renderStar(3)}

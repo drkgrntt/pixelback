@@ -11,10 +11,21 @@
   justify-content: center;
   gap: 1rem;
   width: 100%;
+  font-size: 3rem;
+
+  &.small {
+    font-size: 1.5rem;
+
+    .crescent .star:not(.mask),
+    .half .star:not(.mask),
+    .gibbous .star:not(.mask) {
+      color: #ccc;
+      transform: translateY(-0.2rem);
+    }
+  }
 }
 
 .star {
-  font-size: 3rem;
   color: darkgoldenrod;
 }
 
@@ -29,7 +40,8 @@
 .crescent {
   position: relative;
 
-  .star {
+  .star:not(.mask) {
+    transform: translateY(-0.5rem);
     color: #ccc;
   }
 
@@ -46,8 +58,9 @@
 .half {
   position: relative;
 
-  .star {
+  .star:not(.mask) {
     color: #ccc;
+    transform: translateY(-0.5rem);
   }
 
   .mask {
@@ -63,7 +76,8 @@
 .gibbous {
   position: relative;
 
-  .star {
+  .star:not(.mask) {
+    transform: translateY(-0.5rem);
     color: #ccc;
   }
 
