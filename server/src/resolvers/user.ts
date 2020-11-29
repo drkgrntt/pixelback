@@ -20,7 +20,7 @@ import { Rating } from '../entities/Rating'
 import { Subscription } from '../entities/Subscription'
 import { FavoriteStory } from '../entities/FavoriteStory'
 import { FavoriteGenre } from '../entities/FavoriteGenre'
-import { Context, UserRole } from '../types'
+import { Context, PublishStatus, UserRole } from '../types'
 import { isAuth } from '../middleware/isAuth'
 
 @ObjectType()
@@ -40,8 +40,20 @@ export class UserResolver {
   }
 
   @FieldResolver(() => [Story])
-  async stories(@Root() user: User): Promise<Story[]> {
-    return await Story.find({ authorId: user.id })
+  async stories(
+    @Ctx() { me }: Context,
+    @Root() user: User
+  ): Promise<Story[]> {
+    const query = {
+      where: {
+        authorId: user.id,
+        status: null as PublishStatus | null
+      }
+    }
+    if (user.id !== me?.id) {
+      query.where.status = PublishStatus.Published
+    }
+    return await Story.find(query)
   }
 
   @FieldResolver(() => [Story])
