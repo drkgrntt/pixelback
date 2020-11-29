@@ -44,11 +44,10 @@ export class UserResolver {
     @Ctx() { me }: Context,
     @Root() user: User
   ): Promise<Story[]> {
-    const query = {
+    const query: Record<string, any> = {
       where: {
         authorId: user.id,
-        status: null as PublishStatus | null
-      }
+      },
     }
     if (user.id !== me?.id) {
       query.where.status = PublishStatus.Published
