@@ -12,7 +12,9 @@ import {
   Field,
   Int,
 } from 'type-graphql'
-import { ILike, IsNull } from 'typeorm'
+import { getConnection, ILike, IsNull } from 'typeorm'
+import fs from 'fs'
+import path from 'path'
 import { Story } from '../entities/Story'
 import { User } from '../entities/User'
 import { Comment } from '../entities/Comment'
@@ -54,7 +56,10 @@ export class StoryResolver {
 
   @FieldResolver(() => [Rating])
   async ratings(@Root() story: Story): Promise<Rating[]> {
-    return await Rating.find({ storyId: story.id })
+    return await Rating.find({
+      storyId: story.id,
+      chapterId: IsNull(),
+    })
   }
 
   @FieldResolver(() => Int)
@@ -97,7 +102,7 @@ export class StoryResolver {
         },
         {
           storyId: story.id,
-          authorId: me?.id || IsNull()
+          authorId: me?.id || IsNull(),
         },
       ],
     }
@@ -126,25 +131,21 @@ export class StoryResolver {
   @Query(() => PaginatedResponse)
   async stories(
     @Arg('skip', { nullable: true }) skip: number = 0,
-    @Arg('take', { nullable: true }) take: number = 10
+    @Arg('take', { nullable: true }) take: number = 30
   ): Promise<PaginatedResponse> {
     take = Math.min(30, take)
 
-    const query = {
-      where: {
-        status: PublishStatus.Published,
-      },
-      take: take + 1,
-      skip: skip,
-      order: {
-        createdAt: 'DESC' as const,
-      },
-    }
-    const foundStories = await Story.find(query)
+    const sql = fs
+      .readFileSync(path.join('sql', 'stories.sql'))
+      .toString()
+    const foundStories = await getConnection().query(sql, [
+      PublishStatus.Published,
+      take+1,
+      skip,
+    ])
     const stories = foundStories.slice(0, take)
 
     const hasMore = foundStories.length > take
-
     return {
       pageData: {
         hasMore,
