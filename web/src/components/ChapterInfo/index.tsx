@@ -18,13 +18,18 @@ const ChapterInfo: React.FC<Props> = ({ story, chapter }) => {
             <a>{`${process.env.NEXT_PUBLIC_ROOT_URL}/stories/${story.id}/chapters/${chapter.id}`}</a>
           </Link>
         </li>
+        <li>Reads: {chapter.reads}</li>
         <li>Score: {chapter.score}/5</li>
         <li>Number of ratings: {chapter.ratings.length}</li>
         <li>Status: {PublishStatus[chapter.status]}</li>
         <li>Created: {chapter.createdAt.toLocaleDateString()}</li>
-        <li>Last updated: {chapter.updatedAt.toLocaleDateString()}</li>
+        <li>
+          Last updated: {chapter.updatedAt.toLocaleDateString()}
+        </li>
         {chapter.publishedAt && (
-          <li>Published: {chapter.publishedAt.toLocaleDateString()}</li>
+          <li>
+            Published: {chapter.publishedAt.toLocaleDateString()}
+          </li>
         )}
       </ul>
     </>

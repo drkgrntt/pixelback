@@ -53,6 +53,7 @@ const Dashboard: NextPage<Props> = ({ query }) => {
   return (
     <div>
       <h2>{story.title}</h2>
+      <h3>{chapter.title}</h3>
 
       <Link href={`/stories/${story.id}/dashboard`}>
         <a>Back to the story dashboard</a>

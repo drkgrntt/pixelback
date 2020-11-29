@@ -17,6 +17,7 @@ const StoryInfo: React.FC<Props> = ({ story }) => {
             <a>{`${process.env.NEXT_PUBLIC_ROOT_URL}/stories/${story.id}`}</a>
           </Link>
         </li>
+        <li>Reads: {story.reads}</li>
         <li>Score: {story.score}/5</li>
         <li>Number of ratings: {story.ratings.length}</li>
         <li>Status: {PublishStatus[story.status]}</li>
