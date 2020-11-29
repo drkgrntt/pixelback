@@ -125,7 +125,6 @@ export class StoryResolver {
 
   @Query(() => PaginatedResponse)
   async stories(
-    @Ctx() { me }: Context,
     @Arg('skip', { nullable: true }) skip: number = 0,
     @Arg('take', { nullable: true }) take: number = 10
   ): Promise<PaginatedResponse> {
