@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { NextPage } from 'next'
 import { ParsedUrlQuery } from 'querystring'
 import Error from 'next/error'
@@ -9,6 +10,9 @@ import Link from 'next/link'
 import { Chapter, Story } from '@/types'
 import { withApollo } from '@/utils/withApollo'
 import { useLogRead } from '@/hooks/useLogRead'
+import StarScale from '@/components/StarScale'
+import { useMeQuery } from '@/queries/useMeQuery'
+import { useRateMutation } from '@/mutations/useRateMutation'
 
 interface Props {
   query: ParsedUrlQuery
@@ -25,11 +29,19 @@ const ChapterPage: NextPage<Props> = ({ query }) => {
     variables: chapterVariables,
     skip: !query.chapterId,
   })
+  const meResult = useMeQuery()
+  const [rate] = useRateMutation()
 
   useLogRead(
     storyResult.data?.story.id,
     chapterResult.data?.chapter.id
   )
+
+  // In order to get rateStatus, which is based on user data
+  // This should be fixed when the user state is available on ssr
+  useEffect(() => {
+    chapterResult.refetch()
+  }, [meResult.data])
 
   switch (true) {
     case !!storyResult.error || !!chapterResult.error:
@@ -72,6 +84,23 @@ const ChapterPage: NextPage<Props> = ({ query }) => {
     )
   }
 
+  const rateChapter = async (score: number) => {
+    if (!meResult.data?.me) return
+
+    const variables = {
+      storyId: story.id,
+      chapterId: chapter.id,
+      score,
+    }
+    try {
+      await rate({ variables })
+      await storyResult.refetch()
+      await chapterResult.refetch()
+    } catch (err) {
+      console.warn(err)
+    }
+  }
+
   return (
     <div className={styles.chapter}>
       <h2>{story.title}</h2>
@@ -84,6 +113,12 @@ const ChapterPage: NextPage<Props> = ({ query }) => {
         {renderPrev()}
         {renderNext()}
       </div>
+      <StarScale
+        allowHover={!!meResult.data?.me}
+        onStarClick={rateChapter}
+        score={chapter.score}
+        rateStatus={chapter.rateStatus}
+      />
     </div>
   )
 }

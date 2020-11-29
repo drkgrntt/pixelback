@@ -20,6 +20,7 @@ export const ChapterInfo = gql`
     ratings {
       id
     }
+    rateStatus
     publishedAt
     createdAt
     updatedAt
