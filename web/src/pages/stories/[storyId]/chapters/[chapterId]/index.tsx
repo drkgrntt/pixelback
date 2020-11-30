@@ -13,7 +13,6 @@ import { useLogRead } from '@/hooks/useLogRead'
 import StarScale from '@/components/StarScale'
 import { useMeQuery } from '@/queries/useMeQuery'
 import { useRateMutation } from '@/mutations/useRateMutation'
-import CommentForm from '@/components/CommentForm'
 import Comments from '@/components/Comments'
 
 interface Props {
@@ -103,16 +102,6 @@ const ChapterPage: NextPage<Props> = ({ query }) => {
     }
   }
 
-  const renderCommentsSection = () => {
-    if (!chapter.enableCommenting) return
-    return (
-      <>
-        <CommentForm />
-        <Comments comments={chapter.comments} />
-      </>
-    )
-  }
-
   return (
     <div className={styles.chapter}>
       <h2>{story.title}</h2>
@@ -131,7 +120,7 @@ const ChapterPage: NextPage<Props> = ({ query }) => {
         score={chapter.score}
         rateStatus={chapter.rateStatus}
       />
-      {renderCommentsSection()}
+      <Comments chapter={chapter} comments={chapter.comments} />
     </div>
   )
 }

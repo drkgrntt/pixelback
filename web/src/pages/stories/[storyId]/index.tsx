@@ -15,7 +15,6 @@ import { useAddFavoriteStoryMutation } from '@/mutations/useAddFavoriteStoryMuta
 import { useRateMutation } from '@/mutations/useRateMutation'
 import { Story } from '@/types'
 import StarScale from '@/components/StarScale'
-import CommentForm from '@/components/CommentForm'
 import Comments from '@/components/Comments'
 
 interface Props {
@@ -92,16 +91,6 @@ const StoryPage: NextPage<Props> = ({ query }) => {
     }
   }
 
-  const renderCommentsSection = () => {
-    if (!story.enableCommenting) return
-    return (
-      <>
-        <CommentForm />
-        <Comments comments={story.comments} />
-      </>
-    )
-  }
-
   return (
     <div className={styles.story}>
       <h2>{story.title}</h2>
@@ -117,7 +106,7 @@ const StoryPage: NextPage<Props> = ({ query }) => {
         />
         {renderFavoriteButton()}
       </Card>
-      {renderCommentsSection()}
+      <Comments story={story} comments={story.comments} />
     </div>
   )
 }

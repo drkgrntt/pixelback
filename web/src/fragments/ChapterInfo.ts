@@ -1,4 +1,5 @@
 import { gql } from '@apollo/client'
+import { CommentInfo } from './CommentInfo'
 
 export const ChapterInfo = gql`
   fragment ChapterInfo on Chapter {
@@ -20,9 +21,13 @@ export const ChapterInfo = gql`
     ratings {
       id
     }
+    comments {
+      ...CommentInfo
+    }
     rateStatus
     publishedAt
     createdAt
     updatedAt
   }
+  ${CommentInfo}
 `
