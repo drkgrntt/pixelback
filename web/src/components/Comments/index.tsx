@@ -2,6 +2,7 @@ import styles from './Comments.module.scss'
 import { Chapter, Comment, Story } from '@/types'
 import Card from '@/components/Card'
 import CommentForm from '../CommentForm'
+import { useMeQuery } from '@/hooks/queries/useMeQuery'
 
 interface Props {
   story?: Story
@@ -10,12 +11,27 @@ interface Props {
 }
 
 const Comments: React.FC<Props> = ({ comments, story, chapter }) => {
+  const { data } = useMeQuery()
+
+  const renderAuthorship = (comment: Comment) => {
+    if (
+      !(story && story.author.id === comment.author.id) &&
+      !(chapter && chapter.author.id === comment.author.id)
+    ) {
+      return
+    }
+
+    return '(author)'
+  }
+
   const renderComments = () => {
     return comments.map((comment) => {
       return (
         <Card key={comment.id}>
           <p>{comment.body}</p>
-          <p>-{comment.author.penName}</p>
+          <p>
+            -{comment.author.penName} {renderAuthorship(comment)}
+          </p>
           <p>{new Date(comment.createdAt).toLocaleDateString()}</p>
         </Card>
       )

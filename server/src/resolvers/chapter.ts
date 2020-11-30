@@ -10,6 +10,7 @@ import {
   Float,
   Int,
 } from 'type-graphql'
+import { IsNull } from 'typeorm'
 import { Story } from '../entities/Story'
 import { Comment } from '../entities/Comment'
 import { Chapter } from '../entities/Chapter'
@@ -17,10 +18,18 @@ import { Rating } from '../entities/Rating'
 import { Read } from '../entities/Read'
 import { Context, PublishStatus } from '../types'
 import { isAuth } from '../middleware/isAuth'
-import { IsNull } from 'typeorm'
+import { User } from '../entities/User'
 
 @Resolver(Chapter)
 export class ChapterResolver {
+  @FieldResolver(() => User)
+  async author(
+    @Root() chapter: Chapter,
+    @Ctx() { userLoader }: Context
+  ): Promise<User> {
+    return await userLoader.load(chapter.authorId)
+  }
+
   @FieldResolver(() => Story)
   async story(
     @Root() chapter: Chapter,

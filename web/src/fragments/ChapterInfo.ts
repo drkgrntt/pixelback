@@ -12,6 +12,9 @@ export const ChapterInfo = gql`
     status
     score
     reads
+    author {
+      id
+    }
     previous {
       id
     }

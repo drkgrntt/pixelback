@@ -60,6 +60,7 @@ export interface Story extends Content {
 }
 
 export interface Chapter extends Content {
+  author: User
   story: Story
   comments: Comment[]
   number: number
