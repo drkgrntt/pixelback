@@ -104,4 +104,6 @@ export interface Comment {
   body: string
   story?: Story
   chapter?: Chapter
+  updatedAt: Date
+  createdAt: Date
 }

@@ -15,7 +15,8 @@ const Comments: React.FC<Props> = ({ comments, story, chapter }) => {
       return (
         <Card key={comment.id}>
           <p>{comment.body}</p>
-          <p>{comment.author.penName}</p>
+          <p>-{comment.author.penName}</p>
+          <p>{new Date(comment.createdAt).toLocaleDateString()}</p>
         </Card>
       )
     })
