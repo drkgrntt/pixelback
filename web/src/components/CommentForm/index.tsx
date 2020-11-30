@@ -3,7 +3,8 @@ import Input from '@/components/Input'
 import Button from '@/components/Button'
 import { useForm } from '@/hooks/useForm'
 import { Comment, Story, Chapter } from '@/types'
-import { useCommentMutation } from '@/hooks/mutations/useCommentMutation'
+import { useCommentMutation } from '@/mutations/useCommentMutation'
+import { useEditCommentMutation } from '@/mutations/useEditCommentMutation'
 
 interface Props {
   comment?: Comment
@@ -18,19 +19,26 @@ const CommentForm: React.FC<Props> = ({
 }) => {
   const INITIAL_STATE = {
     body: comment?.body || '',
+    id: comment?.id,
     storyId: story?.id,
     chapterId: chapter?.id,
   }
-  const formState = useForm(INITIAL_STATE)
+  const formState = useForm(INITIAL_STATE, [comment])
+
   const [createComment] = useCommentMutation({
     storyId: story?.id,
     chapterId: chapter?.id,
   })
+  const [editComment] = useEditCommentMutation()
 
   const handleSubmit = async (event: any, reset: Function) => {
     event.preventDefault()
+    if (!formState.values.body) {
+      reset()
+      return
+    }
     if (comment) {
-      // updateComment
+      await editComment({ variables: formState.values })
     } else {
       await createComment({ variables: formState.values })
     }
@@ -47,7 +55,7 @@ const CommentForm: React.FC<Props> = ({
         required
       />
       <Button type="submit" onClick={handleSubmit}>
-        Comment
+        {comment ? 'Update' : 'Comment'}
       </Button>
     </form>
   )

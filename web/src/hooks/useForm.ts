@@ -1,10 +1,16 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
-export const useForm = (initialState: { [key: string]: any }) => {
-  const initialErrors: { [key: string]: string } = {}
+export const useForm = (
+  initialState: Record<string, any>,
+  dependencies: any[] = []
+) => {
+  const initialErrors: Record<string, string> = {}
 
   const [values, setValues] = useState(initialState)
   const [errors, setErrors] = useState(initialErrors)
+  useEffect(() => {
+    setValues(initialState)
+  }, dependencies)
 
   const handleChange = (event: any) => {
     const { type, checked, name, value } = event.target

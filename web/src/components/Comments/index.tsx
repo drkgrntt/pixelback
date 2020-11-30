@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import styles from './Comments.module.scss'
 import { Chapter, Comment, Story } from '@/types'
 import Card from '@/components/Card'
@@ -12,6 +13,12 @@ interface Props {
 
 const Comments: React.FC<Props> = ({ comments, story, chapter }) => {
   const { data } = useMeQuery()
+  const [editingComment, setEditingComment] = useState<
+    Comment | undefined
+  >(undefined)
+  useEffect(() => {
+    if (editingComment) setEditingComment(undefined)
+  }, [comments])
 
   const renderAuthorship = (comment: Comment) => {
     if (
@@ -24,15 +31,30 @@ const Comments: React.FC<Props> = ({ comments, story, chapter }) => {
     return '(author)'
   }
 
+  const renderEdited = (comment: Comment) => {
+    const createdAt = new Date(comment.createdAt)
+    const updatedAt = new Date(comment.updatedAt)
+    if (createdAt.toISOString() === updatedAt.toISOString()) return
+
+    return <p>(edited {updatedAt.toLocaleDateString()})</p>
+  }
+
   const renderComments = () => {
     return comments.map((comment) => {
       return (
         <Card key={comment.id}>
-          <p>{comment.body}</p>
+          <div className={styles.row}>
+            <p>{comment.body}</p>
+            <a onClick={() => setEditingComment(comment)}>Edit</a>
+          </div>
           <p>
             -{comment.author.penName} {renderAuthorship(comment)}
           </p>
-          <p>{new Date(comment.createdAt).toLocaleDateString()}</p>
+          <div className={styles.row}>
+            <p>{new Date(comment.createdAt).toLocaleDateString()}</p>
+            <a>Delete</a>
+          </div>
+          {renderEdited(comment)}
         </Card>
       )
     })
@@ -40,7 +62,13 @@ const Comments: React.FC<Props> = ({ comments, story, chapter }) => {
 
   return (
     <div>
-      {data?.me && <CommentForm story={story} chapter={chapter} />}
+      {data?.me && (
+        <CommentForm
+          comment={editingComment}
+          story={story}
+          chapter={chapter}
+        />
+      )}
       {renderComments()}
     </div>
   )
