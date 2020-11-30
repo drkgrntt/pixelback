@@ -15,6 +15,7 @@ SELECT story.*,
   ) + (
     SELECT COUNT(*)*3 FROM chapter
     WHERE chapter."storyId" = story.id
+    AND status = $1
 
   -- convert date epoch in hours and add to weight
   ) + (
