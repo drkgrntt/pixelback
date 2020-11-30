@@ -19,7 +19,7 @@ const WriterDashboard: NextPage<{}> = () => {
   }
 
   const renderStories = () => {
-    if (!data?.me.stories.length) return null
+    if (!data?.me?.stories.length) return null
 
     return data?.me.stories.map((story: Story) => {
       return (
@@ -35,7 +35,7 @@ const WriterDashboard: NextPage<{}> = () => {
   }
 
   const renderNewStoryButton = () => {
-    if (data?.me.stories.length) {
+    if (data?.me?.stories.length) {
       return (
         <>
           <p className={styles.ctaText}>Write a new story!</p>
@@ -81,7 +81,7 @@ const WriterDashboard: NextPage<{}> = () => {
           <li className={styles.stat}>
             Followers:{' '}
             {
-              data?.me.subscribers.map(
+              data?.me?.subscribers.map(
                 (s: Subscription) => s.level === SubLevel.Free
               ).length
             }
@@ -89,7 +89,7 @@ const WriterDashboard: NextPage<{}> = () => {
           <li className={styles.stat}>
             Subscribers:{' '}
             {
-              data?.me.subscribers.map(
+              data?.me?.subscribers.map(
                 (s: Subscription) => s.level === SubLevel.Free
               ).length
             }

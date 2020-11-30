@@ -40,7 +40,7 @@ const Comments: React.FC<Props> = ({ comments, story, chapter }) => {
 
   return (
     <div>
-      <CommentForm story={story} chapter={chapter} />
+      {data?.me && <CommentForm story={story} chapter={chapter} />}
       {renderComments()}
     </div>
   )
