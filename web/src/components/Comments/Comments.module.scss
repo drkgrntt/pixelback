@@ -1,4 +1,10 @@
 .row {
   display: flex;
   justify-content: space-between;
+  align-items: flex-end;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
 }

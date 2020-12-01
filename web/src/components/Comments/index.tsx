@@ -51,10 +51,14 @@ const Comments: React.FC<Props> = ({ comments, story, chapter }) => {
             -{comment.author.penName} {renderAuthorship(comment)}
           </p>
           <div className={styles.row}>
-            <p>{new Date(comment.createdAt).toLocaleDateString()}</p>
+            <div className={styles.column}>
+              <p>
+                {new Date(comment.createdAt).toLocaleDateString()}
+              </p>
+              {renderEdited(comment)}
+            </div>
             <a>Delete</a>
           </div>
-          {renderEdited(comment)}
         </Card>
       )
     })
