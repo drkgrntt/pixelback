@@ -34,6 +34,12 @@ class UserResponse {
 
 @Resolver(User)
 export class UserResolver {
+  @FieldResolver(() => String)
+  email(@Root() user: User, @Ctx() { me }: Context): string {
+    if (me?.id !== user.id) return ''
+    return user.email
+  }
+
   @FieldResolver(() => [Rating])
   async ratings(@Root() user: User): Promise<Rating[]> {
     return await Rating.find({ readerId: user.id })
