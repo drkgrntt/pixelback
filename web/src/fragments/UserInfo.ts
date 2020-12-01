@@ -9,6 +9,10 @@ export const UserInfo = gql`
     favoriteStories {
       id
       title
+      author {
+        id
+        penName
+      }
     }
     createdAt
     updatedAt

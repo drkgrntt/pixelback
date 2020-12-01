@@ -5,34 +5,52 @@ import styles from './StoryList.module.scss'
 import StarScale from '../StarScale'
 
 interface Props {
+  showRating?: boolean
+  cardWrap?: boolean
   stories: Story[]
 }
 
-const StoryList: React.FC<Props> = ({ stories }) => {
+const StoryList: React.FC<Props> = ({
+  stories,
+  showRating,
+  cardWrap,
+}) => {
   const renderRating = (story: Story) => {
-    if (story.ratings.length < 5) return null
+    console.log(showRating)
+    if (!showRating || story.ratings.length < 5) return null
 
-    // return <p>Rated {story.score}/5</p>
     return <StarScale small score={story.score} />
+  }
+
+  const renderStory = (story: Story) => {
+    return (
+      <>
+        <div className={styles.storyHeader}>
+          <Link href={`/stories/${story.id}`}>
+            <h3>{story.title}</h3>
+          </Link>
+          {renderRating(story)}
+        </div>
+        {story.summary}
+        <p>By {story.author.penName}</p>
+        <Link href={`/stories/${story.id}`}>
+          <a>Read</a>
+        </Link>
+      </>
+    )
   }
 
   const renderStories = () => {
     return stories.map((story: Story) => {
-      return (
-        <Card key={story.id}>
-          <div className={styles.storyHeader}>
-            <Link href={`/stories/${story.id}`}>
-              <h3>{story.title}</h3>
-            </Link>
-            {renderRating(story)}
+      if (!cardWrap) {
+        return (
+          <div className={styles.wrapper} key={story.id}>
+            {renderStory(story)}
           </div>
-          {story.summary}
-          <p>By {story.author.penName}</p>
-          <Link href={`/stories/${story.id}`}>
-            <a>Read</a>
-          </Link>
-        </Card>
-      )
+        )
+      }
+
+      return <Card key={story.id}>{renderStory(story)}</Card>
     })
   }
 

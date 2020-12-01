@@ -1,4 +1,5 @@
 import { NextPage } from 'next'
+import Error from 'next/error'
 import styles from './Profile.module.scss'
 import Button from '@/components/Button'
 import Card from '@/components/Card'
@@ -6,13 +7,20 @@ import { useLogoutEverywhereMutation } from '@/mutations/useLogoutEverywhereMuta
 import Link from 'next/link'
 import { useIsAuth } from '@/hooks/useIsAuth'
 import Loader from '@/components/Loader'
+import StoryList from '@/components/StoryList'
+import { useMeQuery } from '@/hooks/queries/useMeQuery'
 
 const Profile: NextPage<{}> = () => {
   const [logoutEverywhere] = useLogoutEverywhereMutation()
-  const { loading } = useIsAuth()
+  const { loading, data } = useMeQuery()
+  useIsAuth()
 
   if (loading) {
     return <Loader />
+  }
+
+  if (!data?.me) {
+    return <Error statusCode={401} />
   }
 
   const onLogoutEverywhereClick = async (
@@ -43,6 +51,23 @@ const Profile: NextPage<{}> = () => {
         >
           Discard
         </Button>
+      </Card>
+
+      <Card>
+        <h3>User Info</h3>
+      </Card>
+
+      <Card>
+        <h3>Favorite Authors</h3>
+      </Card>
+
+      <Card>
+        <h3>Favorite Stories</h3>
+        <StoryList stories={data.me.favoriteStories} />
+      </Card>
+
+      <Card>
+        <h3>Favorite Genres</h3>
       </Card>
     </div>
   )
