@@ -71,13 +71,13 @@ const Nav: React.FC<{}> = () => {
             className={`${styles.hamburger} ${styles.item}`}
             onClick={toggleNav}
           />
-          <Link href="/">
+          {/* <Link href="/">
             <li className={styles.item}>
               <a className={styles.link} onClick={toggleNav}>
                 Home
               </a>
             </li>
-          </Link>
+          </Link> */}
           <Link href="/stories">
             <li className={styles.item}>
               <a className={styles.link} onClick={toggleNav}>
