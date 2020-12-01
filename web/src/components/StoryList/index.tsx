@@ -7,6 +7,8 @@ import StarScale from '../StarScale'
 interface Props {
   showRating?: boolean
   cardWrap?: boolean
+  actionText?: string
+  action?: Function
   stories: Story[]
 }
 
@@ -14,6 +16,8 @@ const StoryList: React.FC<Props> = ({
   stories,
   showRating,
   cardWrap,
+  action,
+  actionText,
 }) => {
   const renderRating = (story: Story) => {
     console.log(showRating)
@@ -33,9 +37,14 @@ const StoryList: React.FC<Props> = ({
         </div>
         {story.summary}
         <p>By {story.author.penName}</p>
-        <Link href={`/stories/${story.id}`}>
-          <a>Read</a>
-        </Link>
+        <div className={styles.row}>
+          <Link href={`/stories/${story.id}`}>
+            <a>Read</a>
+          </Link>
+          {action && actionText && (
+            <a onClick={() => action(story)}>{actionText}</a>
+          )}
+        </div>
       </>
     )
   }

@@ -16,3 +16,8 @@
     border-bottom: 0.1rem solid $color-grey;
   }
 }
+
+.row {
+  display: flex;
+  justify-content: space-between;
+}

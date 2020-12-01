@@ -8,10 +8,13 @@ import Link from 'next/link'
 import { useIsAuth } from '@/hooks/useIsAuth'
 import Loader from '@/components/Loader'
 import StoryList from '@/components/StoryList'
-import { useMeQuery } from '@/hooks/queries/useMeQuery'
+import { useMeQuery } from '@/queries/useMeQuery'
+import { Story } from '@/types'
+import { useRemoveFavoriteStoryMutation } from '@/mutations/useRemoveFavoriteStoryMutation'
 
 const Profile: NextPage<{}> = () => {
   const [logoutEverywhere] = useLogoutEverywhereMutation()
+  const [removeFavoriteStory] = useRemoveFavoriteStoryMutation()
   const { loading, data } = useMeQuery()
   useIsAuth()
 
@@ -31,6 +34,10 @@ const Profile: NextPage<{}> = () => {
       await logoutEverywhere()
     } catch (err) {}
     reset()
+  }
+
+  const onRemoveStoryClick = async (story: Story) => {
+    await removeFavoriteStory({ variables: { storyId: story.id } })
   }
 
   return (
@@ -63,7 +70,11 @@ const Profile: NextPage<{}> = () => {
 
       <Card>
         <h3>Favorite Stories</h3>
-        <StoryList stories={data.me.favoriteStories} />
+        <StoryList
+          actionText="Remove"
+          action={onRemoveStoryClick}
+          stories={data.me.favoriteStories}
+        />
       </Card>
 
       <Card>
