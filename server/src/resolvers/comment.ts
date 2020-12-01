@@ -105,6 +105,6 @@ export class CommentResolver {
 
     await comment.remove()
 
-    return comment.id
+    return id
   }
 }

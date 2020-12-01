@@ -4,6 +4,7 @@ import { Chapter, Comment, Story } from '@/types'
 import Card from '@/components/Card'
 import CommentForm from '../CommentForm'
 import { useMeQuery } from '@/hooks/queries/useMeQuery'
+import { useDeleteCommentMutation } from '@/hooks/mutations/useDeleteCommentMutation'
 
 interface Props {
   story?: Story
@@ -13,6 +14,7 @@ interface Props {
 
 const Comments: React.FC<Props> = ({ comments, story, chapter }) => {
   const { data } = useMeQuery()
+  const [deleteComment] = useDeleteCommentMutation()
   const [editingComment, setEditingComment] = useState<
     Comment | undefined
   >(undefined)
@@ -39,13 +41,27 @@ const Comments: React.FC<Props> = ({ comments, story, chapter }) => {
     return <p>(edited {updatedAt.toLocaleDateString()})</p>
   }
 
+  const handleDeleteClick = async (comment: Comment) => {
+    const confirm = window.confirm(
+      'Are you sure you want to delete your comment?'
+    )
+    if (!confirm) return
+    await deleteComment({ variables: { id: comment.id } })
+  }
+
+  const isOwner = (comment: Comment) => {
+    return comment.author.id === data?.me?.id
+  }
+
   const renderComments = () => {
     return comments.map((comment) => {
       return (
         <Card key={comment.id}>
           <div className={styles.row}>
             <p>{comment.body}</p>
-            <a onClick={() => setEditingComment(comment)}>Edit</a>
+            {isOwner(comment) && (
+              <a onClick={() => setEditingComment(comment)}>Edit</a>
+            )}
           </div>
           <p>
             -{comment.author.penName} {renderAuthorship(comment)}
@@ -57,7 +73,9 @@ const Comments: React.FC<Props> = ({ comments, story, chapter }) => {
               </p>
               {renderEdited(comment)}
             </div>
-            <a>Delete</a>
+            {isOwner(comment) && (
+              <a onClick={() => handleDeleteClick(comment)}>Delete</a>
+            )}
           </div>
         </Card>
       )
