@@ -94,6 +94,12 @@ export class UserResolver {
     return me
   }
 
+  @Query(() => User, { nullable: true })
+  async user(@Arg('id') id: string): Promise<User | undefined> {
+    const user = await User.findOne(id)
+    return user
+  }
+
   @Query(() => [User])
   async searchUsers(
     // @Arg('filters') filters: any,
