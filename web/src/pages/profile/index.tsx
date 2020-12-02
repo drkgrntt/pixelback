@@ -77,9 +77,9 @@ const Profile: NextPage<{}> = () => {
         />
       </Card>
 
-      <Card>
+      {/* <Card>
         <h3>Favorite Genres</h3>
-      </Card>
+      </Card> */}
     </div>
   )
 }
