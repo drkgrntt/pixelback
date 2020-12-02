@@ -12,7 +12,10 @@ const Login: NextPage<Props> = ({ query }) => {
   return (
     <div className={styles.login}>
       <Card>
-        <LoginForm next={query?.next as string || '/profile'} />
+        <LoginForm
+          next={(query?.next as string) || '/profile'}
+          initialValidation={query?.initialValidation as string}
+        />
       </Card>
     </div>
   )

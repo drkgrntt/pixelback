@@ -8,13 +8,17 @@ import Button from '../Button'
 
 interface Props {
   next: string
+  initialValidation?: string
 }
 
-const LoginForm: React.FC<Props> = ({ next }) => {
+const LoginForm: React.FC<Props> = ({
+  next,
+  initialValidation = '',
+}) => {
   const INITIAL_FORM_STATE = {
     email: '',
     password: '',
-    validation: '',
+    validation: initialValidation,
   }
 
   const formState = useForm(INITIAL_FORM_STATE)
@@ -30,7 +34,7 @@ const LoginForm: React.FC<Props> = ({ next }) => {
     }
 
     try {
-      await login({ variables: formState.values})
+      await login({ variables: formState.values })
       formState.reset()
       push(next)
     } catch (error) {

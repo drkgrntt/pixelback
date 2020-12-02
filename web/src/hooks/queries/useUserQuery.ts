@@ -12,6 +12,10 @@ export const userQuery = gql`
           id
           name
         }
+        author {
+          id
+          penName
+        }
       }
       subscribers {
         id

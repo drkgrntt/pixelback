@@ -20,7 +20,6 @@ const StoryList: React.FC<Props> = ({
   actionText,
 }) => {
   const renderRating = (story: Story) => {
-    console.log(showRating)
     if (!showRating || story.ratings.length < 5) return null
 
     return <StarScale small score={story.score} />

@@ -62,14 +62,17 @@ const Profile: NextPage<{}> = () => {
 
       <Card>
         <h3>User Info</h3>
+        <hr />
       </Card>
 
       <Card>
         <h3>Favorite Authors</h3>
+        <hr />
       </Card>
 
       <Card>
         <h3>Favorite Stories</h3>
+        <hr />
         <StoryList
           actionText="Remove"
           action={onRemoveStoryClick}
