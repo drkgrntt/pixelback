@@ -44,4 +44,18 @@ export class SubscriptionResolver {
 
     return subscription
   }
+
+  @Mutation(() => String)
+  @UseMiddleware(isAuth)
+  async unsubscribe(
+    @Ctx() { me }: Context,
+    @Arg('id') id: string
+  ): Promise<string> {
+    await Subscription.delete({
+      id,
+      subscriberId: me.id,
+    })
+
+    return id
+  }
 }

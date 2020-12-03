@@ -11,6 +11,8 @@ import Card from '@/components/Card'
 import StoryList from '@/components/StoryList'
 import Button from '@/components/Button'
 import { useMeQuery } from '@/hooks/queries/useMeQuery'
+import { useSubscribeMutation } from '@/mutations/useSubscribeMutation'
+import { useUnsubscribeMutation } from '@/mutations/useUnsubscribeMutation'
 
 interface Props {
   query: ParsedUrlQuery
@@ -18,6 +20,8 @@ interface Props {
 
 const UserPage: NextPage<Props> = ({ query }) => {
   const { push } = useRouter()
+  const [subscribe] = useSubscribeMutation()
+  const [unsubscribe] = useUnsubscribeMutation()
   const variables = { id: query?.userId }
   const skip = !query?.userId
   const { data: userData, loading } = useUserQuery({
@@ -36,7 +40,11 @@ const UserPage: NextPage<Props> = ({ query }) => {
     return <Error statusCode={404} />
   }
 
-  const handleSubscribe = (event: any, reset: Function) => {
+  const isSubscribed = me?.subscriptions.some(
+    (sub) => sub.subscribedTo.id === user.id
+  )
+
+  const handleFollow = async (event: any, reset: Function) => {
     if (!me) {
       const initialValidation = 'You need to login to do that'
       push(
@@ -45,7 +53,14 @@ const UserPage: NextPage<Props> = ({ query }) => {
       return
     }
 
-    console.log('subscribing!')
+    if (isSubscribed) {
+      const subscription = me.subscriptions.find(
+        (sub) => sub.subscribedTo.id === user.id
+      )
+      await unsubscribe({ variables: { id: subscription?.id } })
+    } else {
+      await subscribe({ variables: { id: user.id } })
+    }
     reset()
   }
 
@@ -53,8 +68,8 @@ const UserPage: NextPage<Props> = ({ query }) => {
     <div>
       <h2>{user.penName}</h2>
 
-      <Button styleTypes={['cta']} onClick={handleSubscribe}>
-        Subscribe
+      <Button styleTypes={['cta']} onClick={handleFollow}>
+        {isSubscribed ? 'Unfollow' : 'Follow'}
       </Button>
 
       <Card>

@@ -18,6 +18,11 @@ export const meQuery = gql`
       }
       subscriptions {
         id
+        level
+        subscribedTo {
+          id
+          penName
+        }
       }
       subscribers {
         id
