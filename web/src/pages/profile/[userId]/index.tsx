@@ -77,8 +77,6 @@ const UserPage: NextPage<Props> = ({ query }) => {
         <hr />
         <StoryList stories={user.stories} />
       </Card>
-
-      <pre>{JSON.stringify(userData, null, 2)}</pre>
     </div>
   )
 }

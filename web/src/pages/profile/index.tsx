@@ -9,20 +9,21 @@ import { useIsAuth } from '@/hooks/useIsAuth'
 import Loader from '@/components/Loader'
 import StoryList from '@/components/StoryList'
 import { useMeQuery } from '@/queries/useMeQuery'
-import { Story } from '@/types'
+import { Story, User } from '@/types'
 import { useRemoveFavoriteStoryMutation } from '@/mutations/useRemoveFavoriteStoryMutation'
 
 const Profile: NextPage<{}> = () => {
   const [logoutEverywhere] = useLogoutEverywhereMutation()
   const [removeFavoriteStory] = useRemoveFavoriteStoryMutation()
   const { loading, data } = useMeQuery()
+  const me: User = data?.me
   useIsAuth()
 
   if (loading) {
     return <Loader />
   }
 
-  if (!data?.me) {
+  if (!me) {
     return <Error statusCode={401} />
   }
 
@@ -38,6 +39,18 @@ const Profile: NextPage<{}> = () => {
 
   const onRemoveStoryClick = async (story: Story) => {
     await removeFavoriteStory({ variables: { storyId: story.id } })
+  }
+
+  const renderAuthorList = () => {
+    return me.subscriptions.map((subscription) => {
+      return (
+        <li key={subscription.id}>
+          <Link href={`/profile/${subscription.subscribedTo.id}`}>
+            <a>{subscription.subscribedTo.penName}</a>
+          </Link>
+        </li>
+      )
+    })
   }
 
   return (
@@ -68,6 +81,7 @@ const Profile: NextPage<{}> = () => {
       <Card>
         <h3>Favorite Authors</h3>
         <hr />
+        <ul>{renderAuthorList()}</ul>
       </Card>
 
       <Card>
@@ -76,7 +90,7 @@ const Profile: NextPage<{}> = () => {
         <StoryList
           actionText="Remove"
           action={onRemoveStoryClick}
-          stories={data.me.favoriteStories}
+          stories={me.favoriteStories}
         />
       </Card>
 
