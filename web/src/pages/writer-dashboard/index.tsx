@@ -21,7 +21,7 @@ const WriterDashboard: NextPage<{}> = () => {
   const renderStories = () => {
     if (!data?.me?.stories.length) return null
 
-    return data?.me.stories.map((story: Story) => {
+    return data.me.stories.map((story: Story) => {
       return (
         <li key={story.id} className={styles.story}>
           <Link href={`/stories/${story.id}`}>{story.title}</Link>
@@ -81,19 +81,19 @@ const WriterDashboard: NextPage<{}> = () => {
           <li className={styles.stat}>
             Followers:{' '}
             {
-              data?.me?.subscribers.map(
+              data?.me?.subscribers.filter(
                 (s: Subscription) => s.level === SubLevel.Free
               ).length
             }
           </li>
-          <li className={styles.stat}>
+          {/* <li className={styles.stat}>
             Subscribers:{' '}
             {
-              data?.me?.subscribers.map(
-                (s: Subscription) => s.level === SubLevel.Free
+              data?.me?.subscribers.filter(
+                (s: Subscription) => s.level === SubLevel.Paid
               ).length
             }
-          </li>
+          </li> */}
         </ul>
       </Card>
     </div>
