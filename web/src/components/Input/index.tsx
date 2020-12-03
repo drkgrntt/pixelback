@@ -114,7 +114,9 @@ const Input: React.FC<Props> = (props) => {
             onFocus={(event) => onFocus(event)}
           >
             {options.map((option) => (
-              <option value={option.value}>{option.text}</option>
+              <option key={option.value} value={option.value}>
+                {option.text}
+              </option>
             ))}
           </select>
         </>
