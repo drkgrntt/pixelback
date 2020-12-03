@@ -8,9 +8,11 @@ import Link from 'next/link'
 import { useIsAuth } from '@/hooks/useIsAuth'
 import Loader from '@/components/Loader'
 import StoryList from '@/components/StoryList'
+import PasswordResetForm from '@/components/PasswordResetForm'
 import { useMeQuery } from '@/queries/useMeQuery'
 import { Story, User } from '@/types'
 import { useRemoveFavoriteStoryMutation } from '@/mutations/useRemoveFavoriteStoryMutation'
+import Modal from '@/components/Modal'
 
 const Profile: NextPage<{}> = () => {
   const [logoutEverywhere] = useLogoutEverywhereMutation()
@@ -80,6 +82,19 @@ const Profile: NextPage<{}> = () => {
           <li>Email (no one sees this but you): {me.email}</li>
           <li>Pen Name: {me.penName}</li>
         </ul>
+        <Modal
+          closeId="close-password-reset-form"
+          buttonText="Reset password"
+        >
+          <PasswordResetForm
+            onSuccess={() => {
+              const close = document.getElementById(
+                'close-password-reset-form'
+              )
+              close?.click()
+            }}
+          />
+        </Modal>
       </Card>
 
       <Card>

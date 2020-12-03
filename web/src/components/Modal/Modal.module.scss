@@ -1,0 +1,55 @@
+@import 'src/styles/variables.scss';
+
+.modal {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: $color-grey;
+  background-color: rgba($color-grey-dark, 0.7);
+  z-index: 10;
+  transition: 0.3s;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &.hidden {
+    opacity: 0;
+    z-index: -10;
+    transition: 0.3s;
+  }
+}
+
+.box {
+  position: fixed;
+  background-color: $color-grey-light;
+  padding: 2rem;
+  border: 0.1rem solid $color-grey;
+  width: 90%;
+  min-height: 50%;
+  max-height: calc(100vh - 21rem);
+  border-radius: 0.5rem;
+  z-index: 100;
+  overflow-y: auto;
+}
+
+.content {
+  min-height: 44vh;
+}
+
+.close {
+  background: none;
+  border: none;
+  float: right;
+  font-size: 2.5rem;
+  font-weight: 700;
+  cursor: pointer;
+  z-index: 100;
+
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+}
