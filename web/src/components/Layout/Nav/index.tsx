@@ -86,6 +86,13 @@ const Nav: React.FC<{}> = () => {
             </li>
           </Link>
           {renderAuthLinks()}
+          <Link href="/feedback">
+            <li className={styles.item}>
+              <a className={styles.link} onClick={toggleNav}>
+                Feedback
+              </a>
+            </li>
+          </Link>
         </div>
       </ul>
     </nav>

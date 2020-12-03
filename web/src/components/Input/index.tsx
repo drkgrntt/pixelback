@@ -13,6 +13,7 @@ interface Props {
   onFocus?: Function
   onBlur?: Function
   children?: any
+  options?: { value: any; text: string }[]
   validation?: string
   formState?: { [key: string]: any }
 }
@@ -32,6 +33,7 @@ const Input: React.FC<Props> = (props) => {
     onFocus = () => null,
     onBlur = () => null,
     children = null,
+    options = [],
     validation = '',
     formState,
   } = props
@@ -93,6 +95,28 @@ const Input: React.FC<Props> = (props) => {
             onFocus={(event) => onFocus(event)}
           />
           {renderLabel()}
+        </>
+      )
+    } else if (type === 'select') {
+      return (
+        <>
+          {renderLabel()}
+          <select
+            name={name}
+            id={id}
+            className={`${styles.field} ${
+              validation && styles.invalid
+            }`}
+            value={value?.toString() || ''}
+            required={!!required}
+            onChange={(event) => onChange(event)}
+            onBlur={(event) => onBlur(event)}
+            onFocus={(event) => onFocus(event)}
+          >
+            {options.map((option) => (
+              <option value={option.value}>{option.text}</option>
+            ))}
+          </select>
         </>
       )
     }
