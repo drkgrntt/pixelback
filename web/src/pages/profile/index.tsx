@@ -76,6 +76,10 @@ const Profile: NextPage<{}> = () => {
       <Card>
         <h3>User Info</h3>
         <hr />
+        <ul>
+          <li>Email (no one sees this but you): {me.email}</li>
+          <li>Pen Name: {me.penName}</li>
+        </ul>
       </Card>
 
       <Card>
