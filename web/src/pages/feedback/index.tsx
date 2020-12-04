@@ -100,7 +100,7 @@ const Feedback: NextPage<Props> = (props) => {
             required
             type="textarea"
             name="summary"
-            label="In one or sentenses, summarize your bug report or feature request."
+            label="In one or two sentenses, summarize your bug report or feature request."
             formState={formState}
           />
           <Input
