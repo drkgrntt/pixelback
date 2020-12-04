@@ -19,3 +19,19 @@
   color: $color-error;
   text-align: center;
 }
+
+.forgotPassword {
+  // All these need to be !important to override the default button styles
+  border: none !important;
+  background: none !important;
+  font-size: 1.4rem !important;
+  color: $color-grey !important;
+  cursor: pointer !important;
+  text-transform: none !important;
+  letter-spacing: 0 !important;
+  font-weight: 400 !important;
+  padding: 0 1rem !important;
+
+  align-self: flex-start;
+  margin: -1rem;
+}

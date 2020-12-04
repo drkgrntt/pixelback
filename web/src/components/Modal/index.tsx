@@ -12,6 +12,7 @@ type StyleType =
   | 'small'
 
 interface Props {
+  buttonClassName?: string
   buttonStyleTypes?: StyleType[]
   buttonId?: string
   buttonText: string
@@ -24,6 +25,7 @@ interface Props {
 const Modal: React.FC<Props> = (props) => {
   const {
     children,
+    buttonClassName = '',
     buttonStyleTypes,
     buttonId,
     buttonText,
@@ -48,6 +50,7 @@ const Modal: React.FC<Props> = (props) => {
   return (
     <>
       <Button
+        className={buttonClassName}
         id={buttonId}
         styleTypes={buttonStyleTypes}
         onClick={(event: any, reset: Function) => {

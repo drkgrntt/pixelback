@@ -1,7 +1,7 @@
 import { gql, useMutation, MutationHookOptions } from '@apollo/client'
 
 export const exchangeTokenMutation = gql`
-  mutation LogoutEverywhere {
+  mutation ExchangeToken {
     exchangeToken {
       value
     }

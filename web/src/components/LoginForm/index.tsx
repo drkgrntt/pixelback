@@ -5,6 +5,8 @@ import { useLoginMutation } from '@/mutations/useLoginMutation'
 import { useForm } from '@/hooks/useForm'
 import Input from '../Input'
 import Button from '../Button'
+import Modal from '../Modal'
+import ForgotPasswordForm from '../ForgotPasswordForm'
 
 interface Props {
   next: string
@@ -66,6 +68,12 @@ const LoginForm: React.FC<Props> = ({
         formState={formState}
         required
       />
+      <Modal
+        buttonText="Forgot password?"
+        buttonClassName={styles.forgotPassword}
+      >
+        <ForgotPasswordForm email={formState.values.email} />
+      </Modal>
       <span className={styles.validation}>
         {formState.values.validation}
       </span>
