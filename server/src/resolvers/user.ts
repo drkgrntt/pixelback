@@ -22,6 +22,7 @@ import { FavoriteStory } from '../entities/FavoriteStory'
 import { FavoriteGenre } from '../entities/FavoriteGenre'
 import { Context, PublishStatus, UserRole } from '../types'
 import { isAuth } from '../middleware/isAuth'
+import Mailer from '../utils/sendEmail'
 
 @ObjectType()
 class UserResponse {
@@ -191,6 +192,33 @@ export class UserResolver {
     await me.save()
 
     return true
+  }
+
+  @Mutation(() => Boolean)
+  async forgotPassword(
+    @Arg('email') email: string
+  ): Promise<boolean> {
+    const user = await User.findOne({ email })
+    if (!user) return true
+
+    const token = await Token.generate(user.id, 1)
+    const subject = 'Password Reset'
+    const link = `${process.env.APP_BASE_URL}/profile?token=${token.value}`
+    const template = 'passwordReset'
+    const variables = {
+      name: user.penName,
+      link,
+    }
+
+    const mailer = new Mailer()
+    const result = await mailer.sendEmail(
+      user.email,
+      subject,
+      template,
+      variables
+    )
+
+    return result
   }
 
   @Mutation(() => Boolean)

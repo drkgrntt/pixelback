@@ -5,5 +5,10 @@ declare namespace NodeJS {
     DATABASE_URL: string
     PORT: string
     JWT_SECRET: string
+    GMAIL: string
+    GMAIL_CLIENT_ID: string
+    GMAIL_CLIENT_SECRET: string
+    GMAIL_REFRESH_TOKEN: string
+    APP_BASE_URL: string
   }
 }

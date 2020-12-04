@@ -91,9 +91,14 @@ export class Token extends BaseEntity {
     }
   }
 
-  static async generate(uid: string): Promise<Token> {
+  static async generate(
+    uid: string,
+    daysValid: number = 30
+  ): Promise<Token> {
     const now = new Date()
-    const expiry = new Date(new Date(now).setDate(now.getDate() + 30))
+    const expiry = new Date(
+      new Date(now).setDate(now.getDate() + daysValid)
+    )
     const value = jwt.sign(
       {
         uid: uid,
