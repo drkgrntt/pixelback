@@ -4,6 +4,7 @@ import { useForm } from '@/hooks/useForm'
 import Card from '@/components/Card'
 import Input from '@/components/Input'
 import Button from '@/components/Button'
+import { useGiveFeedbackMutation } from '@/hooks/mutations/useGiveFeedbackMutation'
 
 enum FeedbackType {
   general,
@@ -23,11 +24,37 @@ const Feedback: NextPage<Props> = (props) => {
     details: '',
   }
   const formState = useForm(INITIAL_STATE)
+  const [giveFeedback] = useGiveFeedbackMutation()
 
   const handleSubmit = async (event: any, reset: Function) => {
     event.preventDefault()
-    console.log(formState)
-    setTimeout(() => reset(), 2000)
+    try {
+      const result = await giveFeedback({
+        variables: {
+          ...formState.values,
+          type: parseInt(formState.values.type),
+        },
+      })
+      if (result) {
+        formState.setValues({
+          ...INITIAL_STATE,
+          validation: 'Thank you for your feedback!',
+        })
+      } else {
+        formState.setValues({
+          ...formState.values,
+          validation:
+            'Something went wrong and we were not able to recieve your feedback. Please try again or come back later.',
+        })
+      }
+    } catch (err) {
+      console.warn(err)
+      formState.setValues({
+        ...formState.values,
+        validation: err.message,
+      })
+    }
+    reset()
   }
 
   return (
@@ -35,13 +62,6 @@ const Feedback: NextPage<Props> = (props) => {
       <h2>Feedback</h2>
       <Card>
         <form className={styles.form}>
-          {/* <select name="type">
-            <option value={FeedbackType.general}>General</option>
-            <option value={FeedbackType.bug}>Bug Report</option>
-            <option value={FeedbackType.feature}>
-              Feature Request
-            </option>
-          </select> */}
           <Input
             required
             name="type"
@@ -90,6 +110,9 @@ const Feedback: NextPage<Props> = (props) => {
             label="Using as much detail as you would like (more makes it easier for us to take action), describe the bug or feature."
             formState={formState}
           />
+          <span className={styles.validation}>
+            {formState.values.validation}
+          </span>
           <Button onClick={handleSubmit}>Submit</Button>
         </form>
       </Card>

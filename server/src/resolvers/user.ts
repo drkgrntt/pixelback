@@ -20,7 +20,12 @@ import { Rating } from '../entities/Rating'
 import { Subscription } from '../entities/Subscription'
 import { FavoriteStory } from '../entities/FavoriteStory'
 import { FavoriteGenre } from '../entities/FavoriteGenre'
-import { Context, PublishStatus, UserRole } from '../types'
+import {
+  Context,
+  FeedbackType,
+  PublishStatus,
+  UserRole,
+} from '../types'
 import { isAuth } from '../middleware/isAuth'
 import Mailer from '../utils/sendEmail'
 
@@ -317,5 +322,34 @@ export class UserResolver {
     })
 
     return me
+  }
+
+  @Mutation(() => Boolean)
+  async giveFeedback(
+    @Arg('type') type: FeedbackType,
+    @Arg('firstName') firstName: string,
+    @Arg('lastName') lastName: string,
+    @Arg('email') email: string,
+    @Arg('summary') summary: string,
+    @Arg('details') details: string
+  ): Promise<boolean> {
+    const mailer = new Mailer()
+    const subject = `${FeedbackType[type]} feedback from ${firstName} ${lastName}`
+    const variables = {
+      type: FeedbackType[type],
+      firstName,
+      lastName,
+      email,
+      summary,
+      details,
+    }
+    const result = await mailer.sendEmail(
+      process.env.GMAIL,
+      subject,
+      'feedback',
+      variables
+    )
+
+    return result
   }
 }

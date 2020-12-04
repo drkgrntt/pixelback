@@ -15,6 +15,12 @@ export interface Context {
   subscriptionLoader: ReturnType<typeof createSubscriptionLoader>
 }
 
+export enum FeedbackType {
+  general,
+  bug,
+  feature,
+}
+
 export enum UserRole {
   None,
   User,
