@@ -19,8 +19,12 @@ import { SubscriptionResolver } from './resolvers/subscription'
 import { createUserLoader } from './utils/createUserLoader'
 import { createStoryLoader } from './utils/createStoryLoader'
 import { createRatingLoader } from './utils/createRatingLoader'
+import { createCommentLoader } from './utils/createCommentLoader'
 import { createChapterLoader } from './utils/createChapterLoader'
 import { createSubscriptionLoader } from './utils/createSubscriptionLoader'
+import { createRatingIdsByStoryLoader } from './utils/createRatingIdsByStoryLoader'
+import { createChapterIdsByStoryLoader } from './utils/createChapterIdsByStoryLoader'
+import { createCommentIdsByStoryLoader } from './utils/createCommentIdsByStoryLoader'
 import { __prod__ } from './constants'
 
 const main = async () => {
@@ -75,9 +79,13 @@ const main = async () => {
         token,
         userLoader: createUserLoader(),
         storyLoader: createStoryLoader(),
-        chapterLoader: createChapterLoader(),
         ratingLoader: createRatingLoader(),
+        chapterLoader: createChapterLoader(),
+        commentLoader: createCommentLoader(),
         subscriptionLoader: createSubscriptionLoader(),
+        ratingIdsByStoryLoader: createRatingIdsByStoryLoader(),
+        chapterIdsByStoryLoader: createChapterIdsByStoryLoader(),
+        commentIdsByStoryLoader: createCommentIdsByStoryLoader(),
       }
     },
   })

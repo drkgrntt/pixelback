@@ -32,7 +32,7 @@ export class Chapter extends BaseEntity {
 
   @Field(() => User)
   @ManyToOne(() => User, (user) => user.chapters, {
-    onDelete: 'CASCADE'
+    onDelete: 'CASCADE',
   })
   author: User
 

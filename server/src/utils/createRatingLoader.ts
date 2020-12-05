@@ -3,24 +3,19 @@ import { In } from 'typeorm'
 import { Rating } from '../entities/Rating'
 
 export const createRatingLoader = () => {
-  return new DataLoader<
-    { storyId: string; chapterId?: string },
-    Rating
-  >(async (keys) => {
-    const storyIds = keys.map((key) => key.storyId)
-    const chapterIds = keys.map((key) => key.chapterId)
+  return new DataLoader<string, Rating>(async (ratingIds) => {
     const ratings = await Rating.find({
-      where: { storyId: In(storyIds), chapterId: In(chapterIds) },
-    })
-    const ratingIdToRating: Record<string, Rating> = {}
-    ratings.forEach((rating) => {
-      const key = `${rating.storyId}|${rating.chapterId}`
-      ratingIdToRating[key] = rating
+      where: {
+        id: In(ratingIds as string[]),
+      },
     })
 
-    const sortedRatings = keys.map(
-      (key) => ratingIdToRating[`${key.storyId}|${key.chapterId}`]
-    )
+    const ratingMap = ratings.reduce((map, rating) => {
+      map[rating.id] = rating
+      return map
+    }, {} as Record<string, Rating>)
+
+    const sortedRatings = ratingIds.map((id) => ratingMap[id])
 
     return sortedRatings
   })

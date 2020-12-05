@@ -55,11 +55,18 @@ export class StoryResolver {
   }
 
   @FieldResolver(() => [Rating])
-  async ratings(@Root() story: Story): Promise<Rating[]> {
-    return await Rating.find({
+  async ratings(
+    @Root() story: Story,
+    @Ctx() { ratingIdsByStoryLoader, ratingLoader }: Context
+  ): Promise<Rating[]> {
+    const ratingIds = await ratingIdsByStoryLoader.load({
       storyId: story.id,
-      chapterId: IsNull(),
+      exclusive: true,
     })
+    const ratings = (await ratingLoader.loadMany(
+      ratingIds
+    )) as Rating[]
+    return ratings
   }
 
   @FieldResolver(() => Int)
@@ -68,6 +75,8 @@ export class StoryResolver {
     @Ctx() { me }: Context
   ): Promise<1 | 2 | 3 | 4 | 5 | undefined> {
     if (!me) return
+    // Because of the specificity of this, I don't think
+    // using a dataloader would lighten this load at all
     const rating = await Rating.findOne({
       where: {
         storyId: story.id,
@@ -79,8 +88,18 @@ export class StoryResolver {
   }
 
   @FieldResolver(() => Float)
-  async score(@Root() story: Story): Promise<number> {
-    const allRatings = await Rating.find({ storyId: story.id })
+  async score(
+    @Root() story: Story,
+    @Ctx() { ratingIdsByStoryLoader, ratingLoader }: Context
+  ): Promise<number> {
+    const ratingIds = await ratingIdsByStoryLoader.load({
+      storyId: story.id,
+    })
+
+    const allRatings = (await ratingLoader.loadMany(
+      ratingIds
+    )) as Rating[]
+
     if (!allRatings.length) return 0
     const total: number = allRatings.reduce(
       (score, rating) => score + rating.score,
@@ -91,27 +110,47 @@ export class StoryResolver {
 
   @FieldResolver(() => [Chapter])
   async chapters(
-    @Ctx() { me }: Context,
+    @Ctx() { me, chapterIdsByStoryLoader, chapterLoader }: Context,
     @Root() story: Story
   ): Promise<Chapter[]> {
-    const query = {
-      where: [
-        {
-          storyId: story.id,
-          status: PublishStatus.Published,
-        },
-        {
-          storyId: story.id,
-          authorId: me?.id || IsNull(),
-        },
-      ],
+    if (
+      story.authorId !== me?.id &&
+      story.status !== PublishStatus.Published
+    ) {
+      return []
     }
-    return await Chapter.find(query)
+
+    const chapterIds = await chapterIdsByStoryLoader.load(story.id)
+    const chapters = (await chapterLoader.loadMany(
+      chapterIds
+    )) as Chapter[]
+
+    return chapters.filter((chapter) => {
+      return (
+        chapter.authorId === me?.id ||
+        chapter.status === PublishStatus.Published
+      )
+    })
   }
 
   @FieldResolver(() => [Comment])
-  async comments(@Root() story: Story): Promise<Comment[]> {
-    return await Comment.find({ storyId: story.id })
+  async comments(
+    @Root() story: Story,
+    @Ctx() { me, commentIdsByStoryLoader, commentLoader }: Context
+  ): Promise<Comment[]> {
+    if (
+      (!story.enableCommenting ||
+        story.status !== PublishStatus.Published) &&
+      story.authorId !== me?.id
+    ) {
+      return []
+    }
+
+    const commentIds = await commentIdsByStoryLoader.load(story.id)
+    const comments = (await commentLoader.loadMany(
+      commentIds
+    )) as Comment[]
+    return comments
   }
 
   @FieldResolver(() => [Genre])
@@ -140,7 +179,7 @@ export class StoryResolver {
       .toString()
     const foundStories = await getConnection().query(sql, [
       PublishStatus.Published,
-      take+1,
+      take + 1,
       skip,
     ])
     const stories = foundStories.slice(0, take)

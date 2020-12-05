@@ -1,26 +1,21 @@
 import DataLoader from 'dataloader'
-import { PublishStatus } from '../types'
+import { In } from 'typeorm'
 import { Chapter } from '../entities/Chapter'
 
 export const createChapterLoader = () => {
   return new DataLoader<string, Chapter>(async (chapterIds) => {
-    const query = {
+    const chapters = await Chapter.find({
       where: {
-        status: PublishStatus.Published,
+        id: In(chapterIds as string[]),
       },
-    }
-    const chapters = await Chapter.findByIds(
-      chapterIds as string[],
-      query
-    )
-    const chapterIdToChapter: Record<string, Chapter> = {}
-    chapters.forEach((chapter) => {
-      chapterIdToChapter[chapter.id] = chapter
     })
 
-    const sortedChapters = chapterIds.map(
-      (chapterId) => chapterIdToChapter[chapterId]
-    )
+    const chapterMap = chapters.reduce((map, chapter) => {
+      map[chapter.id] = chapter
+      return map
+    }, {} as Record<string, Chapter>)
+
+    const sortedChapters = chapterIds.map((id) => chapterMap[id])
 
     return sortedChapters
   })
