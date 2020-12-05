@@ -197,22 +197,17 @@ export class StoryResolver {
 
   @Query(() => Story, { nullable: true })
   async story(
-    @Ctx() { me }: Context,
+    @Ctx() { me, storyLoader }: Context,
     @Arg('id') id: string
   ): Promise<Story | undefined> {
-    const query = {
-      where: [
-        {
-          id,
-          authorId: me?.id || IsNull(),
-        },
-        {
-          id,
-          status: PublishStatus.Published,
-        },
-      ],
+    const story = await storyLoader.load(id)
+    if (
+      story.status !== PublishStatus.Published &&
+      story.authorId !== me?.id
+    ) {
+      return
     }
-    const story = Story.findOne(query)
+
     return story
   }
 
