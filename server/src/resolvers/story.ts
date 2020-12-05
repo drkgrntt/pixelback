@@ -125,12 +125,14 @@ export class StoryResolver {
       chapterIds
     )) as Chapter[]
 
-    return chapters.filter((chapter) => {
-      return (
-        chapter.authorId === me?.id ||
-        chapter.status === PublishStatus.Published
-      )
-    })
+    return chapters
+      .filter((chapter) => {
+        return (
+          chapter.authorId === me?.id ||
+          chapter.status === PublishStatus.Published
+        )
+      })
+      .sort((a, b) => a.number - b.number)
   }
 
   @FieldResolver(() => [Comment])
@@ -150,7 +152,9 @@ export class StoryResolver {
     const comments = (await commentLoader.loadMany(
       commentIds
     )) as Comment[]
-    return comments
+    return comments.sort((a, b) =>
+      a.createdAt > b.createdAt ? 1 : -1
+    )
   }
 
   @FieldResolver(() => [Genre])
