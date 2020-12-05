@@ -1,5 +1,6 @@
 import Error from 'next/error'
 import { NextPage } from 'next'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { ParsedUrlQuery } from 'querystring'
 import styles from './[storyId].module.scss'
@@ -94,9 +95,14 @@ const StoryPage: NextPage<Props> = ({ query }) => {
   return (
     <div className={styles.story}>
       <h2>{story.title}</h2>
+      <Link href={`/profile/${story.author.id}`}>
+        <a>{story.author.penName}</a>
+      </Link>
       {story.body}
       <hr />
-      <p>{story.author.penName}</p>
+      <Link href={`/profile/${story.author.id}`}>
+        <a>{story.author.penName}</a>
+      </Link>
       <Card>
         <StarScale
           allowHover={!!meResult.data?.me}

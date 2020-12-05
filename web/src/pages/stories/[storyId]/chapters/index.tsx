@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { NextPage } from 'next'
 import { ParsedUrlQuery } from 'querystring'
 import Error from 'next/error'
+import Link from 'next/link'
 import { useStoryQuery } from '@/queries/useStoryQuery'
 import Loader from '@/components/Loader'
 import styles from './Chapters.module.scss'
@@ -84,10 +85,15 @@ const Chapters: NextPage<Props> = ({ query }) => {
   return (
     <div>
       <h2>{story.title}</h2>
-      {story.summary}
+      <Link href={`/profile/${story.author.id}`}>
+        <a>{story.author.penName}</a>
+      </Link>
+      <p>{story.summary}</p>
       <Card>
         <ChapterList story={story} />
-        <p>{story.author.penName}</p>
+        <Link href={`/profile/${story.author.id}`}>
+          <a>{story.author.penName}</a>
+        </Link>
       </Card>
       <Card>
         <StarScale

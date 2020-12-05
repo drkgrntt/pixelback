@@ -105,10 +105,16 @@ const ChapterPage: NextPage<Props> = ({ query }) => {
   return (
     <div className={styles.chapter}>
       <h2>{story.title}</h2>
+      <Link href={`/profile/${story.author.id}`}>
+        <a>{story.author.penName}</a>
+      </Link>
       {renderBack()}
       <hr />
       <h3>{`${chapter.number}. ${chapter.title}`}</h3>
       {chapter.body}
+      <Link href={`/profile/${story.author.id}`}>
+        <a>{story.author.penName}</a>
+      </Link>
       {renderBack()}
       <div className={styles.prevNext}>
         {renderPrev()}
