@@ -154,12 +154,13 @@ export class StoryResolver {
   }
 
   @FieldResolver(() => [Genre])
-  async genres(@Root() story: Story): Promise<Genre[]> {
-    const storyGenres = await StoryGenre.find({
-      where: { storyId: story.id },
-      relations: ['genre'],
-    })
-    return storyGenres.map((storyGenre) => storyGenre.genre)
+  async genres(
+    @Root() story: Story,
+    @Ctx() { genreLoader, genreIdsByStoryLoader }: Context
+  ): Promise<Genre[]> {
+    const genreIds = await genreIdsByStoryLoader.load(story.id)
+    const genres = (await genreLoader.loadMany(genreIds)) as Genre[]
+    return genres
   }
 
   @FieldResolver(() => Int)

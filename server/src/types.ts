@@ -1,11 +1,13 @@
 import { User } from './entities/User'
-import { createRatingIdsByStoryLoader } from './utils/createRatingIdsByStoryLoader'
 import { createChapterIdsByStoryLoader } from './utils/createChapterIdsByStoryLoader'
 import { createCommentIdsByStoryLoader } from './utils/createCommentIdsByStoryLoader'
+import { createRatingIdsByStoryLoader } from './utils/createRatingIdsByStoryLoader'
+import { createGenreIdsByStoryLoader } from './utils/createGenreIdsByStoryLoader'
 import { createSubscriptionLoader } from './utils/createSubscriptionLoader'
 import { createChapterLoader } from './utils/createChapterLoader'
 import { createCommentLoader } from './utils/createCommentLoader'
 import { createRatingLoader } from './utils/createRatingLoader'
+import { createGenreLoader } from './utils/createGenreLoader'
 import { createStoryLoader } from './utils/createStoryLoader'
 import { createUserLoader } from './utils/createUserLoader'
 
@@ -20,6 +22,10 @@ export interface Context {
   commentIdsByStoryLoader: ReturnType<
     typeof createCommentIdsByStoryLoader
   >
+  genreIdsByStoryLoader: ReturnType<
+    typeof createGenreIdsByStoryLoader
+  >
+  genreLoader: ReturnType<typeof createGenreLoader>
   chapterLoader: ReturnType<typeof createChapterLoader>
   commentLoader: ReturnType<typeof createCommentLoader>
   ratingIdsByStoryLoader: ReturnType<

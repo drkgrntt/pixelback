@@ -17,11 +17,13 @@ import { ChapterResolver } from './resolvers/chapter'
 import { CommentResolver } from './resolvers/comment'
 import { SubscriptionResolver } from './resolvers/subscription'
 import { createUserLoader } from './utils/createUserLoader'
+import { createGenreLoader } from './utils/createGenreLoader'
 import { createStoryLoader } from './utils/createStoryLoader'
 import { createRatingLoader } from './utils/createRatingLoader'
 import { createCommentLoader } from './utils/createCommentLoader'
 import { createChapterLoader } from './utils/createChapterLoader'
 import { createSubscriptionLoader } from './utils/createSubscriptionLoader'
+import { createGenreIdsByStoryLoader } from './utils/createGenreIdsByStoryLoader'
 import { createRatingIdsByStoryLoader } from './utils/createRatingIdsByStoryLoader'
 import { createChapterIdsByStoryLoader } from './utils/createChapterIdsByStoryLoader'
 import { createCommentIdsByStoryLoader } from './utils/createCommentIdsByStoryLoader'
@@ -79,10 +81,12 @@ const main = async () => {
         token,
         userLoader: createUserLoader(),
         storyLoader: createStoryLoader(),
+        genreLoader: createGenreLoader(),
         ratingLoader: createRatingLoader(),
         chapterLoader: createChapterLoader(),
         commentLoader: createCommentLoader(),
         subscriptionLoader: createSubscriptionLoader(),
+        genreIdsByStoryLoader: createGenreIdsByStoryLoader(),
         ratingIdsByStoryLoader: createRatingIdsByStoryLoader(),
         chapterIdsByStoryLoader: createChapterIdsByStoryLoader(),
         commentIdsByStoryLoader: createCommentIdsByStoryLoader(),
