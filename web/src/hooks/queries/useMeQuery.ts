@@ -28,6 +28,26 @@ export const meQuery = gql`
         id
         level
       }
+      comments {
+        id
+        author {
+          id
+        }
+        body
+        story {
+          id
+          title
+        }
+        chapter {
+          id
+          title
+          story {
+            id
+          }
+        }
+        createdAt
+        updatedAt
+      }
     }
   }
   ${UserInfo}

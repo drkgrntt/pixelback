@@ -12,7 +12,7 @@ import Loader from '@/components/Loader'
 import StoryList from '@/components/StoryList'
 import PasswordResetForm from '@/components/PasswordResetForm'
 import { useMeQuery } from '@/queries/useMeQuery'
-import { Story, User } from '@/types'
+import { Comment, Story, User } from '@/types'
 import { useRemoveFavoriteStoryMutation } from '@/mutations/useRemoveFavoriteStoryMutation'
 import Modal from '@/components/Modal'
 import { useExchangeTokenMutation } from '@/mutations/useExchangeTokenMutation'
@@ -71,6 +71,36 @@ const Profile: NextPage<Props> = ({ query }) => {
           <Link href={`/profile/${subscription.subscribedTo.id}`}>
             <a>{subscription.subscribedTo.penName}</a>
           </Link>
+        </li>
+      )
+    })
+  }
+
+  const renderEdited = (comment: Comment) => {
+    const createdAt = new Date(comment.createdAt)
+    const updatedAt = new Date(comment.updatedAt)
+    if (createdAt.toISOString() === updatedAt.toISOString()) return
+
+    return <p>(edited {updatedAt.toLocaleDateString()})</p>
+  }
+
+  const renderComments = () => {
+    return me.comments.map((comment) => {
+      let link = '/stories'
+      if (comment.story) {
+        link = `${link}/${comment.story?.id}`
+      } else {
+        link = `${link}/${comment.chapter?.story.id}/chapters/${comment.chapter?.id}`
+      }
+      return (
+        <li key={comment.id}>
+          <Link href={link}>
+            <a>{comment.story?.title || comment.chapter?.title}</a>
+          </Link>
+          <p>{comment.body}</p>
+          <p>{new Date(comment.createdAt).toLocaleDateString()}</p>
+          {renderEdited(comment)}
+          <br />
         </li>
       )
     })
@@ -137,6 +167,12 @@ const Profile: NextPage<Props> = ({ query }) => {
       {/* <Card>
         <h3>Favorite Genres</h3>
       </Card> */}
+
+      <Card>
+        <h3>Comments</h3>
+        <hr />
+        <ul>{renderComments()}</ul>
+      </Card>
     </div>
   )
 }

@@ -30,6 +30,7 @@ export interface User {
   ratings: Rating[]
   subscriptions: Subscription[]
   subscribers: Subscription[]
+  comments: Comment[]
   createdAt: Date
   updatedAt: Date
 }

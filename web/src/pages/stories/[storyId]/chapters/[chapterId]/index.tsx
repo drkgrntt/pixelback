@@ -30,13 +30,14 @@ const ChapterPage: NextPage<Props> = ({ query }) => {
     variables: chapterVariables,
     skip: !query.chapterId,
   })
+
+  const story: Story = storyResult.data?.story
+  const chapter: Chapter = chapterResult.data?.chapter
+
   const meResult = useMeQuery()
   const [rate] = useRateMutation()
 
-  useLogRead(
-    storyResult.data?.story.id,
-    chapterResult.data?.chapter.id
-  )
+  useLogRead(query.storyId as string, query.chapterId as string)
 
   // In order to get rateStatus, which is based on user data
   // This should be fixed when the user state is available on ssr
@@ -45,15 +46,15 @@ const ChapterPage: NextPage<Props> = ({ query }) => {
   }, [meResult.data])
 
   switch (true) {
-    case !!storyResult.error || !!chapterResult.error:
+    case !!storyResult.error ||
+      !!chapterResult.error ||
+      !story ||
+      !chapter:
       return <Error statusCode={404} />
 
-    case !!storyResult.loading || !!chapterResult.loading:
+    case storyResult.loading || chapterResult.loading:
       return <Loader />
   }
-
-  const { story }: { story: Story } = storyResult.data
-  const { chapter }: { chapter: Chapter } = chapterResult.data
 
   const renderPrev = () => {
     if (!chapter.previous) return <div /> // Placeholder so "next" will float right

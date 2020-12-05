@@ -28,6 +28,7 @@ import {
 } from '../types'
 import { isAuth } from '../middleware/isAuth'
 import Mailer from '../utils/sendEmail'
+import { Comment } from '../entities/Comment'
 
 @ObjectType()
 class UserResponse {
@@ -93,6 +94,11 @@ export class UserResolver {
   @FieldResolver(() => [Subscription])
   async subscribers(@Root() user: User): Promise<Subscription[]> {
     return await Subscription.find({ subscribedToId: user.id })
+  }
+
+  @FieldResolver(() => [Comment])
+  async comments(@Root() user: User): Promise<Comment[]> {
+    return await Comment.find({ authorId: user.id })
   }
 
   @Query(() => User, { nullable: true })
