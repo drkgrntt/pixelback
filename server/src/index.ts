@@ -23,7 +23,9 @@ import { createRatingLoader } from './utils/createRatingLoader'
 import { createCommentLoader } from './utils/createCommentLoader'
 import { createChapterLoader } from './utils/createChapterLoader'
 import { createSubscriptionLoader } from './utils/createSubscriptionLoader'
+import { createStoryIdsByUserLoader } from './utils/createStoryIdsByUserLoader'
 import { createGenreIdsByStoryLoader } from './utils/createGenreIdsByStoryLoader'
+import { createRatingIdsByUserLoader } from './utils/createRatingIdsByUserLoader'
 import { createRatingIdsByStoryLoader } from './utils/createRatingIdsByStoryLoader'
 import { createChapterIdsByStoryLoader } from './utils/createChapterIdsByStoryLoader'
 import { createCommentIdsByStoryLoader } from './utils/createCommentIdsByStoryLoader'
@@ -88,7 +90,9 @@ const main = async () => {
         chapterLoader: createChapterLoader(),
         commentLoader: createCommentLoader(),
         subscriptionLoader: createSubscriptionLoader(),
+        storyIdsByUserLoader: createStoryIdsByUserLoader(),
         genreIdsByStoryLoader: createGenreIdsByStoryLoader(),
+        ratingIdsByUserLoader: createRatingIdsByUserLoader(),
         ratingIdsByStoryLoader: createRatingIdsByStoryLoader(),
         chapterIdsByStoryLoader: createChapterIdsByStoryLoader(),
         commentIdsByStoryLoader: createCommentIdsByStoryLoader(),

@@ -1,6 +1,5 @@
 import DataLoader from 'dataloader'
 import { In } from 'typeorm'
-import { PublishStatus } from '../types'
 import { Story } from '../entities/Story'
 
 export const createStoryLoader = () => {
@@ -8,7 +7,6 @@ export const createStoryLoader = () => {
     const stories = await Story.find({
       where: {
         id: In(storyIds as string[]),
-        status: PublishStatus.Published,
       },
     })
 

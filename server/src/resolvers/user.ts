@@ -48,24 +48,33 @@ export class UserResolver {
   }
 
   @FieldResolver(() => [Rating])
-  async ratings(@Root() user: User): Promise<Rating[]> {
-    return await Rating.find({ readerId: user.id })
+  async ratings(
+    @Root() user: User,
+    @Ctx() { ratingLoader, ratingIdsByUserLoader }: Context
+  ): Promise<Rating[]> {
+    const ratingIds = await ratingIdsByUserLoader.load(user.id)
+    const ratings = (await ratingLoader.loadMany(
+      ratingIds
+    )) as Rating[]
+    return ratings
   }
 
   @FieldResolver(() => [Story])
   async stories(
-    @Ctx() { me }: Context,
+    @Ctx() { me, storyLoader, storyIdsByUserLoader }: Context,
     @Root() user: User
   ): Promise<Story[]> {
-    const query: Record<string, any> = {
-      where: {
-        authorId: user.id,
-      },
-    }
-    if (user.id !== me?.id) {
-      query.where.status = PublishStatus.Published
-    }
-    return await Story.find(query)
+    const storyIds = await storyIdsByUserLoader.load(user.id)
+    const stories = (await storyLoader.loadMany(storyIds)) as Story[]
+
+    return stories
+      .filter((story) => {
+        return (
+          story.status === PublishStatus.Published ||
+          story.authorId === me?.id
+        )
+      })
+      .sort((a, b) => (a.createdAt > b.createdAt ? 1 : -1))
   }
 
   @FieldResolver(() => [Story])
