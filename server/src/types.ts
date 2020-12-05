@@ -4,6 +4,8 @@ import { createRatingIdsByChapterLoader } from './utils/createRatingIdsByChapter
 import { createChapterIdsByStoryLoader } from './utils/createChapterIdsByStoryLoader'
 import { createCommentIdsByStoryLoader } from './utils/createCommentIdsByStoryLoader'
 import { createRatingIdsByStoryLoader } from './utils/createRatingIdsByStoryLoader'
+import { createFavoriteStoryIdsLoader } from './utils/createFavoriteStoryIdsLoader'
+import { createFavoriteGenreIdsLoader } from './utils/createFavoriteGenreIdsLoader'
 import { createRatingIdsByUserLoader } from './utils/createRatingIdsByUserLoader'
 import { createGenreIdsByStoryLoader } from './utils/createGenreIdsByStoryLoader'
 import { createStoryIdsByUserLoader } from './utils/createStoryIdsByUserLoader'
@@ -31,6 +33,12 @@ export interface Context {
   >
   genreIdsByStoryLoader: ReturnType<
     typeof createGenreIdsByStoryLoader
+  >
+  favoriteStoryIdsLoader: ReturnType<
+    typeof createFavoriteStoryIdsLoader
+  >
+  favoriteGenreIdsLoader: ReturnType<
+    typeof createFavoriteGenreIdsLoader
   >
   storyIdsByUserLoader: ReturnType<typeof createStoryIdsByUserLoader>
   genreLoader: ReturnType<typeof createGenreLoader>

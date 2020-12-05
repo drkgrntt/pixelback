@@ -26,6 +26,8 @@ import { createSubscriptionLoader } from './utils/createSubscriptionLoader'
 import { createStoryIdsByUserLoader } from './utils/createStoryIdsByUserLoader'
 import { createGenreIdsByStoryLoader } from './utils/createGenreIdsByStoryLoader'
 import { createRatingIdsByUserLoader } from './utils/createRatingIdsByUserLoader'
+import { createFavoriteGenreIdsLoader } from './utils/createFavoriteGenreIdsLoader'
+import { createFavoriteStoryIdsLoader } from './utils/createFavoriteStoryIdsLoader'
 import { createRatingIdsByStoryLoader } from './utils/createRatingIdsByStoryLoader'
 import { createChapterIdsByStoryLoader } from './utils/createChapterIdsByStoryLoader'
 import { createCommentIdsByStoryLoader } from './utils/createCommentIdsByStoryLoader'
@@ -94,6 +96,8 @@ const main = async () => {
         genreIdsByStoryLoader: createGenreIdsByStoryLoader(),
         ratingIdsByUserLoader: createRatingIdsByUserLoader(),
         ratingIdsByStoryLoader: createRatingIdsByStoryLoader(),
+        favoriteStoryIdsLoader: createFavoriteStoryIdsLoader(),
+        favoriteGenreIdsLoader: createFavoriteGenreIdsLoader(),
         chapterIdsByStoryLoader: createChapterIdsByStoryLoader(),
         commentIdsByStoryLoader: createCommentIdsByStoryLoader(),
         ratingIdsByChapterLoader: createRatingIdsByChapterLoader(),

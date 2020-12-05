@@ -78,21 +78,32 @@ export class UserResolver {
   }
 
   @FieldResolver(() => [Story])
-  async favoriteStories(@Root() user: User): Promise<Story[]> {
-    const favoriteStories = await FavoriteStory.find({
-      where: { userId: user.id },
-      relations: ['story'],
-    })
-    return favoriteStories.map((favoriteStory) => favoriteStory.story)
+  async favoriteStories(
+    @Root() user: User,
+    @Ctx() { me, storyLoader, favoriteStoryIdsLoader }: Context
+  ): Promise<Story[]> {
+    const storyIds = await favoriteStoryIdsLoader.load(user.id)
+    const stories = (await storyLoader.loadMany(storyIds)) as Story[]
+
+    return stories
+      .filter((story) => {
+        return (
+          story.status === PublishStatus.Published ||
+          story.authorId === me?.id
+        )
+      })
+      .sort((a, b) => (a.createdAt > b.createdAt ? 1 : -1))
   }
 
   @FieldResolver(() => [Genre])
-  async favoriteGenres(@Root() user: User): Promise<Genre[]> {
-    const favoriteGenres = await FavoriteGenre.find({
-      where: { userId: user.id },
-      relations: ['genre'],
-    })
-    return favoriteGenres.map((favoriteGenre) => favoriteGenre.genre)
+  async favoriteGenres(
+    @Root() user: User,
+    @Ctx() { genreLoader, favoriteGenreIdsLoader }: Context
+  ): Promise<Genre[]> {
+    const genreIds = await favoriteGenreIdsLoader.load(user.id)
+    const genres = (await genreLoader.loadMany(genreIds)) as Genre[]
+
+    return genres
   }
 
   @FieldResolver(() => [Subscription])
