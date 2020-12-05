@@ -2,24 +2,24 @@ import DataLoader from 'dataloader'
 import { Comment } from '../entities/Comment'
 import { In } from 'typeorm'
 
-export const createCommentIdsByStoryLoader = () => {
-  return new DataLoader<string, string[]>(async (storyIds) => {
+export const createCommentIdsByChapterLoader = () => {
+  return new DataLoader<string, string[]>(async (chapterIds) => {
     const comments = await Comment.find({
-      select: ['id', 'storyId'],
+      select: ['id', 'chapterId'],
       where: {
-        storyId: In(storyIds as string[]),
+        chapterId: In(chapterIds as string[]),
       },
     })
 
-    // Essentially is of type Record<storyId: commentId[]>
+    // Essentially is of type Record<chapterId: commentId[]>
     const commentIdsMap = comments.reduce((map, comment) => {
-      map[comment.storyId] = comments
-        .filter((c) => comment.storyId === c.storyId)
+      map[comment.chapterId] = comments
+        .filter((c) => comment.chapterId === c.chapterId)
         .map((c) => c.id)
       return map
     }, {} as Record<string, string[]>)
 
-    const sortedCommentIds = storyIds.map(
+    const sortedCommentIds = chapterIds.map(
       (id) => commentIdsMap[id] || []
     )
 

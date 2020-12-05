@@ -39,8 +39,15 @@ export class ChapterResolver {
   }
 
   @FieldResolver(() => [Rating])
-  async ratings(@Root() chapter: Chapter): Promise<Rating[]> {
-    return await Rating.find({ chapterId: chapter.id })
+  async ratings(
+    @Root() chapter: Chapter,
+    @Ctx() { ratingLoader, ratingIdsByChapterLoader }: Context
+  ): Promise<Rating[]> {
+    const ratingIds = await ratingIdsByChapterLoader.load(chapter.id)
+    const ratings = (await ratingLoader.loadMany(
+      ratingIds
+    )) as Rating[]
+    return ratings
   }
 
   @FieldResolver(() => Int)
@@ -49,6 +56,8 @@ export class ChapterResolver {
     @Ctx() { me }: Context
   ): Promise<1 | 2 | 3 | 4 | 5 | undefined> {
     if (!me) return
+    // Because of the specificity of this, I don't think
+    // using a dataloader would lighten this load at all
     const rating = await Rating.findOne({
       where: {
         storyId: chapter.storyId,
@@ -60,13 +69,40 @@ export class ChapterResolver {
   }
 
   @FieldResolver(() => [Comment])
-  async comments(@Root() chapter: Chapter): Promise<Comment[]> {
-    return await Comment.find({ chapterId: chapter.id })
+  async comments(
+    @Root() chapter: Chapter,
+    @Ctx() { me, commentLoader, commentIdsByChapterLoader }: Context
+  ): Promise<Comment[]> {
+    if (
+      (!chapter.enableCommenting ||
+        chapter.status !== PublishStatus.Published) &&
+      chapter.authorId !== me?.id
+    ) {
+      return []
+    }
+
+    const commentIds = await commentIdsByChapterLoader.load(
+      chapter.id
+    )
+    const comments = (await commentLoader.loadMany(
+      commentIds
+    )) as Comment[]
+    return comments.sort((a, b) =>
+      a.createdAt > b.createdAt ? 1 : -1
+    )
   }
 
   @FieldResolver(() => Float)
-  async score(@Root() chapter: Chapter): Promise<number> {
-    const allRatings = await Rating.find({ chapterId: chapter.id })
+  async score(
+    @Root() chapter: Chapter,
+    @Ctx() { ratingLoader, ratingIdsByChapterLoader }: Context
+  ): Promise<number> {
+    const ratingIds = await ratingIdsByChapterLoader.load(chapter.id)
+
+    const allRatings = (await ratingLoader.loadMany(
+      ratingIds
+    )) as Rating[]
+
     if (!allRatings.length) return 0
     const total: number = allRatings.reduce(
       (score, rating) => score + rating.score,
@@ -80,6 +116,7 @@ export class ChapterResolver {
     @Ctx() { me }: Context,
     @Root() chapter: Chapter
   ): Promise<Chapter | undefined> {
+    // Not sure how I could do this with dataloaders
     const query = {
       where: [
         {
@@ -103,6 +140,7 @@ export class ChapterResolver {
     @Ctx() { me }: Context,
     @Root() chapter: Chapter
   ): Promise<Chapter | undefined> {
+    // Not sure how I could do this with dataloaders
     const query = {
       where: [
         {
@@ -129,41 +167,35 @@ export class ChapterResolver {
   @Query(() => [Chapter])
   async chapters(
     @Arg('storyId') storyId: string,
-    @Ctx() { me }: Context
+    @Ctx() { me, chapterIdsByStoryLoader, chapterLoader }: Context
   ): Promise<Chapter[]> {
-    const query = {
-      where: [
-        {
-          storyId,
-          status: PublishStatus.Published,
-        },
-        {
-          storyId,
-          authorId: me?.id || IsNull(),
-        },
-      ],
-    }
-    return await Chapter.find(query)
+    const chapterIds = await chapterIdsByStoryLoader.load(storyId)
+    const chapters = (await chapterLoader.loadMany(
+      chapterIds
+    )) as Chapter[]
+
+    return chapters
+      .filter((chapter) => {
+        return (
+          chapter.status === PublishStatus.Published ||
+          chapter.authorId === me?.id
+        )
+      })
+      .sort((a, b) => a.number - b.number)
   }
 
   @Query(() => Chapter, { nullable: true })
   async chapter(
-    @Ctx() { me }: Context,
+    @Ctx() { me, chapterLoader }: Context,
     @Arg('id') id: string
   ): Promise<Chapter | undefined> {
-    const query = {
-      where: [
-        {
-          id,
-          status: PublishStatus.Published,
-        },
-        {
-          id,
-          authorId: me?.id || IsNull(),
-        },
-      ],
+    const chapter = await chapterLoader.load(id)
+    if (
+      chapter?.status !== PublishStatus.Published ||
+      chapter.authorId !== me?.id
+    ) {
+      return
     }
-    const chapter = Chapter.findOne(query)
     return chapter
   }
 

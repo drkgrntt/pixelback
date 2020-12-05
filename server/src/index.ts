@@ -27,6 +27,8 @@ import { createGenreIdsByStoryLoader } from './utils/createGenreIdsByStoryLoader
 import { createRatingIdsByStoryLoader } from './utils/createRatingIdsByStoryLoader'
 import { createChapterIdsByStoryLoader } from './utils/createChapterIdsByStoryLoader'
 import { createCommentIdsByStoryLoader } from './utils/createCommentIdsByStoryLoader'
+import { createRatingIdsByChapterLoader } from './utils/createRatingIdsByChapterLoader'
+import { createCommentIdsByChapterLoader } from './utils/createCommentIdsByChapterLoader'
 import { __prod__ } from './constants'
 
 const main = async () => {
@@ -90,6 +92,8 @@ const main = async () => {
         ratingIdsByStoryLoader: createRatingIdsByStoryLoader(),
         chapterIdsByStoryLoader: createChapterIdsByStoryLoader(),
         commentIdsByStoryLoader: createCommentIdsByStoryLoader(),
+        ratingIdsByChapterLoader: createRatingIdsByChapterLoader(),
+        commentIdsByChapterLoader: createCommentIdsByChapterLoader(),
       }
     },
   })
