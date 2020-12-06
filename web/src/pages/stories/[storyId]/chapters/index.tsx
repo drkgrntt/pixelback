@@ -8,13 +8,14 @@ import Loader from '@/components/Loader'
 import styles from './Chapters.module.scss'
 import ChapterList from '@/components/ChapterList'
 import Card from '@/components/Card'
+import Head from '@/components/Head'
 import Button from '@/components/Button'
 import StarScale from '@/components/StarScale'
 import { withApollo } from '@/utils/withApollo'
 import { useMeQuery } from '@/queries/useMeQuery'
 import { useAddFavoriteStoryMutation } from '@/mutations/useAddFavoriteStoryMutation'
 import { useRateMutation } from '@/mutations/useRateMutation'
-import { Story } from '@/types'
+import { Genre, Story } from '@/types'
 
 interface Props {
   query: ParsedUrlQuery
@@ -84,6 +85,17 @@ const Chapters: NextPage<Props> = ({ query }) => {
 
   return (
     <div>
+      <Head
+        title={`${story.title} | Pixelback`}
+        description={story.summary}
+        keywords={story.genres
+          .reduce(
+            (keywords: string, genre: Genre) =>
+              `${keywords}${genre.name}, `,
+            ''
+          )
+          .slice(0, -2)}
+      />
       <h2>{story.title}</h2>
       <Link href={`/profile/${story.author.id}`}>
         <a>{story.author.penName}</a>

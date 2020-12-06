@@ -7,10 +7,11 @@ import { useStoryQuery } from '@/queries/useStoryQuery'
 import { useChapterQuery } from '@/queries/useChapterQuery'
 import styles from './[chapterId].module.scss'
 import Link from 'next/link'
-import { Chapter, Story } from '@/types'
+import { Chapter, Story, Genre } from '@/types'
 import { withApollo } from '@/utils/withApollo'
 import { useLogRead } from '@/hooks/useLogRead'
 import StarScale from '@/components/StarScale'
+import Head from '@/components/Head'
 import { useMeQuery } from '@/queries/useMeQuery'
 import { useRateMutation } from '@/mutations/useRateMutation'
 import Comments from '@/components/Comments'
@@ -105,6 +106,17 @@ const ChapterPage: NextPage<Props> = ({ query }) => {
 
   return (
     <div className={styles.chapter}>
+      <Head
+        title={`${chapter.number}. ${chapter.title} | ${story.title} | Pixelback`}
+        description={chapter.summary}
+        keywords={story.genres
+          .reduce(
+            (keywords: string, genre: Genre) =>
+              `${keywords}${genre.name}, `,
+            ''
+          )
+          .slice(0, -2)}
+      />
       <h2>{story.title}</h2>
       <Link href={`/profile/${story.author.id}`}>
         <a>{story.author.penName}</a>

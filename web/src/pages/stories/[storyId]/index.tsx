@@ -14,9 +14,10 @@ import { useLogRead } from '@/hooks/useLogRead'
 import { useMeQuery } from '@/queries/useMeQuery'
 import { useAddFavoriteStoryMutation } from '@/mutations/useAddFavoriteStoryMutation'
 import { useRateMutation } from '@/mutations/useRateMutation'
-import { Story } from '@/types'
+import { Genre, Story } from '@/types'
 import StarScale from '@/components/StarScale'
 import Comments from '@/components/Comments'
+import Head from '@/components/Head'
 
 interface Props {
   query: ParsedUrlQuery
@@ -94,6 +95,18 @@ const StoryPage: NextPage<Props> = ({ query }) => {
 
   return (
     <div className={styles.story}>
+      <Head
+        title={`${story.title} | Pixelback`}
+        description={story.summary}
+        keywords={story.genres
+          .reduce(
+            (keywords: string, genre: Genre) =>
+              `${keywords}${genre.name}, `,
+            ''
+          )
+          .slice(0, -2)}
+      />
+
       <h2>{story.title}</h2>
       <Link href={`/profile/${story.author.id}`}>
         <a>{story.author.penName}</a>
