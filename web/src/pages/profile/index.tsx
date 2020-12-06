@@ -33,7 +33,7 @@ const Profile: NextPage<Props> = ({ query }) => {
   useEffect(() => {
     setInitialized(true)
   }, [setInitialized])
-  const [logoutEverywhere] = useLogoutEverywhereMutation()
+  const [logoutEverywhere, logoutData] = useLogoutEverywhereMutation()
   const [removeFavoriteStory] = useRemoveFavoriteStoryMutation()
   const { loading, data } = useMeQuery()
   const me: User = data?.me
@@ -124,6 +124,10 @@ const Profile: NextPage<Props> = ({ query }) => {
         >
           Discard
         </Button>
+        <p>
+          {logoutData?.data?.logoutEverywhere?.value &&
+            'All tokens have now been discarded. Your current session is the only remaining valid session.'}
+        </p>
       </Card>
 
       <Card>
