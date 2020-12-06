@@ -42,6 +42,7 @@ export class User extends BaseEntity {
 
   @Field()
   @Column()
+  @Index()
   penName: string
 
   @OneToMany(() => Token, (token) => token.user)
