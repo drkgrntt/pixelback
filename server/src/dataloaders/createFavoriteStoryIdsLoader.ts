@@ -16,7 +16,7 @@ export const createFavoriteStoryIdsLoader = () => {
       (map, favoriteStory) => {
         map[favoriteStory.userId] = favoriteStories
           .filter((fs) => favoriteStory.userId === fs.userId)
-          .map((fs) => fs.userId)
+          .map((fs) => fs.storyId)
         return map
       },
       {} as Record<string, string[]>
