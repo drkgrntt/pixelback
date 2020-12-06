@@ -7,6 +7,7 @@ import {
   PrimaryColumn,
   ManyToOne,
   Unique,
+  Index,
 } from 'typeorm'
 import { Story } from './Story'
 import { Genre } from './Genre'
@@ -15,21 +16,24 @@ import { Genre } from './Genre'
 @Unique(['storyId', 'genreId'])
 export class StoryGenre extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
+  @Index()
   id!: string
 
   @PrimaryColumn()
+  @Index()
   storyId: string
 
   @ManyToOne(() => Story, (story) => story.storyGenre, {
-    onDelete: "CASCADE"
+    onDelete: 'CASCADE',
   })
   story: Story
 
   @PrimaryColumn()
+  @Index()
   genreId: string
 
   @ManyToOne(() => Genre, (genre) => genre.storyGenre, {
-    onDelete: "CASCADE"
+    onDelete: 'CASCADE',
   })
   genre: Genre
 

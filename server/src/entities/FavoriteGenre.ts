@@ -7,6 +7,7 @@ import {
   PrimaryColumn,
   ManyToOne,
   Unique,
+  Index,
 } from 'typeorm'
 import { Genre } from './Genre'
 import { User } from './User'
@@ -15,21 +16,24 @@ import { User } from './User'
 @Unique(['genreId', 'userId'])
 export class FavoriteGenre extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
+  @Index()
   id!: string
 
   @PrimaryColumn()
+  @Index()
   genreId: string
 
   @ManyToOne(() => Genre, (genre) => genre.favorited, {
-    onDelete: "CASCADE"
+    onDelete: 'CASCADE',
   })
   genre: Genre
 
   @PrimaryColumn()
+  @Index()
   userId: string
 
   @ManyToOne(() => User, (user) => user.favoriteStories, {
-    onDelete: "CASCADE"
+    onDelete: 'CASCADE',
   })
   user: User
 

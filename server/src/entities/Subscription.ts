@@ -7,6 +7,7 @@ import {
   ManyToOne,
   BaseEntity,
   Unique,
+  Index,
 } from 'typeorm'
 import { ObjectType, Field, Int } from 'type-graphql'
 import { SubLevel } from '../types'
@@ -18,9 +19,11 @@ import { User } from './User'
 export class Subscription extends BaseEntity {
   @Field()
   @PrimaryGeneratedColumn('uuid')
+  @Index()
   id!: string
 
   @Column()
+  @Index()
   subscriberId: string
 
   @Field(() => User)
@@ -30,6 +33,7 @@ export class Subscription extends BaseEntity {
   subscriber: User
 
   @Column()
+  @Index()
   subscribedToId: string
 
   @Field(() => User)

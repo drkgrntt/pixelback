@@ -7,6 +7,7 @@ import {
   UpdateDateColumn,
   BaseEntity,
   OneToMany,
+  Index,
 } from 'typeorm'
 import { FavoriteGenre } from './FavoriteGenre'
 import { StoryGenre } from './StoryGenre'
@@ -15,17 +16,22 @@ import { StoryGenre } from './StoryGenre'
 @ObjectType()
 export class Genre extends BaseEntity {
   @Field()
+  @Index()
   @PrimaryGeneratedColumn('uuid')
   id!: string
 
   @Field()
   @Column({ unique: true })
+  @Index()
   name: string
 
   @OneToMany(() => StoryGenre, (storyGenre) => storyGenre.genre)
   storyGenre: StoryGenre
 
-  @OneToMany(() => FavoriteGenre, (favoriteGenre) => favoriteGenre.genre)
+  @OneToMany(
+    () => FavoriteGenre,
+    (favoriteGenre) => favoriteGenre.genre
+  )
   favorited: FavoriteGenre[]
 
   @CreateDateColumn()

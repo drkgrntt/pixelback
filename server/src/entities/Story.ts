@@ -9,6 +9,7 @@ import {
   OneToMany,
   BeforeInsert,
   BeforeUpdate,
+  Index,
 } from 'typeorm'
 import { ObjectType, Field, Int, Float } from 'type-graphql'
 import { User } from './User'
@@ -26,10 +27,12 @@ import { FavoriteStory } from './FavoriteStory'
 export class Story extends BaseEntity {
   @Field()
   @PrimaryGeneratedColumn('uuid')
+  @Index()
   id!: string
 
   @Field()
   @Column()
+  @Index()
   authorId: string
 
   @Field(() => User)
@@ -66,7 +69,10 @@ export class Story extends BaseEntity {
   @Field(() => Int)
   status: PublishStatus
 
-  @OneToMany(() => FavoriteStory, (favoriteStory) => favoriteStory.story)
+  @OneToMany(
+    () => FavoriteStory,
+    (favoriteStory) => favoriteStory.story
+  )
   favorited: FavoriteStory[]
 
   @Field(() => [Rating])

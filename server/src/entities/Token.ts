@@ -9,6 +9,7 @@ import {
   BeforeInsert,
   AfterLoad,
   AfterInsert,
+  Index,
 } from 'typeorm'
 import { ObjectType, Field } from 'type-graphql'
 import jwt from 'jsonwebtoken'
@@ -18,10 +19,12 @@ import { User } from './User'
 @Entity()
 export class Token extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
+  @Index()
   id!: string
 
   @Field()
   @Column('text', { unique: true })
+  @Index()
   value: string
 
   @BeforeInsert()
@@ -39,12 +42,14 @@ export class Token extends BaseEntity {
   }
 
   @Column()
+  @Index()
   expiry: Date
 
   @Column()
   issued: Date
 
   @Column()
+  @Index()
   userId: string
 
   @ManyToOne(() => User, (user) => user.tokens, {

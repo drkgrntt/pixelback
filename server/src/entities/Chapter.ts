@@ -10,6 +10,7 @@ import {
   BeforeInsert,
   BeforeUpdate,
   Unique,
+  Index,
 } from 'typeorm'
 import { ObjectType, Field, Int, Float } from 'type-graphql'
 import { Story } from './Story'
@@ -24,10 +25,12 @@ import { User } from './User'
 @Unique(['storyId', 'number'])
 export class Chapter extends BaseEntity {
   @Field()
+  @Index()
   @PrimaryGeneratedColumn('uuid')
   id!: string
 
   @Column()
+  @Index()
   authorId: string
 
   @Field(() => User)
@@ -37,6 +40,7 @@ export class Chapter extends BaseEntity {
   author: User
 
   @Column()
+  @Index()
   storyId: string
 
   @Field(() => Story)

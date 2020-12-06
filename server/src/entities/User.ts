@@ -6,6 +6,7 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   OneToMany,
+  Index,
 } from 'typeorm'
 import { ObjectType, Field, Int } from 'type-graphql'
 import { UserRole } from '../types'
@@ -24,10 +25,12 @@ import { Chapter } from './Chapter'
 export class User extends BaseEntity {
   @Field()
   @PrimaryGeneratedColumn('uuid')
+  @Index()
   id!: string
 
   @Field()
   @Column({ unique: true })
+  @Index()
   email: string
 
   @Column()

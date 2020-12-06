@@ -8,6 +8,7 @@ import {
   BaseEntity,
   PrimaryColumn,
   Unique,
+  Index,
 } from 'typeorm'
 import { ObjectType, Field, Int } from 'type-graphql'
 import { RatingScore } from '../types'
@@ -21,9 +22,11 @@ import { Chapter } from './Chapter'
 export class Rating extends BaseEntity {
   @Field()
   @PrimaryGeneratedColumn('uuid')
+  @Index()
   id!: string
 
   @PrimaryColumn()
+  @Index()
   readerId: string
 
   @Field(() => User)
@@ -33,6 +36,7 @@ export class Rating extends BaseEntity {
   reader: User
 
   @PrimaryColumn()
+  @Index()
   storyId: string
 
   @Field(() => Story)
@@ -42,6 +46,7 @@ export class Rating extends BaseEntity {
   story: Story
 
   @Column({ nullable: true })
+  @Index()
   chapterId: string
 
   @Field(() => Chapter, { nullable: true })

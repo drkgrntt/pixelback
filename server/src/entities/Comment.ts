@@ -7,6 +7,7 @@ import {
   ManyToOne,
   BaseEntity,
   PrimaryColumn,
+  Index,
 } from 'typeorm'
 import { ObjectType, Field } from 'type-graphql'
 import { User } from './User'
@@ -17,10 +18,12 @@ import { Chapter } from './Chapter'
 @Entity()
 export class Comment extends BaseEntity {
   @Field()
+  @Index()
   @PrimaryGeneratedColumn('uuid')
   id!: string
 
   @PrimaryColumn()
+  @Index()
   authorId: string
 
   @Field(() => User)
@@ -34,6 +37,7 @@ export class Comment extends BaseEntity {
   body: string
 
   @Column({ nullable: true })
+  @Index()
   storyId: string
 
   @Field(() => Story, { nullable: true })
@@ -43,6 +47,7 @@ export class Comment extends BaseEntity {
   story: Story
 
   @Column({ nullable: true })
+  @Index()
   chapterId: string
 
   @Field(() => Chapter, { nullable: true })
