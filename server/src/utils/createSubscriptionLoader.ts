@@ -1,28 +1,29 @@
 import DataLoader from 'dataloader'
+import { In } from 'typeorm'
 import { Subscription } from '../entities/Subscription'
 
 export const createSubscriptionLoader = () => {
-  return new DataLoader<
-    { subscriberId: string; subscribedToId: string },
-    Subscription
-  >(async (keys) => {
-    const subscriptions = await Subscription.findByIds(keys as any[])
-    const subscriptionIdToSubscription: Record<
-      string,
-      Subscription
-    > = {}
-    subscriptions.forEach((subscription) => {
-      const key = `${subscription.subscriberId}|${subscription.subscribedToId}`
-      subscriptionIdToSubscription[key] = subscription
-    })
+  return new DataLoader<string, Subscription>(
+    async (subscriptionIds) => {
+      const subscriptions = await Subscription.find({
+        where: {
+          id: In(subscriptionIds as string[]),
+        },
+      })
 
-    const sortedSubscriptions = keys.map(
-      (key) =>
-        subscriptionIdToSubscription[
-          `${key.subscriberId}|${key.subscribedToId}`
-        ]
-    )
+      const subscriptionMap = subscriptions.reduce(
+        (map, subscription) => {
+          map[subscription.id] = subscription
+          return map
+        },
+        {} as Record<string, Subscription>
+      )
 
-    return sortedSubscriptions
-  })
+      const sortedSubscriptions = subscriptionIds.map(
+        (subscriptionId) => subscriptionMap[subscriptionId]
+      )
+
+      return sortedSubscriptions
+    }
+  )
 }

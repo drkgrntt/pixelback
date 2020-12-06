@@ -6,6 +6,7 @@ import { createCommentIdsByStoryLoader } from './utils/createCommentIdsByStoryLo
 import { createRatingIdsByStoryLoader } from './utils/createRatingIdsByStoryLoader'
 import { createFavoriteStoryIdsLoader } from './utils/createFavoriteStoryIdsLoader'
 import { createFavoriteGenreIdsLoader } from './utils/createFavoriteGenreIdsLoader'
+import { createSubscriptionIdsLoader } from './utils/createSubscriptionIdsLoader'
 import { createRatingIdsByUserLoader } from './utils/createRatingIdsByUserLoader'
 import { createGenreIdsByStoryLoader } from './utils/createGenreIdsByStoryLoader'
 import { createStoryIdsByUserLoader } from './utils/createStoryIdsByUserLoader'
@@ -55,6 +56,9 @@ export interface Context {
   >
   ratingLoader: ReturnType<typeof createRatingLoader>
   subscriptionLoader: ReturnType<typeof createSubscriptionLoader>
+  subscriptionIdsLoader: ReturnType<
+    typeof createSubscriptionIdsLoader
+  >
 }
 
 export enum FeedbackType {

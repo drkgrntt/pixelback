@@ -14,8 +14,8 @@ export const createStoryIdsByUserLoader = () => {
     // Essentially is of type Record<authorId: storyId[]>
     const storyIdsMap = stories.reduce((map, story) => {
       map[story.authorId] = stories
-        .filter((ch) => story.authorId === ch.authorId)
-        .map((ch) => ch.id)
+        .filter((s) => story.authorId === s.authorId)
+        .map((s) => s.id)
       return map
     }, {} as Record<string, string[]>)
 

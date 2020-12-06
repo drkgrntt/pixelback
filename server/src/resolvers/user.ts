@@ -107,13 +107,33 @@ export class UserResolver {
   }
 
   @FieldResolver(() => [Subscription])
-  async subscriptions(@Root() user: User): Promise<Subscription[]> {
-    return await Subscription.find({ subscriberId: user.id })
+  async subscriptions(
+    @Root() user: User,
+    @Ctx() { subscriptionIdsLoader, subscriptionLoader }: Context
+  ): Promise<Subscription[]> {
+    const subscriptionIds = await subscriptionIdsLoader.load({
+      subscriberId: user.id,
+    })
+    const subscriptions = (await subscriptionLoader.loadMany(
+      subscriptionIds
+    )) as Subscription[]
+
+    return subscriptions
   }
 
   @FieldResolver(() => [Subscription])
-  async subscribers(@Root() user: User): Promise<Subscription[]> {
-    return await Subscription.find({ subscribedToId: user.id })
+  async subscribers(
+    @Root() user: User,
+    @Ctx() { subscriptionIdsLoader, subscriptionLoader }: Context
+  ): Promise<Subscription[]> {
+    const subscriptionIds = await subscriptionIdsLoader.load({
+      subscribedToId: user.id,
+    })
+    const subscriptions = (await subscriptionLoader.loadMany(
+      subscriptionIds
+    )) as Subscription[]
+
+    return subscriptions
   }
 
   @FieldResolver(() => [Comment])
