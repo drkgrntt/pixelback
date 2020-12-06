@@ -9,9 +9,14 @@
   justify-content: space-around;
 }
 
+.comingSoon {
+  color: $color-grey;
+  font-style: italic;
+}
+
 .title {
   margin: 0;
-  margin-top: 3rem;
+  // margin-top: 3rem;
   font-size: 2.8rem;
   font-weight: 300;
 }

@@ -1,9 +1,14 @@
 import styles from './Footer.module.scss'
 
-const Footer: React.FC<{}> = () => {
+interface Props {}
+
+const Footer: React.FC<Props> = () => {
   return (
     <footer className={styles.footer}>
       <h2 className={styles.title}>Pixelback</h2>
+      <p className={styles.comingSoon}>
+        Coming soon on Android and iOS
+      </p>
       <span className={styles.copyright}>© drkgrntt 2020</span>
     </footer>
   )
