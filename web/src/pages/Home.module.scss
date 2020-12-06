@@ -1,0 +1,15 @@
+@import 'src/styles/variables.scss';
+
+.home {
+  height: $landing-height;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: center;
+}

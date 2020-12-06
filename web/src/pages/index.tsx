@@ -1,12 +1,25 @@
 import { NextPage } from 'next'
-import Loader from '@/components/Loader'
+import { useRouter } from 'next/router'
+import styles from './Home.module.scss'
+import Button from '@/components/Button'
 
 const Home: NextPage<{}> = () => {
+  const { push } = useRouter()
 
   return (
-    <div>
-      <p>This is the home page</p>
-      <Loader />
+    <div className={styles.home}>
+      <div className={styles.cta}>
+        <Button onClick={() => push('/stories')}>
+          Start Reading
+        </Button>
+        <em>or</em>
+        <Button
+          onClick={() => push('/register')}
+          styleTypes={['cta']}
+        >
+          Create an account
+        </Button>
+      </div>
     </div>
   )
 }

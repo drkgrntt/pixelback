@@ -28,7 +28,7 @@ const RegisterForm: React.FC<{}> = ({}) => {
     try {
       await register({ variables: formState.values })
       formState.reset()
-      push('/profile')
+      push('/writer-dashboard')
     } catch (error) {
       console.warn(error)
       formState.setValues({
