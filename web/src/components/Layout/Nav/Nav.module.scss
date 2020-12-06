@@ -28,6 +28,7 @@
     cursor: pointer;
     transition: all 0.4s;
     width: 100%;
+    color: $color-grey-light !important;
 
     display: flex;
     align-items: center;
@@ -35,14 +36,13 @@
 
     &:hover:not(.hamburger) {
       background-color: $color-grey-light-2;
-      color: $color-grey-dark-2;
+      color: $color-grey-dark-2 !important;
     }
   }
 
   .link {
     text-decoration: none;
     font-style: normal;
-    color: $color-grey-light;
     width: 100%;
     text-align: center;
     font-size: 1.6rem;

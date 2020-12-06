@@ -1,19 +1,27 @@
 // COLORS
 // ========================
 
+// palette
+// https://coolors.co/156064-00c49a-f8e16c-ffc2b4-fb8f67
+$skobeloff: rgba(21, 96, 100, 1);
+$caribbean-green: rgba(0, 196, 154, 1);
+$naples-yellow: rgba(248, 225, 108, 1);
+$melon: rgba(255, 194, 180, 1);
+$coral: rgba(251, 143, 103, 1);
+
 // neutrals
 $color-white: rgb(255, 255, 255);
 $color-grey-light: rgb(250, 250, 250);
 $color-grey-light-2: rgb(238, 238, 238);
 $color-grey: rgb(136, 136, 136);
-$color-grey-dark: rgb(51, 51, 51);
 $color-grey-dark-2: rgb(85, 85, 85);
+$color-grey-dark: rgb(51, 51, 51);
 $color-black: rgb(0, 0, 0);
 
 // palette
-$color-primary: rgb(0, 196, 154);
-$color-secondary: rgb(248, 225, 108);
-$color-tertiary: rgb(251, 143, 103);
+$color-primary: $caribbean-green;
+$color-secondary: $naples-yellow;
+$color-tertiary: $coral;
 
 $color-edit: $color-secondary;
 $color-warning: $color-secondary;
@@ -24,9 +32,11 @@ $color-error: $color-tertiary;
 $color-cta: $color-tertiary;
 
 // FONT
+// ========================
 $default-font-size: 1.4rem;
 
 // LAYOUT
+// ========================
 $header-height: 10rem;
 $footer-height: 10rem;
 $main-height: calc(100vh - 20rem);
