@@ -11,9 +11,9 @@ $color-grey-dark-2: rgb(85, 85, 85);
 $color-black: rgb(0, 0, 0);
 
 // palette
-$color-primary: rgb(46, 147, 230);
-$color-secondary: rgb(255, 183, 28);
-$color-tertiary: rgb(243, 52, 77);
+$color-primary: rgb(0, 196, 154);
+$color-secondary: rgb(248, 225, 108);
+$color-tertiary: rgb(251, 143, 103);
 
 $color-edit: $color-secondary;
 $color-warning: $color-secondary;
@@ -27,7 +27,7 @@ $color-cta: $color-tertiary;
 $default-font-size: 1.4rem;
 
 // LAYOUT
-$header-height: 13rem;
+$header-height: 10rem;
 $footer-height: 10rem;
-$main-height: calc(100vh - 23rem);
-$landing-height: calc(100vh - 25rem);
+$main-height: calc(100vh - 20rem);
+$landing-height: calc(100vh - 23rem);
