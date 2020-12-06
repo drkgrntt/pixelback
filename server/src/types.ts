@@ -1,4 +1,6 @@
 import { User } from './entities/User'
+import { createSubscriptionIdsBySubscribedToLoader } from './dataloaders/createSubscriptionIdsBySubscribedToLoader'
+import { createSubscriptionIdsBySubscriberLoader } from './dataloaders/createSubscriptionIdsBySubscriberLoader'
 import { createCommentIdsByChapterLoader } from './dataloaders/createCommentIdsByChapterLoader'
 import { createRatingIdsByChapterLoader } from './dataloaders/createRatingIdsByChapterLoader'
 import { createChapterIdsByStoryLoader } from './dataloaders/createChapterIdsByStoryLoader'
@@ -7,7 +9,6 @@ import { createRatingIdsByStoryLoader } from './dataloaders/createRatingIdsBySto
 import { createFavoriteStoryIdsLoader } from './dataloaders/createFavoriteStoryIdsLoader'
 import { createCommentIdsByUserLoader } from './dataloaders/createCommentIdsByUserLoader'
 import { createFavoriteGenreIdsLoader } from './dataloaders/createFavoriteGenreIdsLoader'
-import { createSubscriptionIdsLoader } from './dataloaders/createSubscriptionIdsLoader'
 import { createRatingIdsByUserLoader } from './dataloaders/createRatingIdsByUserLoader'
 import { createGenreIdsByStoryLoader } from './dataloaders/createGenreIdsByStoryLoader'
 import { createStoryIdsByUserLoader } from './dataloaders/createStoryIdsByUserLoader'
@@ -60,8 +61,11 @@ export interface Context {
   >
   ratingLoader: ReturnType<typeof createRatingLoader>
   subscriptionLoader: ReturnType<typeof createSubscriptionLoader>
-  subscriptionIdsLoader: ReturnType<
-    typeof createSubscriptionIdsLoader
+  subscriptionIdsBySubscriberLoader: ReturnType<
+    typeof createSubscriptionIdsBySubscriberLoader
+  >
+  subscriptionIdsBySubscribedToLoader: ReturnType<
+    typeof createSubscriptionIdsBySubscribedToLoader
   >
 }
 

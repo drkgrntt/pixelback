@@ -25,7 +25,6 @@ import { createChapterLoader } from './dataloaders/createChapterLoader'
 import { createSubscriptionLoader } from './dataloaders/createSubscriptionLoader'
 import { createStoryIdsByUserLoader } from './dataloaders/createStoryIdsByUserLoader'
 import { createGenreIdsByStoryLoader } from './dataloaders/createGenreIdsByStoryLoader'
-import { createSubscriptionIdsLoader } from './dataloaders/createSubscriptionIdsLoader'
 import { createRatingIdsByUserLoader } from './dataloaders/createRatingIdsByUserLoader'
 import { createCommentIdsByUserLoader } from './dataloaders/createCommentIdsByUserLoader'
 import { createFavoriteGenreIdsLoader } from './dataloaders/createFavoriteGenreIdsLoader'
@@ -35,6 +34,8 @@ import { createChapterIdsByStoryLoader } from './dataloaders/createChapterIdsByS
 import { createCommentIdsByStoryLoader } from './dataloaders/createCommentIdsByStoryLoader'
 import { createRatingIdsByChapterLoader } from './dataloaders/createRatingIdsByChapterLoader'
 import { createCommentIdsByChapterLoader } from './dataloaders/createCommentIdsByChapterLoader'
+import { createSubscriptionIdsBySubscriberLoader } from './dataloaders/createSubscriptionIdsBySubscriberLoader'
+import { createSubscriptionIdsBySubscribedToLoader } from './dataloaders/createSubscriptionIdsBySubscribedToLoader'
 import { __prod__ } from './constants'
 
 const main = async () => {
@@ -97,7 +98,6 @@ const main = async () => {
         storyIdsByUserLoader: createStoryIdsByUserLoader(),
         genreIdsByStoryLoader: createGenreIdsByStoryLoader(),
         ratingIdsByUserLoader: createRatingIdsByUserLoader(),
-        subscriptionIdsLoader: createSubscriptionIdsLoader(),
         ratingIdsByStoryLoader: createRatingIdsByStoryLoader(),
         favoriteStoryIdsLoader: createFavoriteStoryIdsLoader(),
         favoriteGenreIdsLoader: createFavoriteGenreIdsLoader(),
@@ -106,6 +106,8 @@ const main = async () => {
         commentIdsByStoryLoader: createCommentIdsByStoryLoader(),
         ratingIdsByChapterLoader: createRatingIdsByChapterLoader(),
         commentIdsByChapterLoader: createCommentIdsByChapterLoader(),
+        subscriptionIdsBySubscriberLoader: createSubscriptionIdsBySubscriberLoader(),
+        subscriptionIdsBySubscribedToLoader: createSubscriptionIdsBySubscribedToLoader(),
       }
     },
   })

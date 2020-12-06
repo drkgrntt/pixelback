@@ -109,11 +109,12 @@ export class UserResolver {
   @FieldResolver(() => [Subscription])
   async subscriptions(
     @Root() user: User,
-    @Ctx() { subscriptionIdsLoader, subscriptionLoader }: Context
+    @Ctx()
+    { subscriptionIdsBySubscriberLoader, subscriptionLoader }: Context
   ): Promise<Subscription[]> {
-    const subscriptionIds = await subscriptionIdsLoader.load({
-      subscriberId: user.id,
-    })
+    const subscriptionIds = await subscriptionIdsBySubscriberLoader.load(
+      user.id
+    )
     const subscriptions = (await subscriptionLoader.loadMany(
       subscriptionIds
     )) as Subscription[]
@@ -124,11 +125,15 @@ export class UserResolver {
   @FieldResolver(() => [Subscription])
   async subscribers(
     @Root() user: User,
-    @Ctx() { subscriptionIdsLoader, subscriptionLoader }: Context
+    @Ctx()
+    {
+      subscriptionIdsBySubscribedToLoader,
+      subscriptionLoader,
+    }: Context
   ): Promise<Subscription[]> {
-    const subscriptionIds = await subscriptionIdsLoader.load({
-      subscribedToId: user.id,
-    })
+    const subscriptionIds = await subscriptionIdsBySubscribedToLoader.load(
+      user.id
+    )
     const subscriptions = (await subscriptionLoader.loadMany(
       subscriptionIds
     )) as Subscription[]
