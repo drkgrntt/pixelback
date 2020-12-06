@@ -5,6 +5,7 @@ import { createChapterIdsByStoryLoader } from './utils/createChapterIdsByStoryLo
 import { createCommentIdsByStoryLoader } from './utils/createCommentIdsByStoryLoader'
 import { createRatingIdsByStoryLoader } from './utils/createRatingIdsByStoryLoader'
 import { createFavoriteStoryIdsLoader } from './utils/createFavoriteStoryIdsLoader'
+import { createCommentIdsByUserLoader } from './utils/createCommentIdsByUserLoader'
 import { createFavoriteGenreIdsLoader } from './utils/createFavoriteGenreIdsLoader'
 import { createSubscriptionIdsLoader } from './utils/createSubscriptionIdsLoader'
 import { createRatingIdsByUserLoader } from './utils/createRatingIdsByUserLoader'
@@ -23,6 +24,9 @@ export interface Context {
   token: string
   userLoader: ReturnType<typeof createUserLoader>
   storyLoader: ReturnType<typeof createStoryLoader>
+  commentIdsByUserLoader: ReturnType<
+    typeof createCommentIdsByUserLoader
+  >
   chapterIdsByStoryLoader: ReturnType<
     typeof createChapterIdsByStoryLoader
   >

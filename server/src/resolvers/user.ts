@@ -137,8 +137,15 @@ export class UserResolver {
   }
 
   @FieldResolver(() => [Comment])
-  async comments(@Root() user: User): Promise<Comment[]> {
-    return await Comment.find({ authorId: user.id })
+  async comments(
+    @Root() user: User,
+    @Ctx() { commentIdsByUserLoader, commentLoader }: Context
+  ): Promise<Comment[]> {
+    const commentIds = await commentIdsByUserLoader.load(user.id)
+    const comments = (await commentLoader.loadMany(
+      commentIds
+    )) as Comment[]
+    return comments
   }
 
   @Query(() => User, { nullable: true })
