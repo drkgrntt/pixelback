@@ -154,8 +154,11 @@ export class UserResolver {
   }
 
   @Query(() => User, { nullable: true })
-  async user(@Arg('id') id: string): Promise<User | undefined> {
-    const user = await User.findOne(id)
+  async user(
+    @Arg('id') id: string,
+    @Ctx() { userLoader }: Context
+  ): Promise<User | undefined> {
+    const user = await userLoader.load(id)
     return user
   }
 
