@@ -10,7 +10,7 @@ const Home: NextPage<{}> = () => {
     <div className={styles.home}>
       <div className={styles.cta}>
         <Button onClick={() => push('/stories')}>
-          Start Reading
+          Start reading
         </Button>
         <em>or</em>
         <Button

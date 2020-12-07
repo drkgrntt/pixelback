@@ -6,6 +6,12 @@ body {
   margin: 0;
   font-family: 'Montserrat', 'Raleway', 'Lato', sans-serif;
   background-color: $color-grey-light;
+  background: linear-gradient(
+    25deg,
+    lighten($color-primary, 60%),
+    lighten($color-tertiary, 28%),
+    lighten($color-primary, 60%)
+  );
 }
 
 html {
@@ -36,6 +42,7 @@ a {
   color: $color-grey-dark-2;
   text-decoration: underline;
   font-style: italic;
+  cursor: pointer;
 }
 
 hr {
