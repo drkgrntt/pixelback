@@ -30,6 +30,7 @@ const App = ({
           href="https://fonts.googleapis.com/css?family=Raleway:400,500,600&display=swap"
           rel="stylesheet"
         />
+        <link rel="shortcut icon" href="/favicon.ico" />
       </Head>
       <Layout>
         <Component {...pageProps} />
