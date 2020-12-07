@@ -53,6 +53,11 @@ export const meQuery = gql`
   ${UserInfo}
 `
 
-export const useMeQuery = (options?: QueryHookOptions) => {
+export const useMeQuery = (options: QueryHookOptions = {}) => {
+  let token
+  if (typeof window !== 'undefined') {
+    token = localStorage.getItem('token')
+  }
+  options.skip = options.skip || !token
   return useQuery(meQuery, options)
 }

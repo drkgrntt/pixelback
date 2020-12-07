@@ -24,15 +24,11 @@ interface Props {
 const Profile: NextPage<Props> = ({ query }) => {
   const [initialized, setInitialized] = useState(false)
   const [exchangeToken] = useExchangeTokenMutation()
-  // There must be a better way to handle this.
-  // The problem is if I put this in a useEffect,
-  // the "me" query gets called without the token and it's too late
-  if (!initialized && query.token && typeof window !== 'undefined') {
-    localStorage.setItem('token', query.token as string)
-  }
   useEffect(() => {
+    if (!query.token) return
+    localStorage.setItem('token', query.token as string)
     setInitialized(true)
-  }, [setInitialized])
+  }, [])
   const [logoutEverywhere, logoutData] = useLogoutEverywhereMutation()
   const [removeFavoriteStory] = useRemoveFavoriteStoryMutation()
   const { loading, data } = useMeQuery()
