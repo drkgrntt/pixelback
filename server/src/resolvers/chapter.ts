@@ -191,7 +191,7 @@ export class ChapterResolver {
   ): Promise<Chapter | undefined> {
     const chapter = await chapterLoader.load(id)
     if (
-      chapter?.status !== PublishStatus.Published ||
+      chapter?.status !== PublishStatus.Published &&
       chapter.authorId !== me?.id
     ) {
       return
