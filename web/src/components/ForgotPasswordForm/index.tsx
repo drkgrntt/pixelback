@@ -21,6 +21,7 @@ const ForgotPasswordForm: React.FC<Props> = (props) => {
   })
 
   const handleSubmit = async (event: any, reset: Function) => {
+    event.preventDefault()
     try {
       const result = await forgotPassword({ variables: { email } })
       if (result.data) {
@@ -61,7 +62,9 @@ const ForgotPasswordForm: React.FC<Props> = (props) => {
 
       <p className={styles.validation}>{validation}</p>
 
-      <Button onClick={handleSubmit}>Send</Button>
+      <Button type="submit" onClick={handleSubmit}>
+        Send
+      </Button>
     </div>
   )
 }

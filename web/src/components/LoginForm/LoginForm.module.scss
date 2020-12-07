@@ -11,15 +11,6 @@
   margin: 0;
 }
 
-.link {
-  text-align: center;
-}
-
-.validation {
-  color: $color-error;
-  text-align: center;
-}
-
 .forgotPassword {
   // All these need to be !important to override the default button styles
   border: none !important;
@@ -34,4 +25,20 @@
 
   align-self: flex-start;
   margin: -1rem;
+  order: 2;
+}
+
+.validation {
+  color: $color-error;
+  text-align: center;
+  order: 3;
+}
+
+.submit {
+  order: 4;
+}
+
+.link {
+  text-align: center;
+  order: 5;
 }

@@ -54,6 +54,7 @@ const Modal: React.FC<Props> = (props) => {
         id={buttonId}
         styleTypes={buttonStyleTypes}
         onClick={(event: any, reset: Function) => {
+          event.preventDefault()
           reset()
           setHidden(false)
           onOpen()

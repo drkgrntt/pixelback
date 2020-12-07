@@ -68,18 +68,22 @@ const LoginForm: React.FC<Props> = ({
         formState={formState}
         required
       />
+      <span className={styles.validation}>
+        {formState.values.validation}
+      </span>
+      <Button
+        className={styles.submit}
+        type="submit"
+        onClick={handleSubmit}
+      >
+        Login
+      </Button>
       <Modal
         buttonText="Forgot password?"
         buttonClassName={styles.forgotPassword}
       >
         <ForgotPasswordForm email={formState.values.email} />
       </Modal>
-      <span className={styles.validation}>
-        {formState.values.validation}
-      </span>
-      <Button type="submit" onClick={handleSubmit}>
-        Login
-      </Button>
       <Link href="/register">
         <a className={styles.link}>Or create a new account!</a>
       </Link>
