@@ -1,6 +1,5 @@
 import { NextPage } from 'next'
 import { useState } from 'react'
-import Error from 'next/error'
 import styles from './New.module.scss'
 import Card from '@/components/Card'
 import ContentForm from '@/components/ContentForm'
@@ -8,9 +7,9 @@ import { useCreateStoryMutation } from '@/mutations/useCreateStoryMutation'
 import { useUpdateStoryMutation } from '@/mutations/useUpdateStoryMutation'
 import { PublishStatus, Story } from '@/types'
 import { useRouter } from 'next/router'
-import { useMeQuery } from '@/queries/useMeQuery'
 import { useIsAuth } from '@/hooks/useIsAuth'
 import Loader from '@/components/Loader'
+import { withApollo } from '@/utils/withApollo'
 
 const New: NextPage<{}> = () => {
   const { push } = useRouter()
@@ -70,4 +69,4 @@ const New: NextPage<{}> = () => {
   )
 }
 
-export default New
+export default withApollo({ ssr: false })(New)

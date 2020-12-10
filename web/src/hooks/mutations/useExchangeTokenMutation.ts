@@ -1,4 +1,4 @@
-import { gql, useMutation, MutationHookOptions } from '@apollo/client'
+import { gql, useMutation } from '@apollo/client'
 
 export const exchangeTokenMutation = gql`
   mutation ExchangeToken {
@@ -9,11 +9,5 @@ export const exchangeTokenMutation = gql`
 `
 
 export const useExchangeTokenMutation = () => {
-  const options: MutationHookOptions = {
-    update: (cache, result) => {
-      localStorage.setItem('token', result.data?.exchangeToken.value)
-    },
-  }
-
-  return useMutation(exchangeTokenMutation, options)
+  return useMutation(exchangeTokenMutation)
 }

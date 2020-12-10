@@ -16,24 +16,25 @@ import { Comment, Story, User } from '@/types'
 import { useRemoveFavoriteStoryMutation } from '@/mutations/useRemoveFavoriteStoryMutation'
 import Modal from '@/components/Modal'
 import { useExchangeTokenMutation } from '@/mutations/useExchangeTokenMutation'
+import { withApollo } from '@/utils/withApollo'
 
 interface Props {
   query: ParsedUrlQuery
 }
 
 const Profile: NextPage<Props> = ({ query }) => {
-  const [initialized, setInitialized] = useState(false)
+  // const [initialized, setInitialized] = useState(false)
   const [exchangeToken] = useExchangeTokenMutation()
-  useEffect(() => {
-    if (!query.token) return
-    localStorage.setItem('token', query.token as string)
-    setInitialized(true)
-  }, [])
+  // useEffect(() => {
+  //   setInitialized(true)
+  //   if (!query.token) return
+  //   document.cookie = query.token as string
+  // }, [])
   const [logoutEverywhere, logoutData] = useLogoutEverywhereMutation()
   const [removeFavoriteStory] = useRemoveFavoriteStoryMutation()
   const { loading, data } = useMeQuery()
   const me: User = data?.me
-  useIsAuth(!initialized)
+  useIsAuth()
   useEffect(() => {
     if (me && query.token) exchangeToken()
   }, [me, query.token])
@@ -177,8 +178,11 @@ const Profile: NextPage<Props> = ({ query }) => {
   )
 }
 
-Profile.getInitialProps = ({ query }) => {
+Profile.getInitialProps = ({ res, query }) => {
+  if (res && query.token) {
+    res.setHeader('set-cookie', [`token=${query.token}`])
+  }
   return { query }
 }
 
-export default Profile
+export default withApollo({ ssr: false })(Profile)

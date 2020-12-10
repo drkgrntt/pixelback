@@ -17,7 +17,6 @@ const Nav: React.FC<{}> = () => {
     toggleNav()
     try {
       await logout()
-      localStorage.removeItem('token')
     } catch (err) {
       console.warn(err)
     }

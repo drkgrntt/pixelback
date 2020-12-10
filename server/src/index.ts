@@ -4,6 +4,7 @@ import path from 'path'
 import express from 'express'
 import cors from 'cors'
 import sanitize from 'sanitize'
+import cookieParser from 'cookie-parser'
 import { createConnection } from 'typeorm'
 import { buildSchema } from 'type-graphql'
 import { ApolloServer } from 'apollo-server-express'
@@ -50,8 +51,14 @@ const main = async () => {
   })
 
   const app = express()
-  app.use(cors())
   app.use(sanitize.middleware)
+  app.use(cookieParser())
+  app.use(
+    cors({
+      origin: true,
+      credentials: true,
+    })
+  )
 
   const server = new ApolloServer({
     playground: true,
@@ -68,24 +75,21 @@ const main = async () => {
       ],
       validate: false,
     }),
-    context: async ({ req }) => {
+    context: async ({ req, res }) => {
       if (req.body.operationName === 'IntrospectionQuery') {
         return {}
       }
-
+      console.log(req.cookies)
       let me
-      let token
 
-      const { authorization } = req.headers
-      if (authorization && typeof authorization === 'string') {
-        const [bearer, bearerToken] = authorization.split(' ')
-        token = bearerToken
-        if (bearer === 'Bearer') {
-          me = await Token.verifyAndFindUser(token)
-        }
+      const { token } = req.cookies
+      if (token) {
+        me = await Token.verifyAndFindUser(token)
       }
 
       return {
+        req,
+        res,
         me,
         token,
         userLoader: createUserLoader(),
@@ -112,7 +116,11 @@ const main = async () => {
     },
   })
 
-  server.applyMiddleware({ app })
+  server.applyMiddleware({
+    app,
+    path: '/',
+    cors: false,
+  })
 
   app.listen(parseInt(process.env.PORT), () => {
     console.log(`Server started on ${process.env.PORT}`)

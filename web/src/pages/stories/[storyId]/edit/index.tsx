@@ -11,6 +11,7 @@ import { useRouter } from 'next/router'
 import { useMeQuery } from '@/hooks/queries/useMeQuery'
 import { useIsAuth } from '@/hooks/useIsAuth'
 import Loader from '@/components/Loader'
+import { withApollo } from '@/utils/withApollo'
 
 interface Props {
   query: ParsedUrlQuery
@@ -21,7 +22,10 @@ const Edit: NextPage<Props> = ({ query }) => {
   const [updateStory] = useUpdateStoryMutation()
   const meResult = useMeQuery()
   const variables = { id: query.storyId as string }
-  const storyResult = useStoryQuery({ variables, skip: !query.storyId })
+  const storyResult = useStoryQuery({
+    variables,
+    skip: !query.storyId,
+  })
   const story = storyResult.data?.story
   useIsAuth()
 
@@ -82,4 +86,4 @@ Edit.getInitialProps = ({ query }) => {
   return { query }
 }
 
-export default Edit
+export default withApollo({ ssr: false })(Edit)

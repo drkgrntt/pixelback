@@ -13,6 +13,7 @@ import { useMeQuery } from '@/hooks/queries/useMeQuery'
 import { useIsAuth } from '@/hooks/useIsAuth'
 import { ParsedUrlQuery } from 'querystring'
 import Loader from '@/components/Loader'
+import { withApollo } from '@/utils/withApollo'
 
 interface Props {
   query: ParsedUrlQuery
@@ -21,7 +22,10 @@ interface Props {
 const Dashboard: NextPage<Props> = ({ query }) => {
   const meResult = useMeQuery()
   const variables = { id: query.storyId as string }
-  const storyResult = useStoryQuery({ variables, skip: !query.storyId })
+  const storyResult = useStoryQuery({
+    variables,
+    skip: !query.storyId,
+  })
   const story: Story = storyResult.data?.story
   useIsAuth()
 
@@ -70,4 +74,4 @@ Dashboard.getInitialProps = ({ query }) => {
   return { query }
 }
 
-export default Dashboard
+export default withApollo({ ssr: false })(Dashboard)

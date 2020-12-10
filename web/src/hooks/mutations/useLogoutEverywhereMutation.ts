@@ -1,4 +1,4 @@
-import { gql, useMutation, MutationHookOptions } from '@apollo/client'
+import { gql, useMutation } from '@apollo/client'
 
 export const logoutEverywhereMutation = gql`
   mutation LogoutEverywhere {
@@ -9,11 +9,5 @@ export const logoutEverywhereMutation = gql`
 `
 
 export const useLogoutEverywhereMutation = () => {
-  const options: MutationHookOptions = {
-    update: (cache, result) => {
-      localStorage.setItem('token', result.data?.logoutEverywhere.value)
-    }
-  }
-
-  return useMutation(logoutEverywhereMutation, options)
+  return useMutation(logoutEverywhereMutation)
 }

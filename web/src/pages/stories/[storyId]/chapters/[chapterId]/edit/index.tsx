@@ -12,6 +12,7 @@ import { useRouter } from 'next/router'
 import { useMeQuery } from '@/queries/useMeQuery'
 import { useIsAuth } from '@/hooks/useIsAuth'
 import Loader from '@/components/Loader'
+import { withApollo } from '@/utils/withApollo'
 
 interface Props {
   query: ParsedUrlQuery
@@ -99,4 +100,4 @@ Edit.getInitialProps = ({ query }) => {
   return { query }
 }
 
-export default Edit
+export default withApollo({ ssr: false })(Edit)

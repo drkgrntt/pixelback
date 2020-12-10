@@ -1,3 +1,4 @@
+import { NextPageContext } from 'next'
 import { Story } from '@/types'
 import {
   ApolloClient,
@@ -6,22 +7,22 @@ import {
   ApolloLink,
 } from '@apollo/client'
 import { setContext } from '@apollo/client/link/context'
-import { withApollo as createWithApollo } from 'next-apollo'
+import { createWithApollo } from './createWithApollo'
 
-const createClient = () => {
+const createClient = (ctx: NextPageContext) => {
   const httpLink = createHttpLink({
     uri: process.env.NEXT_PUBLIC_API_URL,
+    credentials: 'include',
   })
 
   const authLink = setContext((_, { headers }) => {
-    let token: string | null = null
-    if (typeof window !== 'undefined') {
-      token = localStorage.getItem('token')
-    }
     return {
       headers: {
         ...headers,
-        Authorization: token ? `Bearer ${token}` : '',
+        cookie:
+          (typeof window === 'undefined'
+            ? ctx?.req?.headers.cookie
+            : undefined) || '',
       },
     }
   })
@@ -107,7 +108,6 @@ const createClient = () => {
   return new ApolloClient({
     link: dataMutationLink.concat(authLink).concat(httpLink),
     cache: inMemoryCache,
-    credentials: 'include',
     name: 'react-web-client',
     version: '1.0.0',
   })

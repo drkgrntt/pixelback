@@ -13,12 +13,11 @@ export const useLogoutMutation = () => {
       cache.writeQuery({
         query: meQuery,
         data: {
-          __typename: "Query",
+          __typename: 'Query',
           me: null,
         },
       })
-      localStorage.removeItem('token')
-    }
+    },
   }
 
   return useMutation(logoutMutation, options)

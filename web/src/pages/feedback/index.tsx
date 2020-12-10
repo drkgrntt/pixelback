@@ -5,6 +5,7 @@ import Card from '@/components/Card'
 import Input from '@/components/Input'
 import Button from '@/components/Button'
 import { useGiveFeedbackMutation } from '@/hooks/mutations/useGiveFeedbackMutation'
+import { withApollo } from '@/utils/withApollo'
 
 enum FeedbackType {
   general,
@@ -120,4 +121,4 @@ const Feedback: NextPage<Props> = (props) => {
   )
 }
 
-export default Feedback
+export default withApollo({ ssr: false })(Feedback)

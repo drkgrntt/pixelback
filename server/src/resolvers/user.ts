@@ -182,7 +182,8 @@ export class UserResolver {
   @Mutation(() => UserResponse)
   async login(
     @Arg('password') password: string,
-    @Arg('email') email: string
+    @Arg('email') email: string,
+    @Ctx() { res }: Context
   ): Promise<UserResponse> {
     const user = await User.findOne({ email })
     if (!user) {
@@ -198,6 +199,10 @@ export class UserResolver {
     }
 
     const token = await Token.generate(user.id)
+    res.cookie('token', token.value, {
+      httpOnly: true,
+      maxAge: 1000 * 60 * 60 * 24 * 30,
+    })
 
     return {
       user,
@@ -208,7 +213,8 @@ export class UserResolver {
   @Mutation(() => UserResponse)
   async register(
     @Arg('password') password: string,
-    @Arg('email') email: string
+    @Arg('email') email: string,
+    @Ctx() { res }: Context
   ): Promise<UserResponse> {
     if (!User.verifyEmailSyntax(email)) {
       throw new Error('Invalid email')
@@ -231,6 +237,10 @@ export class UserResolver {
 
     // Generate a token
     const token = await Token.generate(user.id)
+    res.cookie('token', token.value, {
+      httpOnly: true,
+      maxAge: 1000 * 60 * 60 * 24 * 30,
+    })
 
     return {
       user,
@@ -289,26 +299,39 @@ export class UserResolver {
 
   @Mutation(() => Boolean)
   @UseMiddleware(isAuth)
-  async logout(@Ctx() { token }: Context): Promise<boolean> {
+  async logout(@Ctx() { token, res }: Context): Promise<boolean> {
     const value = Token.unsign(token)
     const result = await Token.delete({ value })
+    res.cookie('token', 'a.b.c', { maxAge: 0, httpOnly: true })
     return !!result.affected
   }
 
   @Mutation(() => Token)
   @UseMiddleware(isAuth)
-  async logoutEverywhere(@Ctx() { me }: Context): Promise<Token> {
+  async logoutEverywhere(
+    @Ctx() { me, res }: Context
+  ): Promise<Token> {
     await Token.delete({ userId: me.id })
     const token = await Token.generate(me.id)
+    res.cookie('token', token.value, {
+      httpOnly: true,
+      maxAge: 1000 * 60 * 60 * 24 * 30,
+    })
     return token
   }
 
   @Mutation(() => Token)
   @UseMiddleware(isAuth)
-  async exchangeToken(@Ctx() { me, token }: Context): Promise<Token> {
+  async exchangeToken(
+    @Ctx() { me, token, res }: Context
+  ): Promise<Token> {
     const value = Token.unsign(token)
     await Token.delete({ value })
     const newToken = await Token.generate(me.id)
+    res.cookie('token', newToken.value, {
+      httpOnly: true,
+      maxAge: 1000 * 60 * 60 * 24 * 30,
+    })
     return newToken
   }
 

@@ -8,6 +8,7 @@ import Button from '@/components/Button'
 import { useMeQuery } from '@/hooks/queries/useMeQuery'
 import { useIsAuth } from '@/hooks/useIsAuth'
 import Loader from '@/components/Loader'
+import { withApollo } from '@/utils/withApollo'
 
 const WriterDashboard: NextPage<{}> = () => {
   const { loading, data } = useMeQuery()
@@ -100,4 +101,4 @@ const WriterDashboard: NextPage<{}> = () => {
   )
 }
 
-export default WriterDashboard
+export default withApollo({ ssr: false })(WriterDashboard)

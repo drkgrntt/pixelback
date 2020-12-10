@@ -2,6 +2,7 @@ import { NextPage } from 'next'
 import { useRouter } from 'next/router'
 import styles from './Home.module.scss'
 import Button from '@/components/Button'
+import { withApollo } from '@/utils/withApollo'
 
 const Home: NextPage<{}> = () => {
   const { push } = useRouter()
@@ -24,4 +25,4 @@ const Home: NextPage<{}> = () => {
   )
 }
 
-export default Home
+export default withApollo({ ssr: false })(Home)

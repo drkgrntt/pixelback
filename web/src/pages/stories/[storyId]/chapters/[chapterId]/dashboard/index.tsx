@@ -12,6 +12,7 @@ import { useChapterQuery } from '@/queries/useChapterQuery'
 import { Story, Chapter, User } from '@/types'
 import { useMeQuery } from '@/hooks/queries/useMeQuery'
 import { useIsAuth } from '@/hooks/useIsAuth'
+import { withApollo } from '@/utils/withApollo'
 
 interface Props {
   query: ParsedUrlQuery
@@ -85,4 +86,4 @@ Dashboard.getInitialProps = ({ query }) => {
   return { query }
 }
 
-export default Dashboard
+export default withApollo({ ssr: false })(Dashboard)

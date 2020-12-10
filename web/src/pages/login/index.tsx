@@ -3,6 +3,7 @@ import { NextPage } from 'next'
 import styles from './Login.module.scss'
 import LoginForm from '@/components/LoginForm'
 import Card from '@/components/Card'
+import { withApollo } from '@/utils/withApollo'
 
 interface Props {
   query: ParsedUrlQuery
@@ -25,4 +26,4 @@ Login.getInitialProps = ({ query }) => {
   return { query }
 }
 
-export default Login
+export default withApollo({ ssr: false })(Login)

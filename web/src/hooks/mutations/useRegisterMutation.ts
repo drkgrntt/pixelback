@@ -31,18 +31,16 @@ export const registerMutation = gql`
 `
 
 export const useRegisterMutation = () => {
-
   const options: MutationHookOptions = {
     update: (cache, result) => {
       cache.writeQuery({
         query: meQuery,
         data: {
-          __typename: "Query",
+          __typename: 'Query',
           me: result.data?.register.user,
         },
       })
-      localStorage.setItem('token', result.data?.register.token.value)
-    }
+    },
   }
 
   return useMutation(registerMutation, options)

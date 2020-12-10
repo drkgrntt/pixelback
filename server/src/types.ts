@@ -1,3 +1,4 @@
+import { Request, Response } from 'express'
 import { User } from './entities/User'
 import { createSubscriptionIdsBySubscribedToLoader } from './dataloaders/createSubscriptionIdsBySubscribedToLoader'
 import { createSubscriptionIdsBySubscriberLoader } from './dataloaders/createSubscriptionIdsBySubscriberLoader'
@@ -21,6 +22,8 @@ import { createStoryLoader } from './dataloaders/createStoryLoader'
 import { createUserLoader } from './dataloaders/createUserLoader'
 
 export interface Context {
+  req: Request
+  res: Response
   me: User
   token: string
   userLoader: ReturnType<typeof createUserLoader>

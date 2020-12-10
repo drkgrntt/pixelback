@@ -36,12 +36,11 @@ export const useLoginMutation = () => {
       cache.writeQuery({
         query: meQuery,
         data: {
-          __typename: "Query",
+          __typename: 'Query',
           me: result.data?.login.user,
         },
       })
-      localStorage.setItem('token', result.data?.login.token.value)
-    }
+    },
   }
 
   return useMutation(loginMutation, options)
