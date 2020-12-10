@@ -7,6 +7,7 @@ import {
   UpdateDateColumn,
   OneToMany,
   Index,
+  OneToOne,
 } from 'typeorm'
 import { ObjectType, Field, Int } from 'type-graphql'
 import { UserRole } from '../types'
@@ -19,6 +20,7 @@ import { FavoriteStory } from './FavoriteStory'
 import { FavoriteGenre } from './FavoriteGenre'
 import { Genre } from './Genre'
 import { Chapter } from './Chapter'
+import { Profile } from './Profile'
 
 @ObjectType()
 @Entity()
@@ -90,6 +92,10 @@ export class User extends BaseEntity {
     (subscription) => subscription.subscribedTo
   )
   subscribers: Subscription[]
+
+  @Field(() => Profile)
+  @OneToOne(() => Profile, (profile) => profile.user)
+  profile: Profile[]
 
   @Field(() => String)
   @CreateDateColumn()
