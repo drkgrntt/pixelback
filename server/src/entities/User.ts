@@ -8,6 +8,7 @@ import {
   OneToMany,
   Index,
   OneToOne,
+  AfterInsert,
 } from 'typeorm'
 import { ObjectType, Field, Int } from 'type-graphql'
 import { UserRole } from '../types'
@@ -104,6 +105,11 @@ export class User extends BaseEntity {
   @Field(() => String)
   @UpdateDateColumn()
   updatedAt: Date
+
+  @AfterInsert()
+  async createProfile() {
+    await Profile.create({ userId: this.id }).save()
+  }
 
   static verifyEmailSyntax(email: string): boolean {
     const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/

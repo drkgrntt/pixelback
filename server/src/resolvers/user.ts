@@ -9,6 +9,7 @@ import {
   FieldResolver,
   Root,
   UseMiddleware,
+  Int,
 } from 'type-graphql'
 import { ILike } from 'typeorm'
 import bcrypt from 'bcrypt'
@@ -27,8 +28,10 @@ import {
   UserRole,
 } from '../types'
 import { isAuth } from '../middleware/isAuth'
-import Mailer from '../utils/sendEmail'
+import Mailer from '../utils/Mailer'
+import Payments from '../utils/Payments'
 import { Comment } from '../entities/Comment'
+import Stripe from 'stripe'
 
 @ObjectType()
 class UserResponse {
@@ -37,6 +40,24 @@ class UserResponse {
 
   @Field(() => Token, { nullable: true })
   token: Token
+}
+
+@ObjectType()
+export class StripeSource {
+  @Field(() => String)
+  id: string
+
+  @Field(() => String)
+  brand: string
+
+  @Field(() => String)
+  last4: string
+
+  @Field(() => Int)
+  exp_month: number
+
+  @Field(() => Int)
+  exp_year: number
 }
 
 @Resolver(User)
@@ -151,6 +172,25 @@ export class UserResolver {
       commentIds
     )) as Comment[]
     return comments
+  }
+
+  @UseMiddleware(isAuth)
+  @FieldResolver(() => [StripeSource])
+  async paymentMethods(
+    @Root() user: User,
+    @Ctx() { me, profileLoader }: Context
+  ): Promise<Stripe.CustomerSource[]> {
+    if (user.id !== me.id) return []
+
+    const profile = await profileLoader.load(user.id)
+    if (!profile.stripeCustomerId) return []
+
+    const payments = new Payments()
+    const paymentMethods = await payments.getPaymentMethods(
+      profile.stripeCustomerId
+    )
+
+    return paymentMethods
   }
 
   @Query(() => User, { nullable: true })

@@ -16,6 +16,7 @@ import { createStoryIdsByUserLoader } from './dataloaders/createStoryIdsByUserLo
 import { createSubscriptionLoader } from './dataloaders/createSubscriptionLoader'
 import { createChapterLoader } from './dataloaders/createChapterLoader'
 import { createCommentLoader } from './dataloaders/createCommentLoader'
+import { createProfileLoader } from './dataloaders/createProfileLoader'
 import { createRatingLoader } from './dataloaders/createRatingLoader'
 import { createGenreLoader } from './dataloaders/createGenreLoader'
 import { createStoryLoader } from './dataloaders/createStoryLoader'
@@ -26,6 +27,7 @@ export interface Context {
   res: Response
   me: User
   token: string
+  profileLoader: ReturnType<typeof createProfileLoader>
   userLoader: ReturnType<typeof createUserLoader>
   storyLoader: ReturnType<typeof createStoryLoader>
   commentIdsByUserLoader: ReturnType<

@@ -21,6 +21,7 @@ import { createUserLoader } from './dataloaders/createUserLoader'
 import { createGenreLoader } from './dataloaders/createGenreLoader'
 import { createStoryLoader } from './dataloaders/createStoryLoader'
 import { createRatingLoader } from './dataloaders/createRatingLoader'
+import { createProfileLoader } from './dataloaders/createProfileLoader'
 import { createCommentLoader } from './dataloaders/createCommentLoader'
 import { createChapterLoader } from './dataloaders/createChapterLoader'
 import { createSubscriptionLoader } from './dataloaders/createSubscriptionLoader'
@@ -79,7 +80,7 @@ const main = async () => {
       if (req.body.operationName === 'IntrospectionQuery') {
         return {}
       }
-      console.log(req.cookies)
+
       let me
 
       const { token } = req.cookies
@@ -98,6 +99,7 @@ const main = async () => {
         ratingLoader: createRatingLoader(),
         chapterLoader: createChapterLoader(),
         commentLoader: createCommentLoader(),
+        profileLoader: createProfileLoader(),
         subscriptionLoader: createSubscriptionLoader(),
         storyIdsByUserLoader: createStoryIdsByUserLoader(),
         genreIdsByStoryLoader: createGenreIdsByStoryLoader(),
