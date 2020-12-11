@@ -18,6 +18,7 @@ import Modal from '@/components/Modal'
 import { useExchangeTokenMutation } from '@/mutations/useExchangeTokenMutation'
 import { withApollo } from '@/utils/withApollo'
 import CreditCardForm from '@/components/CreditCardForm'
+import { PaymentMethod } from '@stripe/stripe-js'
 
 interface Props {
   query: ParsedUrlQuery
@@ -104,6 +105,14 @@ const Profile: NextPage<Props> = ({ query }) => {
     })
   }
 
+  const handleAddCard = (
+    paymentMethod: PaymentMethod,
+    setValidation: Function
+  ) => {
+    console.log(paymentMethod)
+    setValidation('nice')
+  }
+
   return (
     <div className={styles.profile}>
       <h2>Profile</h2>
@@ -168,7 +177,16 @@ const Profile: NextPage<Props> = ({ query }) => {
 
       <Card>
         <h3>Payment Methods</h3>
-        <CreditCardForm />
+        <hr />
+        <ul>
+          {me.paymentMethods.map((source) => (
+            <li>
+              {source.brand} ending in {source.last4} (exp{' '}
+              {source.exp_month}/{source.exp_year})
+            </li>
+          ))}
+        </ul>
+        <CreditCardForm onSuccess={handleAddCard} />
       </Card>
 
       {/* <Card>

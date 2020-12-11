@@ -24,6 +24,7 @@ export interface User {
   email: string
   role: UserRole
   penName: string
+  paymentMethods: StripeSource[]
   stories: Story[]
   favoriteStories: Story[]
   favoriteGenres: Genre[]
@@ -108,4 +109,12 @@ export interface Comment {
   chapter?: Chapter
   updatedAt: Date
   createdAt: Date
+}
+
+export interface StripeSource {
+  id: string
+  brand: string
+  last4: string
+  exp_month: number
+  exp_year: number
 }

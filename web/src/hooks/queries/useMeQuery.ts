@@ -5,6 +5,13 @@ export const meQuery = gql`
   query Me {
     me {
       ...UserInfo
+      paymentMethods {
+        id
+        brand
+        last4
+        exp_month
+        exp_year
+      }
       stories {
         id
         title

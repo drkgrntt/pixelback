@@ -21,6 +21,7 @@ import { createRatingLoader } from './dataloaders/createRatingLoader'
 import { createGenreLoader } from './dataloaders/createGenreLoader'
 import { createStoryLoader } from './dataloaders/createStoryLoader'
 import { createUserLoader } from './dataloaders/createUserLoader'
+import { Field, Int, ObjectType } from 'type-graphql'
 
 export interface Context {
   req: Request
@@ -100,3 +101,21 @@ export enum SubLevel {
 }
 
 export type RatingScore = 1 | 2 | 3 | 4 | 5
+
+@ObjectType()
+export class StripeSource {
+  @Field(() => String)
+  id: string
+
+  @Field(() => String)
+  brand: string
+
+  @Field(() => String)
+  last4: string
+
+  @Field(() => Int)
+  exp_month: number
+
+  @Field(() => Int)
+  exp_year: number
+}

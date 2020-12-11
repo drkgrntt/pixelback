@@ -26,6 +26,7 @@ import {
   FeedbackType,
   PublishStatus,
   UserRole,
+  StripeSource,
 } from '../types'
 import { isAuth } from '../middleware/isAuth'
 import Mailer from '../utils/Mailer'
@@ -40,24 +41,6 @@ class UserResponse {
 
   @Field(() => Token, { nullable: true })
   token: Token
-}
-
-@ObjectType()
-export class StripeSource {
-  @Field(() => String)
-  id: string
-
-  @Field(() => String)
-  brand: string
-
-  @Field(() => String)
-  last4: string
-
-  @Field(() => Int)
-  exp_month: number
-
-  @Field(() => Int)
-  exp_year: number
 }
 
 @Resolver(User)
