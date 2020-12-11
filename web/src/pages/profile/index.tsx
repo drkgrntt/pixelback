@@ -17,6 +17,7 @@ import { useRemoveFavoriteStoryMutation } from '@/mutations/useRemoveFavoriteSto
 import Modal from '@/components/Modal'
 import { useExchangeTokenMutation } from '@/mutations/useExchangeTokenMutation'
 import { withApollo } from '@/utils/withApollo'
+import CreditCardForm from '@/components/CreditCardForm'
 
 interface Props {
   query: ParsedUrlQuery
@@ -163,6 +164,11 @@ const Profile: NextPage<Props> = ({ query }) => {
           action={onRemoveStoryClick}
           stories={me.favoriteStories}
         />
+      </Card>
+
+      <Card>
+        <h3>Payment Methods</h3>
+        <CreditCardForm />
       </Card>
 
       {/* <Card>
