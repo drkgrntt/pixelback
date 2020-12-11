@@ -17,10 +17,6 @@ export class Profile extends BaseEntity {
   @Index()
   id!: string
 
-  @Field({ nullable: true })
-  @Column({ unique: true, nullable: true })
-  stripeCustomerId: string
-
   @Field()
   @Column({ unique: true })
   @Index()

@@ -178,16 +178,15 @@ export class UserResolver {
   @FieldResolver(() => [StripeSource])
   async paymentMethods(
     @Root() user: User,
-    @Ctx() { me, profileLoader }: Context
+    @Ctx() { me }: Context
   ): Promise<Stripe.CustomerSource[]> {
     if (user.id !== me.id) return []
 
-    const profile = await profileLoader.load(user.id)
-    if (!profile.stripeCustomerId) return []
+    if (!user.stripeCustomerId) return []
 
     const payments = new Payments()
     const paymentMethods = await payments.getPaymentMethods(
-      profile.stripeCustomerId
+      user.stripeCustomerId
     )
 
     return paymentMethods

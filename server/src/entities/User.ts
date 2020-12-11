@@ -48,6 +48,10 @@ export class User extends BaseEntity {
   @Index()
   penName: string
 
+  @Field({ nullable: true })
+  @Column({ unique: true, nullable: true })
+  stripeCustomerId: string
+
   @OneToMany(() => Token, (token) => token.user)
   tokens: Token[]
 
