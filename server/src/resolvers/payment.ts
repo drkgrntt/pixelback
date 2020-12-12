@@ -78,7 +78,7 @@ export class PaymentResolver {
 
     await this.payments.cancelSubscription(subscription.id)
 
-    me.role = UserRole.Author
+    me.role = UserRole.Writer
     await me.save()
 
     return me
