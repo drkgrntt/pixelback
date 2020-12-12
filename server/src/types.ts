@@ -77,14 +77,15 @@ export interface Context {
 }
 
 export enum FeedbackType {
-  general,
-  bug,
-  feature,
+  General,
+  Bug,
+  Feature,
 }
 
 export enum UserRole {
   None,
   User,
+  Writer,
   Author,
   Admin,
 }

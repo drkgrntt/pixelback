@@ -8,16 +8,16 @@ import { useGiveFeedbackMutation } from '@/hooks/mutations/useGiveFeedbackMutati
 import { withApollo } from '@/utils/withApollo'
 
 enum FeedbackType {
-  general,
-  bug,
-  feature,
+  General,
+  Bug,
+  Feature,
 }
 
 interface Props {}
 
 const Feedback: NextPage<Props> = (props) => {
   const INITIAL_STATE = {
-    type: FeedbackType.general,
+    type: FeedbackType.General,
     firstName: '',
     lastName: '',
     email: '',
@@ -69,10 +69,10 @@ const Feedback: NextPage<Props> = (props) => {
             type="select"
             label="Feedback Type"
             options={[
-              { value: FeedbackType.general, text: 'General' },
-              { value: FeedbackType.bug, text: 'Bug Report' },
+              { value: FeedbackType.General, text: 'General' },
+              { value: FeedbackType.Bug, text: 'Bug Report' },
               {
-                value: FeedbackType.feature,
+                value: FeedbackType.Feature,
                 text: 'Feature Request',
               },
             ]}

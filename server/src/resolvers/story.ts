@@ -19,7 +19,7 @@ import { Story } from '../entities/Story'
 import { User } from '../entities/User'
 import { Comment } from '../entities/Comment'
 import { Rating } from '../entities/Rating'
-import { Context, PublishStatus } from '../types'
+import { Context, PublishStatus, UserRole } from '../types'
 import { isAuth } from '../middleware/isAuth'
 import { Chapter } from '../entities/Chapter'
 import { StoryGenre } from '../entities/StoryGenre'
@@ -268,6 +268,11 @@ export class StoryResolver {
       enableCommenting,
       authorId: me.id,
     }).save()
+
+    if (me.role === UserRole.User) {
+      me.role = UserRole.Writer
+      await me.save()
+    }
 
     return story
   }
