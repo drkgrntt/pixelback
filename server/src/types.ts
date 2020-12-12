@@ -111,6 +111,7 @@ export class StripeSource {
     this.last4 = paymentMethod.card?.last4 || 'unknown'
     this.expMonth = paymentMethod.card?.exp_month || 0
     this.expYear = paymentMethod.card?.exp_year || 0
+    this.name = `${this.brand} ending in ${this.last4} (exp ${this.expMonth}/${this.expYear})`
   }
 
   @Field(() => String)
@@ -127,4 +128,7 @@ export class StripeSource {
 
   @Field(() => Int)
   expYear: number
+
+  @Field(() => String)
+  name: string
 }

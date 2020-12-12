@@ -117,4 +117,5 @@ export interface StripeSource {
   last4: string
   expMonth: number
   expYear: number
+  name: string
 }

@@ -59,6 +59,21 @@ class Payments {
 
     return new StripeSource(paymentMethod)
   }
+
+  async removePaymentMethod(
+    user: User,
+    sourceId: string
+  ): Promise<boolean> {
+    let paymentMethod = await this.stripe.paymentMethods.retrieve(
+      sourceId
+    )
+    if (paymentMethod?.customer !== user.stripeCustomerId) {
+      return false
+    }
+
+    await this.stripe.paymentMethods.detach(sourceId)
+    return true
+  }
 }
 
 export default Payments

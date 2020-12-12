@@ -13,6 +13,7 @@ export const registerMutation = gql`
           last4
           expMonth
           expYear
+          name
         }
         stories {
           id

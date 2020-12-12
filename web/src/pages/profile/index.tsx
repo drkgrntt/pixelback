@@ -12,12 +12,13 @@ import Loader from '@/components/Loader'
 import StoryList from '@/components/StoryList'
 import PasswordResetForm from '@/components/PasswordResetForm'
 import { useMeQuery } from '@/queries/useMeQuery'
-import { Comment, Story, User } from '@/types'
+import { Comment, Story, StripeSource, User } from '@/types'
 import { useRemoveFavoriteStoryMutation } from '@/mutations/useRemoveFavoriteStoryMutation'
 import Modal from '@/components/Modal'
 import { useExchangeTokenMutation } from '@/mutations/useExchangeTokenMutation'
 import { withApollo } from '@/utils/withApollo'
 import CreditCardForm from '@/components/CreditCardForm'
+import { useRemovePaymentMethodMutation } from '@/hooks/mutations/useRemovePaymentMethodMutation'
 
 interface Props {
   query: ParsedUrlQuery
@@ -27,6 +28,7 @@ const Profile: NextPage<Props> = ({ query }) => {
   const [exchangeToken] = useExchangeTokenMutation()
   const [logoutEverywhere, logoutData] = useLogoutEverywhereMutation()
   const [removeFavoriteStory] = useRemoveFavoriteStoryMutation()
+  const [removePaymentMethod] = useRemovePaymentMethodMutation()
   const { loading, data } = useMeQuery()
   const me: User = data?.me
   useIsAuth()
@@ -98,6 +100,19 @@ const Profile: NextPage<Props> = ({ query }) => {
     })
   }
 
+  const handleRemovePaymentMethod = async (
+    paymentMethod: StripeSource
+  ) => {
+    const confirm = window.confirm(
+      `Are you sure you want to remove ${paymentMethod.name}?`
+    )
+    if (!confirm) return
+
+    await removePaymentMethod({
+      variables: { sourceId: paymentMethod.id },
+    })
+  }
+
   return (
     <div className={styles.profile}>
       <h2>Profile</h2>
@@ -166,8 +181,10 @@ const Profile: NextPage<Props> = ({ query }) => {
         <ul>
           {me.paymentMethods.map((source) => (
             <li key={source.id}>
-              {source.brand} ending in {source.last4} (exp{' '}
-              {source.expMonth}/{source.expYear})
+              <span>{source.name}</span>{' '}
+              <a onClick={() => handleRemovePaymentMethod(source)}>
+                Remove
+              </a>
             </li>
           ))}
         </ul>
