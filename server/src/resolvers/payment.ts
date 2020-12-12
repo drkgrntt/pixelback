@@ -43,21 +43,41 @@ export class PaymentResolver {
     @Ctx() { me }: Context,
     @Arg('price') price: 'month' | 'year'
   ): Promise<User> {
-    let priceId
-    switch (price) {
-      case 'month':
-        priceId = process.env.STRIPE_MONTHLY_PRICE_ID
-        break
-
-      case 'year':
-        priceId = process.env.STRIPE_YEARLY_PRICE_ID
-        break
-
-      default:
-        throw new Error('Price must be "month" or "year"')
+    if (me.role === UserRole.Author) {
+      me = await this.cancelAuthorship({ me } as Context)
     }
 
+    const priceId = this.payments.getPriceId(price)
+
     await this.payments.createSubscription(me, priceId)
+    me.role = UserRole.Author
+    await me.save()
+
+    return me
+  }
+
+  @Mutation(() => User)
+  @UseMiddleware(isAuth)
+  async cancelAuthorship(@Ctx() { me }: Context): Promise<User> {
+    if (me.role !== UserRole.Author) {
+      throw new Error('Only authors can cancel their authorship')
+    }
+
+    const customer = await this.payments.getCustomer(me)
+    if (!customer) return me
+
+    const subscription = customer.subscriptions?.data.find(
+      (subscription) =>
+        subscription.items.data.some(
+          (item) =>
+            item.price.id === process.env.STRIPE_MONTHLY_PRICE_ID ||
+            item.price.id === process.env.STRIPE_YEARLY_PRICE_ID
+        ) && !subscription.canceled_at
+    )
+    if (!subscription) return me
+
+    await this.payments.cancelSubscription(subscription.id)
+
     me.role = UserRole.Author
     await me.save()
 

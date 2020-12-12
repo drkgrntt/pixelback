@@ -75,6 +75,19 @@ class Payments {
     return true
   }
 
+  getPriceId(price: 'month' | 'year') {
+    switch (price) {
+      case 'month':
+        return process.env.STRIPE_MONTHLY_PRICE_ID
+
+      case 'year':
+        return process.env.STRIPE_YEARLY_PRICE_ID
+
+      default:
+        throw new Error('Price must be "month" or "year"')
+    }
+  }
+
   async createSubscription(
     user: User,
     priceId: string
@@ -88,6 +101,16 @@ class Payments {
     })
 
     return subscription
+  }
+
+  async cancelSubscription(
+    subscriptionId: string
+  ): Promise<Stripe.Subscription | null> {
+    const deleted = await this.stripe.subscriptions.del(
+      subscriptionId
+    )
+
+    return deleted
   }
 }
 
