@@ -84,7 +84,7 @@ export enum FeedbackType {
 
 export enum UserRole {
   None,
-  User,
+  Reader,
   Writer,
   Author,
   Admin,

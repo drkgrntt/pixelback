@@ -269,7 +269,7 @@ export class StoryResolver {
       authorId: me.id,
     }).save()
 
-    if (me.role === UserRole.User) {
+    if (me.role === UserRole.Reader) {
       me.role = UserRole.Writer
       await me.save()
     }

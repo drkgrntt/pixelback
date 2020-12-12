@@ -249,7 +249,7 @@ export class UserResolver {
     const user = await User.create({
       email: email,
       password: passwordHash,
-      role: UserRole.User,
+      role: UserRole.Reader,
       penName: email.split('@')[0], // TODO: improve this
     }).save()
 
