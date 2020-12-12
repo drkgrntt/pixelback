@@ -9,26 +9,45 @@ class Payments {
   }
 
   async getCustomer(
-    id?: string,
+    customerId?: string,
     createIfNull?: boolean
-  ): Promise<Stripe.Customer | Stripe.DeletedCustomer | null> {
-    if (!id && !createIfNull) return null
+  ): Promise<Stripe.Customer | null> {
+    if (!customerId && !createIfNull) return null
 
-    if (!id) {
+    if (!customerId) {
       return await this.stripe.customers.create()
     }
 
-    return await this.stripe.customers.retrieve(id)
+    const customer = await this.stripe.customers.retrieve(customerId)
+    if (customer.deleted) return null
+    return customer
   }
 
   async getPaymentMethods(
-    id: string
+    customerId: string
   ): Promise<Stripe.CustomerSource[]> {
-    const cards = await this.stripe.customers.listSources(id, {
-      object: 'card',
-    })
+    const cards = await this.stripe.customers.listSources(
+      customerId,
+      {
+        object: 'card',
+      }
+    )
 
     return cards.data
+  }
+
+  async addPaymentMethod(
+    customerId: string,
+    sourceId: string
+  ): Promise<Stripe.CustomerSource> {
+    const customer = await this.getCustomer(customerId, true)
+
+    const source = await this.stripe.customers.createSource(
+      customer?.id as string,
+      { source: sourceId }
+    )
+
+    return source
   }
 }
 
