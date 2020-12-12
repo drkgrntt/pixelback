@@ -9,8 +9,8 @@ export const meQuery = gql`
         id
         brand
         last4
-        exp_month
-        exp_year
+        expMonth
+        expYear
       }
       stories {
         id

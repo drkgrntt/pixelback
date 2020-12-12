@@ -1,4 +1,6 @@
 import Stripe from 'stripe'
+import { User } from '../entities/User'
+import { StripeSource } from '../types'
 
 class Payments {
   stripe: Stripe
@@ -9,45 +11,53 @@ class Payments {
   }
 
   async getCustomer(
-    customerId?: string,
+    user: User,
     createIfNull?: boolean
   ): Promise<Stripe.Customer | null> {
-    if (!customerId && !createIfNull) return null
+    if (!user.stripeCustomerId && !createIfNull) return null
 
-    if (!customerId) {
-      return await this.stripe.customers.create()
+    if (!user.stripeCustomerId) {
+      const customer = await this.stripe.customers.create({
+        email: user.email,
+      })
+      user.stripeCustomerId = customer.id
+      await user.save()
+      return customer
     }
 
-    const customer = await this.stripe.customers.retrieve(customerId)
+    const customer = await this.stripe.customers.retrieve(
+      user.stripeCustomerId
+    )
     if (customer.deleted) return null
+
     return customer
   }
 
-  async getPaymentMethods(
-    customerId: string
-  ): Promise<Stripe.CustomerSource[]> {
-    const cards = await this.stripe.customers.listSources(
-      customerId,
-      {
-        object: 'card',
-      }
-    )
+  async getPaymentMethods(user: User): Promise<StripeSource[]> {
+    const paymentMethods = await this.stripe.paymentMethods.list({
+      type: 'card',
+      customer: user.stripeCustomerId,
+    })
 
-    return cards.data
+    const cards = paymentMethods.data
+      .filter((pm) => pm)
+      .map((pm) => new StripeSource(pm))
+
+    return cards
   }
 
   async addPaymentMethod(
-    customerId: string,
+    user: User,
     sourceId: string
-  ): Promise<Stripe.CustomerSource> {
-    const customer = await this.getCustomer(customerId, true)
+  ): Promise<StripeSource> {
+    const customer = await this.getCustomer(user, true)
 
-    const source = await this.stripe.customers.createSource(
-      customer?.id as string,
-      { source: sourceId }
+    const paymentMethod = await this.stripe.paymentMethods.attach(
+      sourceId,
+      { customer: customer?.id as string }
     )
 
-    return source
+    return new StripeSource(paymentMethod)
   }
 }
 

@@ -9,7 +9,6 @@ import {
   FieldResolver,
   Root,
   UseMiddleware,
-  Int,
 } from 'type-graphql'
 import { ILike } from 'typeorm'
 import bcrypt from 'bcrypt'
@@ -32,7 +31,6 @@ import { isAuth } from '../middleware/isAuth'
 import Mailer from '../utils/Mailer'
 import Payments from '../utils/Payments'
 import { Comment } from '../entities/Comment'
-import Stripe from 'stripe'
 
 @ObjectType()
 class UserResponse {
@@ -162,15 +160,13 @@ export class UserResolver {
   async paymentMethods(
     @Root() user: User,
     @Ctx() { me }: Context
-  ): Promise<Stripe.CustomerSource[]> {
+  ): Promise<StripeSource[]> {
     if (user.id !== me.id) return []
 
     if (!user.stripeCustomerId) return []
 
     const payments = new Payments()
-    const paymentMethods = await payments.getPaymentMethods(
-      user.stripeCustomerId
-    )
+    const paymentMethods = await payments.getPaymentMethods(user)
 
     return paymentMethods
   }

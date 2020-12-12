@@ -9,6 +9,7 @@ import { loadStripe, StripeCardElement } from '@stripe/stripe-js'
 import styles from './CreditCardForm.module.scss'
 import Loader from '../Loader'
 import Button from '../Button'
+import { useAddPaymentMethodMutation } from '@/hooks/mutations/useAddPaymentMethodMutation'
 
 interface Props {
   onSuccess?: Function
@@ -22,6 +23,7 @@ const CreditCardForm: React.FC<Props> = ({
   const stripe = useStripe()
   const elements = useElements()
   const [validation, setValidation] = useState('')
+  const [addPaymentMethod] = useAddPaymentMethodMutation()
 
   if (!elements || !stripe) {
     return <Loader />
@@ -38,10 +40,15 @@ const CreditCardForm: React.FC<Props> = ({
       }
     )
 
-    if (error) {
+    if (error || !paymentMethod) {
       onError(error)
-      setValidation(error?.message || '')
+      setValidation(
+        error?.message || 'Something went wrong. Try again later.'
+      )
     } else {
+      await addPaymentMethod({
+        variables: { sourceId: paymentMethod?.id },
+      })
       onSuccess(paymentMethod, setValidation)
       cardElement?.clear()
     }

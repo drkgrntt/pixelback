@@ -1,6 +1,6 @@
 import { ParsedUrlQuery } from 'querystring'
 import Link from 'next/link'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { NextPage } from 'next'
 import Error from 'next/error'
 import styles from './Profile.module.scss'
@@ -18,20 +18,13 @@ import Modal from '@/components/Modal'
 import { useExchangeTokenMutation } from '@/mutations/useExchangeTokenMutation'
 import { withApollo } from '@/utils/withApollo'
 import CreditCardForm from '@/components/CreditCardForm'
-import { PaymentMethod } from '@stripe/stripe-js'
 
 interface Props {
   query: ParsedUrlQuery
 }
 
 const Profile: NextPage<Props> = ({ query }) => {
-  // const [initialized, setInitialized] = useState(false)
   const [exchangeToken] = useExchangeTokenMutation()
-  // useEffect(() => {
-  //   setInitialized(true)
-  //   if (!query.token) return
-  //   document.cookie = query.token as string
-  // }, [])
   const [logoutEverywhere, logoutData] = useLogoutEverywhereMutation()
   const [removeFavoriteStory] = useRemoveFavoriteStoryMutation()
   const { loading, data } = useMeQuery()
@@ -105,14 +98,6 @@ const Profile: NextPage<Props> = ({ query }) => {
     })
   }
 
-  const handleAddCard = (
-    paymentMethod: PaymentMethod,
-    setValidation: Function
-  ) => {
-    console.log(paymentMethod)
-    setValidation('nice')
-  }
-
   return (
     <div className={styles.profile}>
       <h2>Profile</h2>
@@ -180,13 +165,13 @@ const Profile: NextPage<Props> = ({ query }) => {
         <hr />
         <ul>
           {me.paymentMethods.map((source) => (
-            <li>
+            <li key={source.id}>
               {source.brand} ending in {source.last4} (exp{' '}
-              {source.exp_month}/{source.exp_year})
+              {source.expMonth}/{source.expYear})
             </li>
           ))}
         </ul>
-        <CreditCardForm onSuccess={handleAddCard} />
+        <CreditCardForm />
       </Card>
 
       {/* <Card>

@@ -7,6 +7,13 @@ export const loginMutation = gql`
     login(email: $email, password: $password) {
       user {
         ...UserInfo
+        paymentMethods {
+          id
+          brand
+          last4
+          expMonth
+          expYear
+        }
         stories {
           id
           title

@@ -22,6 +22,7 @@ import { createGenreLoader } from './dataloaders/createGenreLoader'
 import { createStoryLoader } from './dataloaders/createStoryLoader'
 import { createUserLoader } from './dataloaders/createUserLoader'
 import { Field, Int, ObjectType } from 'type-graphql'
+import Stripe from 'stripe'
 
 export interface Context {
   req: Request
@@ -104,6 +105,14 @@ export type RatingScore = 1 | 2 | 3 | 4 | 5
 
 @ObjectType()
 export class StripeSource {
+  constructor(paymentMethod: Stripe.PaymentMethod) {
+    this.id = paymentMethod.id
+    this.brand = paymentMethod.card?.brand || 'unknown'
+    this.last4 = paymentMethod.card?.last4 || 'unknown'
+    this.expMonth = paymentMethod.card?.exp_month || 0
+    this.expYear = paymentMethod.card?.exp_year || 0
+  }
+
   @Field(() => String)
   id: string
 
@@ -114,8 +123,8 @@ export class StripeSource {
   last4: string
 
   @Field(() => Int)
-  exp_month: number
+  expMonth: number
 
   @Field(() => Int)
-  exp_year: number
+  expYear: number
 }

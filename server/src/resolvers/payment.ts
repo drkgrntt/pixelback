@@ -8,7 +8,6 @@ import {
 import { Context, StripeSource } from '../types'
 import { isAuth } from '../middleware/isAuth'
 import Payments from '../utils/Payments'
-import Stripe from 'stripe'
 
 @Resolver()
 export class PaymentResolver {
@@ -17,10 +16,10 @@ export class PaymentResolver {
   async addPaymentMethod(
     @Arg('sourceId') sourceId: string,
     @Ctx() { me }: Context
-  ): Promise<Stripe.CustomerSource> {
+  ): Promise<StripeSource> {
     const payments = new Payments()
     const paymentMethod = await payments.addPaymentMethod(
-      me.stripeCustomerId,
+      me,
       sourceId
     )
     return paymentMethod

@@ -14,6 +14,7 @@ import { ReadResolver } from './resolvers/read'
 import { StoryResolver } from './resolvers/story'
 import { GenreResolver } from './resolvers/genre'
 import { RatingResolver } from './resolvers/rating'
+import { PaymentResolver } from './resolvers/payment'
 import { ChapterResolver } from './resolvers/chapter'
 import { CommentResolver } from './resolvers/comment'
 import { SubscriptionResolver } from './resolvers/subscription'
@@ -70,6 +71,7 @@ const main = async () => {
         StoryResolver,
         GenreResolver,
         RatingResolver,
+        PaymentResolver,
         CommentResolver,
         ChapterResolver,
         SubscriptionResolver,
