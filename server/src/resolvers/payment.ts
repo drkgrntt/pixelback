@@ -5,9 +5,10 @@ import {
   Arg,
   Mutation,
 } from 'type-graphql'
-import { Context, StripeSource } from '../types'
+import { Context, StripeSource, UserRole } from '../types'
 import { isAuth } from '../middleware/isAuth'
 import Payments from '../utils/Payments'
+import { User } from 'src/entities/User'
 
 @Resolver()
 export class PaymentResolver {
@@ -34,5 +35,32 @@ export class PaymentResolver {
   ): Promise<string> {
     await this.payments.removePaymentMethod(me, sourceId)
     return sourceId
+  }
+
+  @Mutation(() => User)
+  @UseMiddleware(isAuth)
+  async becomeAuthor(
+    @Ctx() { me }: Context,
+    @Arg('price') price: 'month' | 'year'
+  ): Promise<User> {
+    let priceId
+    switch (price) {
+      case 'month':
+        priceId = process.env.STRIPE_MONTHLY_PRICE_ID
+        break
+
+      case 'year':
+        priceId = process.env.STRIPE_YEARLY_PRICE_ID
+        break
+
+      default:
+        throw new Error('Price must be "month" or "year"')
+    }
+
+    await this.payments.createSubscription(me, priceId)
+    me.role = UserRole.Author
+    await me.save()
+
+    return me
   }
 }

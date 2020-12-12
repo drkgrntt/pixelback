@@ -74,6 +74,21 @@ class Payments {
     await this.stripe.paymentMethods.detach(sourceId)
     return true
   }
+
+  async createSubscription(
+    user: User,
+    priceId: string
+  ): Promise<Stripe.Subscription | null> {
+    const customer = await this.getCustomer(user, true)
+    if (!customer) return null
+
+    const subscription = await this.stripe.subscriptions.create({
+      customer: customer.id,
+      items: [{ price: priceId }],
+    })
+
+    return subscription
+  }
 }
 
 export default Payments
