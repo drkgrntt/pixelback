@@ -176,16 +176,13 @@ const WriterDashboard: NextPage<{}> = () => {
       case UserRole.Admin:
         return <p>Aren't you special?</p>
 
-      case UserRole.None:
+      default:
         return (
           <p>
             This shouldn't be the case. Consider reporting this as a
             bug.
           </p>
         )
-
-      default:
-        return
     }
   }
 
