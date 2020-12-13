@@ -65,15 +65,10 @@ export class PaymentResolver {
     }
 
     const subscriptions = await this.payments.getSubscriptions(me)
-
-    const subscription = subscriptions.find(
-      (subscription) =>
-        subscription.items.data.some(
-          (item) =>
-            item.price.id === process.env.STRIPE_MONTHLY_PRICE_ID ||
-            item.price.id === process.env.STRIPE_YEARLY_PRICE_ID
-        ) && !subscription.canceled_at
+    const subscription = this.payments.getAuthorshipSubscription(
+      subscriptions
     )
+
     if (!subscription) return me
 
     await this.payments.cancelSubscription(subscription.id)

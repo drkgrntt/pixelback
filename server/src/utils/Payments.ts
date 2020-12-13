@@ -98,6 +98,19 @@ class Payments {
     return subscriptions.data
   }
 
+  getAuthorshipSubscription(
+    subscriptions: Stripe.Subscription[]
+  ): Stripe.Subscription | undefined {
+    return subscriptions.find(
+      (subscription) =>
+        subscription.items.data.some(
+          (item) =>
+            item.price.id === process.env.STRIPE_MONTHLY_PRICE_ID ||
+            item.price.id === process.env.STRIPE_YEARLY_PRICE_ID
+        ) && !subscription.canceled_at
+    )
+  }
+
   async createSubscription(
     user: User,
     priceId: string,

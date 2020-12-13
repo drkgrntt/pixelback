@@ -133,3 +133,31 @@ export class StripeSource {
   @Field(() => String)
   name: string
 }
+
+@ObjectType()
+export class StripeSubscription {
+  constructor(subscription: Stripe.Subscription) {
+    this.id = subscription.id
+    this.createdAt = new Date(subscription.created)
+    this.currentPeriodStart = new Date(
+      subscription.current_period_start
+    )
+    this.currentPeriodEnd = new Date(subscription.current_period_end)
+    this.daysUntilDue = subscription.days_until_due || 0
+  }
+
+  @Field(() => String)
+  id: string
+
+  @Field(() => String)
+  createdAt: Date
+
+  @Field(() => String)
+  currentPeriodStart: Date
+
+  @Field(() => String)
+  currentPeriodEnd: Date
+
+  @Field(() => Int)
+  daysUntilDue: number
+}

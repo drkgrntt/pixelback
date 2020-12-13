@@ -26,6 +26,7 @@ import {
   PublishStatus,
   UserRole,
   StripeSource,
+  StripeSubscription,
 } from '../types'
 import { isAuth } from '../middleware/isAuth'
 import Mailer from '../utils/Mailer'
@@ -44,6 +45,9 @@ class UserResponse {
 
 @Resolver(User)
 export class UserResolver {
+  payments = new Payments()
+  mailer = new Mailer()
+
   @FieldResolver(() => String)
   email(@Root() user: User, @Ctx() { me }: Context): string {
     if (me?.id !== user.id) return ''
@@ -157,18 +161,27 @@ export class UserResolver {
   }
 
   @FieldResolver(() => [StripeSource])
-  async paymentMethods(
-    @Root() user: User,
-    @Ctx() { me }: Context
-  ): Promise<StripeSource[]> {
-    if (user.id !== me?.id) return []
-
+  async paymentMethods(@Root() user: User): Promise<StripeSource[]> {
     if (!user.stripeCustomerId) return []
 
-    const payments = new Payments()
-    const paymentMethods = await payments.getPaymentMethods(user)
+    const paymentMethods = await this.payments.getPaymentMethods(user)
 
     return paymentMethods
+  }
+
+  @FieldResolver(() => StripeSubscription, { nullable: true })
+  async roleSubscription(
+    @Root() user: User
+  ): Promise<StripeSubscription | null> {
+    if (!user.stripeCustomerId) return null
+
+    const subscriptions = await this.payments.getSubscriptions(user)
+    const subscription = this.payments.getAuthorshipSubscription(
+      subscriptions
+    )
+    if (!subscription) return null
+
+    return new StripeSubscription(subscription)
   }
 
   @Query(() => User, { nullable: true })
@@ -304,8 +317,7 @@ export class UserResolver {
       link,
     }
 
-    const mailer = new Mailer()
-    const result = await mailer.sendEmail(
+    const result = await this.mailer.sendEmail(
       user.email,
       subject,
       template,
@@ -435,7 +447,6 @@ export class UserResolver {
     @Arg('summary') summary: string,
     @Arg('details') details: string
   ): Promise<boolean> {
-    const mailer = new Mailer()
     const subject = `${FeedbackType[type]} feedback from ${firstName} ${lastName}`
     const variables = {
       type: FeedbackType[type],
@@ -445,7 +456,7 @@ export class UserResolver {
       summary,
       details,
     }
-    const result = await mailer.sendEmail(
+    const result = await this.mailer.sendEmail(
       process.env.GMAIL,
       subject,
       templates.feedback,
