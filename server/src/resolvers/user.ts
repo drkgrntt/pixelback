@@ -10,7 +10,7 @@ import {
   Root,
   UseMiddleware,
 } from 'type-graphql'
-import { ILike, LessThanOrEqual } from 'typeorm'
+import { ILike, LessThan } from 'typeorm'
 import bcrypt from 'bcrypt'
 import { User } from '../entities/User'
 import { Token } from '../entities/Token'
@@ -31,6 +31,7 @@ import { isAuth } from '../middleware/isAuth'
 import Mailer from '../utils/Mailer'
 import Payments from '../utils/Payments'
 import { Comment } from '../entities/Comment'
+import { templates } from '../constants'
 
 @ObjectType()
 class UserResponse {
@@ -298,7 +299,7 @@ export class UserResolver {
     const token = await Token.generate(user.id, 1)
     const subject = 'Password Reset'
     const link = `${process.env.APP_BASE_URL}/profile?token=${token.value}`
-    const template = 'passwordReset'
+    const template = templates.passwordReset
     const variables = {
       name: user.penName,
       link,
@@ -448,7 +449,7 @@ export class UserResolver {
     const result = await mailer.sendEmail(
       process.env.GMAIL,
       subject,
-      'feedback',
+      templates.feedback,
       variables
     )
 
@@ -458,7 +459,7 @@ export class UserResolver {
   @Mutation(() => Boolean)
   async clearTokens() {
     const expiredTokens = await Token.delete({
-      expiry: LessThanOrEqual(new Date()),
+      expiry: LessThan(new Date()),
     })
     return !!expiredTokens.affected
   }
