@@ -49,6 +49,7 @@ const CreditCardForm: React.FC<Props> = ({
       await addPaymentMethod({
         variables: { sourceId: paymentMethod?.id },
       })
+      setValidation('')
       onSuccess(paymentMethod, setValidation)
       cardElement?.clear()
     }

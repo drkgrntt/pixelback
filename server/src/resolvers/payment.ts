@@ -41,6 +41,7 @@ export class PaymentResolver {
   @UseMiddleware(isAuth)
   async becomeAuthor(
     @Ctx() { me }: Context,
+    @Arg('sourceId') sourceId: string,
     @Arg('price') price: 'month' | 'year'
   ): Promise<User> {
     if (me.role === UserRole.Author) {
@@ -49,7 +50,7 @@ export class PaymentResolver {
 
     const priceId = this.payments.getPriceId(price)
 
-    await this.payments.createSubscription(me, priceId)
+    await this.payments.createSubscription(me, priceId, sourceId)
     me.role = UserRole.Author
     await me.save()
 
@@ -63,10 +64,9 @@ export class PaymentResolver {
       throw new Error('Only authors can cancel their authorship')
     }
 
-    const customer = await this.payments.getCustomer(me)
-    if (!customer) return me
+    const subscriptions = await this.payments.getSubscriptions(me)
 
-    const subscription = customer.subscriptions?.data.find(
+    const subscription = subscriptions.find(
       (subscription) =>
         subscription.items.data.some(
           (item) =>

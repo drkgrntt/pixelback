@@ -88,14 +88,26 @@ class Payments {
     }
   }
 
+  async getSubscriptions(user: User): Promise<Stripe.Subscription[]> {
+    if (!user.stripeCustomerId) return []
+
+    const subscriptions = await this.stripe.subscriptions.list({
+      customer: user.stripeCustomerId,
+    })
+
+    return subscriptions.data
+  }
+
   async createSubscription(
     user: User,
-    priceId: string
+    priceId: string,
+    sourceId: string
   ): Promise<Stripe.Subscription | null> {
     const customer = await this.getCustomer(user, true)
     if (!customer) return null
 
     const subscription = await this.stripe.subscriptions.create({
+      default_payment_method: sourceId,
       customer: customer.id,
       items: [{ price: priceId }],
     })
