@@ -8,7 +8,7 @@ import {
 import { Context, StripeSource, UserRole } from '../types'
 import { isAuth } from '../middleware/isAuth'
 import Payments from '../utils/Payments'
-import { User } from 'src/entities/User'
+import { User } from '../entities/User'
 
 @Resolver()
 export class PaymentResolver {

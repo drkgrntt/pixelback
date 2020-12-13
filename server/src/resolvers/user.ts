@@ -10,7 +10,7 @@ import {
   Root,
   UseMiddleware,
 } from 'type-graphql'
-import { ILike } from 'typeorm'
+import { ILike, LessThanOrEqual } from 'typeorm'
 import bcrypt from 'bcrypt'
 import { User } from '../entities/User'
 import { Token } from '../entities/Token'
@@ -453,5 +453,13 @@ export class UserResolver {
     )
 
     return result
+  }
+
+  @Mutation(() => Boolean)
+  async clearTokens() {
+    const expiredTokens = await Token.delete({
+      expiry: LessThanOrEqual(new Date()),
+    })
+    return !!expiredTokens.affected
   }
 }
