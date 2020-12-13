@@ -3,36 +3,20 @@ import { useRouter } from 'next/router'
 import Link from 'next/link'
 import styles from './WriterDashboard.module.scss'
 import Card from '@/components/Card'
-import {
-  Story,
-  StripeSource,
-  SubLevel,
-  Subscription,
-  UserRole,
-} from '@/types'
+import { Story, SubLevel, Subscription, UserRole } from '@/types'
 import Button from '@/components/Button'
-import CreditCardForm from '@/components/CreditCardForm'
+import AuthorshipForm from '@/components/AuthorshipForm'
 import { useMeQuery } from '@/queries/useMeQuery'
 import { useIsAuth } from '@/hooks/useIsAuth'
 import Loader from '@/components/Loader'
 import { withApollo } from '@/utils/withApollo'
-import Input from '@/components/Input'
-import { useBecomeAuthorMutation } from '@/mutations/useBecomeAuthorMutation'
-import { useForm } from '@/hooks/useForm'
 import { useCancelAuthorshipMutation } from '@/hooks/mutations/useCancelAuthorshipMutation'
 import Modal from '@/components/Modal'
 
 const WriterDashboard: NextPage<{}> = () => {
   const { loading, data } = useMeQuery()
   const { push } = useRouter()
-  const [becomeAuthor] = useBecomeAuthorMutation()
   const [cancelAuthorship] = useCancelAuthorshipMutation()
-  const formState = useForm(
-    {
-      sourceId: data?.me?.paymentMethods[0]?.id,
-    },
-    [data?.me]
-  )
   useIsAuth()
 
   if (loading) {
@@ -83,24 +67,7 @@ const WriterDashboard: NextPage<{}> = () => {
     )
   }
 
-  const handleBecomeAuthorClick = async (
-    event: any,
-    reset: Function,
-    price: string
-  ) => {
-    event.preventDefault()
-    await becomeAuthor({
-      variables: { price, sourceId: formState.values.sourceId },
-    })
-  }
-
   const renderBecomeAuthorButton = () => {
-    const options = data?.me?.paymentMethods.map(
-      (paymentMethod: StripeSource) => ({
-        value: paymentMethod.id,
-        text: paymentMethod.name,
-      })
-    )
     return (
       <div className={styles.authorSubscription}>
         <h4>Unlock more as an Author!</h4>
@@ -109,31 +76,7 @@ const WriterDashboard: NextPage<{}> = () => {
           <li>Something else</li>
           <li>Something else</li>
         </ul>
-        <form className={styles.authorSubscriptionForm}>
-          <Input
-            type="select"
-            name="sourceId"
-            options={options}
-            formState={formState}
-          />
-          <div className={styles.authorSubscriptionOptions}>
-            <Button
-              onClick={(event: any, reset: Function) =>
-                handleBecomeAuthorClick(event, reset, 'month')
-              }
-            >
-              $5/month
-            </Button>
-            <Button
-              onClick={(event: any, reset: Function) =>
-                handleBecomeAuthorClick(event, reset, 'year')
-              }
-            >
-              $50/year
-            </Button>
-          </div>
-        </form>
-        <CreditCardForm />
+        <AuthorshipForm />
       </div>
     )
   }

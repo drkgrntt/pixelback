@@ -1,0 +1,11 @@
+.options {
+  display: flex;
+  justify-content: space-around;
+}
+
+.authorshipForm,
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}

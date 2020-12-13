@@ -260,6 +260,15 @@ export class StoryResolver {
     @Arg('summary') summary: string,
     @Ctx() { me }: Context
   ): Promise<Story> {
+    if (me.role < UserRole.Author) {
+      const storyCount = await Story.count({ authorId: me.id })
+      if (storyCount >= 10) {
+        throw new Error(
+          'You need to be an author to write more stories.'
+        )
+      }
+    }
+
     const story = await Story.create({
       title,
       body,

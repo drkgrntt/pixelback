@@ -1,21 +1,25 @@
 import { NextPage } from 'next'
 import { useState } from 'react'
 import styles from './New.module.scss'
+import AuthorshipForm from '@/components/AuthorshipForm'
 import Card from '@/components/Card'
 import ContentForm from '@/components/ContentForm'
 import { useCreateStoryMutation } from '@/mutations/useCreateStoryMutation'
 import { useUpdateStoryMutation } from '@/mutations/useUpdateStoryMutation'
-import { PublishStatus, Story } from '@/types'
+import { PublishStatus, Story, UserRole } from '@/types'
 import { useRouter } from 'next/router'
 import { useIsAuth } from '@/hooks/useIsAuth'
 import Loader from '@/components/Loader'
 import { withApollo } from '@/utils/withApollo'
+import { useMeQuery } from '@/hooks/queries/useMeQuery'
+import Button from '@/components/Button'
 
 const New: NextPage<{}> = () => {
   const { push } = useRouter()
   const [createStory] = useCreateStoryMutation()
   const [updateStory] = useUpdateStoryMutation()
   const [story, setStory] = useState<Story | undefined>()
+  const { data } = useMeQuery()
   const { loading } = useIsAuth()
 
   if (loading) {
@@ -53,6 +57,23 @@ const New: NextPage<{}> = () => {
     const story = await save(formState)
     if (!story) return
     push(`/stories/${story.id}/dashboard`)
+  }
+
+  if (
+    data?.me?.role < UserRole.Author &&
+    data?.me?.stories.length >= 10
+  ) {
+    return (
+      <Card>
+        <h2>Great work!</h2>
+        <p>
+          You are on a roll! You have reached the free limit of
+          stories. Please upgrade to Author status to write more
+          stories.
+        </p>
+        <AuthorshipForm />
+      </Card>
+    )
   }
 
   return (
