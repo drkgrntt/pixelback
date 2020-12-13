@@ -135,8 +135,6 @@ const StoryPage: NextPage<Props> = ({ query }) => {
         >
           <h3>Tip {story.author.penName}</h3>
           <TipForm author={story.author} />
-          <p>Need a different card?</p>
-          <CreditCardForm />
         </Modal>
       </Card>
       <Comments story={story} comments={story.comments} />

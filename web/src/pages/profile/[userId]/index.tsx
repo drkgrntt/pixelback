@@ -81,8 +81,6 @@ const UserPage: NextPage<Props> = ({ query }) => {
         >
           <h3>Tip {user.penName}</h3>
           <TipForm author={user} />
-          <p>Need a different card?</p>
-          <CreditCardForm />
         </Modal>
       </Card>
 
