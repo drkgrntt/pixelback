@@ -115,7 +115,6 @@ const WriterDashboard: NextPage<{}> = () => {
             options={options}
             formState={formState}
           />
-          <CreditCardForm />
           <div className={styles.authorSubscriptionOptions}>
             <Button
               onClick={(event: any, reset: Function) =>
@@ -133,6 +132,7 @@ const WriterDashboard: NextPage<{}> = () => {
             </Button>
           </div>
         </form>
+        <CreditCardForm />
       </div>
     )
   }

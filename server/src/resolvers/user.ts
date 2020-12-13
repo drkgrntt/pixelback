@@ -156,13 +156,12 @@ export class UserResolver {
     return comments
   }
 
-  @UseMiddleware(isAuth)
   @FieldResolver(() => [StripeSource])
   async paymentMethods(
     @Root() user: User,
     @Ctx() { me }: Context
   ): Promise<StripeSource[]> {
-    if (user.id !== me.id) return []
+    if (user.id !== me?.id) return []
 
     if (!user.stripeCustomerId) return []
 
