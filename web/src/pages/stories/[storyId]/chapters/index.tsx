@@ -5,6 +5,9 @@ import Error from 'next/error'
 import Link from 'next/link'
 import { useStoryQuery } from '@/queries/useStoryQuery'
 import Loader from '@/components/Loader'
+import Modal from '@/components/Modal'
+import TipForm from '@/components/TipForm'
+import CreditCardForm from '@/components/CreditCardForm'
 import styles from './Chapters.module.scss'
 import ChapterList from '@/components/ChapterList'
 import Card from '@/components/Card'
@@ -115,6 +118,17 @@ const Chapters: NextPage<Props> = ({ query }) => {
           rateStatus={story.rateStatus}
         />
         {renderFavoriteButton()}
+      </Card>
+      <Card>
+        <Modal
+          buttonText="Tip the author"
+          className={styles.tipModal}
+        >
+          <h3>Tip {story.author.penName}</h3>
+          <TipForm author={story.author} />
+          <p>Need a different card?</p>
+          <CreditCardForm />
+        </Modal>
       </Card>
     </div>
   )

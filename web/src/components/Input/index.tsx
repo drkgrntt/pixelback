@@ -13,6 +13,9 @@ interface Props {
   onFocus?: Function
   onBlur?: Function
   children?: any
+  step?: number
+  min?: number
+  max?: number
   options?: { value: any; text: string }[]
   validation?: string
   formState?: { [key: string]: any }
@@ -32,6 +35,9 @@ const Input: React.FC<Props> = (props) => {
     onChange = () => null,
     onFocus = () => null,
     onBlur = () => null,
+    step,
+    min,
+    max,
     children = null,
     options = [],
     validation = '',
@@ -139,6 +145,9 @@ const Input: React.FC<Props> = (props) => {
           onChange={(event) => onChange(event)}
           onBlur={(event) => onBlur(event)}
           onFocus={(event) => onFocus(event)}
+          step={step}
+          min={min}
+          max={max}
         />
       </>
     )

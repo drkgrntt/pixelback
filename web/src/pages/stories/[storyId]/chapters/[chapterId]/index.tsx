@@ -15,6 +15,10 @@ import Head from '@/components/Head'
 import { useMeQuery } from '@/queries/useMeQuery'
 import { useRateMutation } from '@/mutations/useRateMutation'
 import Comments from '@/components/Comments'
+import Card from '@/components/Card'
+import Modal from '@/components/Modal'
+import CreditCardForm from '@/components/CreditCardForm'
+import TipForm from '@/components/TipForm'
 
 interface Props {
   query: ParsedUrlQuery
@@ -133,12 +137,25 @@ const ChapterPage: NextPage<Props> = ({ query }) => {
         {renderPrev()}
         {renderNext()}
       </div>
-      <StarScale
-        allowHover={!!meResult.data?.me}
-        onStarClick={rateChapter}
-        score={chapter.score}
-        rateStatus={chapter.rateStatus}
-      />
+      <Card>
+        <StarScale
+          allowHover={!!meResult.data?.me}
+          onStarClick={rateChapter}
+          score={chapter.score}
+          rateStatus={chapter.rateStatus}
+        />
+      </Card>
+      <Card>
+        <Modal
+          buttonText="Tip the author"
+          className={styles.tipModal}
+        >
+          <h3>Tip {story.author.penName}</h3>
+          <TipForm author={story.author} />
+          <p>Need a different card?</p>
+          <CreditCardForm />
+        </Modal>
+      </Card>
       <Comments chapter={chapter} comments={chapter.comments} />
     </div>
   )

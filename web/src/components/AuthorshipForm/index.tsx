@@ -63,7 +63,6 @@ const AuthorshipForm: React.FC<Props> = (props) => {
           </Button>
         </div>
       </form>
-      <CreditCardForm />
     </div>
   )
 }

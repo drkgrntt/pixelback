@@ -12,6 +12,7 @@ import Loader from '@/components/Loader'
 import { withApollo } from '@/utils/withApollo'
 import { useCancelAuthorshipMutation } from '@/hooks/mutations/useCancelAuthorshipMutation'
 import Modal from '@/components/Modal'
+import CreditCardForm from '@/components/CreditCardForm'
 
 const WriterDashboard: NextPage<{}> = () => {
   const { loading, data } = useMeQuery()
@@ -73,10 +74,18 @@ const WriterDashboard: NextPage<{}> = () => {
         <h4>Unlock more as an Author!</h4>
         <ul>
           <li>Unlimited stories</li>
-          <li>Something else</li>
-          <li>Something else</li>
+          <li>
+            <em>All</em> future features
+          </li>
         </ul>
         <AuthorshipForm />
+        <Modal
+          buttonText="Use a different card"
+          className={styles.cardModal}
+        >
+          <h3>Add new card</h3>
+          <CreditCardForm />
+        </Modal>
       </div>
     )
   }
@@ -98,8 +107,9 @@ const WriterDashboard: NextPage<{}> = () => {
         <h4>Enjoy your benefits as an Author!</h4>
         <ul>
           <li>Unlimited stories</li>
-          <li>Something else</li>
-          <li>Something else</li>
+          <li>
+            <em>All</em> future features
+          </li>
         </ul>
         <Modal
           buttonText="View plan details"

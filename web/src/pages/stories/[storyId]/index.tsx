@@ -7,6 +7,9 @@ import styles from './[storyId].module.scss'
 import Loader from '@/components/Loader'
 import Card from '@/components/Card'
 import Button from '@/components/Button'
+import Modal from '@/components/Modal'
+import CreditCardForm from '@/components/CreditCardForm'
+import TipForm from '@/components/TipForm'
 import { useStoryQuery } from '@/queries/useStoryQuery'
 import { withApollo } from '@/utils/withApollo'
 import { useEffect } from 'react'
@@ -124,6 +127,17 @@ const StoryPage: NextPage<Props> = ({ query }) => {
           rateStatus={story.rateStatus}
         />
         {renderFavoriteButton()}
+      </Card>
+      <Card>
+        <Modal
+          buttonText="Tip the author"
+          className={styles.tipModal}
+        >
+          <h3>Tip {story.author.penName}</h3>
+          <TipForm author={story.author} />
+          <p>Need a different card?</p>
+          <CreditCardForm />
+        </Modal>
       </Card>
       <Comments story={story} comments={story.comments} />
     </div>

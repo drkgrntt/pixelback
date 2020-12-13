@@ -7,7 +7,10 @@ import { useUserQuery } from '@/hooks/queries/useUserQuery'
 import { withApollo } from '@/utils/withApollo'
 import styles from './[userId].module.scss'
 import { User } from '@/types'
+import Modal from '@/components/Modal'
 import Card from '@/components/Card'
+import TipForm from '@/components/TipForm'
+import CreditCardForm from '@/components/CreditCardForm'
 import StoryList from '@/components/StoryList'
 import Button from '@/components/Button'
 import { useMeQuery } from '@/hooks/queries/useMeQuery'
@@ -68,9 +71,20 @@ const UserPage: NextPage<Props> = ({ query }) => {
     <div>
       <h2>{user.penName}</h2>
 
-      <Button styleTypes={['cta']} onClick={handleFollow}>
-        {isSubscribed ? 'Unfollow' : 'Follow'}
-      </Button>
+      <Card>
+        <Button styleTypes={['cta']} onClick={handleFollow}>
+          {isSubscribed ? 'Unfollow' : 'Follow'}
+        </Button>
+        <Modal
+          buttonText="Tip the author"
+          className={styles.tipModal}
+        >
+          <h3>Tip {user.penName}</h3>
+          <TipForm author={user} />
+          <p>Need a different card?</p>
+          <CreditCardForm />
+        </Modal>
+      </Card>
 
       <Card>
         <h3>Stories</h3>

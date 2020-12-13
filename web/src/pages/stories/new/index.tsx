@@ -12,7 +12,8 @@ import { useIsAuth } from '@/hooks/useIsAuth'
 import Loader from '@/components/Loader'
 import { withApollo } from '@/utils/withApollo'
 import { useMeQuery } from '@/hooks/queries/useMeQuery'
-import Button from '@/components/Button'
+import Modal from '@/components/Modal'
+import CreditCardForm from '@/components/CreditCardForm'
 
 const New: NextPage<{}> = () => {
   const { push } = useRouter()
@@ -72,6 +73,13 @@ const New: NextPage<{}> = () => {
           stories.
         </p>
         <AuthorshipForm />
+        <Modal
+          buttonText="Use a different card"
+          className={styles.cardModal}
+        >
+          <h3>Add new card</h3>
+          <CreditCardForm />
+        </Modal>
       </Card>
     )
   }
