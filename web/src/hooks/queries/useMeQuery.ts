@@ -10,7 +10,8 @@ export const meQuery = gql`
         createdAt
         currentPeriodStart
         currentPeriodEnd
-        daysUntilDue
+        price
+        interval
       }
       paymentMethods {
         id

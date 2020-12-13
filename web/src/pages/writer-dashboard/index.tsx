@@ -20,6 +20,7 @@ import Input from '@/components/Input'
 import { useBecomeAuthorMutation } from '@/mutations/useBecomeAuthorMutation'
 import { useForm } from '@/hooks/useForm'
 import { useCancelAuthorshipMutation } from '@/hooks/mutations/useCancelAuthorshipMutation'
+import Modal from '@/components/Modal'
 
 const WriterDashboard: NextPage<{}> = () => {
   const { loading, data } = useMeQuery()
@@ -157,7 +158,34 @@ const WriterDashboard: NextPage<{}> = () => {
           <li>Something else</li>
           <li>Something else</li>
         </ul>
-        <a onClick={handleCancelAuthorshipClick}>Cancel Authorship</a>
+        <Modal
+          buttonText="View plan details"
+          className={styles.paymentDetails}
+        >
+          <h3>Plan Details</h3>
+          <hr />
+          <ul>
+            <li>
+              Plan: ${data?.me?.roleSubscription.price}/
+              {data?.me?.roleSubscription.interval}
+            </li>
+            <li>
+              Started:{' '}
+              {data?.me?.roleSubscription.createdAt.toLocaleDateString()}
+            </li>
+            <li>
+              Previous payment:{' '}
+              {data?.me?.roleSubscription.currentPeriodStart.toLocaleDateString()}
+            </li>
+            <li>
+              Next payment:{' '}
+              {data?.me?.roleSubscription.currentPeriodEnd.toLocaleDateString()}
+            </li>
+          </ul>
+          <a onClick={handleCancelAuthorshipClick}>
+            Cancel Authorship
+          </a>
+        </Modal>
       </div>
     )
   }

@@ -26,6 +26,7 @@ export interface User {
   role: UserRole
   penName: string
   paymentMethods: StripeSource[]
+  roleSubscription: StripeSubscription
   stories: Story[]
   favoriteStories: Story[]
   favoriteGenres: Genre[]
@@ -126,5 +127,6 @@ export interface StripeSubscription {
   createdAt: Date
   currentPeriodStart: Date
   currentPeriodEnd: Date
-  daysUntilDue: number
+  price: number
+  interval: string
 }

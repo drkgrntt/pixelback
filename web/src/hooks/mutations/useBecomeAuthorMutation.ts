@@ -10,7 +10,8 @@ export const becomeAuthorMutation = gql`
         createdAt
         currentPeriodStart
         currentPeriodEnd
-        daysUntilDue
+        price
+        interval
       }
     }
   }

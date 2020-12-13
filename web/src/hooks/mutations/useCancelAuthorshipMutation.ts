@@ -10,7 +10,8 @@ export const cancelAuthorshipMutation = gql`
         createdAt
         currentPeriodStart
         currentPeriodEnd
-        daysUntilDue
+        price
+        interval
       }
     }
   }

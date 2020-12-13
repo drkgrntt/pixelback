@@ -12,7 +12,8 @@ export const registerMutation = gql`
           createdAt
           currentPeriodStart
           currentPeriodEnd
-          daysUntilDue
+          price
+          interval
         }
         paymentMethods {
           id

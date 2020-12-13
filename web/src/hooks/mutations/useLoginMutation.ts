@@ -12,7 +12,8 @@ export const loginMutation = gql`
           createdAt
           currentPeriodStart
           currentPeriodEnd
-          daysUntilDue
+          price
+          interval
         }
         paymentMethods {
           id

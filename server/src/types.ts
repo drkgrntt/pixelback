@@ -21,7 +21,7 @@ import { createRatingLoader } from './dataloaders/createRatingLoader'
 import { createGenreLoader } from './dataloaders/createGenreLoader'
 import { createStoryLoader } from './dataloaders/createStoryLoader'
 import { createUserLoader } from './dataloaders/createUserLoader'
-import { Field, Int, ObjectType } from 'type-graphql'
+import { Field, Float, Int, ObjectType } from 'type-graphql'
 import Stripe from 'stripe'
 
 export interface Context {
@@ -138,12 +138,18 @@ export class StripeSource {
 export class StripeSubscription {
   constructor(subscription: Stripe.Subscription) {
     this.id = subscription.id
-    this.createdAt = new Date(subscription.created)
+    this.createdAt = new Date(subscription.created * 1000)
     this.currentPeriodStart = new Date(
-      subscription.current_period_start
+      subscription.current_period_start * 1000
     )
-    this.currentPeriodEnd = new Date(subscription.current_period_end)
-    this.daysUntilDue = subscription.days_until_due || 0
+    this.currentPeriodEnd = new Date(
+      subscription.current_period_end * 1000
+    )
+    this.price =
+      (subscription.items.data[0].price.unit_amount as number) / 100
+    this.interval =
+      subscription.items.data[0].price.recurring?.interval ||
+      'unknown'
   }
 
   @Field(() => String)
@@ -158,6 +164,9 @@ export class StripeSubscription {
   @Field(() => String)
   currentPeriodEnd: Date
 
-  @Field(() => Int)
-  daysUntilDue: number
+  @Field(() => Float)
+  price: number
+
+  @Field(() => String)
+  interval: string
 }
