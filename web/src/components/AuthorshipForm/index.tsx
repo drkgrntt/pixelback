@@ -52,14 +52,14 @@ const AuthorshipForm: React.FC<Props> = (props) => {
               handleBecomeAuthorClick(event, reset, 'month')
             }
           >
-            $5/month
+            $4/month
           </Button>
           <Button
             onClick={(event: any, reset: Function) =>
               handleBecomeAuthorClick(event, reset, 'year')
             }
           >
-            $50/year
+            $40/year
           </Button>
         </div>
       </form>
