@@ -120,3 +120,11 @@ export interface StripeSource {
   expYear: number
   name: string
 }
+
+export interface StripeSubscription {
+  id: string
+  createdAt: Date
+  currentPeriodStart: Date
+  currentPeriodEnd: Date
+  daysUntilDue: number
+}

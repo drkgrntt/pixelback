@@ -37,6 +37,8 @@ const createClient = (ctx: NextPageContext) => {
       switch (typeof data[key]) {
         case 'string':
           if (
+            key === 'currentPeriodStart' ||
+            key === 'currentPeriodEnd' ||
             key === 'createdAt' ||
             key === 'publishedAt' ||
             key === 'updatedAt'

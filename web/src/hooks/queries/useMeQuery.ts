@@ -5,6 +5,13 @@ export const meQuery = gql`
   query Me {
     me {
       ...UserInfo
+      roleSubscription {
+        id
+        createdAt
+        currentPeriodStart
+        currentPeriodEnd
+        daysUntilDue
+      }
       paymentMethods {
         id
         brand

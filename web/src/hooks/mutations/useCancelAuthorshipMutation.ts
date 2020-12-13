@@ -5,6 +5,13 @@ export const cancelAuthorshipMutation = gql`
   mutation CancelAuthorship {
     cancelAuthorship {
       ...UserInfo
+      roleSubscription {
+        id
+        createdAt
+        currentPeriodStart
+        currentPeriodEnd
+        daysUntilDue
+      }
     }
   }
   ${UserInfo}
