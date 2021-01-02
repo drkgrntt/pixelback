@@ -21,8 +21,13 @@ const TipForm: React.FC<Props> = ({ author }) => {
     amount: 1.0,
     authorId: author.id,
     sourceId: data?.me?.paymentMethods[0]?.id,
+    validation: '',
   }
   const formState = useForm(INITIAL_STATE, [data?.me])
+
+  if (!author.canAcceptPayments) {
+    return null
+  }
 
   if (!data?.me) {
     return (
@@ -46,8 +51,20 @@ const TipForm: React.FC<Props> = ({ author }) => {
     event.preventDefault()
 
     formState.values.amount = parseInt(formState.values.amount)
-    await tipAuthor({ variables: formState.values })
-    reset()
+    try {
+      await tipAuthor({ variables: formState.values })
+      reset()
+      formState.setValues({
+        ...formState.values,
+        validation: 'Thank you for your tip!',
+      })
+    } catch (err) {
+      reset()
+      formState.setValues({
+        ...formState.values,
+        validation: 'Something went wrong.',
+      })
+    }
   }
 
   return (
@@ -67,6 +84,9 @@ const TipForm: React.FC<Props> = ({ author }) => {
           formState={formState}
         />
         <Button onClick={handleTipClick}>{tipText}</Button>
+        <span className={styles.validation}>
+          {formState.values.validation}
+        </span>
       </form>
       <p>Need a different card?</p>
       <CreditCardForm />

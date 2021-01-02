@@ -1,6 +1,6 @@
 import Stripe from 'stripe'
 import { User } from '../entities/User'
-import { StripeSource } from '../types'
+import { StripeSource, UserRole } from '../types'
 
 class Payments {
   stripe: Stripe
@@ -202,7 +202,11 @@ class Payments {
     )
 
     amount = amount * 100 // convert to cents
-    const application_fee_amount = amount * 0.1 // 10%
+
+    let application_fee_amount = amount * 0.1 // 8%
+    if (author.role === UserRole.Author) {
+      application_fee_amount = application_fee_amount / 2 // 4%
+    }
 
     const paymentIntent = await this.stripe.paymentIntents.create(
       {

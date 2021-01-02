@@ -94,7 +94,7 @@ const WriterDashboard: NextPage<{}> = () => {
 
     if (
       !data?.me?.canAcceptPayments &&
-      data?.me?.role > UserRole.Writer
+      data?.me?.role > UserRole.Reader
     ) {
       return (
         <>
@@ -108,9 +108,13 @@ const WriterDashboard: NextPage<{}> = () => {
                 linkAccountData.data.linkAccount)
             }
           >
-            Sign up
+            Set your data
           </Button>
-          <p>in order to start collecting tips.</p>
+          <p>
+            in order to start collecting tips. If you have already set
+            your data, there may be additional steps on Stripe, so
+            click the button again.
+          </p>
           <hr />
         </>
       )
