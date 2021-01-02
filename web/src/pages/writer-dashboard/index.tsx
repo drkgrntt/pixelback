@@ -10,12 +10,19 @@ import { useMeQuery } from '@/queries/useMeQuery'
 import { useIsAuth } from '@/hooks/useIsAuth'
 import Loader from '@/components/Loader'
 import { withApollo } from '@/utils/withApollo'
-import { useCancelAuthorshipMutation } from '@/hooks/mutations/useCancelAuthorshipMutation'
+import { useCancelAuthorshipMutation } from '@/mutations/useCancelAuthorshipMutation'
+import { useLinkAccountQuery } from '@/queries/useLinkAccountQuery'
 import Modal from '@/components/Modal'
 import CreditCardForm from '@/components/CreditCardForm'
 
 const WriterDashboard: NextPage<{}> = () => {
   const { loading, data } = useMeQuery()
+  const linkAccountData = useLinkAccountQuery({
+    skip:
+      !data?.me ||
+      data?.me?.role < UserRole.Writer ||
+      data?.me?.canAcceptPayments,
+  })
   const { push } = useRouter()
   const [cancelAuthorship] = useCancelAuthorshipMutation()
   useIsAuth()
@@ -66,6 +73,50 @@ const WriterDashboard: NextPage<{}> = () => {
         </Button>
       </>
     )
+  }
+
+  const renderLinkAccount = () => {
+    if (!linkAccountData.data && linkAccountData.loading) {
+      return <Loader />
+    }
+
+    if (!linkAccountData.data && data?.me?.canAcceptPayments) {
+      return (
+        <>
+          <p>You are able to accept payments.</p>
+          <a target="_blank" href="https://dashboard.stripe.com/">
+            Stripe Home
+          </a>
+          <hr />
+        </>
+      )
+    }
+
+    if (
+      !data?.me?.canAcceptPayments &&
+      data?.me?.role > UserRole.Writer
+    ) {
+      return (
+        <>
+          <p>
+            We use <a href="https://stripe.com/">Stripe</a> to handle
+            tips to writers and authors.
+          </p>
+          <Button
+            onClick={() =>
+              (window.location.href =
+                linkAccountData.data.linkAccount)
+            }
+          >
+            Sign up
+          </Button>
+          <p>in order to start collecting tips.</p>
+          <hr />
+        </>
+      )
+    }
+
+    return
   }
 
   const renderBecomeAuthorButton = () => {
@@ -182,6 +233,7 @@ const WriterDashboard: NextPage<{}> = () => {
       <Card>
         <h3>Status: {UserRole[data?.me?.role]}</h3>
         <hr />
+        {renderLinkAccount()}
         {renderStatusCta()}
       </Card>
 

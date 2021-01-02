@@ -61,7 +61,7 @@ export class UserResolver {
   ): Promise<Rating[]> {
     const ratingIds = await ratingIdsByUserLoader.load(user.id)
     const ratings = (await ratingLoader.loadMany(
-      ratingIds
+      ratingIds || []
     )) as Rating[]
     return ratings
   }
@@ -72,7 +72,9 @@ export class UserResolver {
     @Root() user: User
   ): Promise<Story[]> {
     const storyIds = await storyIdsByUserLoader.load(user.id)
-    const stories = (await storyLoader.loadMany(storyIds)) as Story[]
+    const stories = (await storyLoader.loadMany(
+      storyIds || []
+    )) as Story[]
 
     return stories
       .filter((story) => {
@@ -90,7 +92,9 @@ export class UserResolver {
     @Ctx() { me, storyLoader, favoriteStoryIdsLoader }: Context
   ): Promise<Story[]> {
     const storyIds = await favoriteStoryIdsLoader.load(user.id)
-    const stories = (await storyLoader.loadMany(storyIds)) as Story[]
+    const stories = (await storyLoader.loadMany(
+      storyIds || []
+    )) as Story[]
 
     return stories
       .filter((story) => {
@@ -108,7 +112,9 @@ export class UserResolver {
     @Ctx() { genreLoader, favoriteGenreIdsLoader }: Context
   ): Promise<Genre[]> {
     const genreIds = await favoriteGenreIdsLoader.load(user.id)
-    const genres = (await genreLoader.loadMany(genreIds)) as Genre[]
+    const genres = (await genreLoader.loadMany(
+      genreIds || []
+    )) as Genre[]
 
     return genres
   }
@@ -123,7 +129,7 @@ export class UserResolver {
       user.id
     )
     const subscriptions = (await subscriptionLoader.loadMany(
-      subscriptionIds
+      subscriptionIds || []
     )) as Subscription[]
 
     return subscriptions
@@ -142,7 +148,7 @@ export class UserResolver {
       user.id
     )
     const subscriptions = (await subscriptionLoader.loadMany(
-      subscriptionIds
+      subscriptionIds || []
     )) as Subscription[]
 
     return subscriptions
@@ -155,7 +161,7 @@ export class UserResolver {
   ): Promise<Comment[]> {
     const commentIds = await commentIdsByUserLoader.load(user.id)
     const comments = (await commentLoader.loadMany(
-      commentIds
+      commentIds || []
     )) as Comment[]
     return comments
   }
@@ -182,6 +188,13 @@ export class UserResolver {
     if (!subscription) return null
 
     return new StripeSubscription(subscription)
+  }
+
+  @FieldResolver(() => Boolean)
+  async canAcceptPayments(@Root() user: User): Promise<boolean> {
+    const payments = new Payments()
+    const account = await payments.getAccount(user)
+    return !!account?.payouts_enabled
   }
 
   @Query(() => User, { nullable: true })

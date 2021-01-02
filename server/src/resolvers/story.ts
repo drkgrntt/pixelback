@@ -64,7 +64,7 @@ export class StoryResolver {
       exclusive: true,
     })
     const ratings = (await ratingLoader.loadMany(
-      ratingIds
+      ratingIds || []
     )) as Rating[]
     return ratings
   }
@@ -97,7 +97,7 @@ export class StoryResolver {
     })
 
     const allRatings = (await ratingLoader.loadMany(
-      ratingIds
+      ratingIds || []
     )) as Rating[]
 
     if (!allRatings.length) return 0
@@ -122,7 +122,7 @@ export class StoryResolver {
 
     const chapterIds = await chapterIdsByStoryLoader.load(story.id)
     const chapters = (await chapterLoader.loadMany(
-      chapterIds
+      chapterIds || []
     )) as Chapter[]
 
     return chapters
@@ -150,7 +150,7 @@ export class StoryResolver {
 
     const commentIds = await commentIdsByStoryLoader.load(story.id)
     const comments = (await commentLoader.loadMany(
-      commentIds
+      commentIds || []
     )) as Comment[]
     return comments.sort((a, b) =>
       a.createdAt > b.createdAt ? 1 : -1
@@ -163,7 +163,9 @@ export class StoryResolver {
     @Ctx() { genreLoader, genreIdsByStoryLoader }: Context
   ): Promise<Genre[]> {
     const genreIds = await genreIdsByStoryLoader.load(story.id)
-    const genres = (await genreLoader.loadMany(genreIds)) as Genre[]
+    const genres = (await genreLoader.loadMany(
+      genreIds || []
+    )) as Genre[]
     return genres
   }
 

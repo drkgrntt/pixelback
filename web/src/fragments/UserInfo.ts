@@ -6,6 +6,7 @@ export const UserInfo = gql`
     email
     role
     penName
+    canAcceptPayments
     favoriteStories {
       id
       title

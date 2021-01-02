@@ -4,6 +4,7 @@ import Button from '@/components/Button'
 import CreditCardForm from '@/components/CreditCardForm'
 import { useForm } from '@/hooks/useForm'
 import { useMeQuery } from '@/queries/useMeQuery'
+import { useTipAuthorMutation } from '@/mutations/useTipAuthorMutation'
 import { StripeSource, User } from '@/types'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
@@ -15,6 +16,7 @@ interface Props {
 const TipForm: React.FC<Props> = ({ author }) => {
   const { data } = useMeQuery()
   const { asPath } = useRouter()
+  const [tipAuthor] = useTipAuthorMutation()
   const INITIAL_STATE = {
     amount: 1.0,
     authorId: author.id,
@@ -40,6 +42,14 @@ const TipForm: React.FC<Props> = ({ author }) => {
 
   const tipText = `Tip $${formState.values.amount}`
 
+  const handleTipClick = async (event: any, reset: Function) => {
+    event.preventDefault()
+
+    formState.values.amount = parseInt(formState.values.amount)
+    await tipAuthor({ variables: formState.values })
+    reset()
+  }
+
   return (
     <>
       <form className={styles.form}>
@@ -56,7 +66,7 @@ const TipForm: React.FC<Props> = ({ author }) => {
           min={1}
           formState={formState}
         />
-        <Button>{tipText}</Button>
+        <Button onClick={handleTipClick}>{tipText}</Button>
       </form>
       <p>Need a different card?</p>
       <CreditCardForm />

@@ -45,7 +45,7 @@ export class ChapterResolver {
   ): Promise<Rating[]> {
     const ratingIds = await ratingIdsByChapterLoader.load(chapter.id)
     const ratings = (await ratingLoader.loadMany(
-      ratingIds
+      ratingIds || []
     )) as Rating[]
     return ratings
   }
@@ -85,7 +85,7 @@ export class ChapterResolver {
       chapter.id
     )
     const comments = (await commentLoader.loadMany(
-      commentIds
+      commentIds || []
     )) as Comment[]
     return comments.sort((a, b) =>
       a.createdAt > b.createdAt ? 1 : -1
@@ -100,7 +100,7 @@ export class ChapterResolver {
     const ratingIds = await ratingIdsByChapterLoader.load(chapter.id)
 
     const allRatings = (await ratingLoader.loadMany(
-      ratingIds
+      ratingIds || []
     )) as Rating[]
 
     if (!allRatings.length) return 0
@@ -171,7 +171,7 @@ export class ChapterResolver {
   ): Promise<Chapter[]> {
     const chapterIds = await chapterIdsByStoryLoader.load(storyId)
     const chapters = (await chapterLoader.loadMany(
-      chapterIds
+      chapterIds || []
     )) as Chapter[]
 
     return chapters

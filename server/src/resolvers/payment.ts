@@ -4,6 +4,7 @@ import {
   UseMiddleware,
   Arg,
   Mutation,
+  Query,
 } from 'type-graphql'
 import { Context, StripeSource, UserRole } from '../types'
 import { isAuth } from '../middleware/isAuth'
@@ -13,6 +14,17 @@ import { User } from '../entities/User'
 @Resolver()
 export class PaymentResolver {
   payments = new Payments()
+
+  @Query(() => String, { nullable: true })
+  @UseMiddleware(isAuth)
+  async linkAccount(
+    @Ctx() { me }: Context
+  ): Promise<string | undefined> {
+    const account = await this.payments.getAccount(me, true)
+    if (!account) return
+    const res = await this.payments.linkAccount(account)
+    return res.url
+  }
 
   @Mutation(() => StripeSource)
   @UseMiddleware(isAuth)
@@ -77,5 +89,30 @@ export class PaymentResolver {
     await me.save()
 
     return me
+  }
+
+  @Mutation(() => Boolean)
+  @UseMiddleware(isAuth)
+  async tipAuthor(
+    @Ctx() { me, userLoader }: Context,
+    @Arg('amount') amount: number,
+    @Arg('authorId') authorId: string,
+    @Arg('sourceId') sourceId: string
+  ): Promise<boolean> {
+    const author = await userLoader.load(authorId)
+    if (!author) return false
+
+    const description = `Pixelback tip for ${author.penName}`
+    const charge = await this.payments.createCharge(
+      me,
+      author,
+      amount,
+      sourceId,
+      description
+    )
+
+    console.log(charge)
+
+    return !!charge
   }
 }

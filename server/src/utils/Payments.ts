@@ -10,6 +10,45 @@ class Payments {
     this.stripe = new Stripe(process.env.STRIPE_SECRET_KEY, config)
   }
 
+  async getAccount(
+    user: User,
+    createIfNull?: boolean
+  ): Promise<Stripe.Account | null> {
+    if (!user.stripeAccountId && !createIfNull) return null
+
+    if (!user.stripeAccountId) {
+      const account = await this.stripe.accounts.create({
+        type: 'express',
+        capabilities: {
+          card_payments: { requested: true },
+          transfers: { requested: true },
+        },
+        email: user.email,
+      })
+      user.stripeAccountId = account.id
+      await user.save()
+      return account
+    }
+
+    const account = await this.stripe.accounts.retrieve(
+      user.stripeAccountId
+    )
+    return account
+  }
+
+  async linkAccount(
+    account: Stripe.Account
+  ): Promise<Stripe.AccountLink> {
+    const accountLinks = await this.stripe.accountLinks.create({
+      account: account.id,
+      refresh_url: `${process.env.APP_BASE_URL}/writer-dashboard`,
+      return_url: `${process.env.APP_BASE_URL}/writer-dashboard`,
+      type: 'account_onboarding',
+    })
+
+    return accountLinks
+  }
+
   async getCustomer(
     user: User,
     createIfNull?: boolean
@@ -136,6 +175,49 @@ class Payments {
     )
 
     return deleted
+  }
+
+  async createCharge(
+    user: User,
+    author: User,
+    amount: number,
+    sourceId: string,
+    description: string
+  ): Promise<Stripe.PaymentIntent | null> {
+    const paymentMethods = await this.getPaymentMethods(user)
+    if (!paymentMethods.some((pm) => pm.id === sourceId)) return null
+
+    const account = await this.getAccount(author, true)
+    if (!account) return null
+    const accountObj = {
+      stripeAccount: author.stripeAccountId,
+    }
+
+    const clonedPaymentMethod = await this.stripe.paymentMethods.create(
+      {
+        customer: user.stripeCustomerId,
+        payment_method: sourceId,
+      },
+      accountObj
+    )
+
+    amount = amount * 100 // convert to cents
+    const application_fee_amount = amount * 0.1 // 10%
+
+    const paymentIntent = await this.stripe.paymentIntents.create(
+      {
+        amount: amount,
+        application_fee_amount,
+        currency: 'usd',
+        payment_method_types: ['card'],
+        payment_method: clonedPaymentMethod.id,
+        description,
+        confirm: true,
+      },
+      accountObj
+    )
+
+    return paymentIntent
   }
 }
 

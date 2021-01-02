@@ -31,6 +31,7 @@ export interface User {
   favoriteStories: Story[]
   favoriteGenres: Genre[]
   ratings: Rating[]
+  canAcceptPayments: boolean
   subscriptions: Subscription[]
   subscribers: Subscription[]
   comments: Comment[]
