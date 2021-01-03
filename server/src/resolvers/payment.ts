@@ -111,8 +111,6 @@ export class PaymentResolver {
       description
     )
 
-    console.log(charge)
-
     return !!charge
   }
 }

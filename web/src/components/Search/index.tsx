@@ -17,8 +17,6 @@ const Search: React.FC<Props> = (props) => {
     skip: !searchTerm,
   })
 
-  console.log(storyInfo)
-
   useEffect(() => {
     const searchTimeout = setTimeout(() => {
       setSearchTerm(search)
