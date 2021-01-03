@@ -1,4 +1,4 @@
-SELECT story.*,
+SELECT DISTINCT story.*,
 -- this is where we total up relavent values for ordering
 (
   -- +1 per read

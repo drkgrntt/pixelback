@@ -190,6 +190,7 @@ export class StoryResolver {
       skip,
       '',
     ])
+
     const stories = foundStories.slice(0, take)
 
     const hasMore = foundStories.length > take
