@@ -25,10 +25,15 @@ SELECT story.*,
 FROM story
 LEFT JOIN "user"
   ON "user".id = story."authorId"
+LEFT OUTER JOIN story_genre
+  ON story_genre."storyId" = story.id
+LEFT OUTER JOIN genre
+  ON genre.id = story_genre."genreId"
 WHERE status = $1
 AND (
   "user"."penName" ILIKE '%' || $4 || '%' OR
-  story.title ILIKE '%' || $4 || '%'
+  story.title ILIKE '%' || $4 || '%' OR 
+  genre.name ILIKE '%' || $4 || '%'
 )
 ORDER BY weight DESC
 LIMIT $2 OFFSET $3;
