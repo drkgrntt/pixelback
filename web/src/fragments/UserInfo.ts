@@ -14,6 +14,10 @@ export const UserInfo = gql`
         id
         penName
       }
+      genres {
+        id
+        name
+      }
     }
     createdAt
     updatedAt

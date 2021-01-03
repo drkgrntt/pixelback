@@ -8,10 +8,6 @@ export const removeGenreFromStoryMutation = gql`
   ) {
     removeGenreFromStory(genreId: $genreId, storyId: $storyId) {
       ...StoryInfo
-      genres {
-        id
-        name
-      }
       chapters {
         id
         title

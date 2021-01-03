@@ -5,10 +5,6 @@ export const storyQuery = gql`
   query Story($id: String!) {
     story(id: $id) {
       ...StoryInfo
-      genres {
-        id
-        name
-      }
       chapters {
         id
         title

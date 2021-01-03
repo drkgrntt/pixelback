@@ -23,6 +23,10 @@ export const StoryInfo = gql`
     comments {
       ...CommentInfo
     }
+    genres {
+      id
+      name
+    }
     rateStatus
     publishedAt
     createdAt

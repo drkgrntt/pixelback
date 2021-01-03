@@ -14,10 +14,6 @@ export const searchStoriesQuery = gql`
           id
           penName
         }
-        genres {
-          id
-          name
-        }
         chapters {
           id
           title

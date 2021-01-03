@@ -5,10 +5,6 @@ export const addGenreToStoryMutation = gql`
   mutation AddGenreToStory($genreId: String!, $storyId: String!) {
     addGenreToStory(genreId: $genreId, storyId: $storyId) {
       ...StoryInfo
-      genres {
-        id
-        name
-      }
       chapters {
         id
         title
