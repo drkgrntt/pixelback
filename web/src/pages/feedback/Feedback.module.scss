@@ -1,11 +1,14 @@
 @import 'src/styles/variables.scss';
 
+.feedback {
+  max-width: $max-content-width;
+  margin: 0 auto;
+}
+
 .form {
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  max-width: $max-content-width;
-  margin: 0 auto;
 }
 
 .validation {
