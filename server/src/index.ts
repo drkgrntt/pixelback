@@ -50,6 +50,10 @@ const main = async () => {
     entities: [path.join(__dirname, 'entities', '*.js')],
     migrations: [],
     subscribers: [],
+    extra: {
+      ssl: __prod__,
+      rejectUnauthorized: !__prod__,
+    },
   })
 
   const app = express()
