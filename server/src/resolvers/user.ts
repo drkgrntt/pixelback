@@ -244,6 +244,8 @@ export class UserResolver {
 
     const token = await Token.generate(user.id)
     res.cookie('token', token.value, {
+      secure: true,
+      sameSite: 'none',
       httpOnly: true,
       maxAge: 1000 * 60 * 60 * 24 * 30,
     })
@@ -282,6 +284,8 @@ export class UserResolver {
     // Generate a token
     const token = await Token.generate(user.id)
     res.cookie('token', token.value, {
+      sameSite: 'none',
+      secure: true,
       httpOnly: true,
       maxAge: 1000 * 60 * 60 * 24 * 30,
     })
@@ -345,7 +349,12 @@ export class UserResolver {
   async logout(@Ctx() { token, res }: Context): Promise<boolean> {
     const value = Token.unsign(token)
     const result = await Token.delete({ value })
-    res.cookie('token', 'a.b.c', { maxAge: 0, httpOnly: true })
+    res.cookie('token', 'a.b.c', {
+      sameSite: 'none',
+      secure: true,
+      maxAge: 0,
+      httpOnly: true,
+    })
     return !!result.affected
   }
 
@@ -357,6 +366,8 @@ export class UserResolver {
     await Token.delete({ userId: me.id })
     const token = await Token.generate(me.id)
     res.cookie('token', token.value, {
+      sameSite: 'none',
+      secure: true,
       httpOnly: true,
       maxAge: 1000 * 60 * 60 * 24 * 30,
     })
@@ -372,6 +383,8 @@ export class UserResolver {
     await Token.delete({ value })
     const newToken = await Token.generate(me.id)
     res.cookie('token', newToken.value, {
+      sameSite: 'none',
+      secure: true,
       httpOnly: true,
       maxAge: 1000 * 60 * 60 * 24 * 30,
     })
