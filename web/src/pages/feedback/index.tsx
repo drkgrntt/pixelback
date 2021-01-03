@@ -94,7 +94,7 @@ const Feedback: NextPage<Props> = (props) => {
             required
             type="email"
             name="email"
-            label="email Name"
+            label="Email"
             formState={formState}
           />
           <Input
