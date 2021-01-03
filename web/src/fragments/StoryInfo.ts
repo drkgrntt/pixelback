@@ -18,6 +18,7 @@ export const StoryInfo = gql`
     reads
     ratings {
       id
+      score
     }
     comments {
       ...CommentInfo
