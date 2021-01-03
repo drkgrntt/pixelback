@@ -5,6 +5,7 @@ import styles from './Stories.module.scss'
 import Loader from '@/components/Loader'
 import Button from '@/components/Button'
 import StoryList from '@/components/StoryList'
+import Search from '@/components/Search'
 
 interface Props {}
 
@@ -40,7 +41,10 @@ const Stories: NextPage<Props> = (props) => {
 
   return (
     <div>
-      <h2>Stories</h2>
+      <div className={styles.header}>
+        <h2>Stories</h2>
+        <Search perPage={PER_PAGE} />
+      </div>
       <StoryList cardWrap showRating stories={stories} />
       {renderMore()}
     </div>
