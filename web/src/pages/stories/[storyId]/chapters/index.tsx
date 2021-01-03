@@ -87,7 +87,7 @@ const Chapters: NextPage<Props> = ({ query }) => {
   }
 
   return (
-    <div>
+    <div className={styles.chapters}>
       <Head
         title={`${story.title} | Pixelback`}
         description={story.summary}

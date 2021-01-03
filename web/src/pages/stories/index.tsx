@@ -40,7 +40,7 @@ const Stories: NextPage<Props> = (props) => {
   }
 
   return (
-    <div>
+    <div className={styles.stories}>
       <div className={styles.header}>
         <h2>Stories</h2>
         <Search perPage={PER_PAGE} />

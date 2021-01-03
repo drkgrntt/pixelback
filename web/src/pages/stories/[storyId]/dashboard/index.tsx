@@ -42,7 +42,7 @@ const Dashboard: NextPage<Props> = ({ query }) => {
   }
 
   return (
-    <div>
+    <div className={styles.dashboard}>
       <h2>{story.title}</h2>
       <Link href="/writer-dashboard">
         <a>Back to writer's dashboard</a>

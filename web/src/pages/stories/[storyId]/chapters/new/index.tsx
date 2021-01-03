@@ -85,7 +85,7 @@ const New: NextPage<Props> = ({ query }) => {
   }
 
   return (
-    <div>
+    <div className={styles.new}>
       <h2>New Chapter</h2>
       <Card>
         <ContentForm

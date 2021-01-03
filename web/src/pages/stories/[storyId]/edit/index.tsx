@@ -69,7 +69,7 @@ const Edit: NextPage<Props> = ({ query }) => {
   }
 
   return (
-    <div>
+    <div className={styles.edit}>
       <h2>Edit Story</h2>
       <Card>
         <ContentForm

@@ -85,7 +85,7 @@ const New: NextPage<{}> = () => {
   }
 
   return (
-    <div>
+    <div className={styles.new}>
       <h2>New Story</h2>
       <Card>
         <ContentForm
