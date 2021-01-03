@@ -68,22 +68,26 @@ const UserPage: NextPage<Props> = ({ query }) => {
   }
 
   return (
-    <div>
+    <div className={styles.profile}>
       <h2>{user.penName}</h2>
 
       <Card>
-        <Button styleTypes={['cta']} onClick={handleFollow}>
-          {isSubscribed ? 'Unfollow' : 'Follow'}
-        </Button>
-        {user.canAcceptPayments && (
-          <Modal
-            buttonText="Tip the author"
-            className={styles.tipModal}
-          >
-            <h3>Tip {user.penName}</h3>
-            <TipForm author={user} />
-          </Modal>
-        )}
+        <h3>Show your support</h3>
+        <hr />
+        <div className={styles.actions}>
+          <Button styleTypes={['cta']} onClick={handleFollow}>
+            {isSubscribed ? 'Unfollow' : 'Follow'}
+          </Button>
+          {user.canAcceptPayments && (
+            <Modal
+              buttonText="Tip the author"
+              className={styles.tipModal}
+            >
+              <h3>Tip {user.penName}</h3>
+              <TipForm author={user} />
+            </Modal>
+          )}
+        </div>
       </Card>
 
       <Card>

@@ -223,7 +223,7 @@ const WriterDashboard: NextPage<{}> = () => {
   }
 
   return (
-    <div>
+    <div className={styles.dashboard}>
       <h2>Writer's Dashboard</h2>
 
       <Card>

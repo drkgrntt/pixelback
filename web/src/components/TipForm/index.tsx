@@ -71,12 +71,14 @@ const TipForm: React.FC<Props> = ({ author }) => {
     <>
       <form className={styles.form}>
         <Input
+          label="Card"
           type="select"
           name="sourceId"
           options={options}
           formState={formState}
         />
         <Input
+          label="Amount"
           type="number"
           name="amount"
           step={0.01}

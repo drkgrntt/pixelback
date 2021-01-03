@@ -1,6 +1,6 @@
-.profile {
-}
+@import 'src/styles/variables.scss';
 
-.login {
-  text-align: center;
+.profile {
+  max-width: $max-content-width;
+  margin: 0 auto;
 }
