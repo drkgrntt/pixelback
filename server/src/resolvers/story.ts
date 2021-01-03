@@ -12,7 +12,7 @@ import {
   Field,
   Int,
 } from 'type-graphql'
-import { getConnection, ILike, IsNull } from 'typeorm'
+import { getConnection, IsNull } from 'typeorm'
 import fs from 'fs'
 import path from 'path'
 import { Story } from '../entities/Story'
@@ -188,6 +188,7 @@ export class StoryResolver {
       PublishStatus.Published,
       take + 1,
       skip,
+      '',
     ])
     const stories = foundStories.slice(0, take)
 
@@ -221,24 +222,20 @@ export class StoryResolver {
   async searchStories(
     @Arg('skip', { nullable: true }) skip: number = 0,
     @Arg('take', { nullable: true }) take: number = 10,
-    // @Arg('filters') filters: any,
     @Arg('search') search: string
   ): Promise<PaginatedResponse> {
     take = Math.min(50, take)
 
-    const query = {
-      where: {
-        status: PublishStatus.Published,
-        title: ILike(`%${search}%`),
-      },
-      take: take + 1,
-      skip: skip,
-      order: {
-        createdAt: 'DESC' as const,
-      },
-    }
+    const sql = fs
+      .readFileSync(path.join('sql', 'stories.sql'))
+      .toString()
+    const foundStories = await getConnection().query(sql, [
+      PublishStatus.Published,
+      take + 1,
+      skip,
+      search,
+    ])
 
-    const foundStories = await Story.find(query)
     const stories = foundStories.slice(0, take)
 
     const hasMore = foundStories.length > take

@@ -23,6 +23,12 @@ SELECT story.*,
   )
 ) AS weight
 FROM story
+LEFT JOIN "user"
+  ON "user".id = story."authorId"
 WHERE status = $1
+AND (
+  "user"."penName" ILIKE '%' || $4 || '%' OR
+  story.title ILIKE '%' || $4 || '%'
+)
 ORDER BY weight DESC
 LIMIT $2 OFFSET $3;
