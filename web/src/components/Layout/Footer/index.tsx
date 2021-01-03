@@ -9,7 +9,7 @@ const Footer: React.FC<Props> = () => {
       <p className={styles.comingSoon}>
         Coming soon on Android and iOS
       </p>
-      <span className={styles.copyright}>© drkgrntt 2020</span>
+      <span className={styles.copyright}>© drkgrntt 2021</span>
     </footer>
   )
 }
