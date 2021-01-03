@@ -34,6 +34,7 @@ const StoryList: React.FC<Props> = ({
           </Link>
           {renderRating(story)}
         </div>
+        <em>{story.genres.map((genre) => genre.name).join(', ')}</em>
         {story.summary}
         <Link href={`/profile/${story.author.id}`}>
           <a>{story.author.penName}</a>

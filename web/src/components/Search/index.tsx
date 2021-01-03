@@ -36,7 +36,7 @@ const Search: React.FC<Props> = (props) => {
       className={styles.search}
       buttonText="Search"
     >
-      <h2>Search by Author or Title</h2>
+      <h2>Search by author, title, or genre</h2>
       <Input name="search" value={search} onChange={handleChange} />
       <StoryList
         showRating
