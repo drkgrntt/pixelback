@@ -223,6 +223,7 @@ export class ChapterResolver {
 
     return await Chapter.create({
       storyId,
+      authorId: me.id,
       number,
       title,
       body,
