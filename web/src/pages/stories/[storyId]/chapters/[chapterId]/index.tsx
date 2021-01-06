@@ -51,14 +51,14 @@ const ChapterPage: NextPage<Props> = ({ query }) => {
   }, [meResult.data])
 
   switch (true) {
+    case storyResult.loading || chapterResult.loading:
+      return <Loader />
+
     case !!storyResult.error ||
       !!chapterResult.error ||
       !story ||
       !chapter:
       return <Error statusCode={404} />
-
-    case storyResult.loading || chapterResult.loading:
-      return <Loader />
   }
 
   const renderPrev = () => {
