@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "next dev -p 4000",
     "build": "next build",
-    "start": "NODE_ENV=production next start -p $PORT"
+    "start": "NODE_ENV=production next start -p $PORT",
+    "deploy": "git add . && git commit -m \"deploy to heroku\" && git push heroku master"
   },
   "dependencies": {
     "@apollo/client": "^3.2.7",
