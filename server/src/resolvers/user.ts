@@ -10,7 +10,7 @@ import {
   Root,
   UseMiddleware,
 } from 'type-graphql'
-import { ILike, LessThan } from 'typeorm'
+import { ILike, LessThan, Like } from 'typeorm'
 import bcrypt from 'bcrypt'
 import { User } from '../entities/User'
 import { Token } from '../entities/Token'
@@ -32,7 +32,7 @@ import { isAuth } from '../middleware/isAuth'
 import Mailer from '../utils/Mailer'
 import Payments from '../utils/Payments'
 import { Comment } from '../entities/Comment'
-import { templates } from '../constants'
+import { templates, __prod__ } from '../constants'
 
 @ObjectType()
 class UserResponse {
@@ -244,8 +244,8 @@ export class UserResolver {
 
     const token = await Token.generate(user.id)
     res.cookie('token', token.value, {
-      secure: true,
-      sameSite: 'none',
+      secure: __prod__,
+      sameSite: __prod__ ? 'none' : 'lax',
       httpOnly: true,
       maxAge: 1000 * 60 * 60 * 24 * 30,
     })
@@ -272,20 +272,49 @@ export class UserResolver {
       )
     }
 
+    let penName = email.split('@')[0]
+    const userWithPenName = await User.findOne({
+      select: ['id'],
+      where: {
+        penName,
+      },
+    })
+
+    // Ensure penName is unique
+    if (userWithPenName) {
+      const usersWithSimilarPenName = await User.find({
+        select: ['penName'],
+        where: {
+          penName: Like(penName),
+        },
+      })
+
+      let i = 1
+      let newPenName = `${penName}${i}`
+      while (
+        usersWithSimilarPenName.some(
+          (user) => user.penName === newPenName
+        )
+      ) {
+        newPenName = `${penName}${i++}`
+      }
+      penName = newPenName
+    }
+
     // Create the user
     const passwordHash = await bcrypt.hash(password, 13)
     const user = await User.create({
       email: email,
       password: passwordHash,
       role: UserRole.Reader,
-      penName: email.split('@')[0], // TODO: improve this
+      penName: penName,
     }).save()
 
     // Generate a token
     const token = await Token.generate(user.id)
     res.cookie('token', token.value, {
-      sameSite: 'none',
-      secure: true,
+      sameSite: __prod__ ? 'none' : 'lax',
+      secure: __prod__,
       httpOnly: true,
       maxAge: 1000 * 60 * 60 * 24 * 30,
     })
@@ -350,8 +379,8 @@ export class UserResolver {
     const value = Token.unsign(token)
     const result = await Token.delete({ value })
     res.cookie('token', 'a.b.c', {
-      sameSite: 'none',
-      secure: true,
+      sameSite: __prod__ ? 'none' : 'lax',
+      secure: __prod__,
       maxAge: 0,
       httpOnly: true,
     })
@@ -366,8 +395,8 @@ export class UserResolver {
     await Token.delete({ userId: me.id })
     const token = await Token.generate(me.id)
     res.cookie('token', token.value, {
-      sameSite: 'none',
-      secure: true,
+      sameSite: __prod__ ? 'none' : 'lax',
+      secure: __prod__,
       httpOnly: true,
       maxAge: 1000 * 60 * 60 * 24 * 30,
     })
@@ -384,8 +413,8 @@ export class UserResolver {
     await Token.delete({ value })
     const newToken = await Token.generate(me.id)
     res.cookie('token', newToken.value, {
-      sameSite: 'none',
-      secure: true,
+      sameSite: __prod__ ? 'none' : 'lax',
+      secure: __prod__,
       httpOnly: true,
       maxAge: 1000 * 60 * 60 * 24 * 30,
     })
