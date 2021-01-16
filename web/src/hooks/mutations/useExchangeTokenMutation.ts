@@ -1,8 +1,8 @@
 import { gql, useMutation } from '@apollo/client'
 
 export const exchangeTokenMutation = gql`
-  mutation ExchangeToken {
-    exchangeToken {
+  mutation ExchangeToken($token: String) {
+    exchangeToken(token: $token) {
       value
     }
   }

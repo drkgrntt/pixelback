@@ -377,9 +377,10 @@ export class UserResolver {
   @Mutation(() => Token)
   @UseMiddleware(isAuth)
   async exchangeToken(
-    @Ctx() { me, token, res }: Context
+    @Ctx() { me, token, res }: Context,
+    @Arg('token', { nullable: true }) oldToken: string
   ): Promise<Token> {
-    const value = Token.unsign(token)
+    const value = Token.unsign(oldToken || token)
     await Token.delete({ value })
     const newToken = await Token.generate(me.id)
     res.cookie('token', newToken.value, {

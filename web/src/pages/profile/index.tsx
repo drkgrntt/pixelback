@@ -33,7 +33,8 @@ const Profile: NextPage<Props> = ({ query }) => {
   const me: User = data?.me
   useIsAuth()
   useEffect(() => {
-    if (me && query.token) exchangeToken()
+    if (me && query.token)
+      exchangeToken({ variables: { token: query.token } })
   }, [me, query.token])
 
   if (loading) {
