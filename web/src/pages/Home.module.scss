@@ -5,21 +5,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-image: url('/books.jpg');
+  background-image: url('/books 1.png');
   background-size: cover;
   margin: -1rem;
-}
-
-.home::before {
-  content: '';
-  position: absolute;
-  top: $header-height;
-  right: 0px;
-  bottom: 0px;
-  left: 0px;
-  height: $landing-height;
-  background-color: rgba(255, 255, 255, 0.65);
-  z-index: 10;
 }
 
 .cta {
