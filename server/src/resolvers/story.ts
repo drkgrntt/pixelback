@@ -25,6 +25,9 @@ import { Chapter } from '../entities/Chapter'
 import { StoryGenre } from '../entities/StoryGenre'
 import { Genre } from '../entities/Genre'
 import { Read } from '../entities/Read'
+import Mailer from '../utils/Mailer'
+import { Subscription } from '../entities/Subscription'
+import { templates } from '../constants'
 
 @ObjectType()
 class PageData {
@@ -258,7 +261,15 @@ export class StoryResolver {
     @Arg('status') status: PublishStatus,
     @Arg('enableCommenting') enableCommenting: boolean,
     @Arg('summary') summary: string,
-    @Ctx() { me }: Context
+    @Ctx()
+    {
+      me,
+      subscriptionIdsBySubscribedToLoader,
+      subscriptionLoader,
+      userLoader,
+      genreIdsByStoryLoader,
+      genreLoader,
+    }: Context
   ): Promise<Story> {
     if (me.role < UserRole.Author) {
       const storyCount = await Story.count({ authorId: me.id })
@@ -283,6 +294,46 @@ export class StoryResolver {
       await me.save()
     }
 
+    // Notify users subscribed to the author
+    // on the initial publish of the story
+    if (story.status === PublishStatus.Published) {
+      const subscriptionIds = await subscriptionIdsBySubscribedToLoader.load(
+        me.id
+      )
+      const subscriptions = (await subscriptionLoader.loadMany(
+        subscriptionIds || []
+      )) as Subscription[]
+      const users = (await userLoader.loadMany(
+        subscriptions.map((sub) => sub.subscriberId)
+      )) as User[]
+
+      const genreIds = await genreIdsByStoryLoader.load(story.id)
+      const genres = (await genreLoader.loadMany(
+        genreIds || []
+      )) as Genre[]
+      const genreNames = genres.map((genre) => genre.name).join(', ')
+
+      const recipients = users.map((user) => user.email)
+      const subject = `${me.penName} just published a new story!`
+      const template = templates.newStory
+      const variables = {
+        title: story.title,
+        authorLink: `${process.env.APP_BASE_URL}/profile/${me.id}`,
+        author: me.penName,
+        genres: genreNames,
+        summary: story.summary,
+        storyLink: `${process.env.APP_BASE_URL}/stories/${story.id}`,
+      }
+
+      const mailer = new Mailer()
+      await mailer.sendBulkEmail(
+        recipients,
+        subject,
+        template,
+        variables
+      )
+    }
+
     return story
   }
 
@@ -295,7 +346,15 @@ export class StoryResolver {
     @Arg('status') status: PublishStatus,
     @Arg('enableCommenting') enableCommenting: boolean,
     @Arg('summary') summary: string,
-    @Ctx() { me }: Context
+    @Ctx()
+    {
+      me,
+      subscriptionIdsBySubscribedToLoader,
+      subscriptionLoader,
+      userLoader,
+      genreIdsByStoryLoader,
+      genreLoader,
+    }: Context
   ): Promise<Story> {
     let story = await Story.findOne({ id, authorId: me.id })
     if (!story) {
@@ -308,7 +367,55 @@ export class StoryResolver {
     story.enableCommenting = enableCommenting
     story.summary = summary
 
+    let sendEmail = false
+    if (
+      !story.publishedAt &&
+      story.status === PublishStatus.Published
+    ) {
+      sendEmail = true
+    }
+
     story = await story.save()
+
+    // Notify users subscribed to the author
+    // on the initial publish of the story
+    if (sendEmail) {
+      const subscriptionIds = await subscriptionIdsBySubscribedToLoader.load(
+        me.id
+      )
+      const subscriptions = (await subscriptionLoader.loadMany(
+        subscriptionIds || []
+      )) as Subscription[]
+      const users = (await userLoader.loadMany(
+        subscriptions.map((sub) => sub.subscriberId)
+      )) as User[]
+
+      const genreIds = await genreIdsByStoryLoader.load(story.id)
+      const genres = (await genreLoader.loadMany(
+        genreIds || []
+      )) as Genre[]
+      const genreNames = genres.map((genre) => genre.name).join(', ')
+
+      const recipients = users.map((user) => user.email)
+      const subject = `${me.penName} just published a new story!`
+      const template = templates.newStory
+      const variables = {
+        title: story.title,
+        authorLink: `${process.env.APP_BASE_URL}/profile/${me.id}`,
+        author: me.penName,
+        genres: genreNames,
+        summary: story.summary,
+        storyLink: `${process.env.APP_BASE_URL}/stories/${story.id}`,
+      }
+
+      const mailer = new Mailer()
+      await mailer.sendBulkEmail(
+        recipients,
+        subject,
+        template,
+        variables
+      )
+    }
 
     return story
   }
