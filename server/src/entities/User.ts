@@ -44,7 +44,7 @@ export class User extends BaseEntity {
   role: UserRole
 
   @Field()
-  @Column()
+  @Column({ unique: true })
   @Index()
   penName: string
 

@@ -212,10 +212,7 @@ export class UserResolver {
   }
 
   @Query(() => [User])
-  async searchUsers(
-    // @Arg('filters') filters: any,
-    @Arg('search') search: string
-  ): Promise<User[]> {
+  async searchUsers(@Arg('search') search: string): Promise<User[]> {
     const users = await User.find({
       where: [{ penName: ILike(`%${search}%`) }],
     })
@@ -322,6 +319,21 @@ export class UserResolver {
     return {
       user,
       token,
+    }
+  }
+
+  @Mutation(() => User)
+  @UseMiddleware(isAuth)
+  async updatePenName(
+    @Ctx() { me }: Context,
+    @Arg('penName') penName: string
+  ): Promise<User> {
+    try {
+      me.penName = penName
+      await me.save()
+      return me
+    } catch (err) {
+      throw new Error('This pen name is not available.')
     }
   }
 
