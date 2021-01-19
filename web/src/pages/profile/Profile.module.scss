@@ -4,3 +4,9 @@
   max-width: $max-content-width;
   margin: 0 auto;
 }
+
+.userInfoHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

@@ -11,6 +11,7 @@ import { useIsAuth } from '@/hooks/useIsAuth'
 import Loader from '@/components/Loader'
 import StoryList from '@/components/StoryList'
 import PasswordResetForm from '@/components/PasswordResetForm'
+import PenNameForm from '@/components/PenNameForm'
 import { useMeQuery } from '@/queries/useMeQuery'
 import { Comment, Story, StripeSource, User } from '@/types'
 import { useRemoveFavoriteStoryMutation } from '@/mutations/useRemoveFavoriteStoryMutation'
@@ -18,7 +19,7 @@ import Modal from '@/components/Modal'
 import { useExchangeTokenMutation } from '@/mutations/useExchangeTokenMutation'
 import { withApollo } from '@/utils/withApollo'
 import CreditCardForm from '@/components/CreditCardForm'
-import { useRemovePaymentMethodMutation } from '@/hooks/mutations/useRemovePaymentMethodMutation'
+import { useRemovePaymentMethodMutation } from '@/mutations/useRemovePaymentMethodMutation'
 
 interface Props {
   query: ParsedUrlQuery
@@ -80,25 +81,27 @@ const Profile: NextPage<Props> = ({ query }) => {
   }
 
   const renderComments = () => {
-    return me.comments.map((comment) => {
-      let link = '/stories'
-      if (comment.story) {
-        link = `${link}/${comment.story?.id}`
-      } else {
-        link = `${link}/${comment.chapter?.story.id}/chapters/${comment.chapter?.id}`
-      }
-      return (
-        <li key={comment.id}>
-          <Link href={link}>
-            <a>{comment.story?.title || comment.chapter?.title}</a>
-          </Link>
-          <p>{comment.body}</p>
-          <p>{new Date(comment.createdAt).toLocaleDateString()}</p>
-          {renderEdited(comment)}
-          <br />
-        </li>
-      )
-    })
+    return me.comments
+      .map((comment) => {
+        let link = '/stories'
+        if (comment.story) {
+          link = `${link}/${comment.story?.id}`
+        } else {
+          link = `${link}/${comment.chapter?.story.id}/chapters/${comment.chapter?.id}`
+        }
+        return (
+          <li key={comment.id}>
+            <Link href={link}>
+              <a>{comment.story?.title || comment.chapter?.title}</a>
+            </Link>
+            <p>{comment.body}</p>
+            <p>{new Date(comment.createdAt).toLocaleDateString()}</p>
+            {renderEdited(comment)}
+            <br />
+          </li>
+        )
+      })
+      .reverse()
   }
 
   const handleRemovePaymentMethod = async (
@@ -139,7 +142,20 @@ const Profile: NextPage<Props> = ({ query }) => {
       </Card>
 
       <Card>
-        <h3>User Info</h3>
+        <div className={styles.userInfoHeader}>
+          <h3>User Info</h3>
+          <Modal closeId="close-pen-name-form" buttonText="Edit">
+            <h2>Set a new pen name</h2>
+            <PenNameForm
+              onSuccess={() => {
+                const close = document.getElementById(
+                  'close-pen-name-form'
+                )
+                close?.click()
+              }}
+            />
+          </Modal>
+        </div>
         <hr />
         <ul>
           <li>Email (no one sees this but you): {me.email}</li>
