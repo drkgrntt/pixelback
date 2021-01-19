@@ -12,6 +12,7 @@ export const useRemovePaymentMethodMutation = () => {
       cache.evict({
         id: `StripeSource:${result.data?.removePaymentMethod}`,
       })
+      cache.gc()
     },
   }
 

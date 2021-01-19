@@ -10,7 +10,8 @@ export const useDeleteStoryMutation = () => {
   const options: MutationHookOptions = {
     update: (cache, result) => {
       cache.evict({ id: `Story:${result.data?.deleteStory}` })
-    }
+      cache.gc()
+    },
   }
 
   return useMutation(deleteStoryMutation, options)

@@ -1,5 +1,4 @@
 import { gql, MutationHookOptions, useMutation } from '@apollo/client'
-import { StoryInfo } from '@/fragments/StoryInfo'
 import { meQuery } from '@/queries/useMeQuery'
 import { User } from '@/types'
 
@@ -18,7 +17,6 @@ export const addPaymentMethodMutation = gql`
 export const useAddPaymentMethodMutation = () => {
   const options: MutationHookOptions = {
     update: (cache, result) => {
-      cache.evict({ fieldName: 'Stories:{}' })
       const meRes = cache.readQuery<{ me: User }>({ query: meQuery })
       if (!meRes) return
       cache.writeQuery({

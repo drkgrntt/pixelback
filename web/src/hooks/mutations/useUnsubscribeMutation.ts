@@ -10,6 +10,7 @@ export const useUnsubscribeMutation = () => {
   const options: MutationHookOptions = {
     update: (cache, result) => {
       cache.evict({ id: `Subscription:${result.data?.unsubscribe}` })
+      cache.gc()
     },
   }
 

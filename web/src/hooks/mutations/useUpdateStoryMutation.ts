@@ -26,8 +26,9 @@ export const updateStoryMutation = gql`
 
 const options: MutationHookOptions = {
   update: (cache) => {
-    cache.evict({ fieldName: 'Stories:{}' })
-  }
+    cache.evict({ fieldName: 'stories:{}' })
+    cache.gc()
+  },
 }
 
 export const useUpdateStoryMutation = () => {

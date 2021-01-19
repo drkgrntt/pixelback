@@ -10,6 +10,7 @@ export const useDeleteCommentMutation = () => {
   const options: MutationHookOptions = {
     update: (cache, result) => {
       cache.evict({ id: `Comment:${result.data?.deleteComment}` })
+      cache.gc()
     },
   }
 

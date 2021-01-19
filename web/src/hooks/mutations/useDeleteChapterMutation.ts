@@ -10,7 +10,8 @@ export const useDeleteChapterMutation = () => {
   const options: MutationHookOptions = {
     update: (cache, result) => {
       cache.evict({ id: `Chapter:${result.data?.deleteChapter}` })
-    }
+      cache.gc()
+    },
   }
 
   return useMutation(deleteChapterMutation, options)
