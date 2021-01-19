@@ -114,24 +114,24 @@ class Mailer {
     const transporter = await this.createTransporter()
     if (!transporter) return false
 
-    let success = true
-    for (const recipient of recipients) {
-      const mailOptions = {
-        from: process.env.GMAIL,
-        to: recipient,
-        subject: subject,
-        generateTextFromHTML: true,
-        html: parsedHtml,
+    // Declare a function to run in the background
+    const sendEmails = async () => {
+      for (const recipient of recipients) {
+        const mailOptions = {
+          from: process.env.GMAIL,
+          to: recipient,
+          subject: subject,
+          generateTextFromHTML: true,
+          html: parsedHtml,
+        }
+        await transporter.sendMail(mailOptions)
       }
 
-      const response = await transporter.sendMail(mailOptions)
-      if (!response) {
-        success = false
-      }
+      transporter.close()
     }
+    sendEmails()
 
-    transporter.close()
-    return success
+    return true
   }
 }
 
