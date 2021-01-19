@@ -180,19 +180,31 @@ export class StoryResolver {
   @Query(() => PaginatedResponse)
   async stories(
     @Arg('skip', { nullable: true }) skip: number = 0,
-    @Arg('take', { nullable: true }) take: number = 30
+    @Arg('take', { nullable: true }) take: number = 30,
+    @Arg('newest', { nullable: true }) newest: boolean
   ): Promise<PaginatedResponse> {
     take = Math.min(30, take)
 
-    const sql = fs
-      .readFileSync(path.join('sql', 'stories.sql'))
-      .toString()
-    const foundStories = await getConnection().query(sql, [
-      PublishStatus.Published,
-      take + 1,
-      skip,
-      '',
-    ])
+    let foundStories = []
+    switch (true) {
+      case newest:
+        foundStories = await Story.find({
+          where: { status: PublishStatus.Published },
+          order: { publishedAt: 'DESC' },
+        })
+        break
+
+      default:
+        const sql = fs
+          .readFileSync(path.join('sql', 'stories.sql'))
+          .toString()
+        foundStories = await getConnection().query(sql, [
+          PublishStatus.Published,
+          take + 1,
+          skip,
+          '',
+        ])
+    }
 
     const stories = foundStories.slice(0, take)
 
