@@ -3,6 +3,9 @@ import '../styles/globals.scss'
 import Layout from '@/components/Layout'
 import { withApollo } from '@/utils/withApollo'
 import { NextPage } from 'next'
+import { useGA } from '@/hooks/useGA'
+import { useEffect, useState } from 'react'
+import { useRouter } from 'next/router'
 
 const App = ({
   Component,
@@ -11,6 +14,20 @@ const App = ({
   Component: NextPage
   pageProps: Record<string, any>
 }) => {
+  const { initGA, logPageView } = useGA()
+  const [gaInitialized, setGaInitialized] = useState(false)
+  const { asPath } = useRouter()
+
+  useEffect(() => {
+    if (!gaInitialized) {
+      initGA(process.env.NEXT_PUBLIC_GA_ID as string)
+      setGaInitialized(true)
+    }
+    if (gaInitialized) {
+      logPageView()
+    }
+  }, [asPath])
+
   return (
     <>
       <Head>
