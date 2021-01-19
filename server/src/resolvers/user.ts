@@ -300,12 +300,18 @@ export class UserResolver {
 
     // Create the user
     const passwordHash = await bcrypt.hash(password, 13)
-    const user = await User.create({
-      email: email,
-      password: passwordHash,
-      role: UserRole.Reader,
-      penName: penName,
-    }).save()
+
+    let user
+    try {
+      user = await User.create({
+        email: email,
+        password: passwordHash,
+        role: UserRole.Reader,
+        penName: penName,
+      }).save()
+    } catch (err) {
+      throw new Error('The email you have chosen is already in use.')
+    }
 
     // Generate a token
     const token = await Token.generate(user.id)

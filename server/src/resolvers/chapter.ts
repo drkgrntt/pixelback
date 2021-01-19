@@ -246,15 +246,12 @@ export class ChapterResolver {
     @Ctx() { me }: Context
   ): Promise<Chapter> {
     // Make sure the user is the author of the story
-    let chapter = await Chapter.findOne(
-      { id },
-      { relations: ['story'] }
-    )
+    let chapter = await Chapter.findOne({ where: { id } })
     if (!chapter) {
       throw new Error('This chapter does not exist.')
     }
 
-    if (chapter.story.authorId !== me.id) {
+    if (chapter.authorId !== me.id) {
       throw new Error('You do not own this.')
     }
 

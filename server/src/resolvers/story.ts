@@ -289,7 +289,7 @@ export class StoryResolver {
       const storyCount = await Story.count({ authorId: me.id })
       if (storyCount >= 10) {
         throw new Error(
-          'You need to be an author to write more stories.'
+          'You need to have author status to write more stories.'
         )
       }
     }
