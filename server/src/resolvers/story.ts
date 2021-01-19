@@ -191,6 +191,8 @@ export class StoryResolver {
         foundStories = await Story.find({
           where: { status: PublishStatus.Published },
           order: { publishedAt: 'DESC' },
+          take: take + 1,
+          skip,
         })
         break
 
