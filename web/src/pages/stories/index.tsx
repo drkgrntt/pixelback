@@ -27,10 +27,6 @@ const Stories: NextPage<Props> = (props) => {
     variables: { take: PER_PAGE, skip: 0, newest: queryNewest },
   })
 
-  if (loading) {
-    return <Loader />
-  }
-
   const stories = data?.stories.stories
 
   const loadMore = (event: any, reset: Function) => {
@@ -71,7 +67,11 @@ const Stories: NextPage<Props> = (props) => {
         </div>
         <Search perPage={PER_PAGE} />
       </div>
-      <StoryList cardWrap showRating stories={stories} />
+      {loading ? (
+        <Loader />
+      ) : (
+        <StoryList cardWrap showRating stories={stories} />
+      )}
       {renderMore()}
     </div>
   )
