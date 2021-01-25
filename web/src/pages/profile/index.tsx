@@ -1,13 +1,12 @@
 import { ParsedUrlQuery } from 'querystring'
 import Link from 'next/link'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { NextPage } from 'next'
 import Error from 'next/error'
 import styles from './Profile.module.scss'
 import Button from '@/components/Button'
 import Card from '@/components/Card'
 import { useLogoutEverywhereMutation } from '@/mutations/useLogoutEverywhereMutation'
-import { useIsAuth } from '@/hooks/useIsAuth'
 import Loader from '@/components/Loader'
 import StoryList from '@/components/StoryList'
 import PasswordResetForm from '@/components/PasswordResetForm'
@@ -20,23 +19,40 @@ import { useExchangeTokenMutation } from '@/mutations/useExchangeTokenMutation'
 import { withApollo } from '@/utils/withApollo'
 import CreditCardForm from '@/components/CreditCardForm'
 import { useRemovePaymentMethodMutation } from '@/mutations/useRemovePaymentMethodMutation'
+import { useRouter } from 'next/router'
 
 interface Props {
   query: ParsedUrlQuery
 }
 
 const Profile: NextPage<Props> = ({ query }) => {
+  const [wait, setWait] = useState(!!query.token)
   const [exchangeToken] = useExchangeTokenMutation()
   const [logoutEverywhere, logoutData] = useLogoutEverywhereMutation()
   const [removeFavoriteStory] = useRemoveFavoriteStoryMutation()
   const [removePaymentMethod] = useRemovePaymentMethodMutation()
-  const { loading, data } = useMeQuery()
+  const { called, loading, data, refetch } = useMeQuery()
+  const router = useRouter()
   const me: User = data?.me
-  useIsAuth()
   useEffect(() => {
-    if (me && query.token)
-      exchangeToken({ variables: { token: query.token } })
-  }, [me, query.token])
+    if (query.token && refetch) {
+      exchangeToken({
+        variables: { token: query.token },
+      })
+        .then(async () => {
+          await refetch()
+          setWait(false)
+        })
+        .catch(() => {
+          setWait(false)
+        })
+    }
+  }, [query.token, refetch, setWait])
+  useEffect(() => {
+    if (called && !loading && !data?.me && !wait) {
+      router.replace(`/login?next=${router.pathname}`)
+    }
+  }, [called, loading, data, wait])
 
   if (loading) {
     return <Loader />
@@ -222,9 +238,6 @@ const Profile: NextPage<Props> = ({ query }) => {
 }
 
 Profile.getInitialProps = ({ res, query }) => {
-  if (res && query.token) {
-    res.setHeader('set-cookie', [`token=${query.token}`])
-  }
   return { query }
 }
 

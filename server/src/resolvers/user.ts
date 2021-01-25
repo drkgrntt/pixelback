@@ -422,20 +422,22 @@ export class UserResolver {
   }
 
   @Mutation(() => Token)
-  @UseMiddleware(isAuth)
+  // @UseMiddleware(isAuth)
   async exchangeToken(
-    @Ctx() { me, token, res }: Context,
+    @Ctx() { token, res }: Context,
     @Arg('token', { nullable: true }) oldToken: string
   ): Promise<Token> {
     const value = Token.unsign(oldToken || token)
-    await Token.delete({ value })
-    const newToken = await Token.generate(me.id)
+    const foundToken = await Token.findOne({ where: { value } })
+    if (!foundToken) throw new Error('No token found')
+    const newToken = await Token.generate(foundToken.userId)
     res.cookie('token', newToken.value, {
       sameSite: __prod__ ? 'none' : 'lax',
       secure: __prod__,
       httpOnly: true,
       maxAge: 1000 * 60 * 60 * 24 * 30,
     })
+    await Token.delete({ value })
     return newToken
   }
 
