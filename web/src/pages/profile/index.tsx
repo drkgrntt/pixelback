@@ -58,7 +58,7 @@ const Profile: NextPage<Props> = ({ query }) => {
     return <Loader />
   }
 
-  if (!me) {
+  if (!me && !wait) {
     return <Error statusCode={401} />
   }
 
