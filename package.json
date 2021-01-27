@@ -6,7 +6,9 @@
     "server": "lerna --scope=pixelback-server run dev --stream --",
     "web": "lerna --scope=pixelback-web run dev --stream --",
     "mobile": "lerna --scope=pixelback-mobile run dev --stream --",
-    "heroku-postbuild": "bash ./scripts/heroku.sh"
+    "heroku-postbuild": "bash ./scripts/heroku.sh",
+    "deploy-server": "git push heroku-server main:master",
+    "deploy-web": "git push heroku-web main:master"
   },
   "devDependencies": {
     "lerna": "^3.22.1"
