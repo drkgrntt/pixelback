@@ -1,0 +1,33 @@
+@import 'src/styles/variables.scss';
+
+.footer {
+  height: $footer-height;
+  background-color: $color-grey-light-2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+}
+
+.comingSoon {
+  color: $color-grey;
+  font-style: italic;
+}
+
+.title {
+  margin: 0;
+  font-size: 2.3rem;
+  font-weight: 300;
+}
+
+.copyright {
+  color: $color-grey;
+}
+
+.links {
+  padding: 0;
+  display: flex;
+  gap: 1rem;
+  list-style-type: none;
+}

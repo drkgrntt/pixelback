@@ -1,0 +1,39 @@
+@import 'src/styles/variables.scss';
+
+.header {
+  height: $header-height;
+  background-color: $color-primary;
+  background: linear-gradient(
+    45deg,
+    lighten($color-primary, 0%),
+    darken($color-primary, 30%)
+  );
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.content {
+  width: 100%;
+  max-width: $max-content-width;
+  margin: 0 auto;
+}
+
+.title {
+  line-height: 1;
+  margin: 0;
+  font-weight: 300;
+  font-size: 3.3rem;
+  color: $color-white;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.subtitle {
+  font-size: 1.4rem;
+  display: block;
+  font-weight: 300;
+}

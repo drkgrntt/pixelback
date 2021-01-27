@@ -1,0 +1,127 @@
+@import 'src/styles/variables.scss';
+
+.nav {
+  background: transparent;
+  position: absolute;
+  width: 100%;
+  z-index: 999;
+
+  .list {
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+    position: relative;
+    width: 100%;
+    transition: 0.3s;
+  }
+
+  .toggle {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+    transition: 0.3s;
+    // max-width: $max-content-width;
+    // margin: 0 auto;
+  }
+
+  .item {
+    cursor: pointer;
+    transition: all 0.4s;
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    position: relative;
+
+    &:hover:not(.hamburger) {
+      background-color: $color-grey-light-2;
+      color: $color-grey-dark-2;
+
+      & > .link {
+        color: $color-grey-dark-2;
+      }
+    }
+  }
+
+  .link {
+    transition: all 0.4s;
+    text-decoration: none;
+    font-style: normal;
+    width: 100%;
+    text-align: center;
+    font-size: 1.6rem;
+    color: $color-grey-light;
+  }
+
+  .hamburger {
+    display: flex;
+    margin: 2rem;
+    margin-top: 1.5rem;
+
+    &,
+    &::before,
+    &::after {
+      display: block;
+      border-bottom: 0.2rem solid $color-grey-light;
+      width: 2.5rem;
+      padding-bottom: 1rem;
+    }
+
+    &::before,
+    &::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      transition: all 0.3s;
+    }
+
+    &::before {
+      top: -0.9rem;
+    }
+    &::after {
+      top: 0.9rem;
+    }
+
+    & ~ .item {
+      z-index: -1;
+      height: 0;
+      opacity: 0;
+      transition: all 0.5s;
+    }
+  }
+
+  .checked {
+    background-color: rgba($color-grey-dark, 0.9);
+
+    .hamburger {
+      border-bottom: none;
+      margin-top: -0.5rem;
+      margin-bottom: 4rem;
+
+      &::before {
+        top: 3rem;
+        left: 0.3rem;
+        transform: rotate(135deg);
+      }
+
+      &::after {
+        top: 3rem;
+        left: -0.4rem;
+        transform: rotate(-135deg);
+      }
+
+      & ~ .item {
+        opacity: 1;
+        height: 3rem;
+        z-index: 1;
+        padding: 0.5rem 2vw;
+
+        &:last-of-type {
+          margin-bottom: 1rem;
+        }
+      }
+    }
+  }
+}

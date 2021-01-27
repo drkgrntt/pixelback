@@ -1,0 +1,50 @@
+@import './variables.scss';
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: 'Montserrat', 'Raleway', 'Lato', sans-serif;
+  background-color: $color-grey-light;
+  background: linear-gradient(
+    25deg,
+    lighten($color-primary, 60%),
+    lighten($color-tertiary, 28%),
+    lighten($color-primary, 60%)
+  );
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-size: $default-font-size;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 500;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+a {
+  color: $color-grey-dark-2;
+  text-decoration: underline;
+  font-style: italic;
+  cursor: pointer;
+}
+
+hr {
+  color: $color-grey-dark;
+}

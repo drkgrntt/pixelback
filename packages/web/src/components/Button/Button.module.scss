@@ -1,0 +1,111 @@
+@import 'src/styles/variables.scss';
+
+.button {
+  height: 3.2rem;
+  padding: 0 2rem;
+  font-family: inherit;
+  letter-spacing: 0rem;
+  font-size: 1.4rem;
+  font-weight: 500;
+  border: 0.2rem solid $color-black;
+  background-color: $color-white;
+  color: $color-black;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s;
+  border-radius: 0.2rem;
+
+  img {
+    max-height: inherit;
+  }
+
+  &.small {
+    padding: 0 1rem;
+    font-size: 1.2rem;
+    height: 2.7rem;
+  }
+
+  &:hover {
+    color: $color-white;
+    background-color: transparent;
+    border: 0.2rem solid $color-white;
+  }
+
+  &.primary {
+    border: 0.2rem solid $color-primary;
+    color: $color-white;
+    background-color: $color-primary;
+    transition: all 0.3s;
+
+    &:hover {
+      color: $color-primary;
+      background-color: transparent;
+      border: 0.2rem solid $color-primary;
+    }
+  }
+
+  &.secondary {
+    border: 0.2rem solid $color-secondary;
+    color: $color-white;
+    background-color: $color-secondary;
+    transition: all 0.3s;
+
+    &:hover {
+      color: $color-secondary;
+      background-color: transparent;
+      border: 0.2rem solid $color-secondary;
+    }
+  }
+
+  &.tertiary {
+    border: 0.2rem solid $color-tertiary;
+    color: $color-white;
+    background-color: $color-tertiary;
+    transition: all 0.3s;
+
+    &:hover {
+      color: $color-tertiary;
+      background-color: transparent;
+      border: 0.2rem solid $color-tertiary;
+    }
+  }
+
+  &.cta {
+    border: 0.2rem solid $color-cta;
+    color: $color-white;
+    background-color: $color-cta;
+    transition: all 0.3s;
+
+    &:hover {
+      color: $color-cta;
+      background-color: transparent;
+      border: 0.2rem solid $color-cta;
+    }
+  }
+
+  &.edit {
+    border: 0.2rem solid $color-edit;
+    color: $color-white;
+    background-color: $color-edit;
+    transition: all 0.3s;
+
+    &:hover {
+      color: $color-edit;
+      background-color: transparent;
+      border: 0.2rem solid $color-edit;
+    }
+  }
+
+  &.delete {
+    border: 0.2rem solid $color-delete;
+    color: $color-white;
+    background-color: $color-delete;
+    transition: all 0.3s;
+
+    &:hover {
+      color: $color-delete;
+      background-color: transparent;
+      border: 0.2rem solid $color-delete;
+    }
+  }
+}

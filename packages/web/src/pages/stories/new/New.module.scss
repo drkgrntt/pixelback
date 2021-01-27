@@ -1,0 +1,12 @@
+@import 'src/styles/variables.scss';
+
+.new {
+  max-width: $max-content-width;
+  margin: 0 auto;
+}
+
+.cardModal {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}

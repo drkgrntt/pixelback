@@ -1,0 +1,22 @@
+@import 'src/styles/variables.scss';
+
+.chapter {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: $max-content-width;
+  margin: 0 auto;
+}
+
+.prevNext {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.6rem;
+}
+
+.tipModal {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  text-align: center;
+}
