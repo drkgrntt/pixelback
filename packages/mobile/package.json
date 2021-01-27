@@ -1,10 +1,12 @@
 {
+  "name": "pixelback-mobile",
   "main": "index.js",
   "scripts": {
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "web": "expo start --web",
     "start": "react-native start",
+    "dev": "expo start",
     "test": "jest"
   },
   "dependencies": {

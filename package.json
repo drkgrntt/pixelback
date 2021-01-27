@@ -1,6 +1,12 @@
 {
   "name": "root",
   "private": true,
+  "scripts": {
+    "server-watch": "lerna --scope=pixelback-server run watch --stream --",
+    "server": "lerna --scope=pixelback-server run dev --stream --",
+    "web": "lerna --scope=pixelback-web run dev --stream --",
+    "mobile": "lerna --scope=pixelback-mobile run dev --stream --"
+  },
   "devDependencies": {
     "lerna": "^3.22.1"
   }
