@@ -6,7 +6,7 @@
     "server": "lerna --scope=pixelback-server run dev --stream --",
     "web": "lerna --scope=pixelback-web run dev --stream --",
     "mobile": "lerna --scope=pixelback-mobile run dev --stream --",
-    "postinstall": "cd packages/server && npm install && npm run build && cd ../web && npm install && npm run build"
+    "heroku-postbuild": "./scripts/heroku.sh"
   },
   "devDependencies": {
     "lerna": "^3.22.1"
