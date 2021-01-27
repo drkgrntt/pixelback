@@ -6,7 +6,7 @@
     "server": "lerna --scope=pixelback-server run dev --stream --",
     "web": "lerna --scope=pixelback-web run dev --stream --",
     "mobile": "lerna --scope=pixelback-mobile run dev --stream --",
-    "postinstall": "lerna bootstrap && cd packages/server && npm run build && cd ../web && npm run build"
+    "postinstall": "cd packages/server && npm install && npm run build && cd ../web && npm install && npm run build"
   },
   "devDependencies": {
     "lerna": "^3.22.1"
