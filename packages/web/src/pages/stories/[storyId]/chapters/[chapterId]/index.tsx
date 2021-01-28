@@ -145,17 +145,17 @@ const ChapterPage: NextPage<Props> = ({ query }) => {
           rateStatus={chapter.rateStatus}
         />
       </Card>
-      {story.author.canAcceptPayments && (
-        <Card>
-          <Modal
-            buttonText="Tip the author"
-            className={styles.tipModal}
-          >
-            <h3>Tip {story.author.penName}</h3>
-            <TipForm author={story.author} />
-          </Modal>
-        </Card>
-      )}
+      {/* {story.author.canAcceptPayments && ( */}
+      <Card>
+        <Modal
+          buttonText="Tip the author"
+          className={styles.tipModal}
+        >
+          <h3>Tip {story.author.penName}</h3>
+          <TipForm author={story.author} />
+        </Modal>
+      </Card>
+      {/* )} */}
       <Comments chapter={chapter} comments={chapter.comments} />
     </div>
   )

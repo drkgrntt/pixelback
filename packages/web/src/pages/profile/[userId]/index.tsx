@@ -78,15 +78,15 @@ const UserPage: NextPage<Props> = ({ query }) => {
           <Button styleTypes={['cta']} onClick={handleFollow}>
             {isSubscribed ? 'Unfollow' : 'Follow'}
           </Button>
-          {user.canAcceptPayments && (
-            <Modal
-              buttonText="Tip the author"
-              className={styles.tipModal}
-            >
-              <h3>Tip {user.penName}</h3>
-              <TipForm author={user} />
-            </Modal>
-          )}
+          {/* {user.canAcceptPayments && ( */}
+          <Modal
+            buttonText="Tip the author"
+            className={styles.tipModal}
+          >
+            <h3>Tip {user.penName}</h3>
+            <TipForm author={user} />
+          </Modal>
+          {/* )} */}
         </div>
       </Card>
 
