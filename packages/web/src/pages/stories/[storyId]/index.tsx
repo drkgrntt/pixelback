@@ -128,17 +128,17 @@ const StoryPage: NextPage<Props> = ({ query }) => {
         />
         {renderFavoriteButton()}
       </Card>
-      {/* {story.author.canAcceptPayemnts && ( */}
-      <Card>
-        <Modal
-          buttonText="Tip the author"
-          className={styles.tipModal}
-        >
-          <h3>Tip {story.author.penName}</h3>
-          <TipForm author={story.author} />
-        </Modal>
-      </Card>
-      {/* )} */}
+      {story.author.canAcceptPayemnts && (
+        <Card>
+          <Modal
+            buttonText="Tip the author"
+            className={styles.tipModal}
+          >
+            <h3>Tip {story.author.penName}</h3>
+            <TipForm author={story.author} />
+          </Modal>
+        </Card>
+      )}
       <Comments story={story} comments={story.comments} />
     </div>
   )

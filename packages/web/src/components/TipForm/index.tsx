@@ -26,7 +26,7 @@ const TipForm: React.FC<Props> = ({ author }) => {
   const formState = useForm(INITIAL_STATE, [data?.me])
 
   if (!author.canAcceptPayments) {
-    // return null
+    return null
   }
 
   if (!data?.me) {
