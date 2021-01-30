@@ -1,0 +1,1 @@
+{"version":3,"file":"useRemoveFavoriteStoryMutation.js","sourceRoot":"","sources":["../../src/mutations/useRemoveFavoriteStoryMutation.ts"],"names":[],"mappings":";;;;;;;AAAA,yCAAiD;AACjD,kDAAgD;AAEnC,QAAA,2BAA2B,GAAG,YAAG,iNAAA,wIAM1C,EAAQ,IACX,KADG,mBAAQ,EACX;AAEM,IAAM,8BAA8B,GAAG;IAC5C,OAAO,oBAAW,CAAC,mCAA2B,CAAC,CAAA;AACjD,CAAC,CAAA;AAFY,QAAA,8BAA8B,kCAE1C"}

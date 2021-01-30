@@ -1,0 +1,1 @@
+{"version":3,"file":"useAddFavoriteStoryMutation.js","sourceRoot":"","sources":["../../src/mutations/useAddFavoriteStoryMutation.ts"],"names":[],"mappings":";;;;;;;AAAA,yCAAiD;AACjD,kDAAgD;AAEnC,QAAA,wBAAwB,GAAG,YAAG,2MAAA,kIAMvC,EAAQ,IACX,KADG,mBAAQ,EACX;AAEM,IAAM,2BAA2B,GAAG;IACzC,OAAO,oBAAW,CAAC,gCAAwB,CAAC,CAAA;AAC9C,CAAC,CAAA;AAFY,QAAA,2BAA2B,+BAEvC"}

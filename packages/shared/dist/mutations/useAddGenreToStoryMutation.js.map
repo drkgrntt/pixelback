@@ -1,0 +1,1 @@
+{"version":3,"file":"useAddGenreToStoryMutation.js","sourceRoot":"","sources":["../../src/mutations/useAddGenreToStoryMutation.ts"],"names":[],"mappings":";;;;;;;AAAA,yCAAiD;AACjD,oDAAkD;AAErC,QAAA,uBAAuB,GAAG,YAAG,sTAAA,6OAWtC,EAAS,IACZ,KADG,qBAAS,EACZ;AAEM,IAAM,0BAA0B,GAAG;IACxC,OAAO,oBAAW,CAAC,+BAAuB,CAAC,CAAA;AAC7C,CAAC,CAAA;AAFY,QAAA,0BAA0B,8BAEtC"}
