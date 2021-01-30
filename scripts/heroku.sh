@@ -15,10 +15,9 @@ fi
   cd $PROJECT_ROOT
 
   if [ "$BUILD_ENV" = "server" ]; then
-    cd packages/server && yarn install && yarn install --only=dev && yarn run build
+    cd packages/server && yarn run build
   elif [ "$BUILD_ENV" = "web" ]; then
-    cd packages/shared && yarn build &&
-      cd ../web && yarn install && yarn install --only=dev && yarn run build
+    cd packages/web && yarn run build
   else
     echo "Error: no build config for BUILD_ENV value '$BUILD_ENV'"
     exit 1
