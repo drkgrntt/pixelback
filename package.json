@@ -10,6 +10,7 @@
     "web": "yarn workspace @pixelback/web run dev --stream --",
     "mobile": "yarn workspace @pixelback/mobile run dev --stream --",
     "build": "yarn workspaces run build",
+    "heroku-postbuild": "bash ./scripts/heroku.sh",
     "deploy-server": "git push heroku-server main:master",
     "deploy-web": "git push heroku-web main:master"
   }
