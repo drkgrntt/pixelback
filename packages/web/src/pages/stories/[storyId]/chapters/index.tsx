@@ -3,11 +3,17 @@ import { NextPage } from 'next'
 import { ParsedUrlQuery } from 'querystring'
 import Error from 'next/error'
 import Link from 'next/link'
-import { useStoryQuery } from '@/queries/useStoryQuery'
+import {
+  useRateMutation,
+  useAddFavoriteStoryMutation,
+  useMeQuery,
+  useStoryQuery,
+  Genre,
+  Story,
+} from '@pixelback/shared'
 import Loader from '@/components/Loader'
 import Modal from '@/components/Modal'
 import TipForm from '@/components/TipForm'
-import CreditCardForm from '@/components/CreditCardForm'
 import styles from './Chapters.module.scss'
 import ChapterList from '@/components/ChapterList'
 import Card from '@/components/Card'
@@ -15,10 +21,6 @@ import Head from '@/components/Head'
 import Button from '@/components/Button'
 import StarScale from '@/components/StarScale'
 import { withApollo } from '@/utils/withApollo'
-import { useMeQuery } from '@/queries/useMeQuery'
-import { useAddFavoriteStoryMutation } from '@/mutations/useAddFavoriteStoryMutation'
-import { useRateMutation } from '@/mutations/useRateMutation'
-import { Genre, Story } from '@/types'
 
 interface Props {
   query: ParsedUrlQuery

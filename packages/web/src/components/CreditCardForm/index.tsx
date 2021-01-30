@@ -9,7 +9,7 @@ import { loadStripe, StripeCardElement } from '@stripe/stripe-js'
 import styles from './CreditCardForm.module.scss'
 import Loader from '../Loader'
 import Button from '../Button'
-import { useAddPaymentMethodMutation } from '@/hooks/mutations/useAddPaymentMethodMutation'
+import { useAddPaymentMethodMutation } from '@pixelback/shared'
 
 interface Props {
   onSuccess?: Function

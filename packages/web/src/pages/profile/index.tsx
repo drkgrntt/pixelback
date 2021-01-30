@@ -6,19 +6,24 @@ import Error from 'next/error'
 import styles from './Profile.module.scss'
 import Button from '@/components/Button'
 import Card from '@/components/Card'
-import { useLogoutEverywhereMutation } from '@/mutations/useLogoutEverywhereMutation'
+import {
+  useRemovePaymentMethodMutation,
+  useExchangeTokenMutation,
+  useRemoveFavoriteStoryMutation,
+  useLogoutEverywhereMutation,
+  useMeQuery,
+  Comment,
+  Story,
+  StripeSource,
+  User,
+} from '@pixelback/shared'
 import Loader from '@/components/Loader'
 import StoryList from '@/components/StoryList'
 import PasswordResetForm from '@/components/PasswordResetForm'
 import PenNameForm from '@/components/PenNameForm'
-import { useMeQuery } from '@/queries/useMeQuery'
-import { Comment, Story, StripeSource, User } from '@/types'
-import { useRemoveFavoriteStoryMutation } from '@/mutations/useRemoveFavoriteStoryMutation'
 import Modal from '@/components/Modal'
-import { useExchangeTokenMutation } from '@/mutations/useExchangeTokenMutation'
 import { withApollo } from '@/utils/withApollo'
 import CreditCardForm from '@/components/CreditCardForm'
-import { useRemovePaymentMethodMutation } from '@/mutations/useRemovePaymentMethodMutation'
 import { useRouter } from 'next/router'
 
 interface Props {

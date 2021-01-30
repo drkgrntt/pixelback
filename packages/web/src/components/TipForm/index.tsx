@@ -3,9 +3,12 @@ import Input from '@/components/Input'
 import Button from '@/components/Button'
 import CreditCardForm from '@/components/CreditCardForm'
 import { useForm } from '@/hooks/useForm'
-import { useMeQuery } from '@/queries/useMeQuery'
-import { useTipAuthorMutation } from '@/mutations/useTipAuthorMutation'
-import { StripeSource, User } from '@/types'
+import {
+  StripeSource,
+  User,
+  useMeQuery,
+  useTipAuthorMutation,
+} from '@pixelback/shared'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 

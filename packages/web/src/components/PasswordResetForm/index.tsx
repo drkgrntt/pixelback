@@ -2,7 +2,7 @@ import styles from './PasswordResetForm.module.scss'
 import { useForm } from '@/hooks/useForm'
 import Input from '../Input'
 import Button from '../Button'
-import { useResetPasswordMutation } from '@/hooks/mutations/useResetPasswordMutation'
+import { useResetPasswordMutation } from '@pixelback/shared'
 
 interface Props {
   onSuccess?: Function

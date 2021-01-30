@@ -4,7 +4,7 @@ import styles from './ContentForm.module.scss'
 import { useForm } from '@/hooks/useForm'
 import Button from '../Button'
 import Input from '../Input'
-import { Content, PublishStatus } from '@/types'
+import { Content, PublishStatus } from '@pixelback/shared'
 
 interface Props {
   content?: Content

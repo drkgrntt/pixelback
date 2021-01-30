@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
-import { useMeQuery } from '@/queries/useMeQuery'
+import { useMeQuery } from '@pixelback/shared'
 
 export const useIsAuth = (skip?: boolean) => {
   const { data, loading } = useMeQuery({ skip })

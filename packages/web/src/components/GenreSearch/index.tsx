@@ -1,8 +1,11 @@
 import { useState, useEffect } from 'react'
-import { useAddGenreToStoryMutation } from '@/mutations/useAddGenreToStoryMutation'
-import { useCreateGenreMutation } from '@/mutations/useCreateGenreMutation'
-import { useGenresQuery } from '@/queries/useGenresQuery'
-import { Genre, Story } from '@/types'
+import {
+  useAddGenreToStoryMutation,
+  useCreateGenreMutation,
+  useGenresQuery,
+  Genre,
+  Story,
+} from '@pixelback/shared'
 import Button from '../Button'
 import Input from '../Input'
 import styles from './GenreSearch.module.scss'

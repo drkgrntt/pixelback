@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import Card from '@/components/Card'
-import { Story } from '@/types'
+import { Story } from '@pixelback/shared'
 import styles from './StoryList.module.scss'
 import StarScale from '../StarScale'
 

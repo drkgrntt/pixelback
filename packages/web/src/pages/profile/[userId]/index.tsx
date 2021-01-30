@@ -3,19 +3,20 @@ import Error from 'next/error'
 import { useRouter } from 'next/router'
 import { ParsedUrlQuery } from 'querystring'
 import Loader from '@/components/Loader'
-import { useUserQuery } from '@/hooks/queries/useUserQuery'
+import {
+  useUnsubscribeMutation,
+  useSubscribeMutation,
+  useMeQuery,
+  useUserQuery,
+  User,
+} from '@pixelback/shared'
 import { withApollo } from '@/utils/withApollo'
 import styles from './[userId].module.scss'
-import { User } from '@/types'
 import Modal from '@/components/Modal'
 import Card from '@/components/Card'
 import TipForm from '@/components/TipForm'
-import CreditCardForm from '@/components/CreditCardForm'
 import StoryList from '@/components/StoryList'
 import Button from '@/components/Button'
-import { useMeQuery } from '@/hooks/queries/useMeQuery'
-import { useSubscribeMutation } from '@/mutations/useSubscribeMutation'
-import { useUnsubscribeMutation } from '@/mutations/useUnsubscribeMutation'
 
 interface Props {
   query: ParsedUrlQuery

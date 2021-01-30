@@ -3,15 +3,20 @@ import { useRouter } from 'next/router'
 import Link from 'next/link'
 import styles from './WriterDashboard.module.scss'
 import Card from '@/components/Card'
-import { Story, SubLevel, Subscription, UserRole } from '@/types'
 import Button from '@/components/Button'
 import AuthorshipForm from '@/components/AuthorshipForm'
-import { useMeQuery } from '@/queries/useMeQuery'
 import { useIsAuth } from '@/hooks/useIsAuth'
 import Loader from '@/components/Loader'
 import { withApollo } from '@/utils/withApollo'
-import { useCancelAuthorshipMutation } from '@/mutations/useCancelAuthorshipMutation'
-import { useLinkAccountQuery } from '@/queries/useLinkAccountQuery'
+import {
+  Story,
+  SubLevel,
+  Subscription,
+  UserRole,
+  useLinkAccountQuery,
+  useMeQuery,
+  useCancelAuthorshipMutation,
+} from '@pixelback/shared'
 import Modal from '@/components/Modal'
 import CreditCardForm from '@/components/CreditCardForm'
 

@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 import styles from './LoginForm.module.scss'
-import { useLoginMutation } from '@/mutations/useLoginMutation'
+import { useLoginMutation } from '@pixelback/shared'
 import { useForm } from '@/hooks/useForm'
 import Input from '../Input'
 import Button from '../Button'

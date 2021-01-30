@@ -1,9 +1,8 @@
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 import Button from '../Button'
-import { Chapter, Story } from '@/types'
 import styles from './ChapterList.module.scss'
-import { useMeQuery } from '@/hooks/queries/useMeQuery'
+import { useMeQuery, Chapter, Story } from '@pixelback/shared'
 
 interface Props {
   story: Story
@@ -11,7 +10,7 @@ interface Props {
 
 const ChapterList: React.FC<Props> = ({ story }) => {
   const { push } = useRouter()
-  const { data } = useMeQuery() 
+  const { data } = useMeQuery()
 
   const renderDashboardLink = (chapter: Chapter) => {
     if (data?.me?.id !== story.authorId) return
@@ -19,7 +18,9 @@ const ChapterList: React.FC<Props> = ({ story }) => {
     return (
       <>
         {' | '}
-        <Link href={`/stories/${story.id}/chapters/${chapter.id}/dashboard`}>
+        <Link
+          href={`/stories/${story.id}/chapters/${chapter.id}/dashboard`}
+        >
           Dashboard
         </Link>
       </>
@@ -29,7 +30,9 @@ const ChapterList: React.FC<Props> = ({ story }) => {
   const renderChapters = () => {
     if (!story.chapters.length) return null
 
-    const sortedChapters = [...story.chapters].sort((a, b) => a.number - b.number)
+    const sortedChapters = [...story.chapters].sort(
+      (a, b) => a.number - b.number
+    )
 
     return sortedChapters.map((chapter) => {
       return (

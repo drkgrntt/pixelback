@@ -1,8 +1,11 @@
-import { Genre, Story } from '@/types'
 import styles from './GenreList.module.scss'
 import GenreSearch from '../GenreSearch'
 import Button from '../Button'
-import { useRemoveGenreFromStoryMutation } from '@/mutations/useRemoveGenreFromStoryMutation'
+import {
+  Genre,
+  Story,
+  useRemoveGenreFromStoryMutation,
+} from '@pixelback/shared'
 
 interface Props {
   story: Story

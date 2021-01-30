@@ -1,11 +1,13 @@
 import { useState } from 'react'
 import { useRouter } from 'next/router'
 import styles from './DeleteStoryForm.module.scss'
-import { useDeleteStoryMutation } from '@/mutations/useDeleteStoryMutation'
+import {
+  Story,
+  useMeQuery,
+  useDeleteStoryMutation,
+} from '@pixelback/shared'
 import Input from '../Input'
 import Button from '../Button'
-import { Story } from '@/types'
-import { useMeQuery } from '@/hooks/queries/useMeQuery'
 
 interface Props {
   story: Story

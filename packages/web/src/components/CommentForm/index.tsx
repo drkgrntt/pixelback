@@ -2,9 +2,13 @@ import styles from './CommentForm.module.scss'
 import Input from '@/components/Input'
 import Button from '@/components/Button'
 import { useForm } from '@/hooks/useForm'
-import { Comment, Story, Chapter } from '@/types'
-import { useCommentMutation } from '@/mutations/useCommentMutation'
-import { useEditCommentMutation } from '@/mutations/useEditCommentMutation'
+import {
+  useEditCommentMutation,
+  useCommentMutation,
+  Comment,
+  Story,
+  Chapter,
+} from '@pixelback/shared'
 
 interface Props {
   comment?: Comment

@@ -1,10 +1,11 @@
 import Input from '@/components/Input'
 import Button from '@/components/Button'
-import CreditCardForm from '@/components/CreditCardForm'
 import { useForm } from '@/hooks/useForm'
-import { useBecomeAuthorMutation } from '@/mutations/useBecomeAuthorMutation'
-import { useMeQuery } from '@/queries/useMeQuery'
-import { StripeSource } from '@/types'
+import {
+  StripeSource,
+  useBecomeAuthorMutation,
+  useMeQuery,
+} from '@pixelback/shared'
 import styles from './AuthorshipForm.module.scss'
 
 interface Props {}

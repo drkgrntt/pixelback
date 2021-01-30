@@ -1,5 +1,5 @@
 {
-  "name": "pixelback-web",
+  "name": "@pixelback/web",
   "version": "1.0.0",
   "private": true,
   "scripts": {
@@ -10,10 +10,12 @@
   },
   "dependencies": {
     "@apollo/client": "^3.2.7",
+    "@pixelback/shared": "file:../shared",
     "@stripe/react-stripe-js": "^1.1.2",
     "@stripe/stripe-js": "^1.11.0",
     "graphql": "^15.4.0",
     "next": "10.0.1",
+    "next-transpile-modules": "^6.1.0",
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "react-ga": "^3.3.0"

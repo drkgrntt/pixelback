@@ -1,5 +1,5 @@
 import { NextPageContext } from 'next'
-import { Story } from '@/types'
+import { Story } from '@pixelback/shared'
 import {
   ApolloClient,
   InMemoryCache,

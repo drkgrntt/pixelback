@@ -1,10 +1,14 @@
 import { useEffect, useState } from 'react'
 import styles from './Comments.module.scss'
-import { Chapter, Comment, Story } from '@/types'
 import Card from '@/components/Card'
 import CommentForm from '../CommentForm'
-import { useMeQuery } from '@/hooks/queries/useMeQuery'
-import { useDeleteCommentMutation } from '@/hooks/mutations/useDeleteCommentMutation'
+import {
+  useDeleteCommentMutation,
+  useMeQuery,
+  Chapter,
+  Comment,
+  Story,
+} from '@pixelback/shared'
 
 interface Props {
   story?: Story

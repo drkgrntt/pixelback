@@ -2,7 +2,7 @@ import styles from './Search.module.scss'
 import Modal from '@/components/Modal'
 import Input from '@/components/Input'
 import StoryList from '@/components/StoryList'
-import { useSearchStoriesQuery } from '@/queries/useSearchStoriesQuery'
+import { useSearchStoriesQuery } from '@pixelback/shared'
 import { useEffect, useState } from 'react'
 
 interface Props {

@@ -1,7 +1,6 @@
 import Link from 'next/link'
-import { useLogoutMutation } from '@/mutations/useLogoutMutation'
+import { useMeQuery, useLogoutMutation } from '@pixelback/shared'
 import styles from './Nav.module.scss'
-import { useMeQuery } from '@/hooks/queries/useMeQuery'
 
 const Nav: React.FC<{}> = () => {
   const [logout] = useLogoutMutation()

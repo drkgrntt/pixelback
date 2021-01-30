@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { NextPage } from 'next'
 import { withApollo } from '@/utils/withApollo'
-import { useStoriesQuery } from '@/queries/useStoriesQuery'
+import { useStoriesQuery } from '@pixelback/shared'
 import styles from './Stories.module.scss'
 import Loader from '@/components/Loader'
 import Button from '@/components/Button'

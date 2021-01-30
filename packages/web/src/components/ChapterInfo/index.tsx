@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import styles from './ChapterInfo.module.scss'
-import { Story, PublishStatus, Chapter } from '@/types'
+import { Story, PublishStatus, Chapter } from '@pixelback/shared'
 
 interface Props {
   story: Story

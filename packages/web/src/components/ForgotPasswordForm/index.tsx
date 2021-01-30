@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import styles from './ForgotPasswordForm.module.scss'
 import Input from '../Input'
 import Button from '../Button'
-import { useForgotPasswordMutation } from '@/hooks/mutations/useForgotPasswordMutation'
+import { useForgotPasswordMutation } from '@pixelback/shared'
 
 interface Props {
   email: string

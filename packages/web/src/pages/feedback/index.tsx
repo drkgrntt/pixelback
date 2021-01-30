@@ -4,7 +4,7 @@ import { useForm } from '@/hooks/useForm'
 import Card from '@/components/Card'
 import Input from '@/components/Input'
 import Button from '@/components/Button'
-import { useGiveFeedbackMutation } from '@/hooks/mutations/useGiveFeedbackMutation'
+import { useGiveFeedbackMutation } from '@pixelback/shared'
 import { withApollo } from '@/utils/withApollo'
 
 enum FeedbackType {

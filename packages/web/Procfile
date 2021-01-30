@@ -1,1 +1,1 @@
-web: cd packages/web && npm start
+web: cd packages/web && yarn start

@@ -8,16 +8,18 @@ import Loader from '@/components/Loader'
 import Card from '@/components/Card'
 import Button from '@/components/Button'
 import Modal from '@/components/Modal'
-import CreditCardForm from '@/components/CreditCardForm'
 import TipForm from '@/components/TipForm'
-import { useStoryQuery } from '@/queries/useStoryQuery'
+import {
+  useAddFavoriteStoryMutation,
+  useRateMutation,
+  useMeQuery,
+  useStoryQuery,
+  Genre,
+  Story,
+} from '@pixelback/shared'
 import { withApollo } from '@/utils/withApollo'
 import { useEffect } from 'react'
 import { useLogRead } from '@/hooks/useLogRead'
-import { useMeQuery } from '@/queries/useMeQuery'
-import { useAddFavoriteStoryMutation } from '@/mutations/useAddFavoriteStoryMutation'
-import { useRateMutation } from '@/mutations/useRateMutation'
-import { Genre, Story } from '@/types'
 import StarScale from '@/components/StarScale'
 import Comments from '@/components/Comments'
 import Head from '@/components/Head'

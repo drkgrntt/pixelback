@@ -4,14 +4,18 @@ import styles from './New.module.scss'
 import AuthorshipForm from '@/components/AuthorshipForm'
 import Card from '@/components/Card'
 import ContentForm from '@/components/ContentForm'
-import { useCreateStoryMutation } from '@/mutations/useCreateStoryMutation'
-import { useUpdateStoryMutation } from '@/mutations/useUpdateStoryMutation'
-import { PublishStatus, Story, UserRole } from '@/types'
+import {
+  useMeQuery,
+  useUpdateStoryMutation,
+  useCreateStoryMutation,
+  PublishStatus,
+  Story,
+  UserRole,
+} from '@pixelback/shared'
 import { useRouter } from 'next/router'
 import { useIsAuth } from '@/hooks/useIsAuth'
 import Loader from '@/components/Loader'
 import { withApollo } from '@/utils/withApollo'
-import { useMeQuery } from '@/hooks/queries/useMeQuery'
 import Modal from '@/components/Modal'
 import CreditCardForm from '@/components/CreditCardForm'
 

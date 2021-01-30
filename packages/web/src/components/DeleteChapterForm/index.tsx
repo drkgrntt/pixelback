@@ -1,10 +1,13 @@
 import { useState } from 'react'
 import { useRouter } from 'next/router'
 import styles from './DeleteChapterForm.module.scss'
-import { useDeleteChapterMutation } from '@/mutations/useDeleteChapterMutation'
+import {
+  useDeleteChapterMutation,
+  Story,
+  Chapter,
+} from '@pixelback/shared'
 import Input from '../Input'
 import Button from '../Button'
-import { Story, Chapter } from '@/types'
 
 interface Props {
   chapter: Chapter

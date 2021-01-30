@@ -2,7 +2,7 @@ import { useForm } from '@/hooks/useForm'
 import styles from './PenNameForm.module.scss'
 import Input from '@/components/Input'
 import Button from '@/components/Button'
-import { useUpdatePenNameMutation } from '@/mutations/useUpdatePenNameMutation'
+import { useUpdatePenNameMutation } from '@pixelback/shared'
 
 interface Props {
   onSuccess?: Function

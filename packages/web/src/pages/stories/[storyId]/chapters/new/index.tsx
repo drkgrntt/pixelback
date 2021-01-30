@@ -6,12 +6,15 @@ import styles from './New.module.scss'
 import Card from '@/components/Card'
 import Loader from '@/components/Loader'
 import ContentForm from '@/components/ContentForm'
-import { useCreateChapterMutation } from '@/mutations/useCreateChapterMutation'
-import { useUpdateChapterMutation } from '@/mutations/useUpdateChapterMutation'
-import { useStoryQuery } from '@/queries/useStoryQuery'
-import { PublishStatus, Chapter } from '@/types'
+import {
+  useMeQuery,
+  useStoryQuery,
+  useCreateChapterMutation,
+  useUpdateChapterMutation,
+  PublishStatus,
+  Chapter,
+} from '@pixelback/shared'
 import { useRouter } from 'next/router'
-import { useMeQuery } from '@/queries/useMeQuery'
 import { useIsAuth } from '@/hooks/useIsAuth'
 import { withApollo } from '@/utils/withApollo'
 

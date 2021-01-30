@@ -7,10 +7,14 @@ import Loader from '@/components/Loader'
 import ChapterInfo from '@/components/ChapterInfo'
 import DeleteChapterForm from '@/components/DeleteChapterForm'
 import Card from '@/components/Card'
-import { useStoryQuery } from '@/queries/useStoryQuery'
-import { useChapterQuery } from '@/queries/useChapterQuery'
-import { Story, Chapter, User } from '@/types'
-import { useMeQuery } from '@/hooks/queries/useMeQuery'
+import {
+  useMeQuery,
+  useChapterQuery,
+  useStoryQuery,
+  Story,
+  Chapter,
+  User,
+} from '@pixelback/shared'
 import { useIsAuth } from '@/hooks/useIsAuth'
 import { withApollo } from '@/utils/withApollo'
 

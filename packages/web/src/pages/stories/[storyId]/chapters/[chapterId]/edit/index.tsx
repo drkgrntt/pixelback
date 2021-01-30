@@ -4,12 +4,14 @@ import Error from 'next/error'
 import styles from './Edit.module.scss'
 import Card from '@/components/Card'
 import ContentForm from '@/components/ContentForm'
-import { useUpdateChapterMutation } from '@/mutations/useUpdateChapterMutation'
-import { useStoryQuery } from '@/queries/useStoryQuery'
-import { useChapterQuery } from '@/queries/useChapterQuery'
-import { Genre, PublishStatus } from '@/types'
+import {
+  useMeQuery,
+  useChapterQuery,
+  useUpdateChapterMutation,
+  useStoryQuery,
+  PublishStatus,
+} from '@pixelback/shared'
 import { useRouter } from 'next/router'
-import { useMeQuery } from '@/queries/useMeQuery'
 import { useIsAuth } from '@/hooks/useIsAuth'
 import Loader from '@/components/Loader'
 import { withApollo } from '@/utils/withApollo'
