@@ -15,9 +15,9 @@ fi
   cd $PROJECT_ROOT
 
   if [ "$BUILD_ENV" = "server" ]; then
-    cd packages/server && npm install && npm install --only=dev && npm run build
+    cd packages/server && yarn install && yarn install --only=dev && yarn run build
   elif [ "$BUILD_ENV" = "web" ]; then
-    cd packages/web && npm install && npm install --only=dev && npm run build
+    cd packages/web && yarn install && yarn install --only=dev && yarn run build
   else
     echo "Error: no build config for BUILD_ENV value '$BUILD_ENV'"
     exit 1
