@@ -42,14 +42,12 @@ const ContentForm: React.FC<Props> = (props) => {
   // Autosave handling
   const [saved, setSaved] = useState('')
   const [init, setInit] = useState(false)
-  const [
-    autoSaveTimer,
-    setAutoSaveTimer,
-  ] = useState<NodeJS.Timeout | null>(null)
-  const [
-    saveTextTimer,
-    setSaveTextTimer,
-  ] = useState<NodeJS.Timeout | null>(null)
+  const [autoSaveTimer, setAutoSaveTimer] = useState<number | null>(
+    null
+  )
+  const [saveTextTimer, setSaveTextTimer] = useState<number | null>(
+    null
+  )
   useEffect(() => {
     if (!autoSave || INITIAL_STATE.publish) return
     if (!init) {
