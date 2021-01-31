@@ -5,10 +5,10 @@
     "packages/*"
   ],
   "scripts": {
-    "server-watch": "yarn workspace @pixelback/server run watch --stream --",
-    "server": "yarn workspace @pixelback/server run dev --stream --",
-    "web": "yarn workspace @pixelback/web run dev --stream --",
-    "mobile": "yarn workspace @pixelback/mobile run dev --stream --",
+    "server-watch": "yarn workspace @pixelback/server run watch --stream",
+    "server": "yarn workspace @pixelback/server run dev --stream",
+    "web": "yarn workspace @pixelback/web run dev --stream",
+    "mobile": "yarn workspace @pixelback/mobile run start --stream",
     "build": "yarn workspaces run build",
     "heroku-postbuild": "bash ./scripts/heroku.sh",
     "deploy-server": "git push heroku-server main:master",
