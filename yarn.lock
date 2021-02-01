@@ -2408,6 +2408,11 @@
   dependencies:
     "@types/react" "^16"
 
+"@types/react-native-dotenv@^0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@types/react-native-dotenv/-/react-native-dotenv-0.2.0.tgz#32c58422a422c1adf68acce363ed791314d5a8e7"
+  integrity sha512-ZxX+dU/yoQc0jTk+/NWttkiuXceJyN5FpOSqDl0WynN5GDzxwH7OMruQ47qcY8llo2RD3irjvzJ9BwC8gDiq0A==
+
 "@types/react-native@~0.63.2":
   version "0.63.46"
   resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.63.46.tgz#942df5af29046c6f22227495e00d5297cc1cea73"
@@ -5204,6 +5209,14 @@ expo-asset@~8.2.1:
     md5-file "^3.2.3"
     path-browserify "^1.0.0"
     url-parse "^1.4.4"
+
+expo-constants@^10.0.1:
+  version "10.0.1"
+  resolved "https://registry.yarnpkg.com/expo-constants/-/expo-constants-10.0.1.tgz#a6cf6998c70ef6e1772a7c4096723482194c5828"
+  integrity sha512-SnMIX1PnTz3AgGcFd+paCb8Ur0WfEiBjEZ7TxCdwpk7XVQO4etCzn6auNutCd4PBc4YVNvmKF9e0WFgLxy4NRQ==
+  dependencies:
+    "@expo/config" "^3.3.18"
+    uuid "^3.3.2"
 
 expo-constants@~9.3.3:
   version "9.3.5"
