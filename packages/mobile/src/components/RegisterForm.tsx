@@ -1,6 +1,6 @@
 import React, { FC, useState } from 'react'
 import { Text, View, StyleSheet, Button } from 'react-native'
-import { useLoginMutation } from '@pixelback/shared'
+import { useRegisterMutation } from '@pixelback/shared'
 import { verifyEmailSyntax } from '../util/verifyEmailSyntax'
 import { verifyPasswordSyntax } from '../util/verifyPasswordSyntax'
 import Input from './Input'
@@ -14,8 +14,8 @@ const INITIAL_STATE = {
   validation: '',
 }
 
-const LoginForm: FC<{}> = () => {
-  const [login] = useLoginMutation()
+const RegisterForm: FC<{}> = () => {
+  const [register] = useRegisterMutation()
   const [values, setValues] = useState(INITIAL_STATE)
   const setState = (
     key: keyof typeof INITIAL_STATE,
@@ -36,7 +36,7 @@ const LoginForm: FC<{}> = () => {
       return
     }
     try {
-      await login({ variables: values })
+      await register({ variables: values })
       setValues(INITIAL_STATE)
     } catch (err) {
       setState('validation', err.message)
@@ -85,10 +85,10 @@ const LoginForm: FC<{}> = () => {
       <Text style={styles.validation}>{values.validation}</Text>
       <Button
         color={theme.colors.primary}
-        title="login"
+        title="register"
         onPress={handleSubmit}
       >
-        Login
+        Register
       </Button>
     </View>
   )
@@ -103,4 +103,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default LoginForm
+export default RegisterForm
