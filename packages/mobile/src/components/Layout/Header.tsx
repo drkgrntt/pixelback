@@ -1,12 +1,22 @@
 import React, { FC } from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import { Header } from 'react-native-elements'
+import theme from '../../theme'
 
-const Header: FC<{}> = () => {
-  return <View style={styles.container}></View>
+const Head: FC<{}> = () => {
+  return (
+    <Header
+      backgroundColor={theme.colors.primary}
+      // leftComponent={{ icon: 'home', color: theme.colors.white }}
+      centerComponent={{
+        text: 'Pixelback',
+        style: {
+          color: theme.colors.white,
+          fontSize: 20,
+        },
+      }}
+      rightComponent={{ icon: 'menu', color: theme.colors.white }}
+    />
+  )
 }
 
-const styles = StyleSheet.create({
-  container: {},
-})
-
-export default Header
+export default Head

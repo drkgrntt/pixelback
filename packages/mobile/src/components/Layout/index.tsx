@@ -6,7 +6,7 @@ import Footer from './Footer'
 
 const Layout: FC<{}> = (props) => {
   return (
-    <View style={styles.container}>
+    <View>
       <Nav />
       <Header />
       {props.children}
@@ -14,14 +14,5 @@ const Layout: FC<{}> = (props) => {
     </View>
   )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-})
 
 export default Layout
