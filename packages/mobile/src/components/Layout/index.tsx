@@ -1,18 +1,25 @@
 import React, { FC } from 'react'
-import { View, StyleSheet } from 'react-native'
-import Nav from './Nav'
+import { StyleSheet, View } from 'react-native'
 import Header from './Header'
 import Footer from './Footer'
 
 const Layout: FC<{}> = (props) => {
   return (
-    <View>
-      <Nav />
+    <>
       <Header />
-      {props.children}
+      <View style={styles.container}>{props.children}</View>
       <Footer />
-    </View>
+    </>
   )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+})
 
 export default Layout

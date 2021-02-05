@@ -1,8 +1,15 @@
 import React, { FC } from 'react'
 import { Header } from 'react-native-elements'
+import { useNavigation } from '@react-navigation/native'
+import { DrawerNavigationProp } from '@react-navigation/drawer'
 import theme from '../../theme'
+import { RootStackParamList } from '../../types'
 
 const Head: FC<{}> = () => {
+  const navigation = useNavigation<
+    DrawerNavigationProp<RootStackParamList, never>
+  >()
+
   return (
     <Header
       backgroundColor={theme.colors.primary}
@@ -14,7 +21,11 @@ const Head: FC<{}> = () => {
           fontSize: 20,
         },
       }}
-      rightComponent={{ icon: 'menu', color: theme.colors.white }}
+      rightComponent={{
+        icon: 'menu',
+        color: theme.colors.white,
+        onPress: () => navigation.openDrawer(),
+      }}
     />
   )
 }
