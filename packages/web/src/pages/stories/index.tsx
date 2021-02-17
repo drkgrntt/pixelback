@@ -43,7 +43,11 @@ const Stories: NextPage<Props> = (props) => {
   const renderMore = () => {
     if (!data?.stories.pageData.hasMore) return
 
-    return <Button onClick={loadMore}>Get more</Button>
+    return (
+      <div className={styles.getMore}>
+        <Button onClick={loadMore}>Get more</Button>
+      </div>
+    )
   }
 
   return (
