@@ -1,17 +1,19 @@
 @import './variables.scss';
 
+* {
+  box-sizing: border-box;
+  margin: 0;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  color: $color-grey-dark;
+}
+
 html,
 body {
   padding: 0;
   margin: 0;
   font-family: 'Montserrat', 'Raleway', 'Lato', sans-serif;
   background-color: $color-grey-light;
-  // background: linear-gradient(
-  //   25deg,
-  //   lighten($color-primary, 60%),
-  //   lighten($color-tertiary, 28%),
-  //   lighten($color-primary, 60%)
-  // );
 }
 
 html {
@@ -29,13 +31,15 @@ h4,
 h5,
 h6 {
   font-weight: 500;
-}
-
-* {
-  box-sizing: border-box;
-  margin: 0;
-  white-space: pre-wrap;
-  word-wrap: break-word;
+  // color: $color-grey-dark;
+  color: darken($color-primary, 20);
+  background: -webkit-linear-gradient(
+    darken($color-primary, 30%),
+    $color-primary
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 a {
@@ -46,5 +50,9 @@ a {
 }
 
 hr {
-  color: $color-grey-dark;
+  border-top: 0.1rem solid $color-grey;
+}
+
+li {
+  color: darken($color-primary, 20%);
 }
