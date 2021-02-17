@@ -1,9 +1,13 @@
 @import 'src/styles/variables.scss';
 
-.storyHeader {
+.storyHeaderTop {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.card {
+  gap: 2rem;
 }
 
 .wrapper {

@@ -1,4 +1,6 @@
 import Link from 'next/link'
+import { useRouter } from 'next/router'
+import Button from '@/components/Button'
 import Card from '@/components/Card'
 import { Story } from '@pixelback/shared'
 import styles from './StoryList.module.scss'
@@ -19,6 +21,7 @@ const StoryList: React.FC<Props> = ({
   action,
   actionText,
 }) => {
+  const { push } = useRouter()
   const renderRating = (story: Story) => {
     if (!showRating || story.ratings.length < 5) return null
 
@@ -29,20 +32,25 @@ const StoryList: React.FC<Props> = ({
     return (
       <>
         <div className={styles.storyHeader}>
-          <Link href={`/stories/${story.id}`}>
-            <h3>{story.title}</h3>
+          <div className={styles.storyHeaderTop}>
+            <Link href={`/stories/${story.id}`}>
+              <h3>{story.title}</h3>
+            </Link>
+            {renderRating(story)}
+          </div>
+          <Link href={`/profile/${story.author.id}`}>
+            <a>{story.author.penName}</a>
           </Link>
-          {renderRating(story)}
         </div>
-        <em>{story.genres.map((genre) => genre.name).join(', ')}</em>
         {story.summary}
-        <Link href={`/profile/${story.author.id}`}>
-          <a>{story.author.penName}</a>
-        </Link>
+        <em>{story.genres.map((genre) => genre.name).join(', ')}</em>
         <div className={styles.row}>
-          <Link href={`/stories/${story.id}`}>
-            <a>Read</a>
-          </Link>
+          <Button
+            onClick={() => push(`/stories/${story.id}`)}
+            styleTypes={['primary']}
+          >
+            Read
+          </Button>
           {action && actionText && (
             <a onClick={() => action(story)}>{actionText}</a>
           )}
@@ -61,7 +69,11 @@ const StoryList: React.FC<Props> = ({
         )
       }
 
-      return <Card key={story.id}>{renderStory(story)}</Card>
+      return (
+        <Card className={styles.card} key={story.id}>
+          {renderStory(story)}
+        </Card>
+      )
     })
   }
 

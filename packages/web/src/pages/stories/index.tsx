@@ -29,14 +29,14 @@ const Stories: NextPage<Props> = (props) => {
 
   const stories = data?.stories.stories
 
-  const loadMore = (event: any, reset: Function) => {
+  const loadMore = async (event: any, reset: Function) => {
     event.preventDefault()
     const newVars = {
       newest: queryNewest,
       skip: data.stories.pageData.skip,
       take: variables?.take,
     }
-    fetchMore({ variables: newVars })
+    await fetchMore({ variables: newVars })
     reset()
   }
 

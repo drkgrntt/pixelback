@@ -2,17 +2,18 @@
 
 .header {
   height: $header-height;
-  background-color: $color-primary;
-  background: linear-gradient(
-    45deg,
-    lighten($color-primary, 0%),
-    darken($color-primary, 30%)
-  );
+  background-color: $color-white;
+  // background: linear-gradient(
+  //   45deg,
+  //   lighten($color-primary, 0%),
+  //   darken($color-primary, 30%)
+  // );
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
   padding: 1rem;
+  box-shadow: 0 0.5rem 1.8rem rgba($color-black, 0.2);
 }
 
 .content {
@@ -24,9 +25,16 @@
 .title {
   line-height: 1;
   margin: 0;
-  font-weight: 300;
   font-size: 3.3rem;
-  color: $color-white;
+  color: $color-primary;
+  background: -webkit-linear-gradient(
+    darken($color-primary, 30%),
+    $color-primary,
+    lighten($color-primary, 20%)
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
@@ -36,4 +44,7 @@
   font-size: 1.4rem;
   display: block;
   font-weight: 300;
+  color: $color-grey;
+  background: none;
+  -webkit-text-fill-color: $color-grey;
 }

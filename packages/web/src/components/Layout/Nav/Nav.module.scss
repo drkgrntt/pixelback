@@ -64,7 +64,7 @@
     &::before,
     &::after {
       display: block;
-      border-bottom: 0.2rem solid $color-grey-light;
+      border-bottom: 0.2rem solid darken($color-primary, 10%);
       width: 2.5rem;
       padding-bottom: 1rem;
     }
@@ -99,6 +99,11 @@
       border-bottom: none;
       margin-top: -0.5rem;
       margin-bottom: 4rem;
+
+      &::before,
+      &::after {
+        border-bottom: 0.2rem solid $color-white;
+      }
 
       &::before {
         top: 3rem;
