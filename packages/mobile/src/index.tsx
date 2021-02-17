@@ -7,6 +7,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer'
 import Login from './screens/Login'
 import Register from './screens/Register'
 import { RootStackParamList } from './types'
+import DrawerContent from './components/Drawer'
 
 const Drawer = createDrawerNavigator<RootStackParamList>()
 
@@ -17,6 +18,10 @@ const App: FC<{}> = () => {
         <Drawer.Navigator
           initialRouteName="Login"
           drawerPosition="right"
+          drawerContent={(props) => {
+            console.log(props)
+            return <DrawerContent />
+          }}
         >
           <Drawer.Screen name="Login" component={Login} />
           <Drawer.Screen name="Register" component={Register} />
