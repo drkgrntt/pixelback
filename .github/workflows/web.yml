@@ -16,5 +16,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: Add frontend remote origin
         run: git remote add heroku-frontend https://heroku:${{ secrets.HEROKU_API_TOKEN }}@git.heroku.com/${{ secrets.HEROKU_WEB_APP_NAME }}.git
+      - name: Unshallow the heroku git repo
+        run: git fetch --all --unshallow
       - name: Deploy frontend to Heroku
-        run: git fetch --all --unshallow && git push heroku-frontend main:master --force
+        run: git push heroku-frontend main:master --force
