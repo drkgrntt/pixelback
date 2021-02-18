@@ -28,6 +28,10 @@ const Nav: React.FC<{}> = () => {
           <Link href="/register">
             <li className={styles.item}>
               <a className={styles.link} onClick={toggleNav}>
+                <i
+                  aria-hidden
+                  className={`fas fa-user-plus ${styles.icon}`}
+                />{' '}
                 Register
               </a>
             </li>
@@ -35,6 +39,10 @@ const Nav: React.FC<{}> = () => {
           <Link href="/login">
             <li className={styles.item}>
               <a className={styles.link} onClick={toggleNav}>
+                <i
+                  aria-hidden
+                  className={`fas fa-sign-in-alt ${styles.icon}`}
+                />{' '}
                 Login
               </a>
             </li>
@@ -48,12 +56,20 @@ const Nav: React.FC<{}> = () => {
         <Link href="/profile">
           <li className={styles.item}>
             <a className={styles.link} onClick={toggleNav}>
+              <i
+                aria-hidden
+                className={`fas fa-address-card ${styles.icon}`}
+              />{' '}
               Profile
             </a>
           </li>
         </Link>
         <li className={styles.item}>
           <a className={styles.link} onClick={onLogoutClick}>
+            <i
+              aria-hidden
+              className={`fas fa-sign-out-alt ${styles.icon}`}
+            />{' '}
             Logout
           </a>
         </li>
@@ -72,6 +88,10 @@ const Nav: React.FC<{}> = () => {
           <Link href="/stories">
             <li className={styles.item}>
               <a className={styles.link} onClick={toggleNav}>
+                <i
+                  aria-hidden
+                  className={`fas fa-book ${styles.icon}`}
+                />{' '}
                 Stories
               </a>
             </li>
@@ -80,6 +100,10 @@ const Nav: React.FC<{}> = () => {
           <Link href="/feedback">
             <li className={styles.item}>
               <a className={styles.link} onClick={toggleNav}>
+                <i
+                  aria-hidden
+                  className={`fas fa-bullhorn ${styles.icon}`}
+                />{' '}
                 Feedback
               </a>
             </li>
