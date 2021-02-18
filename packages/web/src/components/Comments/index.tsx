@@ -90,6 +90,7 @@ const Comments: React.FC<Props> = ({ comments, story, chapter }) => {
     <div>
       {data?.me && (
         <CommentForm
+          setEditingComment={setEditingComment}
           comment={editingComment}
           story={story}
           chapter={chapter}

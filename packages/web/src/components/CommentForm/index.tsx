@@ -14,12 +14,14 @@ interface Props {
   comment?: Comment
   story?: Story
   chapter?: Chapter
+  setEditingComment: Function
 }
 
 const CommentForm: React.FC<Props> = ({
   comment,
   story,
   chapter,
+  setEditingComment,
 }) => {
   const INITIAL_STATE = {
     body: comment?.body || '',
@@ -46,7 +48,13 @@ const CommentForm: React.FC<Props> = ({
     } else {
       await createComment({ variables: formState.values })
     }
-    formState.reset()
+    setEditingComment(undefined)
+    formState.setValues({
+      body: '',
+      id: null,
+      storyId: null,
+      chapterId: null,
+    })
     reset()
   }
 
