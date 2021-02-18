@@ -54,5 +54,19 @@ hr {
 }
 
 li {
-  color: darken($color-primary, 20%);
+  list-style: none;
+  position: relative;
+
+  &::before {
+    content: '\2022';
+    color: darken($color-primary, 10);
+    font-weight: bold;
+    font-size: 5rem;
+    display: inline-block;
+    width: 3rem;
+    margin-left: -3rem;
+    line-height: 0;
+    position: absolute;
+    top: 0.6rem;
+  }
 }

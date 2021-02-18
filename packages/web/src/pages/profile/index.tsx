@@ -111,15 +111,16 @@ const Profile: NextPage<Props> = ({ query }) => {
           link = `${link}/${comment.chapter?.story.id}/chapters/${comment.chapter?.id}`
         }
         return (
-          <li key={comment.id}>
+          <Card key={comment.id}>
             <Link href={link}>
-              <a>{comment.story?.title || comment.chapter?.title}</a>
+              <h4>
+                {comment.story?.title || comment.chapter?.title}
+              </h4>
             </Link>
             <p>{comment.body}</p>
             <p>{new Date(comment.createdAt).toLocaleDateString()}</p>
             {renderEdited(comment)}
-            <br />
-          </li>
+          </Card>
         )
       })
       .reverse()
@@ -140,44 +141,26 @@ const Profile: NextPage<Props> = ({ query }) => {
 
   return (
     <div className={styles.profile}>
-      <h2>Profile</h2>
+      <div className={styles.userInfoHeader}>
+        <h2>Profile</h2>
+        <Modal closeId="close-pen-name-form" buttonText="Edit">
+          <h2>Set a new pen name</h2>
+          <PenNameForm
+            onSuccess={() => {
+              const close = document.getElementById(
+                'close-pen-name-form'
+              )
+              close?.click()
+            }}
+          />
+        </Modal>
+      </div>
+
       <Link href="/writer-dashboard">
         <a>Go to your writer's dashboard</a>
       </Link>
 
-      <Card>
-        <label>
-          Discard all other authentication tokens to log out
-          everywhere.
-        </label>
-        <Button
-          styleTypes={['delete']}
-          onClick={onLogoutEverywhereClick}
-        >
-          Discard
-        </Button>
-        <p>
-          {logoutData?.data?.logoutEverywhere?.value &&
-            'All tokens have now been discarded. Your current session is the only remaining valid session.'}
-        </p>
-      </Card>
-
-      <Card>
-        <div className={styles.userInfoHeader}>
-          <h3>User Info</h3>
-          <Modal closeId="close-pen-name-form" buttonText="Edit">
-            <h2>Set a new pen name</h2>
-            <PenNameForm
-              onSuccess={() => {
-                const close = document.getElementById(
-                  'close-pen-name-form'
-                )
-                close?.click()
-              }}
-            />
-          </Modal>
-        </div>
-        <hr />
+      <div className={styles.userInfo}>
         <ul>
           <li>Email (no one sees this but you): {me.email}</li>
           <li>Pen Name: {me.penName}</li>
@@ -195,49 +178,72 @@ const Profile: NextPage<Props> = ({ query }) => {
             }}
           />
         </Modal>
-      </Card>
+      </div>
 
-      <Card>
+      <hr className={styles.hr} />
+
+      <div className={styles.favoriteAuthors}>
         <h3>Favorite Authors</h3>
-        <hr />
         <ul>{renderAuthorList()}</ul>
-      </Card>
+      </div>
 
-      <Card>
+      <hr className={styles.hr} />
+
+      <div className={styles.favoriteStories}>
         <h3>Favorite Stories</h3>
-        <hr />
         <StoryList
+          cardWrap
           actionText="Remove"
           action={onRemoveStoryClick}
           stories={me.favoriteStories}
         />
-      </Card>
+      </div>
 
-      <Card>
+      <hr className={styles.hr} />
+
+      <div className={styles.paymentMethods}>
         <h3>Payment Methods</h3>
-        <hr />
-        <ul>
-          {me.paymentMethods.map((source) => (
-            <li key={source.id}>
-              <span>{source.name}</span>{' '}
-              <a onClick={() => handleRemovePaymentMethod(source)}>
-                Remove
-              </a>
-            </li>
-          ))}
-        </ul>
+        {me.paymentMethods.map((source) => (
+          <Card key={source.id} className={styles.card}>
+            <div>
+              <h4 className={styles.cardBrand}>
+                {source.brand} *{source.last4}
+              </h4>
+              <span>
+                exp. {source.expMonth}/{source.expYear}
+              </span>
+            </div>
+            <a onClick={() => handleRemovePaymentMethod(source)}>
+              Remove
+            </a>
+          </Card>
+        ))}
+        <br />
         <CreditCardForm />
-      </Card>
+      </div>
 
       {/* <Card>
         <h3>Favorite Genres</h3>
       </Card> */}
+      <hr className={styles.hr} />
 
-      <Card>
+      <div className={styles.comments}>
         <h3>Comments</h3>
-        <hr />
-        <ul>{renderComments()}</ul>
-      </Card>
+        {renderComments()}
+      </div>
+
+      <hr className={styles.hr} />
+
+      <Button
+        styleTypes={['delete']}
+        onClick={onLogoutEverywhereClick}
+      >
+        Log Out Everywhere
+      </Button>
+      <p>
+        {logoutData?.data?.logoutEverywhere?.value &&
+          'All tokens have now been discarded. Your current session is the only remaining valid session.'}
+      </p>
     </div>
   )
 }

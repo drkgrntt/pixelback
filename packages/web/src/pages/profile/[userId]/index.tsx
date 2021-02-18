@@ -77,7 +77,7 @@ const UserPage: NextPage<Props> = ({ query }) => {
         <hr />
         <div className={styles.actions}>
           <Button styleTypes={['cta']} onClick={handleFollow}>
-            {isSubscribed ? 'Unfollow' : 'Follow'}
+            {isSubscribed ? 'Following' : 'Follow'}
           </Button>
           {user.canAcceptPayments && (
             <Modal

@@ -65,7 +65,7 @@ const CreditCardForm: React.FC<Props> = ({
           style: {
             base: {
               fontSize: '16px',
-              color: '#424770',
+              color: '#333333',
               '::placeholder': {
                 color: '#aab7c4',
               },

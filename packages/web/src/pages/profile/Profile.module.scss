@@ -3,10 +3,75 @@
 .profile {
   max-width: $max-content-width;
   margin: 0 auto;
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.hr {
+  margin: 2rem 0;
 }
 
 .userInfoHeader {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.userInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.favoriteAuthors {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.favoriteStories {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  & > * {
+    margin: 0 !important;
+  }
+
+  em {
+    display: none;
+  }
+}
+
+.paymentMethods {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  & > * {
+    margin: 0 !important;
+  }
+}
+
+.card {
+  display: flex;
+  flex-direction: row !important;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cardBrand {
+  text-transform: uppercase;
+}
+
+.comments {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  & > * {
+    margin: 0 !important;
+  }
 }

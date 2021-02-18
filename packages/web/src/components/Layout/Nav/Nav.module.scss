@@ -57,6 +57,9 @@
     text-align: center;
     font-size: 1.6rem;
     color: $color-grey-light;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
   }
 
   .hamburger {
