@@ -25,6 +25,16 @@
   gap: 1rem;
 }
 
+.userDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.userDetail > * {
+  display: inline;
+}
+
 .favoriteAuthors {
   display: flex;
   flex-direction: column;

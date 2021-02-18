@@ -161,9 +161,16 @@ const Profile: NextPage<Props> = ({ query }) => {
       </Link>
 
       <div className={styles.userInfo}>
-        <ul>
-          <li>Email (no one sees this but you): {me.email}</li>
-          <li>Pen Name: {me.penName}</li>
+        <ul className={styles.userDetails}>
+          <li>
+            <div className={styles.userDetail}>
+              <h4>Email:</h4> {me.email}
+            </div>
+            <em>*No one sees this but you</em>
+          </li>
+          <li className={styles.userDetail}>
+            <h4>Pen Name:</h4> {me.penName}
+          </li>
         </ul>
         <Modal
           closeId="close-password-reset-form"
