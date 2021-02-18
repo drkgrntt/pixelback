@@ -59,15 +59,15 @@ const CommentForm: React.FC<Props> = ({
   }
 
   return (
-    <form>
+    <form className={styles.form}>
       <Input
         name="body"
+        label="Comment"
         type="textarea"
         formState={formState}
-        required
       />
       <Button type="submit" onClick={handleSubmit}>
-        {comment ? 'Update' : 'Comment'}
+        {comment ? 'Update' : 'Post'}
       </Button>
     </form>
   )

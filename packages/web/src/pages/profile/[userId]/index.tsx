@@ -28,7 +28,7 @@ const UserPage: NextPage<Props> = ({ query }) => {
   const [unsubscribe] = useUnsubscribeMutation()
   const variables = { id: query?.userId }
   const skip = !query?.userId
-  const { data: userData, loading } = useUserQuery({
+  const { data: userData, loading, refetch } = useUserQuery({
     variables,
     skip,
   })
@@ -62,40 +62,42 @@ const UserPage: NextPage<Props> = ({ query }) => {
         (sub) => sub.subscribedTo.id === user.id
       )
       await unsubscribe({ variables: { id: subscription?.id } })
+      await refetch()
     } else {
       await subscribe({ variables: { id: user.id } })
+      await refetch()
     }
     reset()
   }
 
   return (
     <div className={styles.profile}>
-      <h2>{user.penName}</h2>
+      <div>
+        <h2>{user.penName}</h2>
+        <p>{user.subscribers.length} followers</p>
+      </div>
 
-      <Card>
-        <h3>Show your support</h3>
-        <hr />
-        <div className={styles.actions}>
-          <Button styleTypes={['cta']} onClick={handleFollow}>
-            {isSubscribed ? 'Following' : 'Follow'}
-          </Button>
-          {user.canAcceptPayments && (
-            <Modal
-              buttonText="Tip the author"
-              className={styles.tipModal}
-            >
-              <h3>Tip {user.penName}</h3>
-              <TipForm author={user} />
-            </Modal>
-          )}
-        </div>
-      </Card>
+      <div className={styles.actions}>
+        <Button styleTypes={['cta']} onClick={handleFollow}>
+          {isSubscribed ? 'Following' : 'Follow'}
+        </Button>
+        {user.canAcceptPayments && (
+          <Modal
+            buttonText="Tip the author"
+            className={styles.tipModal}
+          >
+            <h3>Tip {user.penName}</h3>
+            <TipForm author={user} />
+          </Modal>
+        )}
+      </div>
 
-      <Card>
+      <hr className={styles.hr} />
+
+      <div className={styles.stories}>
         <h3>Stories</h3>
-        <hr />
-        <StoryList stories={user.stories} />
-      </Card>
+        <StoryList cardWrap stories={user.stories} />
+      </div>
     </div>
   )
 }

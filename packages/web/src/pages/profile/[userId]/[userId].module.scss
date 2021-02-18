@@ -6,8 +6,9 @@
 }
 
 .actions {
+  margin-top: 2rem;
   display: flex;
-  flex-direction: column;
+  justify-content: space-around;
   gap: 1rem;
 
   @media only screen and (min-width: 30rem) {
@@ -16,6 +17,16 @@
     & > * {
       flex: 1;
     }
+  }
+}
+
+.hr {
+  margin: 2rem 0;
+}
+
+.stories {
+  & > * {
+    margin: 2rem 0 !important;
   }
 }
 
