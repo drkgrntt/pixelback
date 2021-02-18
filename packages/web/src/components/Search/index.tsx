@@ -35,7 +35,7 @@ const Search: React.FC<Props> = (props) => {
       buttonText="Search"
     >
       <div className={styles.searchTitle}>
-        <i className="fas fa-search"></i>
+        <i aria-hidden className="fas fa-search"></i>
         <h3>Search by author, title, or genre</h3>
       </div>
       <Input
