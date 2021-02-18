@@ -197,6 +197,11 @@ export class UserResolver {
     return !!account?.payouts_enabled
   }
 
+  @Query(() => String)
+  ping(): 'pong' {
+    return 'pong'
+  }
+
   @Query(() => User, { nullable: true })
   me(@Ctx() { me }: Context): User {
     return me
