@@ -101,28 +101,32 @@ const Chapters: NextPage<Props> = ({ query }) => {
           )
           .slice(0, -2)}
       />
-      <h2>{story.title}</h2>
-      <Link href={`/profile/${story.author.id}`}>
-        <a>{story.author.penName}</a>
-      </Link>
+
+      <div>
+        <h2>{story.title}</h2>
+        <Link href={`/profile/${story.author.id}`}>
+          <a>{story.author.penName}</a>
+        </Link>
+      </div>
+
       <p>{story.summary}</p>
+
       <Card>
         <ChapterList story={story} />
         <Link href={`/profile/${story.author.id}`}>
           <a>{story.author.penName}</a>
         </Link>
       </Card>
-      <Card>
-        <StarScale
-          allowHover={!!meResult.data?.me}
-          onStarClick={rateStory}
-          score={story.score}
-          rateStatus={story.rateStatus}
-        />
+
+      <StarScale
+        allowHover={!!meResult.data?.me}
+        onStarClick={rateStory}
+        score={story.score}
+        rateStatus={story.rateStatus}
+      />
+      <div className={styles.actions}>
         {renderFavoriteButton()}
-      </Card>
-      {story.author.canAcceptPayments && (
-        <Card>
+        {story.author.canAcceptPayments && (
           <Modal
             buttonText="Tip the author"
             className={styles.tipModal}
@@ -130,8 +134,8 @@ const Chapters: NextPage<Props> = ({ query }) => {
             <h3>Tip {story.author.penName}</h3>
             <TipForm author={story.author} />
           </Modal>
-        </Card>
-      )}
+        )}
+      </div>
     </div>
   )
 }
