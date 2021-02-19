@@ -14,6 +14,7 @@ export const StoryInfo = gql`
     author {
       id
       penName
+      canAcceptPayments
     }
     reads
     ratings {

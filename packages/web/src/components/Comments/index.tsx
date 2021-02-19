@@ -34,7 +34,7 @@ const Comments: React.FC<Props> = ({ comments, story, chapter }) => {
       return
     }
 
-    return '(author)'
+    return <em> (author)</em>
   }
 
   const renderEdited = (comment: Comment) => {
@@ -61,22 +61,25 @@ const Comments: React.FC<Props> = ({ comments, story, chapter }) => {
     return comments.map((comment) => {
       return (
         <Card key={comment.id}>
+          <div>
+            <span className={styles.author}>
+              <h4>{comment.author.penName}</h4>
+              {renderAuthorship(comment)}
+            </span>
+            <div className={styles.row}>
+              <div className={styles.column}>
+                <p>
+                  {new Date(comment.createdAt).toLocaleDateString()}
+                </p>
+                {renderEdited(comment)}
+              </div>
+              {isOwner(comment) && (
+                <a onClick={() => setEditingComment(comment)}>Edit</a>
+              )}
+            </div>
+          </div>
           <div className={styles.row}>
             <p>{comment.body}</p>
-            {isOwner(comment) && (
-              <a onClick={() => setEditingComment(comment)}>Edit</a>
-            )}
-          </div>
-          <p>
-            -{comment.author.penName} {renderAuthorship(comment)}
-          </p>
-          <div className={styles.row}>
-            <div className={styles.column}>
-              <p>
-                {new Date(comment.createdAt).toLocaleDateString()}
-              </p>
-              {renderEdited(comment)}
-            </div>
             {isOwner(comment) && (
               <a onClick={() => handleDeleteClick(comment)}>Delete</a>
             )}

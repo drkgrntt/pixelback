@@ -97,7 +97,7 @@ const StoryPage: NextPage<Props> = ({ query }) => {
       console.warn(err)
     }
   }
-
+  console.log(story)
   return (
     <div className={styles.story}>
       <Head
@@ -112,26 +112,31 @@ const StoryPage: NextPage<Props> = ({ query }) => {
           .slice(0, -2)}
       />
 
-      <h2>{story.title}</h2>
+      <div>
+        <h2>{story.title}</h2>
+        <Link href={`/profile/${story.author.id}`}>
+          <a>{story.author.penName}</a>
+        </Link>
+      </div>
+      <span>{story.reads} reads</span>
+
+      <p>{story.body}</p>
+
       <Link href={`/profile/${story.author.id}`}>
         <a>{story.author.penName}</a>
       </Link>
-      {story.body}
+
       <hr />
-      <Link href={`/profile/${story.author.id}`}>
-        <a>{story.author.penName}</a>
-      </Link>
-      <Card>
-        <StarScale
-          allowHover={!!meResult.data?.me}
-          onStarClick={rateStory}
-          score={story.score}
-          rateStatus={story.rateStatus}
-        />
+
+      <StarScale
+        allowHover={!!meResult.data?.me}
+        onStarClick={rateStory}
+        score={story.score}
+        rateStatus={story.rateStatus}
+      />
+      <div className={styles.actions}>
         {renderFavoriteButton()}
-      </Card>
-      {story.author.canAcceptPayemnts && (
-        <Card>
+        {story.author.canAcceptPayments && (
           <Modal
             buttonText="Tip the author"
             className={styles.tipModal}
@@ -139,8 +144,8 @@ const StoryPage: NextPage<Props> = ({ query }) => {
             <h3>Tip {story.author.penName}</h3>
             <TipForm author={story.author} />
           </Modal>
-        </Card>
-      )}
+        )}
+      </div>
       <Comments story={story} comments={story.comments} />
     </div>
   )

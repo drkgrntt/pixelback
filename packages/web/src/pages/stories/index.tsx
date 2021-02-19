@@ -22,7 +22,6 @@ const Stories: NextPage<Props> = (props) => {
     data,
     fetchMore,
     variables,
-    refetch,
   } = useStoriesQuery({
     variables: { take: PER_PAGE, skip: 0, newest: queryNewest },
   })
@@ -36,7 +35,7 @@ const Stories: NextPage<Props> = (props) => {
       skip: data.stories.pageData.skip,
       take: variables?.take,
     }
-    await fetchMore({ variables: newVars })
+    fetchMore({ variables: newVars })
     reset()
   }
 
