@@ -97,7 +97,7 @@ const StoryPage: NextPage<Props> = ({ query }) => {
       console.warn(err)
     }
   }
-  console.log(story)
+
   return (
     <div className={styles.story}>
       <Head
