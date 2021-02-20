@@ -69,27 +69,23 @@ const GenreSearch: React.FC<Props> = ({ story }) => {
   //   addGenreToStory({ variables })
   // }, [createdGenre])
 
-  const renderSearchResults = () => {
-    if (searchResult.loading) return null
+  const getSearchResults = () => {
+    if (searchResult.loading) return []
 
     if (!searchResult.data?.genres.length) {
       if (genreId !== 'newGenre') setGenreId('newGenre')
-      return null
+      return []
     }
 
     return searchResult.data.genres.map((genre: Genre) => {
-      return (
-        <option key={genre.id} value={genre.id}>
-          {genre.name}
-        </option>
-      )
+      return { value: genre.id, text: genre.name }
     })
   }
 
-  const renderAddOption = () => {
-    if (!search || searchResult.data?.genres.length) return null
+  const getAddOption = () => {
+    if (!search || searchResult.data?.genres.length) return []
 
-    return <option value="newGenre">Add "{search}" as a genre</option>
+    return [{ value: 'newGenre', text: `Add "${search}" as a genre` }]
   }
 
   return (
@@ -99,16 +95,19 @@ const GenreSearch: React.FC<Props> = ({ story }) => {
         value={search}
         onChange={(event: any) => setSearch(event.target.value)}
       />
-      <select
-        id="genre-select"
+      <Input
+        name="genre-select"
+        type="select"
+        value={genreId || undefined}
         onChange={(event: any) => setGenreId(event.target.value)}
         className={styles.select}
         disabled={!search}
-      >
-        <option>Select a genre</option>
-        {renderSearchResults()}
-        {renderAddOption()}
-      </select>
+        options={[
+          { value: null, text: 'Select a genre' },
+          ...getSearchResults(),
+          ...getAddOption(),
+        ]}
+      />
       <Button onClick={handleSubmit}>Add Genre</Button>
     </>
   )

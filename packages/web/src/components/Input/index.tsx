@@ -16,6 +16,7 @@ interface Props {
   step?: number
   min?: number
   max?: number
+  disabled?: boolean
   options?: { value: any; text: string }[]
   validation?: string
   formState?: { [key: string]: any }
@@ -38,6 +39,7 @@ const Input: React.FC<Props> = (props) => {
     step,
     min,
     max,
+    disabled,
     children = null,
     options = [],
     validation = '',
@@ -71,6 +73,7 @@ const Input: React.FC<Props> = (props) => {
         <>
           {renderLabel()}
           <textarea
+            disabled={!!disabled}
             placeholder={placeholder}
             name={name}
             id={id}
@@ -89,6 +92,7 @@ const Input: React.FC<Props> = (props) => {
       return (
         <>
           <input
+            disabled={!!disabled}
             type={type}
             placeholder={placeholder}
             name={name}
@@ -108,6 +112,7 @@ const Input: React.FC<Props> = (props) => {
         <>
           {renderLabel()}
           <select
+            disabled={!!disabled}
             name={name}
             id={id}
             className={`${styles.field} ${
@@ -133,6 +138,7 @@ const Input: React.FC<Props> = (props) => {
       <>
         {renderLabel()}
         <input
+          disabled={!!disabled}
           type={type}
           placeholder={placeholder}
           name={name}
