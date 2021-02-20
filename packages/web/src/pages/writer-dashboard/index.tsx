@@ -18,6 +18,7 @@ import {
   useCancelAuthorshipMutation,
 } from '@pixelback/shared'
 import Modal from '@/components/Modal'
+import StoryList from '@/components/StoryList'
 import CreditCardForm from '@/components/CreditCardForm'
 
 const WriterDashboard: NextPage<{}> = () => {
@@ -92,7 +93,6 @@ const WriterDashboard: NextPage<{}> = () => {
           <a target="_blank" href="https://dashboard.stripe.com/">
             Stripe Home
           </a>
-          <hr />
         </>
       )
     }
@@ -229,24 +229,39 @@ const WriterDashboard: NextPage<{}> = () => {
 
   return (
     <div className={styles.dashboard}>
-      <h2>Writer's Dashboard</h2>
-
-      <Card>
-        <h3>My Stories</h3>
-        <hr />
-        <ul className={styles.stories}>{renderStories()}</ul>
-        <hr />
+      <div className={styles.stories}>
+        <div className={styles.storiesHeader}>
+          <h2>My Stories</h2>
+          <span>
+            Followers:{' '}
+            {
+              data?.me?.subscribers.filter(
+                (s: Subscription) => s.level === SubLevel.Free
+              ).length
+            }
+          </span>
+        </div>
+        <StoryList
+          cardWrap
+          actionText="Dashboard"
+          action={(story: Story) =>
+            push(`/stories/${story.id}/dashboard`)
+          }
+          stories={data?.me?.favoriteStories}
+        />
         {renderNewStoryButton()}
-      </Card>
+      </div>
 
-      <Card>
+      <hr className={styles.hr} />
+
+      <div className={styles.statusInfo}>
         <h3>Status: {UserRole[data?.me?.role]}</h3>
-        <hr />
         {renderLinkAccount()}
         {renderStatusCta()}
-      </Card>
+      </div>
 
-      <Card>
+      {/* Saving for when there are more status than just followers */}
+      {/* <Card>
         <h3>Stats</h3>
         <hr />
         <ul className={styles.stats}>
@@ -258,16 +273,16 @@ const WriterDashboard: NextPage<{}> = () => {
               ).length
             }
           </li>
-          {/* <li className={styles.stat}>
+          <li className={styles.stat}>
             Subscribers:{' '}
             {
               data?.me?.subscribers.filter(
                 (s: Subscription) => s.level === SubLevel.Paid
               ).length
             }
-          </li> */}
+          </li>
         </ul>
-      </Card>
+      </Card> */}
     </div>
   )
 }
