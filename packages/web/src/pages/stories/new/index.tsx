@@ -18,6 +18,7 @@ import Loader from '@/components/Loader'
 import { withApollo } from '@/utils/withApollo'
 import Modal from '@/components/Modal'
 import CreditCardForm from '@/components/CreditCardForm'
+import GenreList from '@/components/GenreList'
 
 const New: NextPage<{}> = () => {
   const { push } = useRouter()
@@ -97,6 +98,9 @@ const New: NextPage<{}> = () => {
           autoSave={save}
           onSubmit={handleSubmit}
         />
+      </Card>
+      <Card>
+        <GenreList story={story} />
       </Card>
     </div>
   )

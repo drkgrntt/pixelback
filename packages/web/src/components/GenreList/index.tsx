@@ -8,11 +8,13 @@ import {
 } from '@pixelback/shared'
 
 interface Props {
-  story: Story
+  story?: Story
 }
 
 const GenreList: React.FC<Props> = ({ story }) => {
   const [removeGenreFromStory] = useRemoveGenreFromStoryMutation()
+
+  if (!story) return null
 
   const deleteGenre = async (
     genre: Genre,

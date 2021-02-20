@@ -13,6 +13,7 @@ import {
 import { useRouter } from 'next/router'
 import { useIsAuth } from '@/hooks/useIsAuth'
 import Loader from '@/components/Loader'
+import GenreList from '@/components/GenreList'
 import { withApollo } from '@/utils/withApollo'
 
 interface Props {
@@ -79,6 +80,9 @@ const Edit: NextPage<Props> = ({ query }) => {
           autoSave={save}
           onSubmit={handleSubmit}
         />
+      </Card>
+      <Card>
+        <GenreList story={story} />
       </Card>
     </div>
   )
