@@ -23,12 +23,21 @@ const Feedback: NextPage<Props> = (props) => {
     email: '',
     summary: '',
     details: '',
+    validation: '',
   }
   const formState = useForm(INITIAL_STATE)
   const [giveFeedback] = useGiveFeedbackMutation()
 
   const handleSubmit = async (event: any, reset: Function) => {
     event.preventDefault()
+    if (!formState.validate()) {
+      formState.setValues({
+        ...formState.values,
+        validation: 'Please fill out the entire form.',
+      })
+      reset()
+      return
+    }
     try {
       const result = await giveFeedback({
         variables: {
