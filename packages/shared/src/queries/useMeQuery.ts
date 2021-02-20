@@ -24,6 +24,10 @@ export const meQuery = gql`
       stories {
         id
         title
+        author {
+          id
+          penName
+        }
         genres {
           id
           name

@@ -247,7 +247,7 @@ const WriterDashboard: NextPage<{}> = () => {
           action={(story: Story) =>
             push(`/stories/${story.id}/dashboard`)
           }
-          stories={data?.me?.favoriteStories}
+          stories={data?.me?.stories}
         />
         {renderNewStoryButton()}
       </div>

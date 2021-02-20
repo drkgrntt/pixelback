@@ -26,6 +26,13 @@ const Comments: React.FC<Props> = ({ comments, story, chapter }) => {
     if (editingComment) setEditingComment(undefined)
   }, [comments])
 
+  if (
+    !story?.enableCommenting ||
+    (chapter && !chapter.enableCommenting)
+  ) {
+    return null
+  }
+
   const renderAuthorship = (comment: Comment) => {
     if (
       !(story && story.author.id === comment.author.id) &&

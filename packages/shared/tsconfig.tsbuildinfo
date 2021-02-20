@@ -1407,7 +1407,7 @@
         "affectsGlobalScope": false
       },
       "./src/queries/useMeQuery.ts": {
-        "version": "1373fc2d68376a3539ce1d7aeb257a18f872ceca44fc8418f51fb5bfbc408c82",
+        "version": "c5201cc0e5675e070e46e76af77a0dc8e25d0ba0d67316e8ccaf95f7adc4b3bc",
         "signature": "a2a8897283fec8a881961c910a69d75a2022fe723de3c0aa627683f33e03a5b7",
         "affectsGlobalScope": false
       },
