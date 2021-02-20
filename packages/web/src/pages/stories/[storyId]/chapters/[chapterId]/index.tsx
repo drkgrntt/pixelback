@@ -22,6 +22,8 @@ import Comments from '@/components/Comments'
 import Card from '@/components/Card'
 import Modal from '@/components/Modal'
 import TipForm from '@/components/TipForm'
+import { useRouter } from 'next/router'
+import Button from '@/components/Button'
 
 interface Props {
   query: ParsedUrlQuery
@@ -38,6 +40,8 @@ const ChapterPage: NextPage<Props> = ({ query }) => {
     variables: chapterVariables,
     skip: !query.chapterId,
   })
+
+  const { push } = useRouter()
 
   const story: Story = storyResult.data?.story
   const chapter: Chapter = chapterResult.data?.chapter
@@ -68,11 +72,14 @@ const ChapterPage: NextPage<Props> = ({ query }) => {
     if (!chapter.previous) return <div /> // Placeholder so "next" will float right
 
     return (
-      <Link
-        href={`/stories/${story.id}/chapters/${chapter.previous.id}`}
+      <Button
+        onClick={(event: any, reset: Function) => {
+          push(`/stories/${story.id}/chapters/${chapter.previous.id}`)
+          reset()
+        }}
       >
-        <a>&#8249; Previous</a>
-      </Link>
+        <i aria-hidden className="fas fa-arrow-left"></i>
+      </Button>
     )
   }
 
@@ -80,16 +87,21 @@ const ChapterPage: NextPage<Props> = ({ query }) => {
     if (!chapter.next) return
 
     return (
-      <Link href={`/stories/${story.id}/chapters/${chapter.next.id}`}>
-        <a>Next &#8250;</a>
-      </Link>
+      <Button
+        onClick={(event: any, reset: Function) => {
+          push(`/stories/${story.id}/chapters/${chapter.next.id}`)
+          reset()
+        }}
+      >
+        <i aria-hidden className="fas fa-arrow-right"></i>
+      </Button>
     )
   }
 
   const renderBack = () => {
     return (
       <Link href={`/stories/${story.id}`}>
-        <a>Back to the story</a>
+        <a>{story.title}</a>
       </Link>
     )
   }
@@ -124,32 +136,46 @@ const ChapterPage: NextPage<Props> = ({ query }) => {
           )
           .slice(0, -2)}
       />
-      <h2>{story.title}</h2>
-      <Link href={`/profile/${story.author.id}`}>
-        <a>{story.author.penName}</a>
-      </Link>
-      {renderBack()}
+
+      <div>
+        <h2>{story.title}</h2>
+        <div className={styles.storyActions}>
+          <Link href={`/profile/${story.author.id}`}>
+            <a>{story.author.penName}</a>
+          </Link>
+          {renderBack()}
+        </div>
+      </div>
+
       <hr />
+
       <h3>{`${chapter.number}. ${chapter.title}`}</h3>
-      {chapter.body}
-      <Link href={`/profile/${story.author.id}`}>
-        <a>{story.author.penName}</a>
-      </Link>
-      {renderBack()}
+      <span>{story.reads} reads</span>
+
+      <p>{chapter.body}</p>
+
+      <div className={styles.storyActions}>
+        <Link href={`/profile/${story.author.id}`}>
+          <a>{story.author.penName}</a>
+        </Link>
+        {renderBack()}
+      </div>
+
+      <hr />
+
       <div className={styles.prevNext}>
         {renderPrev()}
         {renderNext()}
       </div>
-      <Card>
-        <StarScale
-          allowHover={!!meResult.data?.me}
-          onStarClick={rateChapter}
-          score={chapter.score}
-          rateStatus={chapter.rateStatus}
-        />
-      </Card>
-      {story.author.canAcceptPayments && (
-        <Card>
+
+      <StarScale
+        allowHover={!!meResult.data?.me}
+        onStarClick={rateChapter}
+        score={chapter.score}
+        rateStatus={chapter.rateStatus}
+      />
+      <div className={styles.actions}>
+        {story.author.canAcceptPayments && (
           <Modal
             buttonText="Tip the author"
             className={styles.tipModal}
@@ -157,8 +183,8 @@ const ChapterPage: NextPage<Props> = ({ query }) => {
             <h3>Tip {story.author.penName}</h3>
             <TipForm author={story.author} />
           </Modal>
-        </Card>
-      )}
+        )}
+      </div>
       <Comments chapter={chapter} comments={chapter.comments} />
     </div>
   )

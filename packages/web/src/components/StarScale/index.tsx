@@ -71,7 +71,7 @@ const StarScale: React.FC<Props> = ({
           className={`${allowHover && styles.hoverable} ${
             styles.star
           } fa fa-star star-pos-${pos}`}
-          aria-hidden="true"
+          aria-hidden
         />
       )
       // Empty star
@@ -85,7 +85,7 @@ const StarScale: React.FC<Props> = ({
           className={`${allowHover && styles.hoverable} ${
             styles.star
           } ${styles.new} fa fa-star star-pos-${pos}`}
-          aria-hidden="true"
+          aria-hidden
         />
       )
       // Star fractions
@@ -109,14 +109,14 @@ const StarScale: React.FC<Props> = ({
             className={`${allowHover && styles.hoverable} ${
               styles.star
             } fa fa-star star-pos-${pos}`}
-            aria-hidden="true"
+            aria-hidden
           />
           <i
             onClick={() => onStarClick(pos)}
             className={`${allowHover && styles.hoverable} ${
               styles.star
             } ${styles.mask} fa fa-star star-pos-${pos}`}
-            aria-hidden="true"
+            aria-hidden
           />
         </div>
       )

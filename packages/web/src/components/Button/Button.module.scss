@@ -15,6 +15,11 @@
   transition: all 0.3s;
   border-radius: 2rem;
 
+  & > * {
+    color: $color-black;
+    transition: all 0.3s;
+  }
+
   img {
     max-height: inherit;
   }
@@ -29,18 +34,29 @@
     color: $color-white;
     background-color: transparent;
     border: 0.2rem solid $color-white;
+
+    & > * {
+      color: $color-white;
+    }
   }
 
   &.primary {
     border: 0.2rem solid $color-primary;
     color: $color-white;
     background-color: $color-primary;
-    transition: all 0.3s;
+
+    & > * {
+      color: $color-white;
+    }
 
     &:hover {
       color: $color-primary;
       background-color: transparent;
       border: 0.2rem solid $color-primary;
+
+      & > * {
+        color: $color-primary;
+      }
     }
   }
 
@@ -48,12 +64,19 @@
     border: 0.2rem solid $color-secondary;
     color: $color-white;
     background-color: $color-secondary;
-    transition: all 0.3s;
+
+    & > * {
+      color: $color-white;
+    }
 
     &:hover {
       color: $color-secondary;
       background-color: transparent;
       border: 0.2rem solid $color-secondary;
+
+      & > * {
+        color: $color-secondary;
+      }
     }
   }
 
@@ -61,12 +84,19 @@
     border: 0.2rem solid $color-tertiary;
     color: $color-white;
     background-color: $color-tertiary;
-    transition: all 0.3s;
+
+    & > * {
+      color: $color-white;
+    }
 
     &:hover {
       color: $color-tertiary;
       background-color: transparent;
       border: 0.2rem solid $color-tertiary;
+
+      & > * {
+        color: $color-tertiary;
+      }
     }
   }
 
@@ -74,12 +104,19 @@
     border: 0.2rem solid $color-cta;
     color: $color-white;
     background-color: $color-cta;
-    transition: all 0.3s;
+
+    & > * {
+      color: $color-white;
+    }
 
     &:hover {
       color: $color-cta;
       background-color: transparent;
       border: 0.2rem solid $color-cta;
+
+      & > * {
+        color: $color-cta;
+      }
     }
   }
 
@@ -87,12 +124,19 @@
     border: 0.2rem solid $color-edit;
     color: $color-white;
     background-color: $color-edit;
-    transition: all 0.3s;
+
+    & > * {
+      color: $color-white;
+    }
 
     &:hover {
       color: $color-edit;
       background-color: transparent;
       border: 0.2rem solid $color-edit;
+
+      & > * {
+        color: $color-edit;
+      }
     }
   }
 
@@ -100,12 +144,19 @@
     border: 0.2rem solid $color-delete;
     color: $color-white;
     background-color: $color-delete;
-    transition: all 0.3s;
+
+    & > * {
+      color: $color-white;
+    }
 
     &:hover {
       color: $color-delete;
       background-color: transparent;
       border: 0.2rem solid $color-delete;
+
+      & > * {
+        color: $color-delete;
+      }
     }
   }
 }

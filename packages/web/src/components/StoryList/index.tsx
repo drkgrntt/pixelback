@@ -42,8 +42,11 @@ const StoryList: React.FC<Props> = ({
             <a>{story.author.penName}</a>
           </Link>
         </div>
-        {story.summary}
+
+        <p>{story.summary}</p>
+
         <em>{story.genres.map((genre) => genre.name).join(', ')}</em>
+
         <div className={styles.row}>
           <Button
             onClick={() => push(`/stories/${story.id}`)}

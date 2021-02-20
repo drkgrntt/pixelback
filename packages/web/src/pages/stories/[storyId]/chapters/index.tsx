@@ -113,9 +113,6 @@ const Chapters: NextPage<Props> = ({ query }) => {
 
       <Card>
         <ChapterList story={story} />
-        <Link href={`/profile/${story.author.id}`}>
-          <a>{story.author.penName}</a>
-        </Link>
       </Card>
 
       <StarScale

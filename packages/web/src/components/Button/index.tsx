@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import React, { useRef, useState, useEffect } from 'react'
 import Loader from '../Loader'
 import styles from './Button.module.scss'
 
@@ -18,12 +18,11 @@ interface Props {
   id?: string
   style?: { [key: string]: string }
   title?: string
-  children: string
   type?: 'button' | 'reset' | 'submit'
   styleTypes?: StyleType[]
 }
 
-const Button = (props: Props) => {
+const Button: React.FC<Props> = (props) => {
   const {
     // Standard button props
     className = '',
@@ -32,7 +31,7 @@ const Button = (props: Props) => {
     id = null,
     style = {},
     title = '',
-    children = '',
+    children,
     type,
 
     // Custom button props
@@ -46,11 +45,21 @@ const Button = (props: Props) => {
     setButtonDisabled(disabled)
   }, [disabled])
 
+  const mounted = useRef(false)
+
+  useEffect(() => {
+    mounted.current = true
+    return () => {
+      mounted.current = false
+    }
+  })
+
   const handleClick = (event: any) => {
     setPressed(true)
     setButtonDisabled(true)
 
     const reset = () => {
+      if (!mounted.current) return
       setButtonDisabled(false)
       setPressed(false)
     }

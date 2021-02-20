@@ -28,6 +28,10 @@ const App = ({
     }
   }, [asPath])
 
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [asPath])
+
   return (
     <>
       <Head>
