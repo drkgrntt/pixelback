@@ -17,6 +17,8 @@ import {
 } from '@pixelback/shared'
 import { useIsAuth } from '@/hooks/useIsAuth'
 import { withApollo } from '@/utils/withApollo'
+import { useRouter } from 'next/router'
+import Button from '@/components/Button'
 
 interface Props {
   query: ParsedUrlQuery
@@ -38,6 +40,7 @@ const Dashboard: NextPage<Props> = ({ query }) => {
   const meResult = useMeQuery()
   const me: User = meResult.data?.me
   useIsAuth()
+  const { push } = useRouter()
 
   if (
     meResult.loading ||
@@ -72,11 +75,14 @@ const Dashboard: NextPage<Props> = ({ query }) => {
 
       <Card>
         <ChapterInfo chapter={chapter} story={story} />
-        <Link
-          href={`/stories/${story.id}/chapters/${chapter.id}/edit`}
+        <Button
+          onClick={(event: any, reset: Function) => {
+            push(`/stories/${story.id}/chapters/${chapter.id}/edit`)
+            reset()
+          }}
         >
-          <a>Edit the chapter</a>
-        </Link>
+          Edit the chapter
+        </Button>
       </Card>
 
       <Card>

@@ -12,6 +12,8 @@ import { useIsAuth } from '@/hooks/useIsAuth'
 import { ParsedUrlQuery } from 'querystring'
 import Loader from '@/components/Loader'
 import { withApollo } from '@/utils/withApollo'
+import Button from '@/components/Button'
+import { useRouter } from 'next/router'
 
 interface Props {
   query: ParsedUrlQuery
@@ -26,6 +28,7 @@ const Dashboard: NextPage<Props> = ({ query }) => {
   })
   const story: Story = storyResult.data?.story
   useIsAuth()
+  const { push } = useRouter()
 
   if (meResult.loading || storyResult.loading) {
     return <Loader />
@@ -56,9 +59,14 @@ const Dashboard: NextPage<Props> = ({ query }) => {
 
       <Card>
         <StoryInfo story={story} />
-        <Link href={`/stories/${story.id}/edit`}>
-          <a>Edit the story</a>
-        </Link>
+        <Button
+          onClick={(event: any, reset: Function) => {
+            push(`/stories/${story.id}/edit`)
+            reset()
+          }}
+        >
+          Edit the story
+        </Button>
       </Card>
 
       <Card>
