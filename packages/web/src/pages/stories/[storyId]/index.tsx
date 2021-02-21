@@ -118,7 +118,9 @@ const StoryPage: NextPage<Props> = ({ query }) => {
           <a>{story.author.penName}</a>
         </Link>
       </div>
-      <span>{story.reads} reads</span>
+      <span>
+        {story.reads} read{story.reads === 1 ? '' : 's'}
+      </span>
 
       <p>{story.body}</p>
 

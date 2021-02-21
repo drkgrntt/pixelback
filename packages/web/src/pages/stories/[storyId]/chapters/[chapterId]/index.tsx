@@ -150,7 +150,9 @@ const ChapterPage: NextPage<Props> = ({ query }) => {
       <hr />
 
       <h3>{`${chapter.number}. ${chapter.title}`}</h3>
-      <span>{chapter.reads} reads</span>
+      <span>
+        {chapter.reads} read{chapter.reads === 1 ? '' : 's'}
+      </span>
 
       <p>{chapter.body}</p>
 
