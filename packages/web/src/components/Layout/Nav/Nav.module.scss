@@ -74,7 +74,7 @@
     &::before,
     &::after {
       display: block;
-      border-bottom: 0.2rem solid $color-white;
+      border-bottom: 0.2rem solid darken($color-primary, 10);
       width: 2.5rem;
       padding-bottom: 1rem;
     }
