@@ -55,6 +55,7 @@ const Stories: NextPage<Props> = (props) => {
         <div className={styles.left}>
           <h2>Stories</h2>
           <Input
+            className={styles.newest}
             type="checkbox"
             label="Newest"
             name="newest"

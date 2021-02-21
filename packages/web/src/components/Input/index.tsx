@@ -90,7 +90,7 @@ const Input: React.FC<Props> = (props) => {
       )
     } else if (type === 'checkbox') {
       return (
-        <>
+        <div className={styles.checkboxContainer}>
           <input
             disabled={!!disabled}
             type={type}
@@ -105,7 +105,7 @@ const Input: React.FC<Props> = (props) => {
             onFocus={(event) => onFocus(event)}
           />
           {renderLabel()}
-        </>
+        </div>
       )
     } else if (type === 'select') {
       return (

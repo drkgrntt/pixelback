@@ -83,7 +83,15 @@ const GenreSearch: React.FC<Props> = ({ story }) => {
   }
 
   const getAddOption = () => {
-    if (!search || searchResult.data?.genres.length) return []
+    if (
+      !search ||
+      searchResult.data?.genres.find(
+        (genre: Genre) =>
+          genre.name.toLowerCase() === search.toLowerCase()
+      )
+    ) {
+      return []
+    }
 
     return [{ value: 'newGenre', text: `Add "${search}" as a genre` }]
   }

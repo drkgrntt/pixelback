@@ -1,7 +1,7 @@
 @import 'src/styles/variables.scss';
 
 .icon {
-  color: $color-grey-light;
+  color: $color-white;
 }
 
 .nav {
@@ -40,11 +40,11 @@
     position: relative;
 
     &:hover:not(.hamburger) {
-      background-color: $color-grey-light-2;
-      color: $color-grey-dark-2;
+      background-color: $color-grey-light;
+      color: $color-grey-dark;
 
       & > .link {
-        color: $color-grey-dark-2;
+        color: $color-grey-dark;
       }
     }
   }
@@ -56,7 +56,7 @@
     width: 100%;
     text-align: center;
     font-size: 1.6rem;
-    color: $color-grey-light;
+    color: $color-white;
     display: flex;
     justify-content: center;
     gap: 1rem;
@@ -71,7 +71,7 @@
     &::before,
     &::after {
       display: block;
-      border-bottom: 0.2rem solid $color-grey-light;
+      border-bottom: 0.2rem solid $color-white;
       width: 2.5rem;
       padding-bottom: 1rem;
     }
@@ -100,7 +100,7 @@
   }
 
   .checked {
-    background-color: rgba($color-grey-dark, 0.9);
+    background-color: rgba($color-black, 0.9);
 
     .hamburger {
       border-bottom: none;
