@@ -46,7 +46,8 @@
       background-color: $color-grey-light;
       color: $color-grey-dark;
 
-      & > .link {
+      & > .link,
+      .icon {
         color: $color-grey-dark;
       }
     }
