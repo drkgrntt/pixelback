@@ -4,10 +4,12 @@ import path from 'path'
 import express from 'express'
 import cors from 'cors'
 import sanitize from 'sanitize'
+import bodyParser from 'body-parser'
 import cookieParser from 'cookie-parser'
 import { createConnection } from 'typeorm'
 import { buildSchema } from 'type-graphql'
 import { ApolloServer } from 'apollo-server-express'
+import stripeWebhook from './utils/stripeWebhook'
 import { Token } from './entities/Token'
 import { UserResolver } from './resolvers/user'
 import { ReadResolver } from './resolvers/read'
@@ -126,9 +128,14 @@ const main = async () => {
 
   server.applyMiddleware({
     app,
-    path: '/',
     cors: false,
   })
+
+  app.post(
+    '/stripe',
+    bodyParser.raw({ type: 'application/json' }),
+    stripeWebhook
+  )
 
   app.listen(parseInt(process.env.PORT), () => {
     console.log(`Server started on ${process.env.PORT}`)
