@@ -7,12 +7,11 @@
 
 .actions {
   margin-top: 2rem;
-  display: flex;
-  gap: 1rem;
+  @include evenlySpace();
   justify-content: space-around;
 
   @media only screen and (min-width: 30rem) {
-    flex-direction: row;
+    @include evenlySpace(1rem, row);
     justify-content: stretch;
     & > * {
       flex: 1;

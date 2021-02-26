@@ -41,8 +41,8 @@ $main-height: calc(100vh - 20rem);
 $landing-height: calc(100vh - 20rem);
 $max-content-width: 60rem;
 
-@mixin evenlySpace($gutter: 1rem) {
+@mixin evenlySpace($gutter: 1rem, $direction: column) {
   display: flex;
-  flex-direction: column;
+  flex-direction: $direction;
   gap: $gutter;
 }

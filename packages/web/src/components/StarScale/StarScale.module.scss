@@ -6,16 +6,14 @@
 }
 
 .stars {
-  display: flex;
-  flex-direction: row;
-  gap: 1rem;
+  @include evenlySpace(1rem, row);
   justify-content: center;
   width: 100%;
   font-size: 3rem;
 
   &.small {
     font-size: 1.5rem;
-    gap: 0.5rem;
+    @include evenlySpace(0.5rem, row);
 
     .crescent .star:not(.mask),
     .half .star:not(.mask),
