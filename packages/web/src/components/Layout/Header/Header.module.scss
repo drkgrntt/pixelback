@@ -46,6 +46,9 @@
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+}
+
+.maintitle {
   background: -webkit-linear-gradient(
     darken($color-primary, 20%),
     lighten($color-primary, 30%)

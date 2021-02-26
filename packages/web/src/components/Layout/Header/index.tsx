@@ -20,7 +20,7 @@ const Header: React.FC<{}> = () => {
     <header className={`${styles.header} ${!isTop && styles.mini}`}>
       <div className={styles.content}>
         <h1 className={styles.title}>
-          Pixelback
+          <span className={styles.maintitle}>Pixelback</span>
           <span className={styles.subtitle}>
             A platform for creative writers
           </span>
