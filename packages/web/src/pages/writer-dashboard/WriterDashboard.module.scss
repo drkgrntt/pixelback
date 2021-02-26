@@ -47,4 +47,5 @@
 .paymentDetails,
 .cardModal {
   @include evenlySpace();
+  align-content: start;
 }

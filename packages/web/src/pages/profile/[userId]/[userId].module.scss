@@ -8,7 +8,6 @@
 .actions {
   margin-top: 2rem;
   @include evenlySpace();
-  justify-content: space-around;
 
   @media only screen and (min-width: 30rem) {
     @include evenlySpace(1rem, row);

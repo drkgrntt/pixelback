@@ -3,6 +3,7 @@
 .search {
   @include evenlySpace();
   justify-content: flex-start;
+  align-content: flex-start;
 }
 
 .searchTitle {

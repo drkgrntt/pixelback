@@ -42,7 +42,16 @@ $landing-height: calc(100vh - 20rem);
 $max-content-width: 60rem;
 
 @mixin evenlySpace($gutter: 1rem, $direction: column) {
-  display: flex;
-  flex-direction: $direction;
-  gap: $gutter;
+  // display: flex;
+  // flex-direction: $direction;
+  // gap: $gutter;
+
+  display: grid;
+  grid-gap: $gutter;
+  @if $direction == row {
+    grid-auto-flow: column;
+  }
+  @if $direction == column {
+    grid-auto-flow: row;
+  }
 }

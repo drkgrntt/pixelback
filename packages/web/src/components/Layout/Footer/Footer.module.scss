@@ -5,7 +5,9 @@
   background-color: $color-grey-light;
   @include evenlySpace(0.4rem);
   align-items: center;
+  align-content: center;
   justify-content: center;
+  justify-items: center;
 }
 
 .comingSoon {
