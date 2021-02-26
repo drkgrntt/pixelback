@@ -1,9 +1,7 @@
 @import 'src/styles/variables.scss';
 
 .form {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
+  @include evenlySpace(0.5rem);
 }
 
 .cardElement {

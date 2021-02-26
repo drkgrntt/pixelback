@@ -40,3 +40,9 @@ $footer-height: 10rem;
 $main-height: calc(100vh - 20rem);
 $landing-height: calc(100vh - 20rem);
 $max-content-width: 60rem;
+
+@mixin evenlySpace($gutter: 1rem) {
+  display: flex;
+  flex-direction: column;
+  gap: $gutter;
+}

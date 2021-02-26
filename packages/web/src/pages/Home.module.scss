@@ -11,9 +11,7 @@
 }
 
 .cta {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
+  @include evenlySpace(0.5);
   align-items: center;
   z-index: 100;
 }

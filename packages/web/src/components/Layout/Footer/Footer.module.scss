@@ -3,11 +3,9 @@
 .footer {
   height: $footer-height;
   background-color: $color-grey-light;
-  display: flex;
-  flex-direction: column;
+  @include evenlySpace(0.4rem);
   align-items: center;
   justify-content: center;
-  gap: 0.4rem;
 }
 
 .comingSoon {
