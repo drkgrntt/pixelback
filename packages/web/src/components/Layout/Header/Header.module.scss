@@ -2,11 +2,6 @@
 
 .header {
   height: $header-height;
-  // background: linear-gradient(
-  //   45deg,
-  //   lighten($color-primary, 0%),
-  //   darken($color-primary, 30%)
-  // );
   background-color: $color-white;
   display: flex;
   flex-direction: column;
@@ -46,22 +41,18 @@
 
 .title {
   line-height: 1;
-  margin: 0;
   font-size: 3.3rem;
-  // color: $color-white;
-  // background: none;
-  // -webkit-text-fill-color: unset;
-  background: linear-gradient(
+  font-weight: 400;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  background: -webkit-linear-gradient(
     darken($color-primary, 20%),
     lighten($color-primary, 30%)
   );
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  font-weight: 400;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
 }
 
 .subtitle {
