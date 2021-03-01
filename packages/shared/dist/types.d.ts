@@ -28,6 +28,7 @@ export interface User {
     favoriteGenres: Genre[];
     ratings: Rating[];
     canAcceptPayments: boolean;
+    stripeAccountError?: String;
     subscriptions: Subscription[];
     subscribers: Subscription[];
     comments: Comment[];

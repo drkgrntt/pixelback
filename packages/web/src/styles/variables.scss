@@ -37,8 +37,8 @@ $default-font-size: 1.4rem;
 // ========================
 $header-height: 10rem;
 $footer-height: 10rem;
-$main-height: calc(100vh - 20rem);
-$landing-height: calc(100vh - 20rem);
+$main-height: calc(100vh - 10rem);
+$landing-height: calc(100vh - 10rem);
 $max-content-width: 60rem;
 
 @mixin evenlySpace($gutter: 1rem, $direction: column) {

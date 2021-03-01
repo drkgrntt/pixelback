@@ -86,12 +86,21 @@ const WriterDashboard: NextPage<{}> = () => {
       return <Loader />
     }
 
+    if (linkAccountData.error) {
+      return (
+        <p>
+          Something is wrong with your linked Stripe account. Please
+          contact us for help.
+        </p>
+      )
+    }
+
     if (!linkAccountData.data && data?.me?.canAcceptPayments) {
       return (
         <>
           <p>You are able to accept payments.</p>
-          <a target="_blank" href="https://dashboard.stripe.com/">
-            Stripe Home
+          <a target="_blank" href="https://.stripe.com/">
+            Stripe
           </a>
         </>
       )
@@ -105,7 +114,8 @@ const WriterDashboard: NextPage<{}> = () => {
         <>
           <p>
             We use <a href="https://stripe.com/">Stripe</a> to handle
-            tips to writers and authors.
+            tips to writers and authors. Click the button below to set
+            up your Stripe account and start collecting tips.
           </p>
           <Button
             onClick={() =>
@@ -116,10 +126,18 @@ const WriterDashboard: NextPage<{}> = () => {
             Set your data
           </Button>
           <p>
-            in order to start collecting tips. If you have already set
-            your data, there may be additional steps on Stripe, so
-            click the button again.
+            If you have already set your data, there may be additional
+            steps on Stripe, so click the button again.
           </p>
+          {data?.me?.stripeAccountError && (
+            <>
+              <hr />
+              <p>
+                The following error was reported from Stripe:{' '}
+                {data.me.stripeAccountError}
+              </p>
+            </>
+          )}
           <hr />
         </>
       )

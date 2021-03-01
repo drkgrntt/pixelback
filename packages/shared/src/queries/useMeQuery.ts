@@ -5,6 +5,7 @@ export const meQuery = gql`
   query Me {
     me {
       ...UserInfo
+      stripeAccountError
       roleSubscription {
         id
         createdAt

@@ -197,6 +197,20 @@ export class UserResolver {
     return !!account?.payouts_enabled
   }
 
+  @FieldResolver(() => String, { nullable: true })
+  async stripeAccountError(
+    @Root() user: User
+  ): Promise<string | undefined> {
+    const payments = new Payments()
+    const account = await payments.getAccount(user)
+    console.log(account, account?.requirements)
+    const errors = account?.requirements?.errors
+    if (errors) {
+      return errors[0]?.reason
+    }
+    return
+  }
+
   @Query(() => String)
   ping(): 'pong' {
     return 'pong'

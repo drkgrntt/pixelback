@@ -157,8 +157,8 @@
         "affectsGlobalScope": true
       },
       "./src/types.ts": {
-        "version": "2bd1b32a28e8fccdda0768b725c4fe0ceb25c21bbf7db60c7dbc2c1155d218a1",
-        "signature": "0e93a0bf26a425bf6f32b935255d8df19e3c530e9e0c3b90f9a80942b20c71fd",
+        "version": "ceac588bcb46c7827984beb0908137f2ab988a327444a4096bc993483bcccc37",
+        "signature": "93fb32ce63105f4e1c6287dfc0fe7d801e7d81db64346db07e40a62bbc144fe9",
         "affectsGlobalScope": false
       },
       "../../node_modules/@types/zen-observable/index.d.ts": {
@@ -1407,7 +1407,7 @@
         "affectsGlobalScope": false
       },
       "./src/queries/useMeQuery.ts": {
-        "version": "c5201cc0e5675e070e46e76af77a0dc8e25d0ba0d67316e8ccaf95f7adc4b3bc",
+        "version": "804a8253ce2a50e22b7db621f6e91379e7c3c4ead2c6b79900ad2bef59027d49",
         "signature": "a2a8897283fec8a881961c910a69d75a2022fe723de3c0aa627683f33e03a5b7",
         "affectsGlobalScope": false
       },
@@ -2151,7 +2151,6 @@
       "outDir": "./dist",
       "esModuleInterop": true,
       "rootDir": "./src",
-      "watch": true,
       "configFilePath": "./tsconfig.json"
     },
     "referencedMap": {
