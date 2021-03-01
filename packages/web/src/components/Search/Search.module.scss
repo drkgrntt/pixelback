@@ -2,8 +2,9 @@
 
 .search {
   @include evenlySpace();
-  justify-content: flex-start;
-  align-content: flex-start;
+  justify-items: start;
+  justify-content: stretch;
+  align-content: start;
 }
 
 .searchTitle {
