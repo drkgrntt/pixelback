@@ -23,10 +23,10 @@ const ContentForm: React.FC<Props> = (props) => {
     summary: content?.summary || '',
     body: content?.body || '',
     publish: content?.status === PublishStatus.Published,
-    enableCommenting: content?.enableCommenting || true,
+    enableCommenting: content?.enableCommenting ?? true,
     validation: '',
   }
-  const formState = useForm(INITIAL_STATE)
+  const formState = useForm(INITIAL_STATE, [content])
 
   // Handle content update
   useEffect(() => {
@@ -131,6 +131,7 @@ const ContentForm: React.FC<Props> = (props) => {
       <Input
         name="body"
         type="textarea"
+        rows={20}
         label="Body"
         formState={formState}
       />

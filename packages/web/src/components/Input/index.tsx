@@ -17,6 +17,7 @@ interface Props {
   min?: number
   max?: number
   disabled?: boolean
+  rows?: number
   options?: { value: any; text: string }[]
   validation?: string
   formState?: { [key: string]: any }
@@ -40,6 +41,7 @@ const Input: React.FC<Props> = (props) => {
     min,
     max,
     disabled,
+    rows = 10,
     children = null,
     options = [],
     validation = '',
@@ -73,6 +75,7 @@ const Input: React.FC<Props> = (props) => {
         <>
           {renderLabel()}
           <textarea
+            rows={rows}
             disabled={!!disabled}
             placeholder={placeholder}
             name={name}
