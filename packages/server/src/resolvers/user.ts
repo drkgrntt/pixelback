@@ -284,7 +284,7 @@ export class UserResolver {
 
     if (!User.verifyPasswordSyntax(password)) {
       throw new Error(
-        'Invalid password. Make sure it is at least 8 characters and includes at least 1 letter and 1 number.'
+        'Invalid password. Make sure it is at least 8 characters and includes at least 1 uppercase letter, 1 lowercase letter, 1 number, and 1 symbol.'
       )
     }
 
