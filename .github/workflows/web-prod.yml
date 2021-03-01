@@ -1,0 +1,22 @@
+name: Deploy to Heroku Prod (Web)
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'packages/web/**'
+      - 'packages/shared/**'
+      - '.github/workflows/web-prod.yml'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Add frontend remote origin
+        run: git remote add heroku-frontend https://heroku:${{ secrets.HEROKU_API_TOKEN }}@git.heroku.com/${{ secrets.HEROKU_PROD_WEB_APP_NAME }}.git
+      - name: Deploy frontend to Heroku
+        run: git push heroku-frontend main:master

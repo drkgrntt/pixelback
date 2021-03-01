@@ -1,13 +1,13 @@
-name: Deploy to Heroku (Web)
+name: Deploy to Heroku Stage (Web)
 
 on:
   push:
     branches:
-      - main
+      - develop
     paths:
       - 'packages/web/**'
       - 'packages/shared/**'
-      - '.github/workflows/web.yml'
+      - '.github/workflows/web-stage.yml'
 
 jobs:
   deploy:
@@ -17,6 +17,6 @@ jobs:
         with:
           fetch-depth: 0
       - name: Add frontend remote origin
-        run: git remote add heroku-frontend https://heroku:${{ secrets.HEROKU_API_TOKEN }}@git.heroku.com/${{ secrets.HEROKU_WEB_APP_NAME }}.git
+        run: git remote add heroku-frontend https://heroku:${{ secrets.HEROKU_API_TOKEN }}@git.heroku.com/${{ secrets.HEROKU_STAGE_WEB_APP_NAME }}.git
       - name: Deploy frontend to Heroku
-        run: git push heroku-frontend main:master
+        run: git push heroku-frontend develop:master
