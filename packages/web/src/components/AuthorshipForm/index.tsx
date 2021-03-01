@@ -25,10 +25,14 @@ const AuthorshipForm: React.FC<Props> = (props) => {
     reset: Function,
     price: string
   ) => {
-    event.preventDefault()
-    await becomeAuthor({
-      variables: { price, sourceId: formState.values.sourceId },
-    })
+    try {
+      event.preventDefault()
+      await becomeAuthor({
+        variables: { price, sourceId: formState.values.sourceId },
+      })
+    } catch {
+      reset()
+    }
   }
 
   const options = data?.me?.paymentMethods.map(
@@ -49,6 +53,7 @@ const AuthorshipForm: React.FC<Props> = (props) => {
         />
         <div className={styles.options}>
           <Button
+            disabled={!formState.values.sourceId}
             onClick={(event: any, reset: Function) =>
               handleBecomeAuthorClick(event, reset, 'month')
             }
@@ -56,6 +61,7 @@ const AuthorshipForm: React.FC<Props> = (props) => {
             $4/month
           </Button>
           <Button
+            disabled={!formState.values.sourceId}
             onClick={(event: any, reset: Function) =>
               handleBecomeAuthorClick(event, reset, 'year')
             }
