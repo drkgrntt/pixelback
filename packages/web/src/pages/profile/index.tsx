@@ -195,10 +195,12 @@ const Profile: NextPage<Props> = ({ query }) => {
       >
         Logout Everywhere
       </Button>
-      <p>
-        {logoutData?.data?.logoutEverywhere?.value &&
-          'All tokens have now been discarded. Your current session is the only remaining valid session.'}
-      </p>
+      {logoutData?.data?.logoutEverywhere?.value && (
+        <p>
+          All tokens have now been discarded. Your current session is
+          the only remaining valid session.
+        </p>
+      )}
 
       <hr className={styles.hr} />
 
