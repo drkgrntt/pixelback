@@ -189,6 +189,19 @@ const Profile: NextPage<Props> = ({ query }) => {
 
       <hr className={styles.hr} />
 
+      <Button
+        styleTypes={['delete']}
+        onClick={onLogoutEverywhereClick}
+      >
+        Logout Everywhere
+      </Button>
+      <p>
+        {logoutData?.data?.logoutEverywhere?.value &&
+          'All tokens have now been discarded. Your current session is the only remaining valid session.'}
+      </p>
+
+      <hr className={styles.hr} />
+
       <div className={styles.favoriteAuthors}>
         <h3>Favorite Authors</h3>
         <ul>{renderAuthorList()}</ul>
@@ -238,19 +251,6 @@ const Profile: NextPage<Props> = ({ query }) => {
         <h3>Comments</h3>
         {renderComments()}
       </div>
-
-      <hr className={styles.hr} />
-
-      <Button
-        styleTypes={['delete']}
-        onClick={onLogoutEverywhereClick}
-      >
-        Log Out Everywhere
-      </Button>
-      <p>
-        {logoutData?.data?.logoutEverywhere?.value &&
-          'All tokens have now been discarded. Your current session is the only remaining valid session.'}
-      </p>
     </div>
   )
 }
