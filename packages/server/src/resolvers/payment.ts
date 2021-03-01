@@ -10,6 +10,7 @@ import { Context, StripeSource, UserRole } from '../types'
 import { isAuth } from '../middleware/isAuth'
 import Payments from '../utils/Payments'
 import { User } from '../entities/User'
+import { isAdmin } from '../middleware/isAdmin'
 
 @Resolver()
 export class PaymentResolver {
@@ -67,6 +68,45 @@ export class PaymentResolver {
     await me.save()
 
     return me
+  }
+
+  @Mutation(() => User)
+  @UseMiddleware(isAdmin)
+  async giveFreeTrial(
+    @Arg('userId') userId: string,
+    @Arg('duration') duration: 'month' | 'year'
+  ): Promise<User> {
+    let user = await User.findOne({
+      where: {
+        id: userId,
+      },
+    })
+    if (!user) {
+      throw new Error('User not found')
+    }
+
+    await this.payments.getCustomer(user, true)
+
+    if (user.role === UserRole.Author) {
+      user = await this.cancelAuthorship({ me: user } as Context)
+    }
+
+    const priceId = this.payments.getPriceId(duration)
+
+    const periods = {
+      month: 30,
+      year: 365,
+    }
+
+    await this.payments.giveFreeTrial(
+      user,
+      priceId,
+      periods[duration]
+    )
+    user.role = UserRole.Author
+    await user.save()
+
+    return user
   }
 
   @Mutation(() => User)

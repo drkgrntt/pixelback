@@ -150,6 +150,23 @@ class Payments {
     )
   }
 
+  async giveFreeTrial(
+    user: User,
+    priceId: string,
+    duration: number
+  ): Promise<Stripe.Subscription | null> {
+    const customer = await this.getCustomer(user, true)
+    if (!customer) return null
+
+    const subscription = await this.stripe.subscriptions.create({
+      customer: customer.id,
+      items: [{ price: priceId }],
+      trial_period_days: duration,
+    })
+
+    return subscription
+  }
+
   async createSubscription(
     user: User,
     priceId: string,
