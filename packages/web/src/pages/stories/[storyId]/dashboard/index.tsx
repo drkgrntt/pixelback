@@ -57,7 +57,7 @@ const Dashboard: NextPage<Props> = ({ query }) => {
         <ChapterList story={story} />
       </Card>
 
-      <Card>
+      <Card className={styles.info}>
         <StoryInfo story={story} />
         <Button
           onClick={(event: any, reset: Function) => {

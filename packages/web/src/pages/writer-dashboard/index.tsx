@@ -224,7 +224,7 @@ const WriterDashboard: NextPage<{}> = () => {
   const renderStatusCta = () => {
     switch (data?.me?.role) {
       case UserRole.Reader:
-        return renderNewStoryButton()
+        return
 
       case UserRole.Writer:
         return renderBecomeAuthorButton()

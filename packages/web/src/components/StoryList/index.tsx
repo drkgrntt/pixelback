@@ -15,7 +15,7 @@ interface Props {
 }
 
 const StoryList: React.FC<Props> = ({
-  stories,
+  stories = [],
   showRating,
   cardWrap,
   action,

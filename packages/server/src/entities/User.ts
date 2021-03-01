@@ -123,7 +123,7 @@ export class User extends BaseEntity {
   }
 
   static verifyPasswordSyntax(password: string): boolean {
-    const regex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/
+    const regex = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/
     return regex.test(String(password))
   }
 }

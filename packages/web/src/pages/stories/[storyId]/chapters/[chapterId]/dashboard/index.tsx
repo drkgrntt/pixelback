@@ -73,7 +73,7 @@ const Dashboard: NextPage<Props> = ({ query }) => {
         <a>Back to writer's dashboard</a>
       </Link>
 
-      <Card>
+      <Card className={styles.info}>
         <ChapterInfo chapter={chapter} story={story} />
         <Button
           onClick={(event: any, reset: Function) => {
