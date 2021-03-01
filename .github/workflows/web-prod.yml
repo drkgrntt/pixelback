@@ -1,4 +1,4 @@
-name: Deploy to Heroku Prod (Web)
+name: Deploy to Heroku Production (Web)
 
 on:
   push:
