@@ -82,7 +82,7 @@ const Profile: NextPage<Props> = ({ query }) => {
   }
 
   const renderAuthorList = () => {
-    return me.subscriptions.map((subscription) => {
+    return me?.subscriptions.map((subscription) => {
       return (
         <li key={subscription.id}>
           <Link href={`/profile/${subscription.subscribedTo.id}`}>
@@ -102,7 +102,7 @@ const Profile: NextPage<Props> = ({ query }) => {
   }
 
   const renderComments = () => {
-    return me.comments
+    return me?.comments
       .map((comment) => {
         let link = '/stories'
         if (comment.story) {
@@ -164,12 +164,12 @@ const Profile: NextPage<Props> = ({ query }) => {
         <ul className={styles.userDetails}>
           <li>
             <div className={styles.userDetail}>
-              <h4>Email:</h4> {me.email}
+              <h4>Email:</h4> {me?.email}
             </div>
             <em>*No one sees this but you</em>
           </li>
           <li className={styles.userDetail}>
-            <h4>Pen Name:</h4> {me.penName}
+            <h4>Pen Name:</h4> {me?.penName}
           </li>
         </ul>
         <Modal
@@ -217,7 +217,7 @@ const Profile: NextPage<Props> = ({ query }) => {
           cardWrap
           actionText="Remove"
           action={onRemoveStoryClick}
-          stories={me.favoriteStories}
+          stories={me?.favoriteStories}
         />
       </div>
 
@@ -225,7 +225,7 @@ const Profile: NextPage<Props> = ({ query }) => {
 
       <div className={styles.paymentMethods}>
         <h3>Payment Methods</h3>
-        {me.paymentMethods.map((source) => (
+        {me?.paymentMethods.map((source) => (
           <Card key={source.id} className={styles.card}>
             <div>
               <h4 className={styles.cardBrand}>
