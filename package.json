@@ -13,6 +13,7 @@
     "build": "yarn workspaces run build",
     "heroku-postbuild": "bash ./scripts/heroku.sh",
     "deploy-server": "git push heroku-server main:master",
-    "deploy-web": "git push heroku-web main:master"
+    "deploy-web": "git push heroku-web main:master",
+    "reset-dev": "git checkout main && git pull && git branch -D develop && git checkout -b develop"
   }
 }
