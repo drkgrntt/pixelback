@@ -5,6 +5,10 @@ import styles from './Home.module.scss'
 import Button from '@/components/Button'
 import { withApollo } from '@/utils/withApollo'
 import Loader from '@/components/Loader'
+import { useStoriesQuery } from '@pixelback/shared'
+
+const PER_PAGE =
+  parseInt(process.env.NEXT_PUBLIC_PAGE_LIMIT as string) || 10
 
 const Home: NextPage<{}> = () => {
   const { push, replace } = useRouter()
@@ -12,6 +16,10 @@ const Home: NextPage<{}> = () => {
   useEffect(() => {
     replace('/stories')
   }, [replace])
+
+  useStoriesQuery({
+    variables: { take: PER_PAGE, skip: 0, newest: false },
+  })
 
   return <Loader />
 
@@ -33,4 +41,4 @@ const Home: NextPage<{}> = () => {
   )
 }
 
-export default withApollo({ ssr: false })(Home)
+export default withApollo({ ssr: true })(Home)
