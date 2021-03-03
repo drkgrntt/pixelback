@@ -14,6 +14,6 @@
     "heroku-postbuild": "bash ./scripts/heroku.sh",
     "deploy-server": "git push heroku-server main:master",
     "deploy-web": "git push heroku-web main:master",
-    "reset-dev": "git checkout main && git pull origin main && git branch -D develop && git push origin --delete develop && git checkout -b develop && git push origin devleop"
+    "reset-dev": "git checkout main && git pull origin main && git branch -D develop && git push origin --delete develop && git checkout -b develop && git push origin develop"
   }
 }
