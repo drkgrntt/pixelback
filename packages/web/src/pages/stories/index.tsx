@@ -81,4 +81,4 @@ const Stories: NextPage<Props> = (props) => {
   )
 }
 
-export default withApollo({ ssr: true })(Stories)
+export default withApollo({ ssr: false })(Stories)

@@ -41,4 +41,4 @@ const Home: NextPage<{}> = () => {
   )
 }
 
-export default withApollo({ ssr: true })(Home)
+export default withApollo({ ssr: false })(Home)
