@@ -1,3 +1,5 @@
+import { useRouter } from 'next/router'
+import { PaymentMethod } from '@stripe/stripe-js'
 import styles from './TipForm.module.scss'
 import Input from '@/components/Input'
 import Button from '@/components/Button'
@@ -9,8 +11,6 @@ import {
   useMeQuery,
   useTipAuthorMutation,
 } from '@pixelback/shared'
-import { useRouter } from 'next/router'
-import Link from 'next/link'
 
 interface Props {
   author: User
@@ -32,16 +32,7 @@ const TipForm: React.FC<Props> = ({ author }) => {
     return null
   }
 
-  if (!data?.me) {
-    return (
-      <p>
-        <Link href={`/login?next=${asPath}`}>Login</Link> to leave a
-        tip!
-      </p>
-    )
-  }
-
-  const options = data.me.paymentMethods.map(
+  const options = data?.me?.paymentMethods.map(
     (paymentMethod: StripeSource) => ({
       value: paymentMethod.id,
       text: paymentMethod.name,
@@ -52,17 +43,19 @@ const TipForm: React.FC<Props> = ({ author }) => {
 
   const handleTipClick = async (event: any, reset: Function) => {
     event.preventDefault()
-
     formState.values.amount = parseInt(formState.values.amount)
+    await tip()
+    reset()
+  }
+
+  const tip = async () => {
     try {
       await tipAuthor({ variables: formState.values })
-      reset()
       formState.setValues({
         ...formState.values,
         validation: 'Thank you for your tip!',
       })
     } catch (err) {
-      reset()
       formState.setValues({
         ...formState.values,
         validation: 'Something went wrong.',
@@ -70,6 +63,37 @@ const TipForm: React.FC<Props> = ({ author }) => {
     }
   }
 
+  // Logged out
+  if (!data?.me) {
+    return (
+      <>
+        <Input
+          label="Amount"
+          type="number"
+          name="amount"
+          step={0.01}
+          min={1}
+          formState={formState}
+        />
+        <CreditCardForm
+          onSuccess={async (paymentMethod: PaymentMethod) => {
+            formState.values.amount = parseInt(
+              formState.values.amount
+            )
+            formState.values.sourceId = paymentMethod.id
+            await tip()
+          }}
+          addToUser={false}
+          submitText={tipText}
+        />
+        <span className={styles.validation}>
+          {formState.values.validation}
+        </span>
+      </>
+    )
+  }
+
+  // Logged in
   return (
     <>
       <form className={styles.form}>
