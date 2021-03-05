@@ -99,7 +99,7 @@ const WriterDashboard: NextPage<{}> = () => {
       return (
         <>
           <p>You are able to accept payments.</p>
-          <a target="_blank" href="https://.stripe.com/">
+          <a target="_blank" href="https://stripe.com/">
             Stripe
           </a>
         </>
@@ -115,7 +115,10 @@ const WriterDashboard: NextPage<{}> = () => {
           <p>
             We use <a href="https://stripe.com/">Stripe</a> to handle
             tips to writers and authors. Click the button below to set
-            up your Stripe account and start collecting tips.
+            up your Stripe account and start collecting tips. If you
+            already have a Stripe account, we recommend using the
+            option for new business settings to get the correct
+            settings.
           </p>
           <Button
             onClick={() =>
@@ -274,8 +277,8 @@ const WriterDashboard: NextPage<{}> = () => {
 
       <div className={styles.statusInfo}>
         <h3>Status: {UserRole[data?.me?.role]}</h3>
-        {renderLinkAccount()}
         {renderStatusCta()}
+        {renderLinkAccount()}
       </div>
 
       {/* Saving for when there are more status than just followers */}
