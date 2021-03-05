@@ -195,15 +195,12 @@ class Payments {
   }
 
   async createCharge(
-    user: User,
     author: User,
     amount: number,
     sourceId: string,
-    description: string
+    description: string,
+    user?: User
   ): Promise<Stripe.PaymentIntent | null> {
-    const paymentMethods = await this.getPaymentMethods(user)
-    if (!paymentMethods.some((pm) => pm.id === sourceId)) return null
-
     const account = await this.getAccount(author, true)
     if (!account) return null
     const accountObj = {
@@ -212,7 +209,7 @@ class Payments {
 
     const clonedPaymentMethod = await this.stripe.paymentMethods.create(
       {
-        customer: user.stripeCustomerId,
+        customer: user?.stripeCustomerId,
         payment_method: sourceId,
       },
       accountObj

@@ -9,7 +9,7 @@
   overflow: auto;
   background-color: $color-grey;
   background-color: rgba($color-black, 0.7);
-  z-index: 10;
+  z-index: 99999999;
   transition: 0.3s;
 
   display: flex;

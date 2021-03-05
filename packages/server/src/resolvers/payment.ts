@@ -132,7 +132,6 @@ export class PaymentResolver {
   }
 
   @Mutation(() => Boolean)
-  @UseMiddleware(isAuth)
   async tipAuthor(
     @Ctx() { me, userLoader }: Context,
     @Arg('amount') amount: number,
@@ -144,11 +143,11 @@ export class PaymentResolver {
 
     const description = `Pixelback tip for ${author.penName}`
     const charge = await this.payments.createCharge(
-      me,
       author,
       amount,
       sourceId,
-      description
+      description,
+      me
     )
 
     return !!charge

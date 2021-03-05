@@ -14,11 +14,15 @@ import { useAddPaymentMethodMutation } from '@pixelback/shared'
 interface Props {
   onSuccess?: Function
   onError?: Function
+  addToUser?: boolean
+  submitText?: string
 }
 
 const CreditCardForm: React.FC<Props> = ({
   onSuccess = () => {},
   onError = () => {},
+  addToUser = true,
+  submitText = 'Add Card',
 }) => {
   const stripe = useStripe()
   const elements = useElements()
@@ -46,11 +50,13 @@ const CreditCardForm: React.FC<Props> = ({
         error?.message || 'Something went wrong. Try again later.'
       )
     } else {
-      await addPaymentMethod({
-        variables: { sourceId: paymentMethod?.id },
-      })
+      if (addToUser) {
+        await addPaymentMethod({
+          variables: { sourceId: paymentMethod?.id },
+        })
+      }
       setValidation('')
-      onSuccess(paymentMethod, setValidation)
+      await onSuccess(paymentMethod, setValidation)
       cardElement?.clear()
     }
 
@@ -78,7 +84,7 @@ const CreditCardForm: React.FC<Props> = ({
       />
       <span className={styles.validation}>{validation}</span>
       <Button type="submit" disabled={!stripe} onClick={handleSubmit}>
-        Add Card
+        {submitText}
       </Button>
     </form>
   )
