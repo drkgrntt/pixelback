@@ -8,6 +8,7 @@ export const userQuery = gql`
       stories {
         id
         title
+        summary
         genres {
           id
           name

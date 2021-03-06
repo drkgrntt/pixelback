@@ -1,1 +1,1 @@
-{"version":3,"file":"useUserQuery.d.ts","sourceRoot":"","sources":["../../src/queries/useUserQuery.ts"],"names":[],"mappings":"AAAA,OAAO,EAAO,gBAAgB,EAAY,MAAM,gBAAgB,CAAA;AAGhE,eAAO,MAAM,SAAS,uCAuBrB,CAAA;AAED,eAAO,MAAM,YAAY,aAAc,gBAAgB,mEAEtD,CAAA"}
+{"version":3,"file":"useUserQuery.d.ts","sourceRoot":"","sources":["../../src/queries/useUserQuery.ts"],"names":[],"mappings":"AAAA,OAAO,EAAO,gBAAgB,EAAY,MAAM,gBAAgB,CAAA;AAGhE,eAAO,MAAM,SAAS,uCAwBrB,CAAA;AAED,eAAO,MAAM,YAAY,aAAc,gBAAgB,mEAEtD,CAAA"}

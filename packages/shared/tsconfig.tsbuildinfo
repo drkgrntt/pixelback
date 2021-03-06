@@ -1432,7 +1432,7 @@
         "affectsGlobalScope": false
       },
       "./src/queries/useUserQuery.ts": {
-        "version": "a6b93f5b4ba868c69ff5123d87a3b9f92859b0f3bede000e9bb23c4885ca57fb",
+        "version": "9a4d0572620b9d8f08294c692ddc9e2080355d91d39d388b22c4f52e96eb6e5c",
         "signature": "23b618e64807ef940b1033c9a19062dbaa0bbf773bfb1fbc6e669eb2a31c0be2",
         "affectsGlobalScope": false
       },
@@ -2151,6 +2151,7 @@
       "outDir": "./dist",
       "esModuleInterop": true,
       "rootDir": "./src",
+      "watch": true,
       "configFilePath": "./tsconfig.json"
     },
     "referencedMap": {
