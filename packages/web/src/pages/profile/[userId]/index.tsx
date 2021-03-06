@@ -96,7 +96,12 @@ const UserPage: NextPage<Props> = ({ query }) => {
 
       <div className={styles.stories}>
         <h3>Stories</h3>
-        <StoryList cardWrap stories={user.stories} />
+        <StoryList
+          cardWrap
+          hideGenres
+          hideSummary
+          stories={user.stories}
+        />
       </div>
     </div>
   )

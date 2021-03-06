@@ -264,6 +264,8 @@ const WriterDashboard: NextPage<{}> = () => {
         </div>
         <StoryList
           cardWrap
+          hideGenres
+          hideSummary
           actionText="Dashboard"
           action={(story: Story) =>
             push(`/stories/${story.id}/dashboard`)
