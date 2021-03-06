@@ -215,6 +215,8 @@ const Profile: NextPage<Props> = ({ query }) => {
         <h3>Favorite Stories</h3>
         <StoryList
           cardWrap
+          hideGenres
+          hideSummary
           actionText="Remove"
           action={onRemoveStoryClick}
           stories={me?.favoriteStories}

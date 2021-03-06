@@ -12,6 +12,8 @@ interface Props {
   actionText?: string
   action?: Function
   stories: Story[]
+  hideGenres?: boolean
+  hideSummary?: boolean
 }
 
 const StoryList: React.FC<Props> = ({
@@ -20,6 +22,8 @@ const StoryList: React.FC<Props> = ({
   cardWrap,
   action,
   actionText,
+  hideGenres = false,
+  hideSummary = false,
 }) => {
   const { push } = useRouter()
   const renderRating = (story: Story) => {
@@ -43,9 +47,13 @@ const StoryList: React.FC<Props> = ({
           </Link>
         </div>
 
-        <p>{story.summary}</p>
+        {!hideSummary && <p>{story.summary}</p>}
 
-        <em>{story.genres.map((genre) => genre.name).join(', ')}</em>
+        {!hideGenres && (
+          <em>
+            {story.genres.map((genre) => genre.name).join(', ')}
+          </em>
+        )}
 
         <div className={styles.row}>
           <Button
