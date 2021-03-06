@@ -203,7 +203,6 @@ export class UserResolver {
   ): Promise<string | undefined> {
     const payments = new Payments()
     const account = await payments.getAccount(user)
-    console.log(account, account?.requirements)
     const errors = account?.requirements?.errors
     if (errors) {
       return errors[0]?.reason
