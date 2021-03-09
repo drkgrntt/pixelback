@@ -24,5 +24,9 @@ export default {
   },
   sizes: {
     text: 16,
+    h1: 52,
+    h2: 44,
+    h3: 36,
+    h4: 28,
   },
 }

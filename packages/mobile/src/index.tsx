@@ -1,12 +1,11 @@
 import React, { FC } from 'react'
-import { StatusBar } from 'expo-status-bar'
 import { ApolloProvider } from '@apollo/client'
 import { client } from './apollo'
 import { NavigationContainer } from '@react-navigation/native'
 import { createDrawerNavigator } from '@react-navigation/drawer'
+import { RootStackParamList } from './types'
 import Login from './screens/Login'
 import Register from './screens/Register'
-import { RootStackParamList } from './types'
 import DrawerContent from './components/Drawer'
 
 const Drawer = createDrawerNavigator<RootStackParamList>()
@@ -28,7 +27,6 @@ const App: FC<{}> = () => {
         </Drawer.Navigator> */}
         <Login />
       </NavigationContainer>
-      <StatusBar style="auto" />
     </ApolloProvider>
   )
 }

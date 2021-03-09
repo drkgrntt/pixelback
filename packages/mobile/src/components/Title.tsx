@@ -19,20 +19,20 @@ const Title: FC<Props> = (props) => {
   let fontSize: number
   switch (true) {
     case props.h4:
-      fontSize = 28
+      fontSize = theme.sizes.h4
       break
 
     case props.h3:
-      fontSize = 36
+      fontSize = theme.sizes.h3
       break
 
     case props.h2:
-      fontSize = 44
+      fontSize = theme.sizes.h2
       break
 
     case props.h1:
     default:
-      fontSize = 52
+      fontSize = theme.sizes.h1
       break
   }
 
