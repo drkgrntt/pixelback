@@ -103,14 +103,15 @@ const styles = StyleSheet.create({
     alignSelf: 'stretch',
   },
   label: {
-    color: theme.colors.grey,
+    color: theme.colors.greyDark,
+    fontSize: theme.sizes.text,
   },
   input: {
     padding: 10,
     height: 40,
     borderColor: theme.colors.grey,
     borderWidth: 1,
-    borderRadius: 3,
+    borderRadius: 20,
   },
   validation: {
     color: theme.colors.error,

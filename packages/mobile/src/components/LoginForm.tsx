@@ -1,10 +1,12 @@
 import React, { FC, useState } from 'react'
-import { Text, View, StyleSheet, Button } from 'react-native'
+import { Text, View, StyleSheet } from 'react-native'
 import { useLoginMutation } from '@pixelback/shared'
 import { verifyEmailSyntax } from '../util/verifyEmailSyntax'
 import { verifyPasswordSyntax } from '../util/verifyPasswordSyntax'
 import Input from './Input'
+import Button from './Button'
 import theme from '../theme'
+import { TouchableHighlight } from 'react-native-gesture-handler'
 
 const INITIAL_STATE = {
   email: '',
@@ -83,13 +85,7 @@ const LoginForm: FC<{}> = () => {
         secureTextEntry
       />
       <Text style={styles.validation}>{values.validation}</Text>
-      <Button
-        color={theme.colors.primary}
-        title="login"
-        onPress={handleSubmit}
-      >
-        Login
-      </Button>
+      <Button onPress={handleSubmit}>Login</Button>
     </View>
   )
 }

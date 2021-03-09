@@ -15,7 +15,7 @@ const App: FC<{}> = () => {
   return (
     <ApolloProvider client={client}>
       <NavigationContainer>
-        <Drawer.Navigator
+        {/* <Drawer.Navigator
           initialRouteName="Login"
           drawerPosition="right"
           drawerContent={(props) => {
@@ -25,7 +25,8 @@ const App: FC<{}> = () => {
         >
           <Drawer.Screen name="Login" component={Login} />
           <Drawer.Screen name="Register" component={Register} />
-        </Drawer.Navigator>
+        </Drawer.Navigator> */}
+        <Login />
       </NavigationContainer>
       <StatusBar style="auto" />
     </ApolloProvider>

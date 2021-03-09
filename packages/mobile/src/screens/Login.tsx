@@ -1,14 +1,14 @@
 import React, { FC } from 'react'
 import { View, StyleSheet } from 'react-native'
-import { Text } from 'react-native-elements'
 import Layout from '../components/Layout'
 import LoginForm from '../components/LoginForm'
+import Title from '../components/Title'
 
 const Login: FC<{}> = (props) => {
   return (
     <Layout>
       <View style={styles.container}>
-        <Text h2>Login</Text>
+        <Title h1>Login</Title>
         <LoginForm />
       </View>
     </Layout>
