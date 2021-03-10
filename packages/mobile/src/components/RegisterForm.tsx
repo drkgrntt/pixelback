@@ -84,13 +84,6 @@ const RegisterForm: FC<{}> = () => {
         secureTextEntry
       />
       <Text style={styles.validation}>{values.validation}</Text>
-      {/* <Button
-        color={theme.colors.primary}
-        title="register"
-        onPress={handleSubmit}
-      >
-        Register
-      </Button> */}
       <Button onPress={handleSubmit}>Register</Button>
     </View>
   )
@@ -102,6 +95,7 @@ const styles = StyleSheet.create({
   },
   validation: {
     color: theme.colors.error,
+    fontSize: theme.sizes.text,
   },
 })
 

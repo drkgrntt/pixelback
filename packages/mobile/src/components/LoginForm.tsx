@@ -95,6 +95,7 @@ const styles = StyleSheet.create({
     alignSelf: 'stretch',
   },
   validation: {
+    fontSize: theme.sizes.text,
     color: theme.colors.error,
   },
 })
