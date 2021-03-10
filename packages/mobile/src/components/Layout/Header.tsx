@@ -2,33 +2,32 @@ import React, { FC } from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { StatusBar } from 'expo-status-bar'
-import { useNavigation } from '@react-navigation/native'
-import { DrawerNavigationProp } from '@react-navigation/drawer'
-import { RootStackParamList } from '../../types'
 import theme from '../../theme'
+import Nav from './Nav'
 
 const Header: FC<{}> = () => {
   return (
-    <SafeAreaView style={styles.safeArea}>
+    <View style={styles.container}>
       <StatusBar style="light" />
-      <View style={styles.container}>
+      <SafeAreaView style={styles.safeArea}>
         <Text style={styles.text}>Pixelback</Text>
-      </View>
-    </SafeAreaView>
+      </SafeAreaView>
+      <Nav />
+    </View>
   )
 }
 
 const styles = StyleSheet.create({
+  container: {},
   safeArea: {
     backgroundColor: theme.colors.primary,
     color: theme.colors.white,
-  },
-  container: {
-    alignSelf: 'stretch',
-    backgroundColor: theme.colors.primary,
-    height: 60,
     justifyContent: 'center',
+    alignSelf: 'stretch',
+    height: 60,
     padding: 25,
+    position: 'absolute',
+    width: '100%',
   },
   text: {
     color: theme.colors.white,
