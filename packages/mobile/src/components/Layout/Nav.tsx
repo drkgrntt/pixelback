@@ -1,6 +1,7 @@
 import React, { FC, useState, useRef, useEffect } from 'react'
 import { Text, StyleSheet, Animated, Easing } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import { useNavigation } from '@react-navigation/native'
 import theme from '../../theme'
 import {
   TouchableOpacity,
@@ -12,6 +13,7 @@ interface Props {}
 const ANIMATION_DURATION = 300
 
 const Nav: FC<Props> = (props) => {
+  const navigation = useNavigation()
   const [open, setOpen] = useState(false)
   const animation = useRef(new Animated.Value(0)).current
 
@@ -37,7 +39,10 @@ const Nav: FC<Props> = (props) => {
     return (
       <TouchableOpacity
         style={styles.menuItem}
-        onPress={() => setOpen((current) => !current)}
+        onPress={() => {
+          navigation.navigate(title)
+          setOpen(false)
+        }}
       >
         <Text style={styles.menuItemText}>{title}</Text>
       </TouchableOpacity>
