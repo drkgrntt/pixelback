@@ -13,167 +13,25 @@ const ANIMATION_DURATION = 300
 
 const Nav: FC<Props> = (props) => {
   const [open, setOpen] = useState(false)
-  const menuOpacity = useRef(new Animated.Value(0)).current
-  const menuHeight = useRef(new Animated.Value(0)).current
-  const line1Rotation = useRef(new Animated.Value(0)).current
-  const line1PositionX = useRef(new Animated.Value(0)).current
-  const line1PositionY = useRef(new Animated.Value(0)).current
-  const line2Opacity = useRef(new Animated.Value(0)).current
-  const line3Rotation = useRef(new Animated.Value(0)).current
-  const line3PositionX = useRef(new Animated.Value(0)).current
-  const line3PositionY = useRef(new Animated.Value(0)).current
+  const animation = useRef(new Animated.Value(0)).current
 
-  const menuOpacityOpening = Animated.timing(menuOpacity, {
-    toValue: 0.9,
-    duration: ANIMATION_DURATION,
-    useNativeDriver: false,
-    easing: Easing.inOut(Easing.quad),
-  })
-  const menuHeightOpening = Animated.timing(menuHeight, {
-    toValue: 250,
-    duration: ANIMATION_DURATION,
-    useNativeDriver: false,
-    easing: Easing.inOut(Easing.quad),
-  })
-  const menuOpacityClosing = Animated.timing(menuOpacity, {
-    toValue: 0,
-    duration: ANIMATION_DURATION,
-    useNativeDriver: false,
-    easing: Easing.inOut(Easing.quad),
-  })
-  const menuHeightClosing = Animated.timing(menuHeight, {
-    toValue: 0,
-    duration: ANIMATION_DURATION,
-    useNativeDriver: false,
-    easing: Easing.inOut(Easing.quad),
-  })
-  const line1RotationOpening = Animated.timing(line1Rotation, {
-    toValue: 135,
-    duration: ANIMATION_DURATION,
-    useNativeDriver: false,
-    easing: Easing.inOut(Easing.quad),
-  })
-  const line1RotationClosing = Animated.timing(line1Rotation, {
-    toValue: 0,
-    duration: ANIMATION_DURATION,
-    useNativeDriver: false,
-    easing: Easing.inOut(Easing.quad),
-  })
-  const line1PositionXOpening = Animated.timing(line1PositionX, {
-    toValue: 7.5,
-    duration: ANIMATION_DURATION,
-    useNativeDriver: false,
-    easing: Easing.inOut(Easing.quad),
-  })
-  const line1PositionXClosing = Animated.timing(line1PositionX, {
-    toValue: 0,
-    duration: ANIMATION_DURATION,
-    useNativeDriver: false,
-    easing: Easing.inOut(Easing.quad),
-  })
-  const line1PositionYOpening = Animated.timing(line1PositionY, {
-    toValue: -7.5,
-    duration: ANIMATION_DURATION,
-    useNativeDriver: false,
-    easing: Easing.inOut(Easing.quad),
-  })
-  const line1PositionYClosing = Animated.timing(line1PositionY, {
-    toValue: 0,
-    duration: ANIMATION_DURATION,
-    useNativeDriver: false,
-    easing: Easing.inOut(Easing.quad),
-  })
-  const line2OpacityOpening = Animated.timing(line2Opacity, {
-    toValue: 0,
-    duration: ANIMATION_DURATION,
-    useNativeDriver: false,
-    easing: Easing.inOut(Easing.quad),
-  })
-  const line2OpacityClosing = Animated.timing(line2Opacity, {
-    toValue: 1,
-    duration: ANIMATION_DURATION,
-    useNativeDriver: false,
-    easing: Easing.inOut(Easing.quad),
-  })
-  const line3RotationOpening = Animated.timing(line3Rotation, {
-    toValue: 135,
-    duration: ANIMATION_DURATION,
-    useNativeDriver: false,
-    easing: Easing.inOut(Easing.quad),
-  })
-  const line3RotationClosing = Animated.timing(line3Rotation, {
-    toValue: 0,
-    duration: ANIMATION_DURATION,
-    useNativeDriver: false,
-    easing: Easing.inOut(Easing.quad),
-  })
-  const line3PositionXOpening = Animated.timing(line3PositionX, {
-    toValue: 7.5,
-    duration: ANIMATION_DURATION / 2,
-    useNativeDriver: false,
-    easing: Easing.inOut(Easing.quad),
-  })
-  const line3PositionXClosing = Animated.timing(line3PositionX, {
-    toValue: 0,
-    duration: ANIMATION_DURATION / 2,
-    useNativeDriver: false,
-    easing: Easing.inOut(Easing.quad),
-  })
-  const line3PositionYOpening = Animated.timing(line3PositionY, {
-    toValue: 7.5,
-    duration: ANIMATION_DURATION / 2,
-    useNativeDriver: false,
-    easing: Easing.inOut(Easing.quad),
-  })
-  const line3PositionYClosing = Animated.timing(line3PositionY, {
-    toValue: 0,
-    duration: ANIMATION_DURATION / 2,
-    useNativeDriver: false,
-    easing: Easing.inOut(Easing.quad),
-  })
   useEffect(() => {
     if (open) {
-      menuOpacityOpening.start()
-      menuHeightOpening.start()
-      line1RotationOpening.start()
-      line1PositionXOpening.start()
-      line1PositionYOpening.start()
-      line2OpacityOpening.start()
-      line3RotationOpening.start()
-      line3PositionXOpening.start()
-      line3PositionYOpening.start()
+      Animated.timing(animation, {
+        toValue: 1,
+        duration: ANIMATION_DURATION,
+        useNativeDriver: false,
+        easing: Easing.inOut(Easing.quad),
+      }).start()
     } else {
-      menuOpacityClosing.start()
-      menuHeightClosing.start()
-      line1RotationClosing.start()
-      line1PositionXClosing.start()
-      line1PositionYClosing.start()
-      line2OpacityClosing.start()
-      line3RotationClosing.start()
-      line3PositionXClosing.start()
-      line3PositionYClosing.start()
+      Animated.timing(animation, {
+        toValue: 0,
+        duration: ANIMATION_DURATION,
+        useNativeDriver: false,
+        easing: Easing.inOut(Easing.quad),
+      }).start()
     }
-  }, [
-    open,
-    menuOpacityOpening,
-    menuHeightOpening,
-    line1RotationOpening,
-    line1PositionXOpening,
-    line1PositionYOpening,
-    line2OpacityOpening,
-    line3RotationOpening,
-    line3PositionYOpening,
-    line3PositionXOpening,
-    menuOpacityClosing,
-    menuHeightClosing,
-    line1RotationClosing,
-    line1PositionXClosing,
-    line1PositionYClosing,
-    line2OpacityClosing,
-    line3RotationClosing,
-    line3PositionXClosing,
-    line3PositionYClosing,
-  ])
+  }, [open, animation])
 
   const renderMenuItem = (title: string) => {
     return (
@@ -185,6 +43,15 @@ const Nav: FC<Props> = (props) => {
       </TouchableOpacity>
     )
   }
+
+  const menuOpacity = animation.interpolate({
+    inputRange: [0, 1],
+    outputRange: [0, 0.9],
+  })
+  const menuHeight = animation.interpolate({
+    inputRange: [0, 1],
+    outputRange: [0, 250],
+  })
 
   const renderMenu = () => {
     return (
@@ -203,13 +70,33 @@ const Nav: FC<Props> = (props) => {
     )
   }
 
-  const line1RotationValue = line1Rotation.interpolate({
-    inputRange: [0, 135],
+  const line1Rotation = animation.interpolate({
+    inputRange: [0, 1],
     outputRange: ['0deg', '135deg'],
   })
-  const line3RotationValue = line3Rotation.interpolate({
-    inputRange: [0, 135],
+  const line1PositionX = animation.interpolate({
+    inputRange: [0, 1],
+    outputRange: [0, 7.5],
+  })
+  const line1PositionY = animation.interpolate({
+    inputRange: [0, 1],
+    outputRange: [0, -7.5],
+  })
+  const line2Opacity = animation.interpolate({
+    inputRange: [0, 1],
+    outputRange: [1, 0],
+  })
+  const line3Rotation = animation.interpolate({
+    inputRange: [0, 1],
     outputRange: ['0deg', '-135deg'],
+  })
+  const line3PositionX = animation.interpolate({
+    inputRange: [0, 1],
+    outputRange: [0, 7.5],
+  })
+  const line3PositionY = animation.interpolate({
+    inputRange: [0, 1],
+    outputRange: [0, 7.5],
   })
 
   const renderHamburger = () => {
@@ -222,7 +109,7 @@ const Nav: FC<Props> = (props) => {
           style={{
             ...styles.line,
             transform: [
-              { rotate: line1RotationValue },
+              { rotate: line1Rotation },
               { translateY: line1PositionY },
               { translateX: line1PositionX },
             ],
@@ -235,7 +122,7 @@ const Nav: FC<Props> = (props) => {
           style={{
             ...styles.line,
             transform: [
-              { rotate: line3RotationValue },
+              { rotate: line3Rotation },
               { translateY: line3PositionY },
               { translateX: line3PositionX },
             ],
