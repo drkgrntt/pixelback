@@ -1,5 +1,5 @@
 import React, { FC, useState, useRef, useEffect } from 'react'
-import { Text, StyleSheet, Animated } from 'react-native'
+import { Text, StyleSheet, Animated, Easing } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import theme from '../../theme'
 import {
@@ -27,91 +27,109 @@ const Nav: FC<Props> = (props) => {
     toValue: 0.9,
     duration: ANIMATION_DURATION,
     useNativeDriver: false,
+    easing: Easing.inOut(Easing.quad),
   })
   const menuHeightOpening = Animated.timing(menuHeight, {
     toValue: 250,
     duration: ANIMATION_DURATION,
     useNativeDriver: false,
+    easing: Easing.inOut(Easing.quad),
   })
   const menuOpacityClosing = Animated.timing(menuOpacity, {
     toValue: 0,
     duration: ANIMATION_DURATION,
     useNativeDriver: false,
+    easing: Easing.inOut(Easing.quad),
   })
   const menuHeightClosing = Animated.timing(menuHeight, {
     toValue: 0,
     duration: ANIMATION_DURATION,
     useNativeDriver: false,
+    easing: Easing.inOut(Easing.quad),
   })
   const line1RotationOpening = Animated.timing(line1Rotation, {
     toValue: 135,
     duration: ANIMATION_DURATION,
     useNativeDriver: false,
+    easing: Easing.inOut(Easing.quad),
   })
   const line1RotationClosing = Animated.timing(line1Rotation, {
     toValue: 0,
     duration: ANIMATION_DURATION,
     useNativeDriver: false,
+    easing: Easing.inOut(Easing.quad),
   })
   const line1PositionXOpening = Animated.timing(line1PositionX, {
     toValue: 7.5,
     duration: ANIMATION_DURATION,
     useNativeDriver: false,
+    easing: Easing.inOut(Easing.quad),
   })
   const line1PositionXClosing = Animated.timing(line1PositionX, {
     toValue: 0,
     duration: ANIMATION_DURATION,
     useNativeDriver: false,
+    easing: Easing.inOut(Easing.quad),
   })
   const line1PositionYOpening = Animated.timing(line1PositionY, {
     toValue: -7.5,
     duration: ANIMATION_DURATION,
     useNativeDriver: false,
+    easing: Easing.inOut(Easing.quad),
   })
   const line1PositionYClosing = Animated.timing(line1PositionY, {
     toValue: 0,
     duration: ANIMATION_DURATION,
     useNativeDriver: false,
+    easing: Easing.inOut(Easing.quad),
   })
   const line2OpacityOpening = Animated.timing(line2Opacity, {
     toValue: 0,
     duration: ANIMATION_DURATION,
     useNativeDriver: false,
+    easing: Easing.inOut(Easing.quad),
   })
   const line2OpacityClosing = Animated.timing(line2Opacity, {
     toValue: 1,
     duration: ANIMATION_DURATION,
     useNativeDriver: false,
+    easing: Easing.inOut(Easing.quad),
   })
   const line3RotationOpening = Animated.timing(line3Rotation, {
     toValue: 135,
     duration: ANIMATION_DURATION,
     useNativeDriver: false,
+    easing: Easing.inOut(Easing.quad),
   })
   const line3RotationClosing = Animated.timing(line3Rotation, {
     toValue: 0,
     duration: ANIMATION_DURATION,
     useNativeDriver: false,
+    easing: Easing.inOut(Easing.quad),
   })
   const line3PositionXOpening = Animated.timing(line3PositionX, {
     toValue: 7.5,
-    duration: ANIMATION_DURATION,
+    duration: ANIMATION_DURATION / 2,
     useNativeDriver: false,
+    easing: Easing.inOut(Easing.quad),
   })
   const line3PositionXClosing = Animated.timing(line3PositionX, {
     toValue: 0,
-    duration: ANIMATION_DURATION,
+    duration: ANIMATION_DURATION / 2,
     useNativeDriver: false,
+    easing: Easing.inOut(Easing.quad),
   })
   const line3PositionYOpening = Animated.timing(line3PositionY, {
     toValue: 7.5,
-    duration: ANIMATION_DURATION,
+    duration: ANIMATION_DURATION / 2,
     useNativeDriver: false,
+    easing: Easing.inOut(Easing.quad),
   })
   const line3PositionYClosing = Animated.timing(line3PositionY, {
     toValue: 0,
-    duration: ANIMATION_DURATION,
+    duration: ANIMATION_DURATION / 2,
     useNativeDriver: false,
+    easing: Easing.inOut(Easing.quad),
   })
   useEffect(() => {
     if (open) {
