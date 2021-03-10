@@ -1,9 +1,10 @@
 import React, { FC, useState } from 'react'
-import { Text, View, StyleSheet, Button } from 'react-native'
+import { Text, View, StyleSheet } from 'react-native'
 import { useRegisterMutation } from '@pixelback/shared'
 import { verifyEmailSyntax } from '../util/verifyEmailSyntax'
 import { verifyPasswordSyntax } from '../util/verifyPasswordSyntax'
 import Input from './Input'
+import Button from './Button'
 import theme from '../theme'
 
 const INITIAL_STATE = {
@@ -83,13 +84,14 @@ const RegisterForm: FC<{}> = () => {
         secureTextEntry
       />
       <Text style={styles.validation}>{values.validation}</Text>
-      <Button
+      {/* <Button
         color={theme.colors.primary}
         title="register"
         onPress={handleSubmit}
       >
         Register
-      </Button>
+      </Button> */}
+      <Button onPress={handleSubmit}>Register</Button>
     </View>
   )
 }
