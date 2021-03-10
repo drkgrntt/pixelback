@@ -6,7 +6,6 @@ import { verifyPasswordSyntax } from '../util/verifyPasswordSyntax'
 import Input from './Input'
 import Button from './Button'
 import theme from '../theme'
-import { TouchableHighlight } from 'react-native-gesture-handler'
 
 const INITIAL_STATE = {
   email: '',

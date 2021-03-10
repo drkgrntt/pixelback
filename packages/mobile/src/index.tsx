@@ -6,6 +6,8 @@ import { createStackNavigator } from '@react-navigation/stack'
 import { RootStackParamList } from './types'
 import Login from './screens/Login'
 import Register from './screens/Register'
+import Stories from './screens/Stories'
+import Feedback from './screens/Feedback'
 
 const Stack = createStackNavigator<RootStackParamList>()
 
@@ -13,9 +15,11 @@ const App: FC<{}> = () => {
   return (
     <ApolloProvider client={client}>
       <NavigationContainer>
-        <Stack.Navigator headerMode="none" initialRouteName="Login">
+        <Stack.Navigator headerMode="none" initialRouteName="Stories">
+          <Stack.Screen name="Stories" component={Stories} />
           <Stack.Screen name="Login" component={Login} />
           <Stack.Screen name="Register" component={Register} />
+          <Stack.Screen name="Feedback" component={Feedback} />
         </Stack.Navigator>
       </NavigationContainer>
     </ApolloProvider>
