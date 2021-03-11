@@ -1,13 +1,14 @@
 import React, { FC } from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import { View, StyleSheet } from 'react-native'
 import Layout from '../components/Layout'
+import Text from '../components/Text'
 
 interface Props {}
 
 const Feedback: FC<Props> = () => {
   return (
     <Layout>
-      <Text>Feedback</Text>
+      <Text h2>Feedback</Text>
     </Layout>
   )
 }

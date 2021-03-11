@@ -1,5 +1,5 @@
 import React, { FC, useState, useRef, useEffect } from 'react'
-import { Text, StyleSheet, Animated, Easing } from 'react-native'
+import { StyleSheet, Animated, Easing } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useNavigation } from '@react-navigation/native'
 import theme from '../../theme'
@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
 } from 'react-native-gesture-handler'
+import Text from '../Text'
 
 interface Props {}
 

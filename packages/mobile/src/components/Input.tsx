@@ -1,6 +1,5 @@
 import React, { FC } from 'react'
 import {
-  Text,
   TextInput,
   StyleSheet,
   NativeSyntheticEvent,
@@ -8,6 +7,7 @@ import {
   View,
 } from 'react-native'
 import theme from '../theme'
+import Text from './Text'
 
 interface Props {
   value: string
@@ -79,7 +79,7 @@ const Input: FC<Props> = ({
 }) => {
   return (
     <View style={styles.container}>
-      <Text style={styles.label}>{label}</Text>
+      <Text>{label}</Text>
       <TextInput
         style={styles.input}
         value={value}
@@ -93,7 +93,7 @@ const Input: FC<Props> = ({
         textContentType={textContentType}
         autoCapitalize={autoCapitalize}
       />
-      <Text style={styles.validation}>{validation}</Text>
+      <Text validation>{validation}</Text>
     </View>
   )
 }
@@ -102,19 +102,12 @@ const styles = StyleSheet.create({
   container: {
     alignSelf: 'stretch',
   },
-  label: {
-    color: theme.colors.greyDark,
-    fontSize: theme.sizes.text,
-  },
   input: {
     padding: 10,
     height: 40,
     borderColor: theme.colors.grey,
     borderWidth: 1,
     borderRadius: 20,
-  },
-  validation: {
-    color: theme.colors.error,
   },
 })
 

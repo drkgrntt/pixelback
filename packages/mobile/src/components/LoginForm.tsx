@@ -1,11 +1,11 @@
 import React, { FC, useState } from 'react'
-import { Text, View, StyleSheet } from 'react-native'
+import { View, StyleSheet } from 'react-native'
 import { useLoginMutation } from '@pixelback/shared'
 import { verifyEmailSyntax } from '../util/verifyEmailSyntax'
 import { verifyPasswordSyntax } from '../util/verifyPasswordSyntax'
 import Input from './Input'
 import Button from './Button'
-import theme from '../theme'
+import Text from './Text'
 
 const INITIAL_STATE = {
   email: '',
@@ -83,7 +83,7 @@ const LoginForm: FC<{}> = () => {
         }}
         secureTextEntry
       />
-      <Text style={styles.validation}>{values.validation}</Text>
+      <Text validation>{values.validation}</Text>
       <Button onPress={handleSubmit}>Login</Button>
     </View>
   )
@@ -92,10 +92,6 @@ const LoginForm: FC<{}> = () => {
 const styles = StyleSheet.create({
   container: {
     alignSelf: 'stretch',
-  },
-  validation: {
-    fontSize: theme.sizes.text,
-    color: theme.colors.error,
   },
 })
 

@@ -1,11 +1,11 @@
 import React, { FC, useState } from 'react'
-import { Text, View, StyleSheet } from 'react-native'
+import { View, StyleSheet } from 'react-native'
 import { useRegisterMutation } from '@pixelback/shared'
 import { verifyEmailSyntax } from '../util/verifyEmailSyntax'
 import { verifyPasswordSyntax } from '../util/verifyPasswordSyntax'
 import Input from './Input'
 import Button from './Button'
-import theme from '../theme'
+import Text from './Text'
 
 const INITIAL_STATE = {
   email: '',
@@ -83,7 +83,7 @@ const RegisterForm: FC<{}> = () => {
         }}
         secureTextEntry
       />
-      <Text style={styles.validation}>{values.validation}</Text>
+      <Text validation>{values.validation}</Text>
       <Button onPress={handleSubmit}>Register</Button>
     </View>
   )
@@ -92,10 +92,6 @@ const RegisterForm: FC<{}> = () => {
 const styles = StyleSheet.create({
   container: {
     alignSelf: 'stretch',
-  },
-  validation: {
-    color: theme.colors.error,
-    fontSize: theme.sizes.text,
   },
 })
 

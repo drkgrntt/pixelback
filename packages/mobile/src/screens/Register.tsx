@@ -2,13 +2,13 @@ import React, { FC } from 'react'
 import { View, StyleSheet } from 'react-native'
 import RegisterForm from '../components/RegisterForm'
 import Layout from '../components/Layout'
-import Title from '../components/Title'
+import Text from '../components/Text'
 
 const Register: FC<{}> = () => {
   return (
     <Layout>
       <View style={styles.container}>
-        <Title h1>Register</Title>
+        <Text h1>Register</Text>
         <RegisterForm />
       </View>
     </Layout>

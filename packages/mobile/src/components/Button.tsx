@@ -1,12 +1,12 @@
 import React, { FC } from 'react'
 import {
   TouchableOpacity,
-  Text,
   View,
   StyleSheet,
   GestureResponderEvent,
 } from 'react-native'
 import theme from '../theme'
+import Text from './Text'
 
 interface Props {
   onPress: (event: GestureResponderEvent) => void
