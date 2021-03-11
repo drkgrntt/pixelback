@@ -53,7 +53,7 @@ const Title: FC<Props> = (props) => {
       </Defs>
       <Text fill="url(#title)">
         <TSpan
-          fontWeight="600"
+          fontWeight="500"
           fontSize={fontSize}
           fontFamily="Raleway_300Light"
           x="0"

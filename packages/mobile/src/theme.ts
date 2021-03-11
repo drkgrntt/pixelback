@@ -10,6 +10,8 @@ export default {
     greyDark: '#555',
     black: '#111',
 
+    primaryDark: '#00806c',
+
     primary: primaryColor,
     secondary: secondaryColor,
     tertiary: tertiaryColor,
@@ -24,9 +26,9 @@ export default {
   },
   sizes: {
     text: 16,
-    h1: 52,
-    h2: 44,
-    h3: 36,
-    h4: 28,
+    h1: 46,
+    h2: 38,
+    h3: 30,
+    h4: 22,
   },
 }

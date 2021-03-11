@@ -5,7 +5,9 @@ import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import {
   useFonts,
+  Raleway_500Medium,
   Raleway_400Regular,
+  Raleway_400Regular_Italic,
   Raleway_300Light,
 } from '@expo-google-fonts/raleway'
 import { ActivityIndicator } from 'react-native'
@@ -20,7 +22,9 @@ const Stack = createStackNavigator<RootStackParamList>()
 
 const App: FC<{}> = () => {
   const [fontsLoaded] = useFonts({
+    Raleway_500Medium,
     Raleway_400Regular,
+    Raleway_400Regular_Italic,
     Raleway_300Light,
   })
 

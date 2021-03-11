@@ -15,12 +15,28 @@ interface Props {
 }
 
 const CustomText: FC<Props> = ({ style = {}, ...props }) => {
-  if (props.h1 || props.h2 || props.h3 || props.h4) {
-    return <Title {...props} />
-  }
+  // if (props.h1 || props.h2 || props.h3 || props.h4) {
+  //   return <Title {...props} />
+  // }
 
   let type: keyof typeof styles = 'p'
   switch (true) {
+    case props.h1:
+      type = 'h1'
+      break
+
+    case props.h2:
+      type = 'h2'
+      break
+
+    case props.h3:
+      type = 'h3'
+      break
+
+    case props.h4:
+      type = 'h4'
+      break
+
     case props.validation:
       type = 'validation'
       break
@@ -55,6 +71,28 @@ const styles = StyleSheet.create({
   },
   a: {
     color: theme.colors.grey,
+    fontFamily: 'Raleway_400Regular_Italic',
+    textDecorationLine: 'underline',
+  },
+  h1: {
+    color: theme.colors.primaryDark,
+    fontFamily: 'Raleway_500Medium',
+    fontSize: theme.sizes.h1,
+  },
+  h2: {
+    color: theme.colors.primaryDark,
+    fontFamily: 'Raleway_500Medium',
+    fontSize: theme.sizes.h2,
+  },
+  h3: {
+    color: theme.colors.primaryDark,
+    fontFamily: 'Raleway_500Medium',
+    fontSize: theme.sizes.h3,
+  },
+  h4: {
+    color: theme.colors.primaryDark,
+    fontFamily: 'Raleway_500Medium',
+    fontSize: theme.sizes.h4,
   },
 })
 

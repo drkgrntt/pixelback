@@ -1,13 +1,20 @@
 import React, { FC } from 'react'
-import { StyleSheet, View } from 'react-native'
+import { StyleSheet } from 'react-native'
+import { SafeAreaView } from 'react-native-safe-area-context'
 import Header from './Header'
 import Footer from './Footer'
 
-const Layout: FC<{}> = (props) => {
+interface Props {
+  style?: object
+}
+
+const Layout: FC<Props> = (props) => {
   return (
     <>
       <Header />
-      <View style={styles.container}>{props.children}</View>
+      <SafeAreaView style={[styles.container, props.style]}>
+        {props.children}
+      </SafeAreaView>
       <Footer />
     </>
   )
@@ -15,6 +22,7 @@ const Layout: FC<{}> = (props) => {
 
 const styles = StyleSheet.create({
   container: {
+    marginTop: 60,
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'center',

@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
   },
   text: {
     color: theme.colors.white,
-    fontSize: theme.sizes.h4,
+    fontSize: theme.sizes.h3,
   },
 })
 
