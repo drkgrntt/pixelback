@@ -163,8 +163,8 @@ const styles = StyleSheet.create({
   },
   line: {
     borderBottomColor: theme.colors.white,
-    borderBottomWidth: 2,
-    width: 32,
+    borderBottomWidth: 1,
+    width: 28,
   },
   menu: {
     backgroundColor: theme.colors.black,
