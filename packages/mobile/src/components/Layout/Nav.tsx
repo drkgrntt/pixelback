@@ -56,7 +56,7 @@ const Nav: FC<Props> = (props) => {
   })
   const menuHeight = animation.interpolate({
     inputRange: [0, 1],
-    outputRange: [0, 250],
+    outputRange: [0, 235],
   })
 
   const renderMenu = () => {
