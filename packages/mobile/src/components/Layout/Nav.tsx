@@ -11,7 +11,7 @@ import Text from '../Text'
 
 interface Props {}
 
-const ANIMATION_DURATION = 300
+const ANIMATION_DURATION = 250
 
 const Nav: FC<Props> = (props) => {
   const navigation = useNavigation()

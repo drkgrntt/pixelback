@@ -55,6 +55,7 @@ const Title: FC<Props> = (props) => {
         <TSpan
           fontWeight="600"
           fontSize={fontSize}
+          fontFamily="Raleway_300Light"
           x="0"
           dy={fontSize}
         >

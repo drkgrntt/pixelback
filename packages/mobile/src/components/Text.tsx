@@ -45,6 +45,7 @@ const CustomText: FC<Props> = ({ style = {}, ...props }) => {
 const styles = StyleSheet.create({
   text: {
     fontSize: theme.sizes.text,
+    fontFamily: 'Raleway_400Regular',
   },
   p: {
     color: theme.colors.greyDark,

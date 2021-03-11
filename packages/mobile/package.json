@@ -12,6 +12,7 @@
     "build": "ls"
   },
   "dependencies": {
+    "@expo-google-fonts/raleway": "^0.1.0",
     "@pixelback/shared": "file:../shared",
     "@react-native-community/masked-view": "0.1.10",
     "@react-navigation/drawer": "^5.12.3",
