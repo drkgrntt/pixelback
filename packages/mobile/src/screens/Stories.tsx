@@ -1,7 +1,8 @@
 import React, { FC } from 'react'
-import { View, StyleSheet } from 'react-native'
+import { ActivityIndicator } from 'react-native'
 import Layout from '../components/Layout'
 import Text from '../components/Text'
+import theme from '../theme'
 
 interface Props {}
 

@@ -8,12 +8,13 @@ import {
   Raleway_400Regular,
   Raleway_300Light,
 } from '@expo-google-fonts/raleway'
-import { Text } from 'react-native'
+import { ActivityIndicator } from 'react-native'
 import { RootStackParamList } from './types'
 import Login from './screens/Login'
 import Register from './screens/Register'
 import Stories from './screens/Stories'
 import Feedback from './screens/Feedback'
+import theme from './theme'
 
 const Stack = createStackNavigator<RootStackParamList>()
 
@@ -23,7 +24,11 @@ const App: FC<{}> = () => {
     Raleway_300Light,
   })
 
-  if (!fontsLoaded) return <Text>Loading...</Text>
+  if (!fontsLoaded) {
+    return (
+      <ActivityIndicator color={theme.colors.primary} size="large" />
+    )
+  }
 
   return (
     <ApolloProvider client={client}>
