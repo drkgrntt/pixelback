@@ -10,13 +10,17 @@ import Text from './Text'
 
 interface Props {
   onPress: (event: GestureResponderEvent) => void
+  containerStyle?: object
+  textStyle?: object
 }
 
 const Button: FC<Props> = (props) => {
   return (
     <TouchableOpacity onPress={props.onPress}>
-      <View style={styles.container}>
-        <Text style={styles.text}>{props.children}</Text>
+      <View style={{ ...styles.container, ...props.containerStyle }}>
+        <Text style={{ ...styles.text, ...props.textStyle }}>
+          {props.children}
+        </Text>
       </View>
     </TouchableOpacity>
   )
@@ -24,8 +28,9 @@ const Button: FC<Props> = (props) => {
 
 const styles = StyleSheet.create({
   container: {
-    alignSelf: 'stretch',
     padding: 10,
+    paddingLeft: 20,
+    paddingRight: 20,
     height: 40,
     borderRadius: 20,
     backgroundColor: theme.colors.primary,

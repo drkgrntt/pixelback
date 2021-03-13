@@ -12,7 +12,7 @@ const Layout: FC<Props> = (props) => {
   return (
     <>
       <Header />
-      <SafeAreaView style={[styles.container, props.style]}>
+      <SafeAreaView style={{ ...styles.container, ...props.style }}>
         {props.children}
       </SafeAreaView>
       <Footer />
@@ -22,7 +22,7 @@ const Layout: FC<Props> = (props) => {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 60,
+    marginTop: 50,
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'center',

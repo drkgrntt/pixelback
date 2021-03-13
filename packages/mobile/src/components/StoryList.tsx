@@ -1,9 +1,10 @@
 import React, { FC } from 'react'
-import { StyleSheet } from 'react-native'
+import { StyleSheet, TouchableOpacity } from 'react-native'
 import { Story } from '@pixelback/shared'
 import Text from './Text'
 import Card from './Card'
 import Button from './Button'
+import theme from '../theme'
 
 interface Props {
   stories: Story[]
@@ -17,11 +18,32 @@ const StoryList: FC<Props> = ({ stories }) => {
           <Text style={styles.spaceUnder} h4>
             {story.title}
           </Text>
-          <Text style={styles.spaceUnder} a>
-            {story.author.penName}
-          </Text>
+          <TouchableOpacity
+            onPress={() =>
+              alert(`Redirect to ${story.author.penName}'s profile`)
+            }
+          >
+            <Text style={styles.spaceUnder} a>
+              {story.author.penName}
+            </Text>
+          </TouchableOpacity>
           <Text style={styles.spaceUnder}>{story.summary}</Text>
-          <Button onPress={() => {}}>Read</Button>
+          {/* <Button
+            onPress={() => {
+              alert(`Redirect to ${story.title}`)
+            }}
+            containerStyle={styles.read}
+          >
+            Read
+          </Button> */}
+          <TouchableOpacity
+            onPress={() => {
+              alert(`Redirect to ${story.title}`)
+            }}
+            style={styles.read}
+          >
+            <Text a>Read</Text>
+          </TouchableOpacity>
         </Card>
       )
     })
@@ -35,7 +57,10 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   spaceUnder: {
-    marginBottom: 10,
+    marginBottom: 5,
+  },
+  read: {
+    alignSelf: 'flex-end',
   },
 })
 
