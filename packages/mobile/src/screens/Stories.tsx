@@ -6,7 +6,7 @@ import {
 } from 'react-native'
 import { useStoriesQuery } from '@pixelback/shared'
 import Layout from '../components/Layout'
-import Text from '../components/Text'
+import Title from '../components/Title'
 import theme from '../theme'
 import StoryList from '../components/StoryList'
 
@@ -29,9 +29,7 @@ const Stories: FC<Props> = () => {
   return (
     <Layout style={styles.layout}>
       <ScrollView contentContainerStyle={styles.container}>
-        <Text style={styles.spaceUnder} h2>
-          Stories
-        </Text>
+        <Title>Stories</Title>
         <StoryList stories={data.stories.stories} />
       </ScrollView>
     </Layout>
@@ -50,9 +48,6 @@ const styles = StyleSheet.create({
     paddingLeft: 16,
     paddingRight: 16,
     // backgroundColor: 'blue',
-  },
-  spaceUnder: {
-    marginBottom: 10,
   },
 })
 
