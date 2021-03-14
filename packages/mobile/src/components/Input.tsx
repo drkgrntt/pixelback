@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React, { FC, useContext } from 'react'
 import {
   TextInput,
   StyleSheet,
@@ -7,6 +7,7 @@ import {
   View,
 } from 'react-native'
 import Picker from 'react-native-picker-select'
+import menuContext from '../context/menuContext'
 import theme from '../theme'
 import Text from './Text'
 
@@ -82,9 +83,11 @@ const Input: FC<Props> = ({
   textContentType,
   autoCapitalize,
 }) => {
+  const { isOpen } = useContext(menuContext)
   const renderPickerInput = () => {
     return (
       <Picker
+        disabled={isOpen}
         style={{
           inputAndroid: styles.pickerText,
           inputIOS: styles.pickerText,

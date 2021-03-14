@@ -1,8 +1,9 @@
-import React, { FC } from 'react'
+import React, { FC, useContext } from 'react'
 import { Text, TouchableOpacity, StyleSheet } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { RootStackParamList } from '../types'
 import theme from '../theme'
+import menuContext from '../context/menuContext'
 
 interface Props {
   href: keyof RootStackParamList
@@ -11,8 +12,10 @@ interface Props {
 
 const Link: FC<Props> = (props) => {
   const navigation = useNavigation()
+  const { isOpen } = useContext(menuContext)
 
   const handlePress = () => {
+    if (isOpen) return
     navigation.navigate(props.href)
   }
 

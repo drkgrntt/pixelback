@@ -11,6 +11,7 @@ import {
   Raleway_300Light,
 } from '@expo-google-fonts/raleway'
 import { ActivityIndicator } from 'react-native'
+import MenuProvider from './context/MenuProvider'
 import { RootStackParamList } from './types'
 import Login from './screens/Login'
 import Register from './screens/Register'
@@ -36,14 +37,19 @@ const App: FC<{}> = () => {
 
   return (
     <ApolloProvider client={client}>
-      <NavigationContainer>
-        <Stack.Navigator headerMode="none" initialRouteName="Stories">
-          <Stack.Screen name="Stories" component={Stories} />
-          <Stack.Screen name="Login" component={Login} />
-          <Stack.Screen name="Register" component={Register} />
-          <Stack.Screen name="Feedback" component={Feedback} />
-        </Stack.Navigator>
-      </NavigationContainer>
+      <MenuProvider>
+        <NavigationContainer>
+          <Stack.Navigator
+            headerMode="none"
+            initialRouteName="Stories"
+          >
+            <Stack.Screen name="Stories" component={Stories} />
+            <Stack.Screen name="Login" component={Login} />
+            <Stack.Screen name="Register" component={Register} />
+            <Stack.Screen name="Feedback" component={Feedback} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </MenuProvider>
     </ApolloProvider>
   )
 }

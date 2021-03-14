@@ -1,7 +1,14 @@
-import React, { FC, useState, useRef, useEffect } from 'react'
+import React, {
+  FC,
+  useState,
+  useRef,
+  useEffect,
+  useContext,
+} from 'react'
 import { StyleSheet, Animated, Easing } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useNavigation } from '@react-navigation/native'
+import menuContext from '../../context/menuContext'
 import theme from '../../theme'
 import {
   TouchableOpacity,
@@ -15,11 +22,11 @@ const ANIMATION_DURATION = 250
 
 const Nav: FC<Props> = (props) => {
   const navigation = useNavigation()
-  const [open, setOpen] = useState(false)
+  const { isOpen, setIsOpen } = useContext(menuContext)
   const animation = useRef(new Animated.Value(0)).current
 
   useEffect(() => {
-    if (open) {
+    if (isOpen) {
       Animated.timing(animation, {
         toValue: 1,
         duration: ANIMATION_DURATION,
@@ -34,15 +41,17 @@ const Nav: FC<Props> = (props) => {
         easing: Easing.inOut(Easing.quad),
       }).start()
     }
-  }, [open, animation])
+  }, [isOpen, animation])
 
   const renderMenuItem = (title: string) => {
     return (
       <TouchableOpacity
         style={styles.menuItem}
         onPress={() => {
-          navigation.navigate(title)
-          setOpen(false)
+          setIsOpen(false)
+          setTimeout(() => {
+            navigation.navigate(title)
+          }, ANIMATION_DURATION)
         }}
       >
         <Text style={styles.menuItemText}>{title}</Text>
@@ -108,7 +117,7 @@ const Nav: FC<Props> = (props) => {
   const renderHamburger = () => {
     return (
       <TouchableWithoutFeedback
-        onPress={() => setOpen((current) => !current)}
+        onPress={() => setIsOpen((current) => !current)}
         style={styles.hamburger}
       >
         <Animated.View
