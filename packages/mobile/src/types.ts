@@ -3,4 +3,6 @@ export type RootStackParamList = {
   Register: undefined
   Feedback: undefined
   Stories: undefined
+  Story: undefined
+  Author: undefined
 }
