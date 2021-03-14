@@ -11,7 +11,7 @@ import theme from '../theme'
 import Text from './Text'
 
 interface Props {
-  type?: 'text' | 'single-select'
+  type?: 'text' | 'single-select' | 'textarea'
   options?: { label: string; value: string | number }[]
   value: string | number
   onChange: (newValue: any) => void
@@ -115,9 +115,29 @@ const Input: FC<Props> = ({
     )
   }
 
+  const renderTextareaInput = () => {
+    return (
+      <TextInput
+        multiline={true}
+        numberOfLines={4}
+        style={styles.textareaInput}
+        value={value.toString()}
+        onChangeText={onChange}
+        onBlur={onBlur}
+        placeholder={placeholder}
+        autoCompleteType={autoCompleteType}
+        secureTextEntry={secureTextEntry}
+        textAlign={textAlign}
+        textContentType={textContentType}
+        autoCapitalize={autoCapitalize}
+      />
+    )
+  }
+
   const renderInput = {
     text: renderTextInput,
     'single-select': renderPickerInput,
+    textarea: renderTextareaInput,
   }
 
   return (
@@ -139,16 +159,33 @@ const styles = StyleSheet.create({
     borderColor: theme.colors.grey,
     borderWidth: 1,
     borderRadius: 20,
+    fontSize: theme.sizes.text,
+    fontFamily: 'Raleway_400Regular',
+    color: theme.colors.greyDark,
+  },
+  textareaInput: {
+    padding: 10,
+    borderColor: theme.colors.grey,
+    borderWidth: 1,
+    borderRadius: 20,
+    textAlignVertical: 'top',
+    fontSize: theme.sizes.text,
+    fontFamily: 'Raleway_400Regular',
+    color: theme.colors.greyDark,
   },
   pickerInput: {
     borderColor: theme.colors.grey,
     borderWidth: 1,
     borderRadius: 20,
     height: 40,
+    fontSize: theme.sizes.text,
+    fontFamily: 'Raleway_400Regular',
   },
   pickerText: {
     height: 40,
     color: theme.colors.greyDark,
+    fontSize: theme.sizes.text,
+    fontFamily: 'Raleway_400Regular',
   },
 })
 

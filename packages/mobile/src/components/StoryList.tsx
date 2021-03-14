@@ -3,8 +3,6 @@ import { StyleSheet, TouchableOpacity } from 'react-native'
 import { Story } from '@pixelback/shared'
 import Text from './Text'
 import Card from './Card'
-import Button from './Button'
-import theme from '../theme'
 
 interface Props {
   stories: Story[]
