@@ -6,12 +6,15 @@ import {
   TextInputFocusEventData,
   View,
 } from 'react-native'
+import Picker from 'react-native-picker-select'
 import theme from '../theme'
 import Text from './Text'
 
 interface Props {
-  value: string
-  onChangeText: (text: string) => void
+  type?: 'text' | 'single-select'
+  options?: { label: string; value: string | number }[]
+  value: string | number
+  onChange: (newValue: any) => void
   validation?: string
   label?: string
   onBlur?: (e: NativeSyntheticEvent<TextInputFocusEventData>) => void
@@ -64,8 +67,10 @@ interface Props {
 }
 
 const Input: FC<Props> = ({
+  type = 'text',
+  options = [],
   value,
-  onChangeText,
+  onChange,
   validation,
   label,
   onBlur,
@@ -77,13 +82,27 @@ const Input: FC<Props> = ({
   textContentType,
   autoCapitalize,
 }) => {
-  return (
-    <View style={styles.container}>
-      <Text>{label}</Text>
-      <TextInput
-        style={styles.input}
+  const renderPickerInput = () => {
+    return (
+      <Picker
+        style={{
+          inputAndroid: styles.pickerText,
+          inputIOS: styles.pickerText,
+          viewContainer: styles.pickerInput,
+        }}
+        items={options}
         value={value}
-        onChangeText={onChangeText}
+        onValueChange={onChange}
+      />
+    )
+  }
+
+  const renderTextInput = () => {
+    return (
+      <TextInput
+        style={styles.textInput}
+        value={value.toString()}
+        onChangeText={onChange}
         onBlur={onBlur}
         placeholder={placeholder}
         numberOfLines={numberOfLines}
@@ -93,6 +112,18 @@ const Input: FC<Props> = ({
         textContentType={textContentType}
         autoCapitalize={autoCapitalize}
       />
+    )
+  }
+
+  const renderInput = {
+    text: renderTextInput,
+    'single-select': renderPickerInput,
+  }
+
+  return (
+    <View style={styles.container}>
+      <Text>{label}</Text>
+      {renderInput[type]()}
       <Text validation>{validation}</Text>
     </View>
   )
@@ -102,12 +133,22 @@ const styles = StyleSheet.create({
   container: {
     alignSelf: 'stretch',
   },
-  input: {
+  textInput: {
     padding: 10,
     height: 40,
     borderColor: theme.colors.grey,
     borderWidth: 1,
     borderRadius: 20,
+  },
+  pickerInput: {
+    borderColor: theme.colors.grey,
+    borderWidth: 1,
+    borderRadius: 20,
+    height: 40,
+  },
+  pickerText: {
+    height: 40,
+    color: theme.colors.greyDark,
   },
 })
 
