@@ -29,7 +29,7 @@ const Stories: FC<Props> = () => {
   return (
     <Layout style={styles.layout}>
       <ScrollView contentContainerStyle={styles.container}>
-        <Text style={styles.spaceUnder} h3>
+        <Text style={styles.spaceUnder} h2>
           Stories
         </Text>
         <StoryList stories={data.stories.stories} />
@@ -46,6 +46,7 @@ const styles = StyleSheet.create({
     // backgroundColor: 'red',
   },
   container: {
+    marginTop: 10,
     paddingLeft: 16,
     paddingRight: 16,
     // backgroundColor: 'blue',
