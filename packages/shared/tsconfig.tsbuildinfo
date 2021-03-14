@@ -157,8 +157,8 @@
         "affectsGlobalScope": true
       },
       "./src/types.ts": {
-        "version": "ceac588bcb46c7827984beb0908137f2ab988a327444a4096bc993483bcccc37",
-        "signature": "93fb32ce63105f4e1c6287dfc0fe7d801e7d81db64346db07e40a62bbc144fe9",
+        "version": "b63dd8508d63142ec41d82c5740e09bce214c59277b17aecdcb2274ff3610032",
+        "signature": "4f5cce7e71f81f76f875b138e43a310100853739ef1e8297e77bbd33e8f75d39",
         "affectsGlobalScope": false
       },
       "../../node_modules/@types/zen-observable/index.d.ts": {
@@ -1896,21 +1896,6 @@
         "signature": "934866fd1fa870606344dd98df9b30b8aa826a80391b23124e7c0415d3bbc948",
         "affectsGlobalScope": false
       },
-      "../../node_modules/@types/react-native-vector-icons/node_modules/@types/react/index.d.ts": {
-        "version": "5eec5df7493ec6ad30cd641228d5ec7a5cc46d86e04a7f5d4f3cc239c6fa05bc",
-        "signature": "5eec5df7493ec6ad30cd641228d5ec7a5cc46d86e04a7f5d4f3cc239c6fa05bc",
-        "affectsGlobalScope": true
-      },
-      "../../node_modules/@types/react-native-vector-icons/Icon.d.ts": {
-        "version": "47738de78f2444a7921c2e78f7fd840207f43354b574f63ee947f74bc457b398",
-        "signature": "47738de78f2444a7921c2e78f7fd840207f43354b574f63ee947f74bc457b398",
-        "affectsGlobalScope": false
-      },
-      "../../node_modules/@types/react-native-vector-icons/index.d.ts": {
-        "version": "905638a87af6b0a1ac8d00fde922dce441e302b06a32b8f1cc3196a02d8ffe8d",
-        "signature": "905638a87af6b0a1ac8d00fde922dce441e302b06a32b8f1cc3196a02d8ffe8d",
-        "affectsGlobalScope": false
-      },
       "../../node_modules/@types/semver/classes/semver.d.ts": {
         "version": "d9e55d93aa33fad61bd5c63800972d00ba8879ec5d29f6f3bce67d16d86abc33",
         "signature": "d9e55d93aa33fad61bd5c63800972d00ba8879ec5d29f6f3bce67d16d86abc33",
@@ -2151,7 +2136,6 @@
       "outDir": "./dist",
       "esModuleInterop": true,
       "rootDir": "./src",
-      "watch": true,
       "configFilePath": "./tsconfig.json"
     },
     "referencedMap": {
@@ -2940,20 +2924,6 @@
       ],
       "../../node_modules/@types/react-dom/index.d.ts": [
         "../../node_modules/@types/react/index.d.ts"
-      ],
-      "../../node_modules/@types/react-native-vector-icons/Icon.d.ts": [
-        "../../node_modules/@types/react-native/index.d.ts",
-        "../../node_modules/@types/react-native/node_modules/@types/react/index.d.ts"
-      ],
-      "../../node_modules/@types/react-native-vector-icons/index.d.ts": [
-        "../../node_modules/@types/react-native-vector-icons/Icon.d.ts",
-        "../../node_modules/@types/react-native/index.d.ts",
-        "../../node_modules/@types/react-native/node_modules/@types/react/index.d.ts"
-      ],
-      "../../node_modules/@types/react-native-vector-icons/node_modules/@types/react/index.d.ts": [
-        "../../node_modules/@types/prop-types/index.d.ts",
-        "../../node_modules/@types/react-native-vector-icons/node_modules/@types/react/global.d.ts",
-        "../../node_modules/csstype/index.d.ts"
       ],
       "../../node_modules/@types/react-native/Devtools.d.ts": [
         "../../node_modules/@types/react-native/Devtools.d.ts"
@@ -4706,20 +4676,6 @@
       "../../node_modules/@types/react-dom/index.d.ts": [
         "../../node_modules/@types/react/index.d.ts"
       ],
-      "../../node_modules/@types/react-native-vector-icons/Icon.d.ts": [
-        "../../node_modules/@types/react-native/index.d.ts",
-        "../../node_modules/@types/react-native/node_modules/@types/react/index.d.ts"
-      ],
-      "../../node_modules/@types/react-native-vector-icons/index.d.ts": [
-        "../../node_modules/@types/react-native-vector-icons/Icon.d.ts",
-        "../../node_modules/@types/react-native/index.d.ts",
-        "../../node_modules/@types/react-native/node_modules/@types/react/index.d.ts"
-      ],
-      "../../node_modules/@types/react-native-vector-icons/node_modules/@types/react/index.d.ts": [
-        "../../node_modules/@types/prop-types/index.d.ts",
-        "../../node_modules/@types/react-native-vector-icons/node_modules/@types/react/global.d.ts",
-        "../../node_modules/csstype/index.d.ts"
-      ],
       "../../node_modules/@types/react-native/Devtools.d.ts": [
         "../../node_modules/@types/react-native/Devtools.d.ts"
       ],
@@ -5827,9 +5783,6 @@
       "../../node_modules/@types/range-parser/index.d.ts",
       "../../node_modules/@types/react-dom/index.d.ts",
       "../../node_modules/@types/react-native-dotenv/index.d.ts",
-      "../../node_modules/@types/react-native-vector-icons/Icon.d.ts",
-      "../../node_modules/@types/react-native-vector-icons/index.d.ts",
-      "../../node_modules/@types/react-native-vector-icons/node_modules/@types/react/index.d.ts",
       "../../node_modules/@types/react-native/BatchedBridge.d.ts",
       "../../node_modules/@types/react-native/Devtools.d.ts",
       "../../node_modules/@types/react-native/LaunchScreen.d.ts",

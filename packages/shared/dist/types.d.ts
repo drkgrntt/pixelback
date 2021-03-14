@@ -15,6 +15,11 @@ export declare enum SubLevel {
     Free = 1,
     Paid = 2
 }
+export declare enum FeedbackType {
+    General = 0,
+    Bug = 1,
+    Feature = 2
+}
 export declare type RatingScore = 1 | 2 | 3 | 4 | 5;
 export interface User {
     id: string;

@@ -18,6 +18,12 @@ export enum SubLevel {
   Paid,
 }
 
+export enum FeedbackType {
+  General,
+  Bug,
+  Feature,
+}
+
 export type RatingScore = 1 | 2 | 3 | 4 | 5
 
 export interface User {

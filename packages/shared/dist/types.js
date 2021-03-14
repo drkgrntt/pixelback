@@ -1,6 +1,6 @@
 "use strict";
 exports.__esModule = true;
-exports.SubLevel = exports.PublishStatus = exports.UserRole = void 0;
+exports.FeedbackType = exports.SubLevel = exports.PublishStatus = exports.UserRole = void 0;
 var UserRole;
 (function (UserRole) {
     UserRole[UserRole["None"] = 0] = "None";
@@ -21,4 +21,10 @@ var SubLevel;
     SubLevel[SubLevel["Free"] = 1] = "Free";
     SubLevel[SubLevel["Paid"] = 2] = "Paid";
 })(SubLevel = exports.SubLevel || (exports.SubLevel = {}));
+var FeedbackType;
+(function (FeedbackType) {
+    FeedbackType[FeedbackType["General"] = 0] = "General";
+    FeedbackType[FeedbackType["Bug"] = 1] = "Bug";
+    FeedbackType[FeedbackType["Feature"] = 2] = "Feature";
+})(FeedbackType = exports.FeedbackType || (exports.FeedbackType = {}));
 //# sourceMappingURL=types.js.map
