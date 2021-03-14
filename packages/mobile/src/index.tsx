@@ -17,6 +17,7 @@ import Login from './screens/Login'
 import Register from './screens/Register'
 import Stories from './screens/Stories'
 import Feedback from './screens/Feedback'
+import Author from './screens/Author'
 import theme from './theme'
 
 const Stack = createStackNavigator<RootStackParamList>()
@@ -44,6 +45,7 @@ const App: FC<{}> = () => {
             initialRouteName="Stories"
           >
             <Stack.Screen name="Stories" component={Stories} />
+            <Stack.Screen name="Author" component={Author} />
             <Stack.Screen name="Login" component={Login} />
             <Stack.Screen name="Register" component={Register} />
             <Stack.Screen name="Feedback" component={Feedback} />

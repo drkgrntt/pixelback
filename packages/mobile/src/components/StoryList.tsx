@@ -17,11 +17,19 @@ const StoryList: FC<Props> = ({ stories }) => {
           <Text style={styles.spaceUnder} h4>
             {story.title}
           </Text>
-          <Link href="Author" style={styles.spaceUnder}>
+          <Link
+            href="Author"
+            params={{ id: story.author.id }}
+            style={styles.spaceUnder}
+          >
             {story.author.penName}
           </Link>
           <Text style={styles.spaceUnder}>{story.summary}</Text>
-          <Link style={styles.read} href="Story">
+          <Link
+            style={styles.read}
+            params={{ storyId: story.id }}
+            href="Story"
+          >
             Read
           </Link>
         </Card>

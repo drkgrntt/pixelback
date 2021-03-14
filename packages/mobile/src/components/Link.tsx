@@ -7,6 +7,7 @@ import menuContext from '../context/menuContext'
 
 interface Props {
   href: keyof RootStackParamList
+  params?: object
   style?: object
 }
 
@@ -16,7 +17,7 @@ const Link: FC<Props> = (props) => {
 
   const handlePress = () => {
     if (isOpen) return
-    navigation.navigate(props.href)
+    navigation.navigate(props.href, props.params)
   }
 
   return (
