@@ -56,6 +56,8 @@ const Author: FC<Props> = () => {
         <StarRating
           containerStyle={styles.stars}
           fullStarColor="#b8860b"
+          emptyStarColor="#b8860b"
+          halfStarColor="#b8860b"
           disabled={false}
           maxStars={5}
           rating={data.story.score}
@@ -69,6 +71,7 @@ const Author: FC<Props> = () => {
 const styles = StyleSheet.create({
   container: {
     padding: 15,
+    width: '100%',
   },
   spaceBelow: {
     marginBottom: 8,
