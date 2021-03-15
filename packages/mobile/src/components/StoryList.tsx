@@ -25,6 +25,9 @@ const StoryList: FC<Props> = ({ stories }) => {
             {story.author.penName}
           </Link>
           <Text style={styles.spaceUnder}>{story.summary}</Text>
+          <Text style={{ ...styles.italic, ...styles.spaceUnder }}>
+            {story.genres.map((genre) => genre.name).join(', ')}
+          </Text>
           <Link
             style={styles.read}
             params={{ storyId: story.id }}
@@ -46,6 +49,9 @@ const styles = StyleSheet.create({
   },
   spaceUnder: {
     marginBottom: 5,
+  },
+  italic: {
+    fontFamily: 'Raleway_400Regular_Italic',
   },
   read: {
     alignSelf: 'flex-end',

@@ -31,6 +31,7 @@ const Link: FC<Props> = (props) => {
 
 const styles = StyleSheet.create({
   text: {
+    fontSize: theme.sizes.text,
     color: theme.colors.grey,
     fontFamily: 'Raleway_400Regular_Italic',
     textDecorationLine: 'underline',
