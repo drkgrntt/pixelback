@@ -6,6 +6,7 @@ import { verifyPasswordSyntax } from '../util/verifyPasswordSyntax'
 import Input from './Input'
 import Button from './Button'
 import Text from './Text'
+import { useNavigation } from '@react-navigation/native'
 
 const INITIAL_STATE = {
   email: '',
@@ -16,6 +17,7 @@ const INITIAL_STATE = {
 }
 
 const LoginForm: FC<{}> = () => {
+  const navigation = useNavigation()
   const [login] = useLoginMutation()
   const [values, setValues] = useState(INITIAL_STATE)
   const setState = (
@@ -39,6 +41,7 @@ const LoginForm: FC<{}> = () => {
     try {
       await login({ variables: values })
       setValues(INITIAL_STATE)
+      navigation.navigate('Profile')
     } catch (err) {
       setState('validation', err.message)
     }
