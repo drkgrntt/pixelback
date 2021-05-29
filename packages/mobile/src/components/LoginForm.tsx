@@ -49,7 +49,7 @@ const LoginForm: FC<{}> = () => {
       <Input
         label="Email"
         value={values.email}
-        onChangeText={(value) => setState('email', value)}
+        onChange={(value) => setState('email', value)}
         textContentType="emailAddress"
         autoCompleteType="email"
         validation={values.emailValidation}
@@ -66,7 +66,7 @@ const LoginForm: FC<{}> = () => {
       <Input
         label="Password"
         value={values.password}
-        onChangeText={(value) => setState('password', value)}
+        onChange={(value) => setState('password', value)}
         autoCompleteType="password"
         validation={values.passwordValidation}
         autoCapitalize="none"
