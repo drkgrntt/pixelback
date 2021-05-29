@@ -5,7 +5,6 @@ import {
   ApolloLink,
 } from '@apollo/client'
 import { Story } from '@pixelback/shared'
-import { API_URL } from './env'
 
 interface PageData {
   hasMore: boolean
@@ -50,45 +49,47 @@ const convertDates = (data: any) => {
   return data
 }
 
-const dataMutationLink = new ApolloLink((operation, forward) => {
-  return forward(operation).map((data) => {
-    data = convertDates(data)
-    return data
+export const getClient = (apiUrl: string) => {
+  const dataMutationLink = new ApolloLink((operation, forward) => {
+    return forward(operation).map((data) => {
+      data = convertDates(data)
+      return data
+    })
   })
-})
 
-const inMemoryCache = new InMemoryCache({
-  typePolicies: {
-    Query: {
-      fields: {
-        stories: {
-          keyArgs: [],
-          merge(
-            existing: PaginatedResponse | undefined,
-            incoming: PaginatedResponse
-          ): PaginatedResponse {
-            return {
-              ...incoming,
-              stories: [
-                ...(existing?.stories || []),
-                ...incoming.stories,
-              ],
-            }
+  const inMemoryCache = new InMemoryCache({
+    typePolicies: {
+      Query: {
+        fields: {
+          stories: {
+            keyArgs: [],
+            merge(
+              existing: PaginatedResponse | undefined,
+              incoming: PaginatedResponse
+            ): PaginatedResponse {
+              return {
+                ...incoming,
+                stories: [
+                  ...(existing?.stories || []),
+                  ...incoming.stories,
+                ],
+              }
+            },
           },
         },
       },
     },
-  },
-})
+  })
 
-const httpLink = createHttpLink({
-  uri: API_URL,
-  credentials: 'include',
-})
+  const httpLink = createHttpLink({
+    uri: apiUrl,
+    credentials: 'include',
+  })
 
-export const client = new ApolloClient({
-  link: dataMutationLink.concat(httpLink),
-  cache: inMemoryCache,
-  name: 'react-mobile-client',
-  version: '1.0.0',
-})
+  return new ApolloClient({
+    link: dataMutationLink.concat(httpLink),
+    cache: inMemoryCache,
+    name: 'react-mobile-client',
+    version: '1.0.0',
+  })
+}

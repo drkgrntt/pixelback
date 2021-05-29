@@ -1,6 +1,6 @@
-import React, { FC } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import { ApolloProvider } from '@apollo/client'
-import { client } from './apollo'
+import { getClient } from './apollo'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import {
@@ -11,6 +11,8 @@ import {
   Raleway_300Light,
 } from '@expo-google-fonts/raleway'
 import { ActivityIndicator } from 'react-native'
+import AsyncStorage from '@react-native-community/async-storage'
+import { API_URL, STAGE_API_URL } from './env'
 import MenuProvider from './context/MenuProvider'
 import { RootStackParamList } from './types'
 import Login from './screens/Login'
@@ -30,15 +32,34 @@ const App: FC<{}> = () => {
     Raleway_400Regular_Italic,
     Raleway_300Light,
   })
+  const [apiUrl, setApiUrl] = useState<string>('')
+  const getApiUrl = async () => {
+    const env = await AsyncStorage.getItem('@pixelback.environment')
+    switch (env) {
+      case 'prod':
+        setApiUrl(API_URL)
+        break
+      case 'stage':
+        setApiUrl(STAGE_API_URL)
+        break
+      default:
+        await AsyncStorage.setItem('@pixelback.environment', 'prod')
+        setApiUrl(API_URL)
+        break
+    }
+  }
+  useEffect(() => {
+    getApiUrl()
+  }, [])
 
-  if (!fontsLoaded) {
+  if (!fontsLoaded || !apiUrl) {
     return (
       <ActivityIndicator color={theme.colors.primary} size="large" />
     )
   }
 
   return (
-    <ApolloProvider client={client}>
+    <ApolloProvider client={getClient(apiUrl)}>
       <MenuProvider>
         <NavigationContainer>
           <Stack.Navigator

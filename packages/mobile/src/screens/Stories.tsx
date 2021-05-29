@@ -9,6 +9,8 @@ import Layout from '../components/Layout'
 import Title from '../components/Title'
 import theme from '../theme'
 import StoryList from '../components/StoryList'
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler'
+import AsyncStorage from '@react-native-community/async-storage'
 
 interface Props {}
 
@@ -29,7 +31,32 @@ const Stories: FC<Props> = () => {
   return (
     <Layout style={styles.layout}>
       <ScrollView contentContainerStyle={styles.container}>
-        <Title>Stories</Title>
+        <TouchableWithoutFeedback
+          onLongPress={async () => {
+            const env = await AsyncStorage.getItem(
+              '@pixelback.environment'
+            )
+            if (env === 'prod') {
+              await AsyncStorage.setItem(
+                '@pixelback.environment',
+                'stage'
+              )
+              alert(
+                'Setting the environment to stage. Please reset the app to see the changes.'
+              )
+            } else {
+              await AsyncStorage.setItem(
+                '@pixelback.environment',
+                'prod'
+              )
+              alert(
+                'Setting the environment to prod. Please reset the app to see the changes.'
+              )
+            }
+          }}
+        >
+          <Title>Stories</Title>
+        </TouchableWithoutFeedback>
         <StoryList stories={data.stories.stories} />
       </ScrollView>
     </Layout>
