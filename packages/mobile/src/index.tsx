@@ -21,6 +21,7 @@ import Stories from './screens/Stories'
 import Feedback from './screens/Feedback'
 import Author from './screens/Author'
 import Story from './screens/Story'
+import Profile from './screens/Profile'
 import theme from './theme'
 
 const Stack = createStackNavigator<RootStackParamList>()
@@ -32,7 +33,7 @@ const App: FC<{}> = () => {
     Raleway_400Regular_Italic,
     Raleway_300Light,
   })
-  const [apiUrl, setApiUrl] = useState<string>('')
+  const [apiUrl, setApiUrl] = useState('')
   const getApiUrl = async () => {
     const env = await AsyncStorage.getItem('@pixelback.environment')
     switch (env) {
@@ -70,6 +71,7 @@ const App: FC<{}> = () => {
             <Stack.Screen name="Story" component={Story} />
             <Stack.Screen name="Author" component={Author} />
             <Stack.Screen name="Login" component={Login} />
+            <Stack.Screen name="Profile" component={Profile} />
             <Stack.Screen name="Register" component={Register} />
             <Stack.Screen name="Feedback" component={Feedback} />
           </Stack.Navigator>

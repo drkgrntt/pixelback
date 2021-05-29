@@ -1,10 +1,4 @@
-import React, {
-  FC,
-  useState,
-  useRef,
-  useEffect,
-  useContext,
-} from 'react'
+import React, { FC, useRef, useEffect, useContext } from 'react'
 import { StyleSheet, Animated, Easing } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useNavigation } from '@react-navigation/native'
@@ -15,6 +9,7 @@ import {
   TouchableWithoutFeedback,
 } from 'react-native-gesture-handler'
 import Text from '../Text'
+import { useLogoutMutation, useMeQuery } from '@pixelback/shared'
 
 interface Props {}
 
@@ -24,6 +19,8 @@ const Nav: FC<Props> = (props) => {
   const navigation = useNavigation()
   const { isOpen, setIsOpen } = useContext(menuContext)
   const animation = useRef(new Animated.Value(0)).current
+  const { data } = useMeQuery()
+  const [logout] = useLogoutMutation()
 
   useEffect(() => {
     if (isOpen) {
@@ -43,7 +40,7 @@ const Nav: FC<Props> = (props) => {
     }
   }, [isOpen, animation])
 
-  const renderMenuItem = (title: string) => {
+  const renderMenuNavItem = (title: string) => {
     return (
       <TouchableOpacity
         style={styles.menuItem}
@@ -51,6 +48,25 @@ const Nav: FC<Props> = (props) => {
           setIsOpen(false)
           setTimeout(() => {
             navigation.navigate(title)
+          }, ANIMATION_DURATION)
+        }}
+      >
+        <Text style={styles.menuItemText}>{title}</Text>
+      </TouchableOpacity>
+    )
+  }
+
+  const renderMenuActionItem = (
+    title: string,
+    callback: Function
+  ) => {
+    return (
+      <TouchableOpacity
+        style={styles.menuItem}
+        onPress={() => {
+          setIsOpen(false)
+          setTimeout(() => {
+            callback()
           }, ANIMATION_DURATION)
         }}
       >
@@ -77,10 +93,14 @@ const Nav: FC<Props> = (props) => {
           height: menuHeight,
         }}
       >
-        {renderMenuItem('Stories')}
-        {renderMenuItem('Login')}
-        {renderMenuItem('Register')}
-        {renderMenuItem('Feedback')}
+        {renderMenuNavItem('Stories')}
+        {data?.me
+          ? renderMenuNavItem('Profile')
+          : renderMenuNavItem('Login')}
+        {data?.me
+          ? renderMenuActionItem('Logout', logout)
+          : renderMenuNavItem('Register')}
+        {renderMenuNavItem('Feedback')}
       </Animated.View>
     )
   }
